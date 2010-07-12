@@ -1,0 +1,280 @@
+@charset "UTF-8";
+
+@font-face {
+  font-family: 'mb_audio_fontRegular';
+  src: url('mbAudioFont/mb_audio_font_webfont.eot');
+  src: local('☺'), url('mbAudioFont/mb_audio_font_webfont.woff') format('woff'), url('mbAudioFont/mb_audio_font_webfont.ttf') format('truetype'), url('mbAudioFont/mb_audio_font-webfont_svg#webfontywr4YLri') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.mbMiniPlayer span{
+  font:16px/20px "mb_audio_fontRegular","Webdings",sans-serif;
+}
+
+a.audio{
+  display:none;
+}
+
+.mbMiniPlayer{
+/*display:inline-block;*/
+/*vertical-align:middle;*/
+}
+
+.mbMiniPlayer table{
+  -moz-border-radius:5px;
+  -webkit-border-radius:8px;
+  border-radius:5px;
+  margin:5px;
+}
+
+.mbMiniPlayer.shadow table{
+  border:1px solid white;
+  -moz-box-shadow:#ccc 0px 0px 5px;
+  -webkit-box-shadow:#ccc 0px 0px 5px;
+  box-shadow:#ccc 0px 0px 5px;
+}
+
+.mbMiniPlayer.black td{
+  margin:0;
+  padding:0;
+}
+
+.jp-progress{
+  position:relative;
+  background-color: #fff;
+  height:8px;
+  margin:2px;
+  margin-top:0;
+  top:-2px;
+  -moz-box-sizing:border-box;
+  cursor:pointer;
+}
+
+.jp-load-bar{
+  background-color: #e9e6e6;
+/*background-image:-moz-linear-gradient(40% 10% 270deg,#ccc, #ffffff, #ddd 100%);*/
+  height:6px;
+  -moz-box-sizing:border-box;
+}
+.jp-play-bar{
+  background-color:black;
+  background-image:-moz-linear-gradient(85% 66% 90deg,#191919, #525252, #C7C7C7 100%);
+  background-image:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#7D7D7D), to(#262626), color-stop(.6,#333333));
+  height:6px;
+  -moz-box-sizing:border-box;
+}
+
+.mbMiniPlayer td.controlsBar{
+  background-color:#fff;
+  background-image:-moz-linear-gradient(19% 100% 90deg,#FFFFFF, #FFFFFF, #EBEBEB 100%);
+  background-image:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#DEDEDE), to(#FFFFFF), color-stop(.6,#FFFFFF));
+  margin:0;
+  padding:0;
+  cursor:default !important;
+  box-shadow:inset 1px 1px 2px #999;
+  -moz-box-shadow:inset 1px 1px 3px #999;
+  -webkit-box-shadow:inset 1px 1px 2px #999;
+}
+
+.mbMiniPlayer .controls{
+  margin:1px;
+  display:none;
+  width:1px;
+  height:100%;
+  -moz-box-sizing:border-box;
+  overflow:hidden;
+  white-space:nowrap;
+}
+
+.mbMiniPlayer span{
+  display:inline-block;
+  padding:3px;
+  width:20px;
+  height:20px;
+  color:white;
+  text-align:center;
+  text-shadow: 1px -1px 1px #000;
+  background-image:-moz-linear-gradient(100% 100% 110deg,rgba(0,0,0,0.5), transparent);
+  background-image:-webkit-gradient(linear, 0% 5%, 85% 100%, from(transparent), to(rgba(0,0,0,0.5)));
+}
+
+.mbMiniPlayer span.title{
+  position:relative;
+  color:#333;
+  font:10px/12px sans-serif;
+  text-shadow: 1px -1px 2px #aaa9a9 !important;
+  letter-spacing:1px;
+  width:100%;
+  height:8px;
+  top:-4px;
+  background:transparent !important;
+  text-align:left;
+  cursor:default !important;
+}
+
+.mbMiniPlayer span.rew{
+  width:1px;
+  cursor:pointer;
+}
+
+.mbMiniPlayer span.volumeLevel{
+}
+.mbMiniPlayer span.volumeLevel a{
+  position:relative;
+  display:inline-block;
+  margin:0;
+  margin-right:2px;
+  width:2px;
+  padding:0;
+  background-color:white;
+  height:0;
+  vertical-align:bottom;
+  opacity:.1;
+  cursor:pointer;
+}
+
+.mbMiniPlayer span.volumeLevel a.sel{
+  -moz-box-shadow:#000 0px 0px 1px;
+  -webkit-box-shadow:#000 0px 0px 1px;
+  box-shadow:#000 0px 0px 1px;
+}
+
+.mbMiniPlayer span.time{
+  width:1px;
+  font:11px/20px sans-serif;
+  overflow:hidden;
+  white-space:nowrap;
+  cursor:default !important;
+  /*
+    background-image:none;
+    background-color:#d9d9d9 !important;
+  */
+  text-shadow: 0 0 2px #999!important;
+}
+
+.mbMiniPlayer span.play{
+  -moz-border-radius:0 5px 5px 0;
+  -webkit-border-top-right-radius:5px;
+  -webkit-border-bottom-right-radius:5px;
+  border-radius:0 5px 5px 0;
+  cursor:pointer;
+}
+.mbMiniPlayer span.volume{
+  -moz-border-radius:5px 0 0 5px;
+  -webkit-border-top-left-radius:5px;
+  -webkit-border-bottom-left-radius:5px;
+  border-radius:5px 0 0 5px;
+  cursor:pointer;
+}
+
+
+/*BLACK ----------------------------------------*/
+.mbMiniPlayer.black span{
+  background-color:#666;
+  text-shadow: 1px -1px 1px #000;
+}
+
+.mbMiniPlayer.black span.play{
+  border-left:1px solid #333;
+}
+
+.mbMiniPlayer.black span.volume{
+  border-right:1px solid #999;
+}
+
+.mbMiniPlayer.black span.volume.mute{
+  color: #999999;
+}
+
+/*GRAY ----------------------------------------*/
+.mbMiniPlayer.gray span{
+  background-color:#ccc;
+  text-shadow: 1px -1px 1px #666;
+}
+
+.mbMiniPlayer.gray span.play{
+  border-left:1px solid #666;
+}
+
+.mbMiniPlayer.gray span.volume{
+  border-right:1px solid #bdbcbc;
+}
+
+.mbMiniPlayer.gray span.volume.mute{
+  color: #cccccc;
+}
+
+/*BLUE ----------------------------------------*/
+.mbMiniPlayer.blue span{
+  background-color: #0099ff;
+  text-shadow: 1px -1px 1px #003366;
+}
+
+.mbMiniPlayer.blue span.play{
+  border-left:1px solid #034383;
+}
+
+.mbMiniPlayer.blue span.volume{
+  border-right:1px solid #18a2fe;
+}
+.mbMiniPlayer.blue span.volume.mute{
+  color: #98bff9;
+}
+
+/*ORANGE ----------------------------------------*/
+.mbMiniPlayer.orange span{
+  background-color: #ff9900;
+  text-shadow: 1px -1px 1px #996600;
+}
+
+.mbMiniPlayer.orange span.play{
+  border-left:1px solid #8c5002;
+}
+
+.mbMiniPlayer.orange span.volume{
+  border-right:1px solid #fea827;
+}
+
+.mbMiniPlayer.orange span.volume.mute{
+  color: #eec957;
+}
+
+/*RED ----------------------------------------*/
+.mbMiniPlayer.red span{
+  background-color: #cc0033;
+  text-shadow: 1px -1px 1px #660000;
+}
+
+.mbMiniPlayer.red span.play{
+  border-left:1px solid #660000;
+}
+
+.mbMiniPlayer.red span.volume{
+  border-right:1px solid #dd033a;
+}
+
+.mbMiniPlayer.red span.volume.mute{
+  color: #df3862;
+}
+
+
+/*GREEN ----------------------------------------*/
+.mbMiniPlayer.green span{
+  background-color: #339900;
+  text-shadow: 1px -1px 1px #003333;
+}
+
+.mbMiniPlayer.green span.play{
+  border-left:1px solid #336600;
+}
+
+.mbMiniPlayer.green span.volume{
+  border-right:1px solid #38a700;
+}
+
+.mbMiniPlayer.green span.volume.mute{
+  color: #2aba5a;
+}
+
+
