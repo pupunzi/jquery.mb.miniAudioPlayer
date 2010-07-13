@@ -66,7 +66,7 @@ a.audio{
 }
 
 .mbMiniPlayer td.controlsBar{
-  background-color:#fff;
+  background-color:#ccc;
   background-image:-moz-linear-gradient(19% 100% 90deg,#FFFFFF, #FFFFFF, #EBEBEB 100%);
   background-image:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#DEDEDE), to(#FFFFFF), color-stop(.6,#FFFFFF));
   margin:0;
@@ -81,6 +81,7 @@ a.audio{
   margin:1px;
   display:none;
   width:1px;
+  *border:1px solid gray;
   height:100%;
   -moz-box-sizing:border-box;
   overflow:hidden;

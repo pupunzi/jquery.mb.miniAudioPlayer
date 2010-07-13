@@ -127,18 +127,29 @@
                         $("[isPlaying=true]").find(".play").click();
                       }
 
+                      var isIE=$.browser.msie;
+
                       $(this).html($.mbMiniPlayer.icon.pause);
                       $controls.css({display:"block",height:20}).animate({width:player.opt.width},200);
                       if(player.opt.showRew) {
-                        $rewBox.animate({width:20},100);
+                        if(isIE)
+                          $rewBox.css({width:20,display:"block"});
+                        else
+                          $rewBox.animate({width:20},100);
                         if($.browser.safari)$rewBox.parent().css({width:20}).show();
                       }
                       if(player.opt.showTime) {
-                        $timeBox.animate({width:30},100);
+                        if(isIE)
+                          $timeBox.css({width:30,display:"block"});
+                        else
+                          $timeBox.animate({width:30},100);
                         if($.browser.safari)$timeBox.parent().css({width:30}).show();
                       }
                       if(player.opt.showVolumLevel) {
-                        $volumeLevel.animate({width:40},100);
+                        if(isIE)
+                          $volumeLevel.css({width:40,display:"block"});
+                        else
+                          $volumeLevel.animate({width:40},100);
                         if($.browser.safari)$volumeLevel.parent().css({width:40}).show();
                       }
                       $controlsBox.attr("isPlaying","true");
@@ -163,30 +174,30 @@
                       $controlsBox.attr("isPlaying","false");
                       el.jPlayer("pause");
                     }).hover(
-              function(){$(this).css({opacity:.8})},
-              function(){$(this).css({opacity:1})}
-              );
+                    function(){$(this).css({opacity:.8})},
+                    function(){$(this).css({opacity:1})}
+                    );
 
             $volumeBox.click(
                     function(){
                       if($player.jPlayer( "getData", "volume")==0){
                         $(this).removeClass("mute");
-                        el.jPlayer("volume",player.opt.volume);                        
+                        el.jPlayer("volume",player.opt.volume);
                       }else{
                         $(this).addClass("mute");
                         el.jPlayer("volume",0);
                       }
                     }).hover(
-              function(){$(this).css({opacity:.8})},
-              function(){$(this).css({opacity:1})}
-              );
+                    function(){$(this).css({opacity:.8})},
+                    function(){$(this).css({opacity:1})}
+                    );
 
             $rewBox.click(function(){
               el.jPlayer("playHeadTime", 0);
             }).hover(
-              function(){$(this).css({opacity:.8})},
-              function(){$(this).css({opacity:1})}
-              );
+                    function(){$(this).css({opacity:.8})},
+                    function(){$(this).css({opacity:1})}
+                    );
             var bars=player.opt.volumeLevels;
             var barVol= 100/bars;
             $volumeLevel.find("a").each(function(i){
