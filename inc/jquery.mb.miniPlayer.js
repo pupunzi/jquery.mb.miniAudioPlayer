@@ -33,11 +33,12 @@
       pause:"p",
       stop:"S",
       rewind:"R",
-      volume:"V"
+      volume:"V",
+      volumeMute:"v"
     },
     defaults:{
       width:150,
-      skin:"black", // available: black, blue, orange
+      skin:"black", // available: black, blue, orange, red, gray
       volume:50,
       autoPlay:false,
       playAlone:true,
@@ -50,8 +51,18 @@
     },
 
     buildPlayer:function(options){
-      this.each(function(){
 
+      if (navigator && navigator.platform && navigator.platform.match(/^(iPad|iPod|iPhone)$/)) {
+        $.mbMiniPlayer.icon.play="<img src='img/play.png'/>";
+        $.mbMiniPlayer.icon.pause="<img src='img/pause.png'/>";
+        $.mbMiniPlayer.icon.stop="<img src='img/stop.png'/>";
+        $.mbMiniPlayer.icon.rewind="<img src='img/rewind.png'/>";
+        $.mbMiniPlayer.icon.volume="<img src='img/volume.png'/>";
+        $.mbMiniPlayer.icon.volumeMute="<img src='img/volume.png'/>";
+        $.mbMiniPlayer.defaults.showVolumLevel=false;
+      }
+
+      this.each(function(){
         var $master=$(this);
         $master.hide();
         var url=$master.attr("href");
@@ -78,7 +89,7 @@
         $("body").append($player);
         $master.after($controlsBox);
         $controlsBox.html($layout);
-        var $tds= $controlsBox.find("td");
+        var $tds= $controlsBox.find("td").unselectable();
 
         var $volumeBox= $("<span/>").addClass("volume").html($.mbMiniPlayer.icon.volume);
         var $volumeLevel= $("<span/>").addClass("volumeLevel").html("").hide();
@@ -90,7 +101,6 @@
         var $controls=$("<div/>").addClass("controls");
         var $titleBox=$("<span/>").addClass("title").html(title);
         var $progress=$("<div/>").addClass("jp-progress");
-
 
         var $loadBar=$("<div/>").addClass("jp-load-bar").attr("id","loadBar_"+ID);
         var $playBar=$("<div/>").addClass("jp-play-bar").attr("id","playBar_"+ID);
@@ -110,9 +120,7 @@
           $tds.eq(3).hide();
           $tds.eq(4).hide();
           $progress.css({top:-4});
-          //$volumeLevel.find("a").css({top:-4});
         }
-
 
         //init jPlayer component (Happyworm Ltd - http://www.happyworm.com/jquery/jplayer/)
         $player.jPlayer({
@@ -154,7 +162,6 @@
                       }
                       $controlsBox.attr("isPlaying","true");
                       el.jPlayer("play");
-
                     },
                     function(){
                       $(this).html($.mbMiniPlayer.icon.play);
@@ -182,9 +189,11 @@
                     function(){
                       if($player.jPlayer( "getData", "volume")==0){
                         $(this).removeClass("mute");
+                        $(this).html($.mbMiniPlayer.icon.volume);
                         el.jPlayer("volume",player.opt.volume);
                       }else{
                         $(this).addClass("mute");
+                        $(this).html($.mbMiniPlayer.icon.volumeMute);
                         el.jPlayer("volume",0);
                       }
                     }).hover(
@@ -215,7 +224,7 @@
           },
           customCssIds: true,
           volume: player.opt.volume,
-          oggSupport: player.opt.ogg?true:false ,
+          oggSupport: player.opt.ogg?true:false,
           swfPath: $.mbMiniPlayer.swfPath
         })
                 .jPlayer("onSoundComplete", function() {
@@ -231,16 +240,13 @@
           if (volume<10 && volume>0)IDX=0;
           $volumeLevel.find("a").css({opacity:.2}).removeClass("sel");
           for (var i=0;i<=IDX;i++){
-            $volumeLevel.find("a").eq(i).css({opacity:.5}).addClass("sel");
+            $volumeLevel.find("a").eq(i).css({opacity:.8}).addClass("sel");
           }
-
 
           $timeBox.html($.jPlayer.convertTime(playedTime)).attr("title",$.jPlayer.convertTime(totalTime));//+"<br>"+$.jPlayer.convertTime(totalTime)
         })
                 .jPlayer("cssId", "loadBar", "loadBar_"+ID)
                 .jPlayer("cssId", "playBar", "playBar_"+ID)
-          //                    .jPlayer("cssId", "volumeBar", "jplayer_volume_bar2")
-          //                    .jPlayer("cssId", "volumeBarValue", "jplayer_volume_bar_value2")
                 ;
       })
     },
@@ -250,7 +256,7 @@
       var $player=$("#"+"MP_"+ID);
       var $titleBox=$controlsBox.find(".title");
       if(!ogg) ogg="";
-      if(!title) title="...";
+      if(!title) title="audio file";
       $player.jPlayer("setFile", mp3, ogg);
       if ($controlsBox.attr("isPlaying")=="true")
         $player.jPlayer("play");
@@ -258,6 +264,16 @@
     }
   };
 
+  $.fn.unselectable=function(){
+    this.each(function(){
+      $(this).css({
+        "-moz-user-select": "none",
+        "-khtml-user-select": "none",
+        "user-select": "none"
+      }).attr("unselectable","on");
+    });
+    return $(this);
+  };
   //Public method
   $.fn.mb_miniPlayer= $.mbMiniPlayer.buildPlayer;
   $.fn.mb_mAPchangeFile= $.mbMiniPlayer.changeFile;

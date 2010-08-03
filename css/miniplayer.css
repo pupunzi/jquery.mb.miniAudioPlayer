@@ -2,10 +2,18 @@
 
 @font-face {
   font-family: 'mb_audio_fontRegular';
-  src: url('mbAudioFont/mb_audio_font_webfont.eot');
-  src: local('☺'), url('mbAudioFont/mb_audio_font_webfont.woff') format('woff'), url('mbAudioFont/mb_audio_font_webfont.ttf') format('truetype'), url('mbAudioFont/mb_audio_font-webfont_svg#webfontywr4YLri') format('svg');
+  src: url('mbAudioFont/mb_audio_font.eot');
+  src: local('☺'), url('mbAudioFont/mb_audio_font.woff') format('woff'), url('mbAudioFont/mb_audio_font.ttf') format('truetype'), url('mbAudioFont/mb_audio_font-webfont_svg#webfontywr4YLri') format('svg');
   font-weight: normal;
   font-style: normal;
+}
+
+@font-face {
+	font-family: 'DroidSansMonoRegular';
+	src: url('DroidSansMono/DroidSansMono.eot');
+	src: local('☺'), url('DroidSansMono/DroidSansMono.woff') format('woff'), url('DroidSansMono/DroidSansMono.ttf') format('truetype'), url('DroidSansMono/DroidSansMono.svg#webfontGzFJ3WpO') format('svg');
+	font-weight: normal;
+	font-style: normal;
 }
 
 .mbMiniPlayer span{
@@ -96,15 +104,17 @@ a.audio{
   color:white;
   text-align:center;
   text-shadow: 1px -1px 1px #000;
-  background-image:-moz-linear-gradient(100% 100% 110deg,rgba(0,0,0,0.5), transparent);
-  background-image:-webkit-gradient(linear, 0% 5%, 85% 100%, from(transparent), to(rgba(0,0,0,0.5)));
+  background-image:-moz-linear-gradient(100% 100% 110deg,rgba(236, 236, 243,0.5), transparent);
+  /*background-image:-moz-linear-gradient(100% 100% 110deg,rgba(0,0,0,0.5), transparent);*/
+  background-image:-webkit-gradient(linear, 0% 5%, 85% 100%, from(transparent), to(rgba(236, 236, 243,0.5)));
 }
 
 .mbMiniPlayer span.title{
   position:relative;
   color:#333;
-  font:10px/12px sans-serif;
-  text-shadow: 1px -1px 2px #aaa9a9 !important;
+  font:10px/12px "DroidSansMonoRegular", sans-serif;
+  text-shadow: none!important;
+  /*text-shadow: 1px -1px 2px #aaa9a9 !important;*/
   letter-spacing:1px;
   width:100%;
   height:8px;
@@ -168,6 +178,16 @@ a.audio{
   border-radius:5px 0 0 5px;
   cursor:pointer;
 }
+
+/*
+.mbMiniPlayer span.volume{
+  background-color:#f3f3f3!important;
+  background-image:none;
+  color:black;
+  text-shadow:0px 0px 0px transparent!important;
+}
+*/
+
 
 
 /*BLACK ----------------------------------------*/
