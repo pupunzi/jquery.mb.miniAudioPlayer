@@ -104,9 +104,9 @@ a.audio{
   color:white;
   text-align:center;
   text-shadow: 1px -1px 1px #000;
-  background-image:-moz-linear-gradient(100% 100% 110deg,rgba(236, 236, 243,0.5), transparent);
+  background-image:-moz-linear-gradient(100% 100% 110deg,rgba(100, 100, 100,0.5), transparent);
   /*background-image:-moz-linear-gradient(100% 100% 110deg,rgba(0,0,0,0.5), transparent);*/
-  background-image:-webkit-gradient(linear, 0% 5%, 85% 100%, from(transparent), to(rgba(236, 236, 243,0.5)));
+  background-image:-webkit-gradient(linear, 0% 5%, 85% 100%, from(transparent), to(rgba(100, 100, 100,0.5)));
 }
 
 .mbMiniPlayer span.title{
