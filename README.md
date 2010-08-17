@@ -6,8 +6,10 @@ __An open source jQuery component to build a mini audio player for your mp3 or o
 
 ![mb.menu](http://pupunzi.com/gitHub/mb.miniAudioPlayer.png)
 
+<!--
 ## [go to the demo](http://pupunzi.com/#mb.components/mb._menu/menu.html)
 ## [go to the Doc](http://wiki.github.com/pupunzi/jquery.mb.menu/)
+-->
 
 
 [jquery.mb.components](http://pupunzi.com/), another way of thinking the web
