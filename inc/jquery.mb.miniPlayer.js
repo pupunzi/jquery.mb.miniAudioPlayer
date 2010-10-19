@@ -141,23 +141,23 @@
                       $controls.css({display:"block",height:20}).animate({width:player.opt.width},200);
                       if(player.opt.showRew) {
                         if(isIE)
-                          $rewBox.css({width:20,display:"block"});
+                          $rewBox.show().css({width:20,display:"block"});
                         else
-                          $rewBox.animate({width:20},100);
+                          $rewBox.show().animate({width:20},100);
                         if($.browser.safari)$rewBox.parent().css({width:20}).show();
                       }
                       if(player.opt.showTime) {
                         if(isIE)
-                          $timeBox.css({width:30,display:"block"});
+                          $timeBox.show().css({width:30,display:"block"});
                         else
-                          $timeBox.animate({width:30},100);
+                          $timeBox.show().animate({width:30},100);
                         if($.browser.safari)$timeBox.parent().css({width:30}).show();
                       }
                       if(player.opt.showVolumLevel) {
                         if(isIE)
-                          $volumeLevel.css({width:40,display:"block"});
+                          $volumeLevel.show().css({width:40,display:"block"});
                         else
-                          $volumeLevel.animate({width:40},100);
+                          $volumeLevel.show().animate({width:40},100);
                         if($.browser.safari)$volumeLevel.parent().css({width:40}).show();
                       }
                       $controlsBox.attr("isPlaying","true");
