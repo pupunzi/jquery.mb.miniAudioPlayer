@@ -24,10 +24,7 @@ a.audio{
   display:none;
 }
 
-.mbMiniPlayer{
-/*display:inline-block;*/
-/*vertical-align:middle;*/
-}
+.mbMiniPlayer{}
 
 .mbMiniPlayer table{
   -moz-border-radius:5px;
@@ -105,7 +102,6 @@ a.audio{
   text-align:center;
   text-shadow: 1px -1px 1px #000;
   background-image:-moz-linear-gradient(100% 100% 110deg,rgba(100, 100, 100,0.5), transparent);
-  /*background-image:-moz-linear-gradient(100% 100% 110deg,rgba(0,0,0,0.5), transparent);*/
   background-image:-webkit-gradient(linear, 0% 5%, 85% 100%, from(transparent), to(rgba(100, 100, 100,0.5)));
 }
 
@@ -114,7 +110,6 @@ a.audio{
   color:#333;
   font:10px/12px "DroidSansMonoRegular", sans-serif;
   text-shadow: none!important;
-  /*text-shadow: 1px -1px 2px #aaa9a9 !important;*/
   letter-spacing:1px;
   width:100%;
   height:8px;
@@ -178,16 +173,6 @@ a.audio{
   border-radius:5px 0 0 5px;
   cursor:pointer;
 }
-
-/*
-.mbMiniPlayer span.volume{
-  background-color:#f3f3f3!important;
-  background-image:none;
-  color:black;
-  text-shadow:0px 0px 0px transparent!important;
-}
-*/
-
 
 
 /*BLACK ----------------------------------------*/
