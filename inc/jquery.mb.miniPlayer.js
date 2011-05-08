@@ -33,8 +33,8 @@
       pause:"p",
       stop:"S",
       rewind:"R",
-      volume:"V",
-      volumeMute:"v"
+      volume:"Vm",
+      volumeMute:"V"
     },
     defaults:{
       width:150,
