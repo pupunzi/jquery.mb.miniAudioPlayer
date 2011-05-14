@@ -27,7 +27,6 @@
     author:"Matteo Bicocchi",
     version:"1.0",
     name:"mb.miniPlayer",
-    swfPath:"inc/",
     icon:{
       play:"P",
       pause:"p",
@@ -43,11 +42,14 @@
       autoPlay:false,
       playAlone:true,
       inLine:false,
-      showVolumLevel:true,
       volumeLevels:8,
-      showTime:true,
+			showVolumLevel:true,
+			showTime:true,
       showRew:true,
-      addShadow:true
+      addShadow:true,
+
+			swfPath:"inc/"
+
     },
 
     buildPlayer:function(options){
@@ -65,7 +67,7 @@
       this.each(function(){
         var $master=$(this);
         $master.hide();
-        var url=$master.attr("href");
+        var url = $master.attr("href");
         var ID= $master.attr("id")?$master.attr("id"):"mb_"+ new Date().getMilliseconds();
         var title= $master.html();
         var $player=$("<div/>").attr({id:"MP_"+ID});
@@ -74,9 +76,11 @@
         $.extend(player.opt,$.mbMiniPlayer.defaults,options);
 
         if ($.metadata){
-          $.metadata.setType("class");
           $.extend(player.opt,$master.metadata());
         }
+
+				if(!player.opt.mp3)
+					player.opt.mp3=url;
 
         var skin= player.opt.skin;
 
@@ -126,7 +130,7 @@
         $player.jPlayer({
           ready: function () {
             var el=this.element;
-            el.jPlayer("setFile", url, player.opt.ogg);
+            el.jPlayer("setFile", player.opt.mp3, player.opt.ogg);
 
             $playBox.toggle(
                     function(){
@@ -225,7 +229,7 @@
           customCssIds: true,
           volume: player.opt.volume,
           oggSupport: player.opt.ogg?true:false,
-          swfPath: $.mbMiniPlayer.swfPath
+          swfPath: player.opt.swfPath
         })
                 .jPlayer("onSoundComplete", function() {
           $playBox.click();
