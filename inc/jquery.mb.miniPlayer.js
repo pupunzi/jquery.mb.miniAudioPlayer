@@ -141,10 +141,11 @@
 										$("[isPlaying=true]").find(".play").click();
 									}
 
-									var isIE=$.browser.msie;
+									var isIE=$.browser.msie && $.browser.version<9;
 
 									$(this).html($.mbMiniPlayer.icon.pause);
-									$controls.css({display:"block",height:20}).animate({width:player.opt.width},200);
+
+									$controls.css({display:"block",height:20}).animate({width:player.opt.width},500);
 									if(player.opt.showRew) {
 										if(isIE)
 											$rewBox.show().css({width:20,display:"block"});
@@ -156,22 +157,24 @@
 										if(isIE)
 											$timeBox.show().css({width:30,display:"block"});
 										else
-											$timeBox.show().animate({width:30},100);
+											$timeBox.animate({width:30},100).show();
 										if($.browser.safari)$timeBox.parent().css({width:30}).show();
 									}
 									if(player.opt.showVolumLevel) {
 										if(isIE)
 											$volumeLevel.show().css({width:40,display:"block"});
 										else
-											$volumeLevel.show().animate({width:40},100);
-										if($.browser.safari)$volumeLevel.parent().css({width:40}).show();
+											$volumeLevel.show().animate({width:40},100,function(){
+												if($.browser.safari)
+													$volumeLevel.parent().animate({width:40}).show();
+											});
 									}
 									$controlsBox.attr("isPlaying","true");
 									el.jPlayer("play");
 								},
 								function(){
 									$(this).html($.mbMiniPlayer.icon.play);
-									$controls.animate({width:1},200,function(){$(this).css({display:"none"})});
+									$controls.animate({width:1},500,function(){$(this).css({display:"none"})});
 									if(player.opt.showRew) {
 										$rewBox.animate({width:1},100,function(){$(this).css({display:"none"})});
 										if($.browser.safari)$rewBox.parent().hide();
