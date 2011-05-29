@@ -130,7 +130,8 @@ a.audio{
   position:relative;
   display:inline-block;
   margin:0;
-  margin-right:2px;
+  margin-right:0px;
+	border-right:1px solid rgba(0,0,0,0.4);
   width:2px;
   padding:0;
   background-color:white;
@@ -141,9 +142,11 @@ a.audio{
 }
 
 .mbMiniPlayer span.volumeLevel a.sel{
+/*
   -moz-box-shadow:#000 0px 0px 1px;
   -webkit-box-shadow:#000 0px 0px 1px;
   box-shadow:#000 0px 0px 1px;
+*/
 }
 
 .mbMiniPlayer span.time{
@@ -172,6 +175,8 @@ a.audio{
   -webkit-border-bottom-left-radius:5px;
   border-radius:5px 0 0 5px;
   cursor:pointer;
+	padding-left:6px;
+	padding-right:2px;
 }
 
 
