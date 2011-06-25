@@ -53,17 +53,6 @@
 		},
 
 		buildPlayer:function(options){
-
-			if (navigator && navigator.platform && navigator.platform.match(/^(iPad|iPod|iPhone)$/)) {
-				$.mbMiniPlayer.icon.play="<img src='img/play.png'/>";
-				$.mbMiniPlayer.icon.pause="<img src='img/pause.png'/>";
-				$.mbMiniPlayer.icon.stop="<img src='img/stop.png'/>";
-				$.mbMiniPlayer.icon.rewind="<img src='img/rewind.png'/>";
-				$.mbMiniPlayer.icon.volume="<img src='img/volume.png'/>";
-				$.mbMiniPlayer.icon.volumeMute="<img src='img/volume.png'/>";
-				$.mbMiniPlayer.defaults.showVolumeLevel=false;
-			}
-
 			this.each(function(){
 				var $master=$(this);
 				$master.hide();
@@ -77,6 +66,16 @@
 
 				if ($.metadata){
 					$.extend(player.opt,$master.metadata());
+				}
+
+				if (navigator && navigator.platform && navigator.platform.match(/^(iPad|iPod|iPhone)$/)) {
+					$.mbMiniPlayer.icon.play="<img src='"+$.mbMiniPlayer.defaults.swfPath+"img/play.png'/>";
+					$.mbMiniPlayer.icon.pause="<img src='"+$.mbMiniPlayer.defaults.swfPath+"img/pause.png'/>";
+					$.mbMiniPlayer.icon.stop="<img src='"+$.mbMiniPlayer.defaults.swfPath+"img/stop.png'/>";
+					$.mbMiniPlayer.icon.rewind="<img src='"+$.mbMiniPlayer.defaults.swfPath+"img/rewind.png'/>";
+					$.mbMiniPlayer.icon.volume="<img src='"+$.mbMiniPlayer.defaults.swfPath+"img/volume.png'/>";
+					$.mbMiniPlayer.icon.volumeMute="<img src='"+$.mbMiniPlayer.defaults.swfPath+"img/volume.png'/>";
+					$.mbMiniPlayer.defaults.showVolumeLevel=false;
 				}
 
 				if(!player.opt.mp3)
