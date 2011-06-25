@@ -43,7 +43,7 @@
 			playAlone:true,
 			inLine:false,
 			volumeLevels:8,
-			showVolumLevel:true,
+			showVolumeLevel:true,
 			showTime:true,
 			showRew:true,
 			addShadow:true,
@@ -61,7 +61,7 @@
 				$.mbMiniPlayer.icon.rewind="<img src='img/rewind.png'/>";
 				$.mbMiniPlayer.icon.volume="<img src='img/volume.png'/>";
 				$.mbMiniPlayer.icon.volumeMute="<img src='img/volume.png'/>";
-				$.mbMiniPlayer.defaults.showVolumLevel=false;
+				$.mbMiniPlayer.defaults.showVolumeLevel=false;
 			}
 
 			this.each(function(){
@@ -160,7 +160,7 @@
 											$timeBox.animate({width:30},100).show();
 										if($.browser.safari)$timeBox.parent().css({width:30}).show();
 									}
-									if(player.opt.showVolumLevel) {
+									if(player.opt.showVolumeLevel) {
 										if(isIE)
 											$volumeLevel.show().css({width:40,display:"block"});
 										else
@@ -183,7 +183,7 @@
 										$timeBox.animate({width:1},100,function(){$(this).css({display:"none"})});
 										if($.browser.safari)$timeBox.parent().hide();
 									}
-									if(player.opt.showVolumLevel) {
+									if(player.opt.showVolumeLevel) {
 										$volumeLevel.animate({width:1},100,function(){$(this).css({display:"none"})});
 										if($.browser.safari)$volumeLevel.parent().hide();
 									}
@@ -231,9 +231,9 @@
 							});
 
 						});
+						// autoPlay can't work on iOs devices
 						if (player.opt.autoPlay && ((player.opt.playAlone && $("[isPlaying=true]").length==0) || !player.opt.playAlone))
 							$playBox.click();
-
 					},
 					customCssIds: true,
 					volume: player.opt.volume,
