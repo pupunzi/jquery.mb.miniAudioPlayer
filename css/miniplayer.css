@@ -1,5 +1,6 @@
 @charset "UTF-8";
 
+/*
 @font-face {
   font-family: 'mb_audio_fontRegular';
   src: url('mbAudioFont/mb_audio_font.eot');
@@ -7,14 +8,38 @@
   font-weight: normal;
   font-style: normal;
 }
+*/
 
 @font-face {
-	font-family: 'DroidSansMonoRegular';
-	src: url('DroidSansMono/DroidSansMono.eot');
-	src: local('☺'), url('DroidSansMono/DroidSansMono.woff') format('woff'), url('DroidSansMono/DroidSansMono.ttf') format('truetype'), url('DroidSansMono/DroidSansMono.svg#webfontGzFJ3WpO') format('svg');
-	font-weight: normal;
-	font-style: normal;
+  font-family: 'mb_audio_fontRegular';
+  src: url('mbAudioFont/mb_audio_font.eot?#iefix') format('embedded-opentype'),
+       url('mbAudioFont/mb_audio_font.woff') format('woff'),
+       url('mbAudioFont/mb_audio_font.ttf')  format('truetype'),
+       url('mbAudioFont/mb_audio_font-webfont_svg#webfontywr4YLri') format('svg');
+  font-weight: normal;
+  font-style: normal;
 }
+
+/*
+@font-face {
+  font-family: 'DroidSansMonoRegular';
+  src: url('DroidSansMono/DroidSansMono.eot');
+  src: local('☺'), url('DroidSansMono/DroidSansMono.woff') format('woff'), url('DroidSansMono/DroidSansMono.ttf') format('truetype'), url('DroidSansMono/DroidSansMono.svg#webfontGzFJ3WpO') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+*/
+
+@font-face {
+  font-family: 'DroidSansMonoRegular';
+  src: url('DroidSansMono/DroidSansMono.eot?#iefix') format('embedded-opentype'),
+       url('DroidSansMono/DroidSansMono.woff') format('woff'),
+       url('DroidSansMono/DroidSansMono.ttf')  format('truetype'),
+       url('DroidSansMono/DroidSansMono.svg#webfontGzFJ3WpO') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
 
 .mbMiniPlayer span{
   font:16px/20px "mb_audio_fontRegular","Webdings",sans-serif;
@@ -131,7 +156,7 @@ a.audio{
   display:inline-block;
   margin:0;
   margin-right:0px;
-	border-right:1px solid rgba(0,0,0,0.4);
+  border-right:1px solid rgba(0,0,0,0.4);
   width:2px;
   padding:0;
   background-color:white;
@@ -142,11 +167,11 @@ a.audio{
 }
 
 .mbMiniPlayer span.volumeLevel a.sel{
-/*
-  -moz-box-shadow:#000 0px 0px 1px;
-  -webkit-box-shadow:#000 0px 0px 1px;
-  box-shadow:#000 0px 0px 1px;
-*/
+  /*
+    -moz-box-shadow:#000 0px 0px 1px;
+    -webkit-box-shadow:#000 0px 0px 1px;
+    box-shadow:#000 0px 0px 1px;
+  */
 }
 
 .mbMiniPlayer span.time{
@@ -175,8 +200,8 @@ a.audio{
   -webkit-border-bottom-left-radius:5px;
   border-radius:5px 0 0 5px;
   cursor:pointer;
-	padding-left:6px;
-	padding-right:2px;
+  padding-left:6px;
+  padding-right:2px;
 }
 
 
