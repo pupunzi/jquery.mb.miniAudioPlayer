@@ -11,7 +11,7 @@
 
 /*
  * jQuery.mb.components: jquery.mb.miniPlayer
- * version: 1.2- 10-lug-2010 - 21
+ * version: 1.5- 10-lug-2010 - 21
  * © 2001 - 2011 Matteo Bicocchi (pupunzi), Open Lab
  *
  *
@@ -25,7 +25,7 @@
 
 	$.mbMiniPlayer={
 		author:"Matteo Bicocchi",
-		version:"1.2",
+		version:"1.5",
 		name:"mb.miniPlayer",
 		icon:{
 			play:"P",
@@ -83,7 +83,7 @@
 
 				var skin= player.opt.skin;
 
-				var $controlsBox=$("<div/>").attr({id:"MPC_"+ID, isPlaying:false}).addClass("mbMiniPlayer").addClass(skin);
+				var $controlsBox=$("<div/>").attr({id:"mp_"+ID, isPlaying:false}).addClass("mbMiniPlayer").addClass(skin);
 				if(player.opt.inLine)
 					$controlsBox.css({display:"inline-block", verticalAlign:"middle"});
 				if(player.opt.addShadow)
@@ -191,7 +191,7 @@
 								}).hover(
 								function(){$(this).css({opacity:.8})},
 								function(){$(this).css({opacity:1})}
-								);
+						);
 
 						$volumeBox.click(
 								function(){
@@ -207,14 +207,14 @@
 								}).hover(
 								function(){$(this).css({opacity:.8})},
 								function(){$(this).css({opacity:1})}
-								);
+						);
 
 						$rewBox.click(function(){
 							el.jPlayer("playHead", 0);
 						}).hover(
 								function(){$(this).css({opacity:.8})},
 								function(){$(this).css({opacity:1})}
-								);
+						);
 
 						var bars=player.opt.volumeLevels;
 						var barVol= 1/bars;
@@ -246,32 +246,32 @@
 					}
 				})
 						.bind($.jPlayer.event.ended, function() {
-					$playBox.click();
-				})
+							$playBox.click();
+						})
 						.bind($.jPlayer.event.timeupdate, function(e) {
 
-					$loadBar.css({width:((player.opt.width-5)*e.jPlayer.status.seekPercent)/100});
-					$playBar.css({width:((player.opt.width-5)*e.jPlayer.status.currentTime)/e.jPlayer.status.duration});
+							$loadBar.css({width:((player.opt.width-5)*e.jPlayer.status.seekPercent)/100});
+							$playBar.css({width:((player.opt.width-5)*e.jPlayer.status.currentTime)/e.jPlayer.status.duration});
 
-					var volume=player.opt.volume;
+							var volume=player.opt.volume;
 
-					var barVol= 1/$volumeLevel.find("a").length;
-					var IDX=Math.floor(volume/barVol)-1;
-					if (volume<.1 && volume>0)
-						IDX=0;
+							var barVol= 1/$volumeLevel.find("a").length;
+							var IDX=Math.floor(volume/barVol)-1;
+							if (volume<.1 && volume>0)
+								IDX=0;
 
-					$volumeLevel.find("a").css({opacity:.2}).removeClass("sel");
-					for (var i=0;i<=IDX;i++){
-						$volumeLevel.find("a").eq(i).css({opacity:.8}).addClass("sel");
-					}
+							$volumeLevel.find("a").css({opacity:.2}).removeClass("sel");
+							for (var i=0;i<=IDX;i++){
+								$volumeLevel.find("a").eq(i).css({opacity:.8}).addClass("sel");
+							}
 
-					$timeBox.html($.jPlayer.convertTime(e.jPlayer.status.currentTime)).attr("title",$.jPlayer.convertTime(e.jPlayer.status.duration));
-				})
+							$timeBox.html($.jPlayer.convertTime(e.jPlayer.status.currentTime)).attr("title",$.jPlayer.convertTime(e.jPlayer.status.duration));
+						})
 			})
 		},
 		changeFile:function(mp3,ogg,title){
 			var ID= $(this).attr("id");
-			var $controlsBox=$("#"+"MPC_"+ID);
+			var $controlsBox=$("#"+"mp_"+ID);
 			var $player=$("#"+"MP_"+ID);
 			var $titleBox=$controlsBox.find(".title");
 			if(!ogg) ogg="";
@@ -280,8 +280,45 @@
 			if ($controlsBox.attr("isPlaying")=="true")
 				$player.jPlayer("play");
 			$titleBox.html(title)
+		},
+		play:function(){
+			return this.each(function(){
+			var id=$(this).attr("id");
+			var player=$("#mp_"+id);
+			if (player.attr("isplaying")=="false")
+				player.find(".play").click();
+			})
+		},
+		stop:function(){
+			return this.each(function(){
+				var id=$(this).attr("id");
+				var player=$("#mp_"+id);
+				if (player.attr("isplaying")=="true")
+					player.find(".play").click();
+			})
+		},
+		destroy:function(){
+			return this.each(function(){
+				var id=this.attr("id");
+				var player=$("#mp_"+id);
+				player.remove();
+			})
 		}
 	};
+
+	$.fn.mApStop=function(){
+		var id=this.attr("id");
+		var player=$("#mp_"+id);
+		if (player.attr("isplaying")=="true")
+			player.find(".play").click();
+	};
+
+	$.fn.mApDestroy=function(){
+		var id=this.attr("id");
+		var player=$("#mp_"+id);
+		player.remove();
+	};
+
 
 	$.fn.unselectable=function(){
 		this.each(function(){
@@ -295,6 +332,10 @@
 	};
 	//Public method
 	$.fn.mb_miniPlayer= $.mbMiniPlayer.buildPlayer;
-	$.fn.mb_mAPchangeFile= $.mbMiniPlayer.changeFile;
+	$.fn.mb_miniPlayer_changeFile= $.mbMiniPlayer.changeFile;
+	$.fn.mb_miniPlayer_play= $.mbMiniPlayer.play;
+	$.fn.mb_miniPlayer_stop= $.mbMiniPlayer.stop;
+	$.fn.mb_miniPlayer_destroy= $.mbMiniPlayer.destroy;
+
 
 })(jQuery);
