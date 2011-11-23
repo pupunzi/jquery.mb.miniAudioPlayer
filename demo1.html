@@ -79,55 +79,72 @@
 
 			$(".audio").mb_miniPlayer({
 				width:240,
-				inLine:false
+				inLine:false,
+				onEnd:playNext
 			});
+
+			function playNext(idx){
+				var players=$(".audio");
+				document.playerIDX = idx+1 <= players.length-1 ? idx+1 : 0;
+				players.eq(document.playerIDX).mb_miniPlayer_play();
+			}
+
 		});
 	</script>
 </head>
 
 <body>
 <br>
-<br>
-<br>
-<br>
 <div class="wrapper">
-	<h1>mb.miniAudioPlayer.demo</h1>
+	<h1>mb.miniAudioPlayer.demo - auto start next player</h1>
 	<br>
 	This is a GUI implementation of <a href="http://www.jplayer.org/" target="_blank"><strong>Happyworm jPlayer plugin</strong></a>, an HTML5 audio engine, developed on jQuery framework, that let you listen mp3 and ogg file over the html5 audio tag where supported or using an invisible flash player where not supported.
 	For more informations about html5 browsers' support go to <a href="http://www.jplayer.org/latest/developer-guide/" target="_blank">jPlayer documentation site</a>.
 	<br>
 	<br>
-	<br>
-	<a id="m1" class="audio {ogg:'http://www.miaowmusic.com/ogg/Miaow-07-Bubble.ogg', loop:true}" href="http://www.miaowmusic.com/mp3/Miaow-07-Bubble.mp3">miaowmusic - Bubble (mp3/ogg)</a>
-	<span>param -> all features</span><br>
+	<a id="m1" class="audio {autoPlay:true, inLine:true}" href="http://www.pacdv.com/sounds/ambience_sounds/airport-gate-1.mp3">Airport Gate (Boarding)</a>
 	<button onclick="$('#m1').mb_miniPlayer_stop()">stop</button>
+	<button onclick="$('#m1').mb_miniPlayer_play()">play</button>
 	<hr>
-	<a id="m2" class="audio {skin:'orange', ogg:'http://www.miaowmusic.com/ogg/Miaow-02-Hidden.ogg', showTime:false}" href="http://www.miaowmusic.com/mp3/Miaow-02-Hidden.mp3">miaowmusic - Hidden (ogg/mp3)</a>
-	<span> param -> showTime:false, ogg:'http://www.miaowmusic.com/ogg/Miaow-02-Hidden.ogg' (FF will play it as HTML5)</span>
+	<a id="m2" class="audio {}" href="http://www.pacdv.com/sounds/ambience_sounds/g-t-1.mp3">Group Talking</a>
 	<hr>
-	<a id="m3" class="audio {skin:'blue', autoPlay:false,showRew:false}" href="http://www.miaowmusic.com/mp3/Miaow-08-Stirring-of-a-fool.mp3">miaowmusic - Stirring of a Fool (mp3)</a>
-	<span>param -> showRew:false</span>
+	<a id="m3" class="audio {}" href="http://www.pacdv.com/sounds/ambience_sounds/water-stream-1.mp3">Water Stream (Small)</a>
 	<hr>
-	<a id="m4" class="audio {skin:'red', autoPlay:false,showRew:false, showTime:false}" href="http://www.miaowmusic.com/mp3/Miaow-04-Lismore.mp3">miaowmusic - Lismore (mp3)</a>
-	<span>param -> showRew:false, showTime:false</span>
+	<a id="m4" class="audio {}" href="http://www.pacdv.com/sounds/domestic_sound_effects/doorbell-1.mp3">Doorbell</a>
 	<hr>
-	<a id="m5" class="audio {skin:'green', autoPlay:false, addShadow:false}" href="http://www.miaowmusic.com/mp3/Miaow-08-Stirring-of-a-fool.mp3">miaowmusic - Stirring of a Fool (mp3)</a>
+	<a id="m5" class="audio {}" href="http://www.pacdv.com/sounds/transportation_sounds/antique-car-honk-1.mp3">Antique Car & Honk</a>
+	<hr>
 	<br>
-	<div>change track:
+	All the music are provided by <a href="http://www.pacdv.com" target="_blank">© pacdv.com</a>.
+	<br>
+	<p style="font: 16px/22px 'trebuchet MS', sans-serif;">
+		Here is a demo of a custom behaviour applied as callback for the "end" event of each player:
 		<br>
-		<button onclick="$('#m5').mb_miniPlayer_changeFile('http://www.miaowmusic.com/mp3/Miaow-04-Lismore.mp3',false,'Lismore (mp3)')">miaowmusic - Lismore</button>
-		<button onclick="$('#m5').mb_miniPlayer_changeFile('http://www.miaowmusic.com/mp3/Miaow-02-Hidden.mp3',false,'Hidden (mp3)')">miaowmusic - Hidden</button>
-	</div>
-	<br>
-	<hr>
-	This is a gray player: <a  class="audio {skin:'gray', autoPlay:false, inLine:true, showVolumeLevel:false, showRew:true, showTime:false, width:100, addShadow:false}" href="http://www.miaowmusic.com/mp3/Miaow-04-Lismore.mp3">miaowmusic - Lismore (mp3)</a>
-	<span>and it is inline</span>
+		The first player has the "autoPlay" parameter set as true and therefor it'll start playing on page load; once one of the audio played ends the next player will start playing.
+		<br>
+		If is the last player playing it starts over from the first.
+	<pre style="margin-left: 100px; "><code>
+// this is the initializer function
 
-	<hr>
+$(".audio").mb_miniPlayer({
+	width:240,
+	inLine:false,
+	onEnd:playNext
+});
+
+// and this is function invoked as 'onEnd' callback
+// Both the onPlay and onEnd callback functions receive the index of the player as parameter.
+
+function playNext(idx){
+	var players=$(".audio");
+	document.playerIDX = idx+1 <= players.length-1 ? idx+1 : 0;
+	players.eq(document.playerIDX).mb_miniPlayer_play();
+}
+	</code></pre>
+	</p>
+
 	<br>
 	<b>jquery.mb.miniPlayer</b> is a GUI implementation of the <a href="http://www.jplayer.org" target="_blank">jquery.jPlayer</a> plug-in realized by © Happyworm LTD. (many thanks to <a href="http://happyworm.com/blog/" target="_blank">Mark Boas</a>)
-	<br>
-	All the music are provided by <a href="http://www.miaowmusic.com" target="_blank">© miaowmusic</a>.
 </div>
 </body>
 </html>

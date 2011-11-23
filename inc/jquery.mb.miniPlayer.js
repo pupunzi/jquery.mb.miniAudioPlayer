@@ -54,7 +54,7 @@
         },
 
         buildPlayer:function(options){
-            this.each(function(){
+            this.each(function(idx){
                 var $master=$(this);
                 $master.hide();
                 var url = $master.attr("href");
@@ -173,7 +173,7 @@
                                 el.jPlayer("play");
 
                                 if(typeof player.opt.onPlay == "function" )
-                                    player.opt.onPlay();
+                                    player.opt.onPlay(idx);
 
                             },
                             function(){
@@ -257,7 +257,7 @@
                             $playBox.click();
 
                         if(typeof player.opt.onEnd == "function" )
-                            player.opt.onEnd();
+                            player.opt.onEnd(idx);
                     })
                     .bind($.jPlayer.event.timeupdate, function(e) {
 
