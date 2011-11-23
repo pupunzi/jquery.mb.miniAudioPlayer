@@ -11,13 +11,13 @@
 
 /*
  * jQuery.mb.components: jquery.mb.miniPlayer
- * version: 1.5- 10-lug-2010 - 21
+ * version: 1.5
  * © 2001 - 2011 Matteo Bicocchi (pupunzi), Open Lab
  *
  *
  * jquery.mb.miniPlayer is a GUI implementation
  * of the jquery.jPlayer plug-in realized by ©Happyworm LTD.
- * http://www.happyworm.com/jquery/jplayer
+ * http://www.jplayer.org
  * (many thanks to Mark Boas)
  */
 
