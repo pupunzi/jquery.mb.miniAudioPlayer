@@ -60,7 +60,7 @@
                 var url = $master.attr("href");
                 var ID= $master.attr("id")?$master.attr("id"):"mb_"+ new Date().getTime();
                 var title= $master.html();
-                var $player=$("<div/>").attr({id:"MP_"+ID});
+                var $player=$("<div/>").attr({id:"JPL_"+ID});
                 var player=$player.get(0);
                 player.opt={};
                 $.extend(player.opt,$.mbMiniPlayer.defaults,options);
@@ -282,8 +282,8 @@
         },
         changeFile:function(mp3,ogg,title){
             var ID= $(this).attr("id");
-            var $controlsBox=$("#"+"mp_"+ID);
-            var $player=$("#"+"MP_"+ID);
+            var $controlsBox=$("#mp_"+ID);
+            var $player=$("#JPL_"+ID);
             var $titleBox=$controlsBox.find(".title");
             if(!ogg) ogg="";
             if(!title) title="audio file";
@@ -316,20 +316,6 @@
             })
         }
     };
-
-    $.fn.mApStop=function(){
-        var id=this.attr("id");
-        var player=$("#mp_"+id);
-        if (player.attr("isplaying")=="true")
-            player.find(".play").click();
-    };
-
-    $.fn.mApDestroy=function(){
-        var id=this.attr("id");
-        var player=$("#mp_"+id);
-        player.remove();
-    };
-
 
     $.fn.unselectable=function(){
         this.each(function(){
