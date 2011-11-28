@@ -1,20 +1,7 @@
 @charset "UTF-8";
 
-/*
 @font-face {
   font-family: 'mb_audio_fontRegular';
-  src: url('mbAudioFont/mb_audio_font.eot');
-  src: local('☺'), url('mbAudioFont/mb_audio_font.woff') format('woff'),
-  url('mbAudioFont/mb_audio_font.ttf') format('truetype'),
-  url('mbAudioFont/mb_audio_font-webfont_svg#webfontywr4YLri') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
-*/
-
-@font-face {
-  font-family: 'mb_audio_fontRegular';
-  src: url('mbAudioFont/mb_audio_font.eot');
   src: url('mbAudioFont/mb_audio_font.eot?#iefix') format('embedded-opentype'),
        url('mbAudioFont/mb_audio_font.woff') format('woff'),
        url('mbAudioFont/mb_audio_font.ttf')  format('truetype'),
@@ -23,19 +10,8 @@
   font-style: normal;
 }
 
-/*
 @font-face {
   font-family: 'DroidSansMonoRegular';
-  src: url('DroidSansMono/DroidSansMono.eot');
-  src: local('☺'), url('DroidSansMono/DroidSansMono.woff') format('woff'), url('DroidSansMono/DroidSansMono.ttf') format('truetype'), url('DroidSansMono/DroidSansMono.svg#webfontGzFJ3WpO') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
-*/
-
-@font-face {
-  font-family: 'DroidSansMonoRegular';
-  src: url('DroidSansMono/DroidSansMono.eot');
   src: url('DroidSansMono/DroidSansMono.eot?#iefix') format('embedded-opentype'),
        url('DroidSansMono/DroidSansMono.woff') format('woff'),
        url('DroidSansMono/DroidSansMono.ttf')  format('truetype'),
@@ -43,7 +19,6 @@
   font-weight: normal;
   font-style: normal;
 }
-
 
 .mbMiniPlayer span{
   font:16px/20px "mb_audio_fontRegular","Webdings",sans-serif;
@@ -87,7 +62,6 @@ a.audio{
 
 .jp-load-bar{
   background-color: #e9e6e6;
-/*background-image:-moz-linear-gradient(40% 10% 270deg,#ccc, #ffffff, #ddd 100%);*/
   height:6px;
   -moz-box-sizing:border-box;
 }
@@ -170,13 +144,7 @@ a.audio{
   cursor:pointer;
 }
 
-.mbMiniPlayer span.volumeLevel a.sel{
-  /*
-    -moz-box-shadow:#000 0px 0px 1px;
-    -webkit-box-shadow:#000 0px 0px 1px;
-    box-shadow:#000 0px 0px 1px;
-  */
-}
+.mbMiniPlayer span.volumeLevel a.sel{}
 
 .mbMiniPlayer span.time{
   width:1px;
@@ -184,10 +152,6 @@ a.audio{
   overflow:hidden;
   white-space:nowrap;
   cursor:default !important;
-  /*
-    background-image:none;
-    background-color:#d9d9d9 !important;
-  */
   text-shadow: 0 0 2px #999!important;
 }
 
