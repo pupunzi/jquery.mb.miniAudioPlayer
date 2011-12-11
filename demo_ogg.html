@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<!--
+  ~ jquery.mb.components
+  ~ Copyright (c) 2001-2011. Matteo Bicocchi (Pupunzi); Open lab srl, Firenze - Italy
+  ~ email: mbicocchi@open-lab.com
+  ~ site: http://pupunzi.com
+  ~
+  ~ Licences: MIT, GPL
+  ~ http://www.opensource.org/licenses/mit-license.php
+  ~ http://www.gnu.org/licenses/gpl.html
+  -->
+
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>jquery.mb.miniAudioPlayer</title>
+
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+	<script type="text/javascript" src="inc/jquery.jplayer.js"></script>
+	<script type="text/javascript" src="inc/jquery.mb.miniPlayer.js"></script>
+	<script type="text/javascript" src="inc/jquery.metadata.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/miniplayer.css" title="style"  media="screen"/>
+	<style type="text/css">
+
+			/*Generic page style*/
+
+		body{
+			font:normal 13px/16px 'trebuchet MS', sans-serif;
+			margin:10px;
+			background: #ffffff;
+		}
+		.wrapper{
+			position:relative;
+			padding-top:90px;
+			padding-left:50px;
+			width:80%;
+			margin:auto
+		}
+		.wrapper h1{
+			font-family:Arial, Helvetica, sans-serif;
+			font-size:26px;
+		}
+		button{
+			padding:3px;
+			display:inline-block;
+			cursor:pointer;
+			font:12px/14px Arial, Helvetica, sans-serif;
+			color:#fff;
+			background-color:#ccc;
+			-moz-border-radius:5px;
+			-webkit-border-radius:5px;
+			-moz-box-shadow:#999 1px 1px 3px;
+			-webkit-box-shadow:#999 1px 1px 3px;
+			border:1px solid white;
+			text-shadow: 1px -1px 2px #aaa9a9 !important;
+		}
+		button:hover{
+			/*background-color:#fff;*/
+			color:#666;
+		}
+		hr{
+			border:none;
+			background-color:#ccc;
+			height:1px;
+		}
+
+	</style>
+
+	<script type="text/javascript">
+
+		$(function(){
+			$(".audio").mb_miniPlayer({
+				width:240,
+				inLine:false
+			});
+		});
+	</script>
+</head>
+
+<body>
+<br>
+<br>
+<br>
+<br>
+<div class="wrapper">
+	<h1>mb.miniAudioPlayer.demo</h1>
+
+	<a id="m1" class="audio {ogg:'http://www.miaowmusic.com/ogg/Miaow-07-Bubble.ogg', loop:true}" href="http://www.miaowmusic.com/mp3/Miaow-07-Bubble.mp3">miaowmusic - Bubble (mp3/ogg)</a>
+</div>
+</body>
+</html>
