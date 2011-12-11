@@ -133,8 +133,6 @@
             var el=$(this);
 
             el.jPlayer("setMedia",{mp3: player.opt.mp3, oga: player.opt.ogg});
-            console.debug(player.opt.mp3, player.opt.ogg)
-
             $playBox.toggle(
               function(){
 
@@ -317,6 +315,10 @@
         var player=$("#mp_"+id);
         player.remove();
       })
+    },
+    getPlayer:function(){
+      var id=this.attr("id");
+      return $("#mp_"+id);
     }
   };
 
@@ -336,6 +338,6 @@
   $.fn.mb_miniPlayer_play= $.mbMiniPlayer.play;
   $.fn.mb_miniPlayer_stop= $.mbMiniPlayer.stop;
   $.fn.mb_miniPlayer_destroy= $.mbMiniPlayer.destroy;
-
+  $.fn.mb_miniPlayer_getPlayer= $.mbMiniPlayer.getPlayer;
 
 })(jQuery);
