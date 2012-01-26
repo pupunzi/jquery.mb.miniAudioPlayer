@@ -126,12 +126,11 @@
           $progress.css({top:-4});
         }
 
-        //init jPlayer component (Happyworm Ltd - http://www.happyworm.com/jquery/jplayer/)
+        //init jPlayer component (Happyworm Ltd - http://www.jplayer.org)
         $player.jPlayer({
           ready: function () {
 
             var el=$(this);
-
             el.jPlayer("setMedia",{mp3: player.opt.mp3, oga: player.opt.ogg});
             $playBox.toggle(
               function(){
@@ -244,10 +243,13 @@
           swfPath: player.opt.swfPath,
           cssSelectorAncestor: "", // Remove the ancestor css selector clause
           cssSelector: {
-            playBar:"#playBar_"+ID, // Set a custom css selector for the play button
+            playBar:"#playBar_"+ID,
             seekBar:"#loadBar_"+ID // Set a custom css selector for the play button
             // The other defaults remain unchanged
           }
+        })
+          .bind($.jPlayer.event.play, function(e) {
+							//console.debug(e.jPlayer.status.src);
         })
           .bind($.jPlayer.event.ended, function() {
           if(player.opt.loop)
@@ -259,8 +261,6 @@
             player.opt.onEnd(idx);
         })
           .bind($.jPlayer.event.timeupdate, function(e) {
-
-          //console.debug(e.jPlayer.status.src);
 
           $loadBar.css({width:((player.opt.width-5)*e.jPlayer.status.seekPercent)/100});
           $playBar.css({width:((player.opt.width-5)*e.jPlayer.status.currentTime)/e.jPlayer.status.duration});
