@@ -65,6 +65,8 @@
         player.opt={};
         $.extend(player.opt,$.mbMiniPlayer.defaults,options);
 
+        player.opt.isIE9 = $.browser.msie && $.browser.version == 9;
+
         if ($.metadata){
           $.extend(player.opt,$master.metadata());
         }
@@ -241,6 +243,7 @@
           volume: player.opt.volume,
           oggSupport: player.opt.ogg? true : false,
           swfPath: player.opt.swfPath,
+         // solution: player.opt.isIE9 ? 'flash' : 'html, flash',
           cssSelectorAncestor: "", // Remove the ancestor css selector clause
           cssSelector: {
             playBar:"#playBar_"+ID,
