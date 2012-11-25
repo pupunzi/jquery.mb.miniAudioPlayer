@@ -11,7 +11,7 @@
 
 /*
  * jQuery.mb.components: jquery.mb.miniPlayer
- * version: 1.5
+ * version: 1.6
  * © 2001 - 2011 Matteo Bicocchi (pupunzi), Open Lab
  *
  *
@@ -25,7 +25,7 @@
 
 	jQuery.mbMiniPlayer={
 		author:"Matteo Bicocchi",
-		version:"1.5",
+		version:"1.6",
 		name:"mb.miniPlayer",
 		icon:{
 			play:"P",
@@ -48,7 +48,6 @@
 			showRew:true,
 			addShadow:true,
 			downloadable:false,
-
 			swfPath:"inc/",
 			onPlay:function(){},
 			onEnd:function(){}
@@ -98,8 +97,9 @@
 				$master.after($controlsBox);
 				$controlsBox.html($layout);
 
-				var download = jQuery("<p/>").addClass("map_download").css({display:"inline-block", cursor:"pointer"}).html("⇣").on("click",function(){
+				var download = jQuery("<p/>").addClass("map_download").css({display:"inline-block", cursor:"pointer"}).html("d").on("click",function(){
 					window.open(player.opt.mp3,"map_download");
+//					location.href = map.downloadUrl+"?filename="+title.asId()+".mp3"+"&fileurl="+player.opt.mp3;
 				}).attr("title","download: "+title);
 				if(player.opt.downloadable){
 					$controlsBox.append(download);
@@ -355,5 +355,10 @@
 	jQuery.fn.mb_miniPlayer_stop= jQuery.mbMiniPlayer.stop;
 	jQuery.fn.mb_miniPlayer_destroy= jQuery.mbMiniPlayer.destroy;
 	jQuery.fn.mb_miniPlayer_getPlayer= jQuery.mbMiniPlayer.getPlayer;
+
+	String.prototype.asId = function () {
+		return this.replace(/[^a-zA-Z0-9_]+/g, '');
+	};
+
 
 })(jQuery);

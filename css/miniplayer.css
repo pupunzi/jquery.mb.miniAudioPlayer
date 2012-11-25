@@ -1,4 +1,5 @@
 @charset "UTF-8";
+/*
 
 @font-face {
   font-family: 'mb_audio_fontRegular';
@@ -9,6 +10,18 @@
   font-weight: normal;
   font-style: normal;
 }
+*/
+
+@font-face {
+  font-family: 'mb_audio_fontRegular';
+  src: url('mbAudioFont/mbaudio_font.eot?#iefix') format('embedded-opentype'),
+  url('mbAudioFont/mbaudio_font.woff') format('woff'),
+  url('mbAudioFont/mbaudio_font.ttf')  format('truetype'),
+  url('mbAudioFont/mbaudio_font.svg#webfontywr4YLri') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
 
 @font-face {
   font-family: 'DroidSansMonoRegular';
@@ -21,11 +34,11 @@
 }
 
 .map_params{
-  display: none;
+  display: none!important;
 }
 
 .mbMiniPlayer span{
-  font:20px/22px "mb_audio_fontRegular","Webdings",sans-serif;
+  font:20px/22px "mb_audio_fontRegular";
 }
 
 a.audio{
@@ -132,7 +145,7 @@ a.audio{
   color:#333;
   font:10px/12px "DroidSansMonoRegular", sans-serif !important;
   text-shadow: none!important;
-  letter-spacing:1px !important;
+  letter-spacing:0 !important;
   width:100% !important;
   height:11px !important;
   top:-2px !important;
@@ -196,13 +209,21 @@ a.audio{
   display: none;
 }
 
-.map_download{
+.mbMiniPlayer .map_download{
   display: inline-block !important;
   vertical-align: top !important;
   margin: 0 !important;
   padding: 3px 5px;
-  font: 20px/25px "DroidSansMonoRegular", sans-serif !important;
+  font:40px/22px "mb_audio_fontRegular";
+  color: #d1d1d1;
+  text-shadow: 0 0 3px rgba(255,255,255,0.6);
+
+  transition: color 1s;
+  -moz-transition: color 1s;
+  -webkit-transition: color 1s;
+  -o-transition: color 1s;
 }
+
 
 /*BLACK ----------------------------------------*/
 .mbMiniPlayer.black span{
@@ -221,8 +242,8 @@ a.audio{
   color: #999999;
 }
 
-.mbMiniPlayer.black .map_download{
-  color: #333 !important;
+.mbMiniPlayer.black .map_download:hover{
+  color: #333 ;
 }
 
 /*GRAY ----------------------------------------*/
@@ -241,8 +262,8 @@ a.audio{
 .mbMiniPlayer.gray span.volume.mute{
   color: #cccccc;
 }
-.mbMiniPlayer.gray .map_download{
-  color: #666 !important;
+.mbMiniPlayer.gray .map_download:hover{
+  color: #666 ;
 }
 
 /*BLUE ----------------------------------------*/
@@ -262,8 +283,8 @@ a.audio{
   color: #98bff9;
 }
 
-.mbMiniPlayer.blue .map_download{
-  color: #0099ff !important;
+.mbMiniPlayer.blue .map_download:hover{
+  color: #0099ff ;
 }
 
 /*ORANGE ----------------------------------------*/
@@ -282,8 +303,8 @@ a.audio{
 .mbMiniPlayer.orange span.volume.mute{
   color: #eec957;
 }
-.mbMiniPlayer.orange .map_download{
-  color: #ff9900 !important;
+.mbMiniPlayer.orange .map_download:hover{
+  color: #ff9900;
 }
 
 /*RED ----------------------------------------*/
@@ -302,7 +323,7 @@ a.audio{
 .mbMiniPlayer.red span.volume.mute{
   color: #b90000;
 }
-.mbMiniPlayer.red .map_download{
+.mbMiniPlayer.red .map_download:hover{
   color: #990000 !important;
 }
 
@@ -323,6 +344,6 @@ a.audio{
   color: #2aba5a;
 }
 
-.mbMiniPlayer.green .map_download{
+.mbMiniPlayer.green .map_download:hover{
   color: #339900 !important;
 }
