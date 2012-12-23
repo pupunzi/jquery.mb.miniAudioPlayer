@@ -82,7 +82,7 @@
         }
 
         if(!player.opt.mp3)
-          player.opt.mp3=url;
+          player.opt.mp3 = url;
 
         var skin= player.opt.skin;
 
