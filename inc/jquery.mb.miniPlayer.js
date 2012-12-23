@@ -271,7 +271,6 @@
               $player.jPlayer("play");
             else
               $playBox.click();
-
             if(typeof player.opt.onEnd == "function" )
               player.opt.onEnd(idx);
           })
