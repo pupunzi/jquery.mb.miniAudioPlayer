@@ -71,16 +71,6 @@
           jQuery.extend(player.opt,$master.metadata());
         }
 
-        if (navigator && navigator.platform && navigator.platform.match(/^(iPad|iPod|iPhone)jQuery/)) {
-          jQuery.mbMiniPlayer.icon.play="<img src='"+jQuery.mbMiniPlayer.defaults.swfPath+"img/play.png'/>";
-          jQuery.mbMiniPlayer.icon.pause="<img src='"+jQuery.mbMiniPlayer.defaults.swfPath+"img/pause.png'/>";
-          jQuery.mbMiniPlayer.icon.stop="<img src='"+jQuery.mbMiniPlayer.defaults.swfPath+"img/stop.png'/>";
-          jQuery.mbMiniPlayer.icon.rewind="<img src='"+jQuery.mbMiniPlayer.defaults.swfPath+"img/rewind.png'/>";
-          jQuery.mbMiniPlayer.icon.volume="<img src='"+jQuery.mbMiniPlayer.defaults.swfPath+"img/volume.png'/>";
-          jQuery.mbMiniPlayer.icon.volumeMute="<img src='"+jQuery.mbMiniPlayer.defaults.swfPath+"img/volume.png'/>";
-          jQuery.mbMiniPlayer.defaults.showVolumeLevel=false;
-        }
-
         if(!player.opt.mp3)
           player.opt.mp3 = url;
 
