@@ -57,7 +57,7 @@
         var $master=jQuery(this);
         $master.hide();
         var url = $master.attr("href");
-        var ID= $master.attr("id")?$master.attr("id"):"mb_"+ new Date().getTime();
+        var ID= "mb_" + ($master.attr("id")?$master.attr("id") : new Date().getTime());
         var title= $master.html();
         var $player=jQuery("<div/>").attr({id:"JPL_"+ID});
         var player=$player.get(0);
@@ -86,7 +86,7 @@
 
         var skin= player.opt.skin;
 
-        var $controlsBox=jQuery("<div/>").attr({id:"mp_"+ID, isPlaying:false}).addClass("mbMiniPlayer").addClass(skin);
+        var $controlsBox=jQuery("<div/>").attr({id:ID, isPlaying:false}).addClass("mbMiniPlayer").addClass(skin);
         if(player.opt.inLine)
           $controlsBox.css({display:"inline-block", verticalAlign:"middle"});
         if(player.opt.addShadow)
@@ -256,7 +256,7 @@
           oggSupport: player.opt.ogg? true : false,
           swfPath: player.opt.swfPath,
           // solution: player.opt.isIE9 ? 'flash' : 'html, flash',
-	        cssSelectorAncestor: "#mp_"+ID, // Remove the ancestor css selector clause
+	        cssSelectorAncestor: "#"+ID, // Remove the ancestor css selector clause
 	        cssSelector: {
             playBar:"#playBar_"+ID,
             seekBar:"#loadBar_"+ID // Set a custom css selector for the play button
