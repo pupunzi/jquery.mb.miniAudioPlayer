@@ -1,19 +1,18 @@
-/*******************************************************************************
- jquery.mb.components
- Copyright (c) 2001-2011. Matteo Bicocchi (Pupunzi); Open lab srl, Firenze - Italy
- email: mbicocchi@open-lab.com
- site: http://pupunzi.com
-
- Licences: MIT, GPL
- http://www.opensource.org/licenses/mit-license.php
- http://www.gnu.org/licenses/gpl.html
- ******************************************************************************/
+/*
+ * mb.components: jquery.mb.miniPlayer.js
+ * Last modified: 22/12/12 19.01
+ *
+ * Copyright (c) 2001-2012. Matteo Bicocchi (Pupunzi)
+ * Open Lab, Florence - Italy
+ * ---------------------------------------------------------
+ * http://pupunzi.com
+ * mbicocchi@open-lab.com
+ * ---------------------------------------------------------
+ */
 
 /*
  * jQuery.mb.components: jquery.mb.miniPlayer
  * version: 1.6
- * © 2001 - 2011 Matteo Bicocchi (pupunzi), Open Lab
- *
  *
  * jquery.mb.miniPlayer is a GUI implementation
  * of the jquery.jPlayer plug-in realized by ©Happyworm LTD.
