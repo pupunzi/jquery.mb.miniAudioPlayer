@@ -256,8 +256,8 @@
           oggSupport: player.opt.ogg? true : false,
           swfPath: player.opt.swfPath,
           // solution: player.opt.isIE9 ? 'flash' : 'html, flash',
-          cssSelectorAncestor: "mbAudio", // Remove the ancestor css selector clause
-          cssSelector: {
+	        cssSelectorAncestor: "#mp_"+ID, // Remove the ancestor css selector clause
+	        cssSelector: {
             playBar:"#playBar_"+ID,
             seekBar:"#loadBar_"+ID // Set a custom css selector for the play button
             // The other defaults remain unchanged
