@@ -1,151 +1,173 @@
 <!DOCTYPE html>
 <!--
-  ~ jquery.mb.components
-  ~ Copyright (c) 2001-2011. Matteo Bicocchi (Pupunzi); Open lab srl, Firenze - Italy
-  ~ email: mbicocchi@open-lab.com
-  ~ site: http://pupunzi.com
+  ~ /*******************************************************************************
+  ~  jquery.mb.components
   ~
-  ~ Licences: MIT, GPL
-  ~ http://www.opensource.org/licenses/mit-license.php
-  ~ http://www.gnu.org/licenses/gpl.html
+  ~  Copyright (c) 2001-2013. Matteo Bicocchi (Pupunzi); Open lab srl, Firenze - Italy
+  ~  email: matteo@open-lab.com
+  ~  site: http://pupunzi.com
+  ~
+  ~  Licences: MIT, GPL
+  ~  http://www.opensource.org/licenses/mit-license.php
+  ~  http://www.gnu.org/licenses/gpl.html
+  ~  ******************************************************************************/
   -->
 
 <html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>jquery.mb.miniAudioPlayer</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>jquery.mb.miniAudioPlayer</title>
 
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
-  <script type="text/javascript" src="inc/jquery.jplayer.js"></script>
-  <script type="text/javascript" src="inc/jquery.mb.miniPlayer.js"></script>
-  <script type="text/javascript" src="inc/jquery.metadata.js"></script>
-  <link rel="stylesheet" type="text/css" href="css/miniplayer.css" title="style"  media="screen"/>
-  <style type="text/css">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+    <script type="text/javascript" src="inc/jquery.jplayer.js"></script>
+    <script type="text/javascript" src="inc/jquery.mb.miniPlayer.js"></script>
+    <script type="text/javascript" src="inc/jquery.metadata.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/miniplayer.css" title="style" media="screen"/>
+    <style type="text/css">
 
-      /*Generic page style*/
+            /*Generic page style*/
 
-    body{
-      font:normal 13px/16px 'trebuchet MS', sans-serif;
-      margin:10px;
-      background: #ffffff;
-    }
-    .wrapper{
-      position:relative;
-      padding-top:90px;
-      padding-left:50px;
-      width:80%;
-      margin:auto
-    }
-    .wrapper h1{
-      font-family:Arial, Helvetica, sans-serif;
-      font-size:26px;
-    }
-    button{
-      padding:3px;
-      display:inline-block;
-      cursor:pointer;
-      font:12px/14px Arial, Helvetica, sans-serif;
-      color:#fff;
-      background-color:#ccc;
-      -moz-border-radius:5px;
-      -webkit-border-radius:5px;
-      -moz-box-shadow:#999 1px 1px 3px;
-      -webkit-box-shadow:#999 1px 1px 3px;
-      border:1px solid white;
-      text-shadow: 1px -1px 2px #aaa9a9 !important;
-    }
-    button:hover{
-      /*background-color:#fff;*/
-      color:#666;
-    }
-    hr{
-      border:none;
-      background-color:#ccc;
-      height:1px;
-    }
+        body {
+            font: normal 13px/16px 'trebuchet MS', sans-serif;
+            margin: 10px;
+            background: #ffffff;
+        }
 
-  </style>
+        .wrapper {
+            position: relative;
+            padding-top: 90px;
+            padding-left: 50px;
+            width: 80%;
+            margin: auto
+        }
 
-  <script type="text/javascript">
+        .wrapper h1 {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 26px;
+        }
 
-    $(function(){
+        button {
+            padding: 3px;
+            display: inline-block;
+            cursor: pointer;
+            font: 12px/14px Arial, Helvetica, sans-serif;
+            color: #fff;
+            background-color: #ccc;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-box-shadow: #999 1px 1px 3px;
+            -webkit-box-shadow: #999 1px 1px 3px;
+            border: 1px solid white;
+            text-shadow: 1px -1px 2px #aaa9a9 !important;
+        }
 
-      if (self.location.href == top.location.href){
-        $("body").css({font:"normal 13px/16px 'trebuchet MS', verdana, sans-serif"});
-        var logo=$("<a href='http://pupunzi.com'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository' style='display:none;'></a>").css({position:"absolute"});
-        $("body").prepend(logo);
-        $("#logo").fadeIn();
-      }
+        button:hover {
+            /*background-color:#fff;*/
+            color: #666;
+        }
 
-      $(".audio").mb_miniPlayer({
-        width:240,
-        inLine:false,
-        onEnd:playNext
-      });
+        hr {
+            border: none;
+            background-color: #ccc;
+            height: 1px;
+        }
 
-       function playNext(idx){
-       var players=$(".audio");
-       document.playerIDX = idx+1 <= players.length-1 ? idx+1 : 0;
-       players.eq(document.playerIDX).mb_miniPlayer_play();
-       }
-    });
-  </script>
+    </style>
+
+    <script type="text/javascript">
+
+        $(function () {
+
+            if (self.location.href == top.location.href) {
+                var logo = $("<a href='http://pupunzi.com'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository' style='display:none;'></a>").css({position: "absolute"});
+                $("body").css({font: "normal 13px/16px 'trebuchet MS', verdana, sans-serif"}).prepend(logo);
+                $("#logo").fadeIn();
+            }
+
+            $(".audio").mb_miniPlayer({
+                width: 240,
+                inLine: false,
+                onEnd: playNext
+            });
+
+            function playNext(idx) {
+                var players = $(".audio");
+                document.playerIDX = idx + 1 <= players.length - 1 ? idx + 1 : 0;
+                players.eq(document.playerIDX).mb_miniPlayer_play();
+            }
+        });
+    </script>
 </head>
 
 <body>
 <br>
+
 <div class="wrapper">
-  <h1>mb.miniAudioPlayer.demo - auto start next player</h1>
-  <br>
-  This is a GUI implementation of <a href="http://www.jplayer.org/" target="_blank"><strong>Happyworm jPlayer plugin</strong></a>, an HTML5 audio engine, developed on jQuery framework, that let you listen mp3 and ogg file over the html5 audio tag where supported or using an invisible flash player where not supported.
-  For more informations about html5 browsers' support go to <a href="http://www.jplayer.org/latest/developer-guide/" target="_blank">jPlayer documentation site</a>.
-  <br>
-  <br>
-  <a id="m1" class="audio {autoPlay:true, inLine:true}" href="http://www.pacdv.com/sounds/ambience_sounds/airport-gate-1.mp3">Airport Gate (Boarding)</a>
-  <button onclick="$('#m1').mb_miniPlayer_stop()">stop</button>
-  <button onclick="$('#m1').mb_miniPlayer_play()">play</button>
-  <hr>
-  <a id="m2" class="audio {ogg:'http://www.miaowmusic.com/ogg/Miaow-02-Hidden.ogg'}" href="http://www.pacdv.com/sounds/ambience_sounds/g-t-1.mp3">Group Talking</a>
-  <hr>
-  <a id="m3" class="audio {ogg:'http://www.miaowmusic.com/ogg/Miaow-02-Hidden.ogg'}" href="http://www.pacdv.com/sounds/ambience_sounds/water-stream-1.mp3" style="display:none">Water Stream (Small)</a>
-  <hr>
-  <a id="m4" class="audio {ogg:'http://www.miaowmusic.com/ogg/Miaow-02-Hidden.ogg'}" href="http://www.pacdv.com/sounds/domestic_sound_effects/doorbell-1.mp3">Doorbell</a>
-  <hr>
-  <a id="m5" class="audio {ogg:'http://www.miaowmusic.com/ogg/Miaow-02-Hidden.ogg'}" href="http://www.pacdv.com/sounds/transportation_sounds/antique-car-honk-1.mp3" style="display: none">Antique Car & Honk</a>
-  <hr>
-  <br>
-  All the music are provided by <a href="http://www.pacdv.com" target="_blank">© pacdv.com</a>.
-  <br>
-  <p style="font: 16px/22px 'trebuchet MS', sans-serif;">
-    Here is a demo of a custom behaviour applied as callback for the "end" event of each player:
+    <h1>mb.miniAudioPlayer.demo - auto start next player</h1>
     <br>
-    The first player has the "autoPlay" parameter set as true and therefor it'll start playing on page load; once one of the audio played ends the next player will start playing.
+    This is a GUI implementation of <a href="http://www.jplayer.org/" target="_blank"><strong>Happyworm jPlayer
+    plugin</strong></a>, an HTML5 audio engine, developed on jQuery framework, that let you listen mp3 and ogg file over
+    the html5 audio tag where supported or using an invisible flash player where not supported.
+    For more informations about html5 browsers' support go to <a href="http://www.jplayer.org/latest/developer-guide/"
+                                                                 target="_blank">jPlayer documentation site</a>.
     <br>
-    If is the last player playing it starts over from the first.
     <br>
-    This behaviour can't works on iOs devices due to their security restrictions.
+    <a id="m1" class="audio {autoPlay:true, inLine:true}"
+       href="http://www.pacdv.com/sounds/ambience_sounds/airport-gate-1.mp3">Airport Gate (Boarding)</a>
+    <button onclick="$('#m1').mb_miniPlayer_stop()">stop</button>
+    <button onclick="$('#m1').mb_miniPlayer_play()">play</button>
+    <hr>
+    <a id="m2" class="audio {ogg:'http://www.miaowmusic.com/ogg/Miaow-02-Hidden.ogg'}"
+       href="http://www.pacdv.com/sounds/ambience_sounds/g-t-1.mp3">Group Talking</a>
+    <hr>
+    <a id="m3" class="audio {ogg:'http://www.miaowmusic.com/ogg/Miaow-02-Hidden.ogg'}"
+       href="http://www.pacdv.com/sounds/ambience_sounds/water-stream-1.mp3" style="display:none">Water Stream
+        (Small)</a>
+    <hr>
+    <a id="m4" class="audio {ogg:'http://www.miaowmusic.com/ogg/Miaow-02-Hidden.ogg'}"
+       href="http://www.pacdv.com/sounds/domestic_sound_effects/doorbell-1.mp3">Doorbell</a>
+    <hr>
+    <a id="m5" class="audio {ogg:'http://www.miaowmusic.com/ogg/Miaow-02-Hidden.ogg'}"
+       href="http://www.pacdv.com/sounds/transportation_sounds/antique-car-honk-1.mp3" style="display: none">Antique Car
+        & Honk</a>
+    <hr>
+    <br>
+    All the music are provided by <a href="http://www.pacdv.com" target="_blank">© pacdv.com</a>.
+    <br>
+
+    <p style="font: 16px/22px 'trebuchet MS', sans-serif;">
+        Here is a demo of a custom behaviour applied as callback for the "end" event of each player:
+        <br>
+        The first player has the "autoPlay" parameter set as true and therefor it'll start playing on page load; once
+        one of the audio played ends the next player will start playing.
+        <br>
+        If is the last player playing it starts over from the first.
+        <br>
+        This behaviour can't works on iOs devices due to their security restrictions.
+    </p>
 	<pre style="margin-left: 100px; "><code>
-    // this is the initializer function
+        // this is the initializer function
 
-    $(".audio").mb_miniPlayer({
-    width:240,
-    inLine:false,
-    onEnd:playNext
-    });
+        $(".audio").mb_miniPlayer({
+        width:240,
+        inLine:false,
+        onEnd:playNext
+        });
 
-    // and this is function invoked as 'onEnd' callback
-    // Both the onPlay and onEnd callback functions receive the index of the player as parameter.
+        // and this is function invoked as 'onEnd' callback
+        // Both the onPlay and onEnd callback functions receive the index of the player as parameter.
 
-    function playNext(idx){
-    var players=$(".audio");
-    document.playerIDX = idx+1 <= players.length-1 ? idx+1 : 0;
-    players.eq(document.playerIDX).mb_miniPlayer_play();
-    }
-  </code></pre>
-  </p>
+        function playNext(idx){
+        var players=$(".audio");
+        document.playerIDX = idx+1 <= players.length-1 ? idx+1 : 0;
+        players.eq(document.playerIDX).mb_miniPlayer_play();
+        }
+    </code></pre>
 
-  <br>
-  <b>jquery.mb.miniPlayer</b> is a GUI implementation of the <a href="http://www.jplayer.org" target="_blank">jquery.jPlayer</a> plug-in realized by © Happyworm LTD. (many thanks to <a href="http://happyworm.com/blog/" target="_blank">Mark Boas</a>)
+    <br>
+    <b>jquery.mb.miniPlayer</b> is a GUI implementation of the <a href="http://www.jplayer.org" target="_blank">jquery.jPlayer</a>
+    plug-in realized by © Happyworm LTD. (many thanks to <a href="http://happyworm.com/blog/" target="_blank">Mark
+    Boas</a>)
 </div>
 </body>
 </html>
