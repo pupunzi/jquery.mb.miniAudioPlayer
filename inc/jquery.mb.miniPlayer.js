@@ -1,6 +1,7 @@
 /*
  * ******************************************************************************
  *  jquery.mb.components
+ *  file: jquery.mb.miniPlayer.js
  *
  *  Copyright (c) 2001-2013. Matteo Bicocchi (Pupunzi);
  *  Open lab srl, Firenze - Italy
@@ -12,13 +13,12 @@
  *  Licences: MIT, GPL
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
+ *
+ *  last modified: 04/01/13 17.13
  *  *****************************************************************************
  */
 
 /*
- * jQuery.mb.components: jquery.mb.miniPlayer
- * version: 1.6
- *
  * jquery.mb.miniPlayer is a GUI implementation
  * of the jquery.jPlayer plug-in realized by ©Happyworm LTD.
  * http://www.jplayer.org
