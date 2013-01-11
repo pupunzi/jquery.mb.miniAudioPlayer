@@ -14,48 +14,41 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 04/01/13 17.13
+ *  last modified: 06/01/13 14.33
  *  *****************************************************************************
- */
-
-/*
- * jquery.mb.miniPlayer is a GUI implementation
- * of the jquery.jPlayer plug-in realized by ©Happyworm LTD.
- * http://www.jplayer.org
- * (many thanks to Mark Boas)
  */
 
 (function (jQuery) {
 
 	jQuery.mbMiniPlayer = {
-		author: "Matteo Bicocchi",
-		version: "1.6",
-		name: "mb.miniPlayer",
-		icon: {
-			play: "P",
-			pause: "p",
-			stop: "S",
-			rewind: "R",
-			volume: "Vm",
+		author  : "Matteo Bicocchi",
+		version : "1.6",
+		name    : "mb.miniPlayer",
+		icon    : {
+			play      : "P",
+			pause     : "p",
+			stop      : "S",
+			rewind    : "R",
+			volume    : "Vm",
 			volumeMute: "Vm"
 		},
 		defaults: {
-			width: 150,
-			skin: "black", // available: black, blue, orange, red, gray
-			volume: .5,
-			autoplay: false,
-			playAlone: true,
-			inLine: false,
-			volumeLevels: 8,
+			width          : 150,
+			skin           : "black", // available: black, blue, orange, red, gray
+			volume         : .5,
+			autoplay       : false,
+			playAlone      : true,
+			inLine         : false,
+			volumeLevels   : 8,
 			showVolumeLevel: true,
-			showTime: true,
-			showRew: true,
-			addShadow: true,
-			downloadable: false,
-			swfPath: "inc/",
-			onPlay: function () {
+			showTime       : true,
+			showRew        : true,
+			addShadow      : true,
+			downloadable   : false,
+			swfPath        : "inc/",
+			onPlay         : function () {
 			},
-			onEnd: function () {
+			onEnd          : function () {
 			}
 		},
 
@@ -66,6 +59,10 @@
 				var url = $master.attr("href");
 				var ID = "mb_" + ($master.attr("id") ? $master.attr("id") : new Date().getTime());
 				var title = $master.html();
+
+				var downloadURL = $master.attr("href").replace(".mp3", "").split("/");
+				downloadURL = downloadURL[downloadURL.length - 1];
+
 				var $player = jQuery("<div/>").attr({id: "JPL_" + ID});
 				var player = $player.get(0);
 				player.opt = {};
@@ -76,6 +73,24 @@
 				if (jQuery.metadata) {
 					jQuery.metadata.setType("class");
 					jQuery.extend(player.opt, $master.metadata());
+				}
+
+				if (player.opt.width.toString().indexOf("%") >= 0) {
+					var pW = $master.parent().outerWidth();
+					player.opt.width = (pW * (parseFloat(player.opt.width) / 2)) / 100;
+				}
+
+				if (navigator && navigator.platform && navigator.platform.match(/^(iPad|iPod|iPhone)$/)) {
+					/*
+					 jQuery.mbMiniPlayer.icon.play="<img src='"+jQuery.mbMiniPlayer.defaults.swfPath+"img/play.png'/>";
+					 jQuery.mbMiniPlayer.icon.pause="<img src='"+jQuery.mbMiniPlayer.defaults.swfPath+"img/pause.png'/>";
+					 jQuery.mbMiniPlayer.icon.stop="<img src='"+jQuery.mbMiniPlayer.defaults.swfPath+"img/stop.png'/>";
+					 jQuery.mbMiniPlayer.icon.rewind="<img src='"+jQuery.mbMiniPlayer.defaults.swfPath+"img/rewind.png'/>";
+					 jQuery.mbMiniPlayer.icon.volume="<img src='"+jQuery.mbMiniPlayer.defaults.swfPath+"img/volume.png'/>";
+					 jQuery.mbMiniPlayer.icon.volumeMute="<img src='"+jQuery.mbMiniPlayer.defaults.swfPath+"img/volume.png'/>";
+					 */
+					jQuery.mbMiniPlayer.defaults.showVolumeLevel = false;
+					jQuery.mbMiniPlayer.defaults.autoplay = false;
 				}
 
 				if (!player.opt.mp3)
@@ -94,12 +109,13 @@
 				$controlsBox.html($layout);
 
 				var download = jQuery("<p/>").addClass("map_download").css({display: "inline-block", cursor: "pointer"}).html("d").on("click",function () {
-					window.open(player.opt.mp3, "map_download");
-//					location.href = map.downloadUrl+"?filename="+title.asId()+".mp3"+"&fileurl="+player.opt.mp3;
-				}).attr("title", "download: " + title);
+					//window.open(player.opt.mp3,"map_download");
+					location.href = map.downloadUrl + "?filename=" + downloadURL + ".mp3" + "&fileurl=" + encodeURI(player.opt.mp3); //title.asId()
+				}).attr("title", "download: " + downloadURL);
 				if (player.opt.downloadable) {
 					$controlsBox.append(download);
 				}
+
 				var cc = jQuery("<div/>").addClass("copy").html("made by Pupunzi");
 				$controlsBox.append(cc);
 				var $tds = $controlsBox.find("td").unselectable();
@@ -130,6 +146,7 @@
 				$tds.eq(4).append($rewBox);
 				$tds.eq(5).append($playBox);
 
+
 				if (jQuery.browser.safari) {
 					$tds.eq(1).hide();
 					$tds.eq(3).hide();
@@ -139,7 +156,7 @@
 
 				//init jPlayer component (Happyworm Ltd - http://www.jplayer.org)
 				$player.jPlayer({
-					ready: function () {
+					ready              : function () {
 
 						var el = jQuery(this);
 						el.jPlayer("setMedia", {mp3: player.opt.mp3, oga: player.opt.ogg});
@@ -160,14 +177,16 @@
 											$rewBox.show().css({width: 20, display: "block"});
 										else
 											$rewBox.show().animate({width: 20}, 100);
-										if (jQuery.browser.safari)$rewBox.parent().css({width: 20}).show();
+										if (jQuery.browser.safari)
+											$rewBox.parent().css({width: 20}).show();
 									}
 									if (player.opt.showTime) {
 										if (isIE)
 											$timeBox.show().css({width: 30, display: "block"});
 										else
 											$timeBox.animate({width: 30}, 100).show();
-										if (jQuery.browser.safari)$timeBox.parent().css({width: 30}).show();
+										if (jQuery.browser.safari)
+											$timeBox.parent().css({width: 30}).show();
 									}
 									if (player.opt.showVolumeLevel) {
 										if (isIE)
@@ -194,19 +213,22 @@
 										$rewBox.animate({width: 1}, 100, function () {
 											jQuery(this).css({display: "none"})
 										});
-										if (jQuery.browser.safari)$rewBox.parent().hide();
+										if (jQuery.browser.safari)
+											$rewBox.parent().hide();
 									}
 									if (player.opt.showTime) {
 										$timeBox.animate({width: 1}, 100, function () {
 											jQuery(this).css({display: "none"})
 										});
-										if (jQuery.browser.safari)$timeBox.parent().hide();
+										if (jQuery.browser.safari)
+											$timeBox.parent().hide();
 									}
 									if (player.opt.showVolumeLevel) {
 										$volumeLevel.animate({width: 1}, 100, function () {
 											jQuery(this).css({display: "none"})
 										});
-										if (jQuery.browser.safari)$volumeLevel.parent().hide();
+										if (jQuery.browser.safari)
+											$volumeLevel.parent().hide();
 									}
 									$controlsBox.attr("isPlaying", "false");
 									el.jPlayer("pause");
@@ -270,21 +292,19 @@
 						if (player.opt.autoplay && ((player.opt.playAlone && jQuery("[isPlaying=true]").length == 0) || !player.opt.playAlone))
 							$playBox.click();
 					},
-					customCssIds: true,
-					volume: player.opt.volume,
-					oggSupport: player.opt.ogg ? true : false,
-					swfPath: player.opt.swfPath,
+					customCssIds       : true,
+					volume             : player.opt.volume,
+					oggSupport         : player.opt.ogg ? true : false,
+					swfPath            : player.opt.swfPath,
 					// solution: player.opt.isIE9 ? 'flash' : 'html, flash',
 					cssSelectorAncestor: "#" + ID, // Remove the ancestor css selector clause
-					cssSelector: {
+					cssSelector        : {
 						playBar: "#playBar_" + ID,
 						seekBar: "#loadBar_" + ID // Set a custom css selector for the play button
 						// The other defaults remain unchanged
 					}
 				})
-						.bind(jQuery.jPlayer.event.play, function (e) {
-							//console.debug(e.jPlayer.status.src);
-						})
+						.bind(jQuery.jPlayer.event.play, function (e) {})
 						.bind(jQuery.jPlayer.event.ended, function () {
 							if (player.opt.loop)
 								$player.jPlayer("play");
@@ -314,7 +334,7 @@
 						})
 			})
 		},
-		changeFile: function (mp3, ogg, title) {
+		changeFile : function (mp3, ogg, title) {
 			var ID = jQuery(this).attr("id");
 			var $controlsBox = jQuery("#mp_" + ID);
 			var $player = jQuery("#JPL_" + ID);
@@ -326,7 +346,7 @@
 				$player.jPlayer("play");
 			$titleBox.html(title)
 		},
-		play: function () {
+		play       : function () {
 			return this.each(function () {
 				var id = jQuery(this).attr("id");
 				var player = jQuery("#mp_" + id);
@@ -334,7 +354,7 @@
 					player.find(".play").click();
 			})
 		},
-		stop: function () {
+		stop       : function () {
 			return this.each(function () {
 				var id = jQuery(this).attr("id");
 				var player = jQuery("#mp_" + id);
@@ -342,14 +362,14 @@
 					player.find(".play").click();
 			})
 		},
-		destroy: function () {
+		destroy    : function () {
 			return this.each(function () {
 				var id = this.attr("id");
 				var player = jQuery("#mp_" + id);
 				player.remove();
 			})
 		},
-		getPlayer: function () {
+		getPlayer  : function () {
 			var id = this.attr("id");
 			return jQuery("#mp_" + id);
 		}
@@ -358,9 +378,9 @@
 	jQuery.fn.unselectable = function () {
 		this.each(function () {
 			jQuery(this).css({
-				"-moz-user-select": "none",
+				"-moz-user-select"  : "none",
 				"-khtml-user-select": "none",
-				"user-select": "none"
+				"user-select"       : "none"
 			}).attr("unselectable", "on");
 		});
 		return jQuery(this);

@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 04/01/13 17.13
+ *  last modified: 05/01/13 19.40
  *  *****************************************************************************
  */
 
@@ -24,11 +24,11 @@
 
 @font-face {
     font-family: 'DroidSansMonoRegular';
-    src: url('DroidSansMono-webfont.eot');
-    src: url('DroidSansMono-webfont.eot?#iefix') format('embedded-opentype'),
-         url('DroidSansMono-webfont.woff') format('woff'),
-         url('DroidSansMono-webfont.ttf') format('truetype'),
-         url('DroidSansMono-webfont.svg#DroidSansMonoRegular') format('svg');
+    src: url('DroidSansMono.eot');
+    src: url('DroidSansMono.eot?#iefix') format('embedded-opentype'),
+         url('DroidSansMono.woff') format('woff'),
+         url('DroidSansMono.ttf') format('truetype'),
+         url('DroidSansMono.svg#DroidSansMonoRegular') format('svg');
     font-weight: normal;
     font-style: normal;
 
