@@ -14,36 +14,15 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 17/01/13 23.13
+ *  last modified: 01/02/13 1.09
  *  *****************************************************************************
  */
 
 /*Browser detection patch*/
-(function () {
-	if (!(8 > jQuery.fn.jquery.split(".")[1])) {
-		jQuery.browser = {};
-		jQuery.browser.mozilla = !1;
-		jQuery.browser.webkit = !1;
-		jQuery.browser.opera = !1;
-		jQuery.browser.msie = !1;
-		var a = navigator.userAgent;
-		jQuery.browser.name = navigator.appName;
-		jQuery.browser.fullVersion = "" + parseFloat(navigator.appVersion);
-		jQuery.browser.majorVersion = parseInt(navigator.appVersion, 10);
-		var c, b;
-		if (-1 != (b = a.indexOf("Opera"))) {
-			if (jQuery.browser.opera = !0, jQuery.browser.name = "Opera", jQuery.browser.fullVersion = a.substring(b + 6), -1 != (b = a.indexOf("Version")))jQuery.browser.fullVersion = a.substring(b + 8)
-		} else if (-1 != (b = a.indexOf("MSIE")))jQuery.browser.msie = !0, jQuery.browser.name = "Microsoft Internet Explorer", jQuery.browser.fullVersion = a.substring(b + 5); else if (-1 != (b = a.indexOf("Chrome")))jQuery.browser.webkit = !0, jQuery.browser.name = "Chrome", jQuery.browser.fullVersion = a.substring(b + 7); else if (-1 != (b = a.indexOf("Safari"))) {
-			if (jQuery.browser.webkit = !0, jQuery.browser.name = "Safari", jQuery.browser.fullVersion = a.substring(b + 7), -1 != (b = a.indexOf("Version")))jQuery.browser.fullVersion = a.substring(b + 8)
-		} else if (-1 != (b = a.indexOf("Firefox")))jQuery.browser.mozilla = !0, jQuery.browser.name = "Firefox", jQuery.browser.fullVersion = a.substring(b + 8); else if ((c = a.lastIndexOf(" ") + 1) < (b = a.lastIndexOf("/")))jQuery.browser.name = a.substring(c, b), jQuery.browser.fullVersion = a.substring(b + 1), jQuery.browser.name.toLowerCase() == jQuery.browser.name.toUpperCase() && (jQuery.browser.name = navigator.appName);
-		if (-1 != (a = jQuery.browser.fullVersion.indexOf(";")))jQuery.browser.fullVersion = jQuery.browser.fullVersion.substring(0, a);
-		if (-1 != (a = jQuery.browser.fullVersion.indexOf(" ")))jQuery.browser.fullVersion = jQuery.browser.fullVersion.substring(0, a);
-		jQuery.browser.majorVersion = parseInt("" + jQuery.browser.fullVersion, 10);
-		isNaN(jQuery.browser.majorVersion) && (jQuery.browser.fullVersion = "" + parseFloat(navigator.appVersion), jQuery.browser.majorVersion = parseInt(navigator.appVersion, 10));
-		jQuery.browser.version = jQuery.browser.majorVersion
-	}
-})(jQuery);
+(function(){if(!(8>jQuery.fn.jquery.split(".")[1])){jQuery.browser={};jQuery.browser.mozilla=!1;jQuery.browser.webkit=!1;jQuery.browser.opera=!1;jQuery.browser.msie=!1;var a=navigator.userAgent;jQuery.browser.name=navigator.appName;jQuery.browser.fullVersion=""+parseFloat(navigator.appVersion);jQuery.browser.majorVersion=parseInt(navigator.appVersion,10);var c,b;if(-1!=(b=a.indexOf("Opera"))){if(jQuery.browser.opera=!0,jQuery.browser.name="Opera",jQuery.browser.fullVersion=a.substring(b+6),-1!=(b= a.indexOf("Version")))jQuery.browser.fullVersion=a.substring(b+8)}else if(-1!=(b=a.indexOf("MSIE")))jQuery.browser.msie=!0,jQuery.browser.name="Microsoft Internet Explorer",jQuery.browser.fullVersion=a.substring(b+5);else if(-1!=(b=a.indexOf("Chrome")))jQuery.browser.webkit=!0,jQuery.browser.name="Chrome",jQuery.browser.fullVersion=a.substring(b+7);else if(-1!=(b=a.indexOf("Safari"))){if(jQuery.browser.webkit=!0,jQuery.browser.name="Safari",jQuery.browser.fullVersion=a.substring(b+7),-1!=(b=a.indexOf("Version")))jQuery.browser.fullVersion= a.substring(b+8)}else if(-1!=(b=a.indexOf("Firefox")))jQuery.browser.mozilla=!0,jQuery.browser.name="Firefox",jQuery.browser.fullVersion=a.substring(b+8);else if((c=a.lastIndexOf(" ")+1)<(b=a.lastIndexOf("/")))jQuery.browser.name=a.substring(c,b),jQuery.browser.fullVersion=a.substring(b+1),jQuery.browser.name.toLowerCase()==jQuery.browser.name.toUpperCase()&&(jQuery.browser.name=navigator.appName);if(-1!=(a=jQuery.browser.fullVersion.indexOf(";")))jQuery.browser.fullVersion=jQuery.browser.fullVersion.substring(0, a);if(-1!=(a=jQuery.browser.fullVersion.indexOf(" ")))jQuery.browser.fullVersion=jQuery.browser.fullVersion.substring(0,a);jQuery.browser.majorVersion=parseInt(""+jQuery.browser.fullVersion,10);isNaN(jQuery.browser.majorVersion)&&(jQuery.browser.fullVersion=""+parseFloat(navigator.appVersion),jQuery.browser.majorVersion=parseInt(navigator.appVersion,10));jQuery.browser.version=jQuery.browser.majorVersion}})(jQuery);
 
+/*Metadata.js*/
+(function(c){c.extend({metadata:{defaults:{type:"class",name:"metadata",cre:/({.*})/,single:"metadata"},setType:function(b,c){this.defaults.type=b;this.defaults.name=c},get:function(b,f){var d=c.extend({},this.defaults,f);d.single.length||(d.single="metadata");var a=c.data(b,d.single);if(a)return a;a="{}";if("class"==d.type){var e=d.cre.exec(b.className);e&&(a=e[1])}else if("elem"==d.type){if(!b.getElementsByTagName)return;e=b.getElementsByTagName(d.name);e.length&&(a=c.trim(e[0].innerHTML))}else void 0!= b.getAttribute&&(e=b.getAttribute(d.name))&&(a=e);0>a.indexOf("{")&&(a="{"+a+"}");a=eval("("+a+")");c.data(b,d.single,a);return a}}});c.fn.metadata=function(b){return c.metadata.get(this[0],b)}})(jQuery);
 
 (function (jQuery) {
 
@@ -73,10 +52,8 @@
 			addShadow      : true,
 			downloadable   : false,
 			swfPath        : "inc/",
-			onPlay         : function () {
-			},
-			onEnd          : function () {
-			}
+			onPlay         : function () {},
+			onEnd          : function () {}
 		},
 
 		buildPlayer: function (options) {
@@ -107,7 +84,7 @@
 					player.opt.width = (pW * (parseFloat(player.opt.width) / 2)) / 100;
 				}
 
-				if (navigator && navigator.platform && navigator.platform.match(/^(iPad|iPod|iPhone)$/)) {
+				if ('ontouchstart' in window) { //'ontouchstart' in window
 
 					player.opt.showVolumeLevel = false;
 					player.opt.autoplay = false;
@@ -130,8 +107,8 @@
 				$master.after($controlsBox);
 				$controlsBox.html($layout);
 
-				var download = jQuery("<p/>").addClass("map_download").css({display: "inline-block", cursor: "pointer"}).html("d").on("click",function () {
-					window.open(player.opt.mp3,"map_download");
+				var download = jQuery("<span/>").addClass("map_download").css({display: "inline-block", cursor: "pointer"}).html("d").on("click",function () {
+					window.open(player.opt.mp3, "map_download");
 //					location.href = map.downloadUrl + "?filename=" + downloadURL + ".mp3" + "&fileurl=" + encodeURI(player.opt.mp3); //title.asId()
 				}).attr("title", "download: " + downloadURL);
 
@@ -142,17 +119,17 @@
 
 				var $tds = $controlsBox.find("td").unselectable();
 
-				var $volumeBox = jQuery("<span/>").addClass("volume").html(jQuery.mbMiniPlayer.icon.volume);
-				var $volumeLevel = jQuery("<span/>").addClass("volumeLevel").html("").hide();
+				var $volumeBox = jQuery("<span/>").addClass("map_volume").html(jQuery.mbMiniPlayer.icon.volume);
+				var $volumeLevel = jQuery("<span/>").addClass("map_volumeLevel").html("").hide();
 				for (var i = 0; i < player.opt.volumeLevels; i++) {
 					$volumeLevel.append("<a/>")
 				}
-				var $playBox = jQuery("<span/>").addClass("play").html(jQuery.mbMiniPlayer.icon.play);
-				var $rewBox = jQuery("<span/>").addClass("rew").html(jQuery.mbMiniPlayer.icon.rewind).hide();
-				var $timeBox = jQuery("<span/>").addClass("time").html("").hide();
+				var $playBox = jQuery("<span/>").addClass("map_play").html(jQuery.mbMiniPlayer.icon.play);
+				var $rewBox = jQuery("<span/>").addClass("map_rew").html(jQuery.mbMiniPlayer.icon.rewind).hide();
+				var $timeBox = jQuery("<span/>").addClass("map_time").html("").hide();
 
-				var $controls = jQuery("<div/>").addClass("controls");
-				var $titleBox = jQuery("<span/>").addClass("title").html(title);
+				var $controls = jQuery("<div/>").addClass("map_controls");
+				var $titleBox = jQuery("<span/>").addClass("map_title").html(title);
 				var $progress = jQuery("<div/>").addClass("jp-progress");
 
 				var $loadBar = jQuery("<div/>").addClass("jp-load-bar").attr("id", "loadBar_" + ID);
@@ -163,7 +140,7 @@
 
 				$tds.eq(0).append($volumeBox);
 				$tds.eq(1).append($volumeLevel);
-				$tds.eq(2).addClass("controlsBar").append($controls);
+				$tds.eq(2).addClass("map_controlsBar").append($controls);
 				$tds.eq(3).append($timeBox);
 				$tds.eq(4).append($rewBox);
 				$tds.eq(5).append($playBox);
@@ -178,10 +155,42 @@
 
 				//init jPlayer component (Happyworm Ltd - http://www.jplayer.org)
 				$player.jPlayer({
-					ready       : function () {
-
+					ready              : function () {
 						var el = jQuery(this);
 						el.jPlayer("setMedia", {mp3: player.opt.mp3, oga: player.opt.ogg});
+
+						if(typeof ID3 == "object"){
+								ID3.loadTags(player.opt.mp3,function(){
+									var data = ID3.getAllTags(player.opt.mp3);
+									console.debug(data);
+									var info = {};
+									info.title = ID3.getTag(player.opt.mp3,"title");
+									info.artist = ID3.getTag(player.opt.mp3,"artist");
+									info.album = ID3.getTag(player.opt.mp3,"album");
+									info.track = ID3.getTag(player.opt.mp3,"track");
+
+									$titleBox.html(info.title+" - "+ info.artist);
+
+									function drawInfoPanel(){
+										var getInfo = $("<div/>").addClass("map_info");
+										for(var i in info){
+											if(info[i] != null){
+												var str = "<div>"+i + ": "+info[i]+"</div>";
+														getInfo.append(str);
+											}
+										}
+										$controlsBox.append(getInfo);
+										$titleBox.on("mouseenter",function(e){
+											getInfo.fadeIn(300);
+										}).on("mouseleave",function(){
+													getInfo.fadeOut(300);
+												})
+
+									}
+									drawInfoPanel();
+								})
+						}
+
 						$playBox.on("click",
 								function () {
 
@@ -190,7 +199,7 @@
 										player.isOpen = true;
 
 										if (player.opt.playAlone) {
-											jQuery("[isPlaying=true]").find(".play").click();
+											jQuery("[isPlaying=true]").find(".map_play").click();
 										}
 
 										var isIE = jQuery.browser.msie && jQuery.browser.version < 9;
@@ -224,8 +233,8 @@
 												});
 										}
 										$controlsBox.attr("isPlaying", "true");
-										el.jPlayer("load");
-										setTimeout(function () {el.jPlayer("play");}, 1000)
+
+										el.jPlayer("play");
 
 										if (typeof player.opt.onPlay == "function")
 											player.opt.onPlay(idx);
@@ -322,20 +331,21 @@
 						if (player.opt.autoplay && ((player.opt.playAlone && jQuery("[isPlaying=true]").length == 0) || !player.opt.playAlone))
 							$playBox.click();
 					},
-					customCssIds: true,
-					volume      : player.opt.volume,
-					oggSupport  : player.opt.ogg ? true : false,
-					swfPath     : player.opt.swfPath,
-					preload     : "metadata",
+					customCssIds       : true,
+					volume             : player.opt.volume,
+					oggSupport         : player.opt.ogg ? true : false,
+					swfPath            : player.opt.swfPath,
+					preload            : "none",
 					// solution: player.opt.isIE9 ? 'flash' : 'html, flash',
-					//cssSelectorAncestor: "#" + ID, // Remove the ancestor css selector clause
-					cssSelector : {
+					cssSelectorAncestor: "#" + ID, // Remove the ancestor css selector clause
+					cssSelector        : {
 						playBar: "#playBar_" + ID,
 						seekBar: "#loadBar_" + ID // Set a custom css selector for the play button
 						// The other defaults remain unchanged
 					}
 				})
-						.on(jQuery.jPlayer.event.play, function (e) {})
+						.on(jQuery.jPlayer.event.play, function (e) {
+						})
 						.on(jQuery.jPlayer.event.ended, function () {
 							if (player.opt.loop)
 								$player.jPlayer("play");
@@ -346,10 +356,12 @@
 						})
 						.on(jQuery.jPlayer.event.timeupdate, function (e) {
 
-							//console.debug(e.jPlayer.status.currentTime)
+							player.duration = e.jPlayer.status.duration;
+							player.currentTime = e.jPlayer.status.currentTime;
+							player.seekPercent = e.jPlayer.status.seekPercent;
 
-							$loadBar.css({width: ((player.opt.width - 5) * e.jPlayer.status.seekPercent) / 100});
-							$playBar.css({width: ((player.opt.width - 5) * e.jPlayer.status.currentTime) / e.jPlayer.status.duration});
+							$loadBar.css({width: ((player.opt.width - 5) * player.seekPercent) / 100});
+							$playBar.css({width: ((player.opt.width - 5) * player.currentTime) / player.duration});
 
 							var volume = player.opt.volume;
 
@@ -370,11 +382,12 @@
 		changeFile : function (mp3, ogg, title) {
 			var ID = jQuery(this).attr("id");
 			var $controlsBox = jQuery("#mp_" + ID);
-			var $player = jQuery("#JPL_" + ID);
-			var $titleBox = $controlsBox.find(".title");
+			var $player = jQuery("#JPL_mp_" + ID);
+			var $titleBox = $controlsBox.find(".map_title");
 			if (!ogg) ogg = "";
 			if (!title) title = "audio file";
 			$player.jPlayer("setMedia", {mp3: mp3, oga: ogg});
+
 			if ($controlsBox.attr("isPlaying") == "true")
 				$player.jPlayer("play");
 			$titleBox.html(title)
@@ -384,7 +397,7 @@
 				var id = jQuery(this).attr("id");
 				var player = jQuery("#mp_" + id);
 				if (player.attr("isplaying") == "false")
-					player.find(".play").click();
+					player.find(".map_play").click();
 			})
 		},
 		stop       : function () {
@@ -392,7 +405,7 @@
 				var id = jQuery(this).attr("id");
 				var player = jQuery("#mp_" + id);
 				if (player.attr("isplaying") == "true")
-					player.find(".play").click();
+					player.find(".map_play").click();
 			})
 		},
 		destroy    : function () {

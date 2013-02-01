@@ -2,7 +2,7 @@
 <!--
   ~ /*******************************************************************************
   ~  jquery.mb.components
-  ~  file: demo.html
+  ~  file: demo_ID3.html
   ~
   ~  Copyright (c) 2001-2013. Matteo Bicocchi (Pupunzi);
   ~  Open lab srl, Firenze - Italy
@@ -15,7 +15,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 31/01/13 22.37
+  ~  last modified: 31/01/13 23.56
   ~  ******************************************************************************/
   -->
 
@@ -26,6 +26,7 @@
 
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
 	<script type="text/javascript" src="inc/jquery.jplayer.min.js"></script>
+	<script type="text/javascript" src="inc/id3/id3.min.js"></script>
   <script type="text/javascript" src="inc/jquery.mb.miniPlayer.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/miniplayer.css" title="style"  media="screen"/>
 	<style type="text/css">
@@ -85,11 +86,11 @@
 			}
 
 			$(".audio").mb_miniPlayer({
-				width:240,
+				width:100,
 				inLine:false
 			});
 
-		});
+        });
 
 	</script>
 </head>
@@ -107,38 +108,11 @@
 	<br>
 	<br>
 	<br>
-	<a id="m1" class="audio {ogg:'http://www.miaowmusic.com/ogg/Miaow-07-Bubble.ogg', loop:true,inLine:true, downloadable:true}" href="http://www.miaowmusic.com/mp3/Miaow-07-Bubble.mp3">miaowmusic - Bubble (mp3/ogg)</a>
-	<button onclick="$('#m1').mb_miniPlayer_play()">play</button>
-	<button onclick="$('#m1').mb_miniPlayer_stop()">stop</button>
-	<br>
-	<span>param -> all features</span>
-	<hr>
-	<a id="m2" class="audio {skin:'orange', ogg:'http://www.miaowmusic.com/ogg/Miaow-02-Hidden.ogg', showTime:false}" href="http://www.miaowmusic.com/mp3/Miaow-02-Hidden.mp3">miaowmusic - Hidden (ogg/mp3)</a>
-	<span> param -> showTime:false, ogg:'http://www.miaowmusic.com/ogg/Miaow-02-Hidden.ogg' (FF will play it as HTML5)</span>
-	<hr>
-	<a id="m3" class="audio {skin:'blue', autoPlay:false,showRew:false}" href="http://www.miaowmusic.com/mp3/Miaow-08-Stirring-of-a-fool.mp3">miaowmusic - Stirring of a Fool (mp3)</a>
-	<span>param -> showRew:false</span>
-	<hr>
-	<a id="m4" class="audio {skin:'red', autoPlay:false,showRew:false, showTime:false}" href="http://www.miaowmusic.com/mp3/Miaow-04-Lismore.mp3">miaowmusic - Lismore (mp3)</a>
-	<span>param -> showRew:false, showTime:false</span>
-	<hr>
-	<a id="m5" class="audio {skin:'green', autoPlay:false, addShadow:false}" href="http://www.miaowmusic.com/mp3/Miaow-08-Stirring-of-a-fool.mp3">miaowmusic - Stirring of a Fool (mp3)</a>
-	<br>
-	<div>change track:
-		<br>
-		<button onclick="$('#m5').mb_miniPlayer_changeFile('http://www.miaowmusic.com/mp3/Miaow-04-Lismore.mp3',false,'Lismore (mp3)')">miaowmusic - Lismore</button>
-		<button onclick="$('#m5').mb_miniPlayer_changeFile('http://www.miaowmusic.com/mp3/Miaow-02-Hidden.mp3',false,'Hidden (mp3)')">miaowmusic - Hidden</button>
-	</div>
-	<br>
-	<hr>
-	This is a gray player: <a  class="audio {skin:'gray', autoPlay:false, inLine:true, showVolumeLevel:false, showRew:true, showTime:false, width:100, addShadow:false}" href="http://www.miaowmusic.com/mp3/Miaow-04-Lismore.mp3">miaowmusic - Lismore (mp3)</a>
-	<span>and it is inline</span>
-
-	<hr>
-	<br>
-	<b>jquery.mb.miniPlayer</b> is a GUI implementation of the <a href="http://www.jplayer.org" target="_blank">jquery.jPlayer</a> plug-in realized by © Happyworm LTD. (many thanks to <a href="http://happyworm.com/blog/" target="_blank">Mark Boas</a>)
-	<br>
-	All the music are provided by <a href="http://www.miaowmusic.com" target="_blank">© miaowmusic</a>.
+    <a id="m1" class="audio {autoPlay:true, inLine:true}"
+       href="audio.mp3">Airport Gate (Boarding)</a>
+    <hr>
+    <a id="m2" class="audio {autoPlay:true, inLine:true}"
+       href="http://www.miaowmusic.com/mp3/Miaow-02-Hidden.mp3">Airport Gate (Boarding)</a>
 </div>
 </body>
 </html>
