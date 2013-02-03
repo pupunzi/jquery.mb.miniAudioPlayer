@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 03/02/13 23.20
+ *  last modified: 03/02/13 23.52
  *  *****************************************************************************
  */
 
@@ -28,7 +28,7 @@
 
 	jQuery.mbMiniPlayer = {
 		author  : "Matteo Bicocchi",
-		version : "1.6.3",
+		version : "1.6.4",
 		name    : "mb.miniPlayer",
 		icon    : {
 			play      : "P",

@@ -1,12 +1,13 @@
 {
 	"name": "jquery.mb.miniAudioPlayer",
-	"title": "jQuery mb.miniAudioPlayer 1.6.3",
+	"title": "jQuery mb.miniAudioPlayer 1.6.4",
 	"description": "This plugin let you add a minimal full featured small player that takes advantage of the new HTML5 AUDIO tag with a flash fallback for browsers that don't support it.",
 	"keywords": [
 		"audio",
 		"HTML5",
 		"player",
-		"jPlayer"
+		"jPlayer",
+		"ui"
 	],
 	"version": "1.6.3",
 	"author": {
