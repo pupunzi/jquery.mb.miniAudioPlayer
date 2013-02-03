@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 03/02/13 17.37
+ *  last modified: 03/02/13 23.20
  *  *****************************************************************************
  */
 
@@ -28,7 +28,7 @@
 
 	jQuery.mbMiniPlayer = {
 		author  : "Matteo Bicocchi",
-		version : "1.6.2",
+		version : "1.6.3",
 		name    : "mb.miniPlayer",
 		icon    : {
 			play      : "P",
@@ -162,7 +162,7 @@
 						if(typeof ID3 == "object"){
 								ID3.loadTags(player.opt.mp3,function(){
 									var data = ID3.getAllTags(player.opt.mp3);
-									console.debug(data);
+									//console.debug(data);
 									var info = {};
 									info.title = ID3.getTag(player.opt.mp3,"title");
 									info.artist = ID3.getTag(player.opt.mp3,"artist");
