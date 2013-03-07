@@ -15,7 +15,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 31/01/13 22.37
+  ~  last modified: 27/02/13 23.53
   ~  ******************************************************************************/
   -->
 
@@ -95,9 +95,9 @@
                 onEnd: playNext
             });
 
-            function playNext(idx) {
+            function playNext(player) {
                 var players = $(".audio");
-                document.playerIDX = idx + 1 <= players.length - 1 ? idx + 1 : 0;
+                document.playerIDX = player.idx + 1 <= players.length - 1 ? player.idx + 1 : 0;
                 players.eq(document.playerIDX).mb_miniPlayer_play();
             }
         });

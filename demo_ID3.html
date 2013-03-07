@@ -15,84 +15,84 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 04/02/13 20.58
+  ~  last modified: 07/03/13 23.23
   ~  ******************************************************************************/
   -->
 
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>jquery.mb.miniAudioPlayer</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>jquery.mb.miniAudioPlayer</title>
 
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
-	<script type="text/javascript" src="inc/jquery.jplayer.min.js"></script>
-	<script type="text/javascript" src="inc/id3/id3.min.js"></script>
-  <script type="text/javascript" src="inc/jquery.mb.miniPlayer.js"></script>
-	<link rel="stylesheet" type="text/css" href="css/miniplayer.css" title="style"  media="screen"/>
-	<style type="text/css">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+    <script type="text/javascript" src="inc/jquery.jplayer.min.js"></script>
+    <script type="text/javascript" src="inc/id3/id3.min.js"></script>
+    <script type="text/javascript" src="inc/jquery.mb.miniPlayer.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/miniplayer.css" title="style"  media="screen"/>
+    <style type="text/css">
 
-			/*Generic page style*/
+            /*Generic page style*/
 
-		body{
-			font:normal 13px/16px 'trebuchet MS', sans-serif;
-			margin:10px;
-			background: #ffffff;
-		}
-		.wrapper{
-			position:relative;
-			padding-top:90px;
-			padding-left:50px;
-			width:80%;
-			margin:auto
-		}
-		.wrapper h1{
-			font-family:Arial, Helvetica, sans-serif;
-			font-size:26px;
-		}
-		button{
-			padding:3px;
-			display:inline-block;
-			cursor:pointer;
-			font:12px/14px Arial, Helvetica, sans-serif;
-			color:#fff;
-			background-color:#ccc;
-			-moz-border-radius:5px;
-			-webkit-border-radius:5px;
-			-moz-box-shadow:#999 1px 1px 3px;
-			-webkit-box-shadow:#999 1px 1px 3px;
-			border:1px solid white;
-			text-shadow: 1px -1px 2px #aaa9a9 !important;
-		}
-		button:hover{
-			color:#666;
-		}
-		hr{
-			border:none;
-			background-color:#ccc;
-			height:1px;
-		}
+        body{
+            font:normal 13px/16px 'trebuchet MS', sans-serif;
+            margin:10px;
+            background: #ffffff;
+        }
+        .wrapper{
+            position:relative;
+            padding-top:90px;
+            padding-left:50px;
+            width:80%;
+            margin:auto
+        }
+        .wrapper h1{
+            font-family:Arial, Helvetica, sans-serif;
+            font-size:26px;
+        }
+        button{
+            padding:3px;
+            display:inline-block;
+            cursor:pointer;
+            font:12px/14px Arial, Helvetica, sans-serif;
+            color:#fff;
+            background-color:#ccc;
+            -moz-border-radius:5px;
+            -webkit-border-radius:5px;
+            -moz-box-shadow:#999 1px 1px 3px;
+            -webkit-box-shadow:#999 1px 1px 3px;
+            border:1px solid white;
+            text-shadow: 1px -1px 2px #aaa9a9 !important;
+        }
+        button:hover{
+            color:#666;
+        }
+        hr{
+            border:none;
+            background-color:#ccc;
+            height:1px;
+        }
 
-	</style>
+    </style>
 
-	<script type="text/javascript">
+    <script type="text/javascript">
 
-		$(function(){
+        $(function(){
 
-			if (self.location.href == top.location.href){
-				$("body").css({font:"normal 13px/16px 'trebuchet MS', verdana, sans-serif"});
-				var logo=$("<a href='http://pupunzi.com'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository' style='display:none;'></a>").css({position:"absolute"});
-				$("body").prepend(logo);
-				$("#logo").fadeIn();
-			}
+            if (self.location.href == top.location.href){
+                $("body").css({font:"normal 13px/16px 'trebuchet MS', verdana, sans-serif"});
+                var logo=$("<a href='http://pupunzi.com'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository' style='display:none;'></a>").css({position:"absolute"});
+                $("body").prepend(logo);
+                $("#logo").fadeIn();
+            }
 
-			$(".audio").mb_miniPlayer({
-				width:250,
-				inLine:false
-			});
+            $(".audio").mb_miniPlayer({
+                width:250,
+                inLine:false
+            });
 
         });
 
-	</script>
+    </script>
 </head>
 
 <body>
@@ -101,20 +101,14 @@
 <br>
 <br>
 <div class="wrapper">
-	<h1>mb.miniAudioPlayer.demo</h1>
-	<br>
-	This is a GUI implementation of <a href="http://www.jplayer.org/" target="_blank"><strong>Happyworm jPlayer plugin</strong></a>, an HTML5 audio engine, developed on jQuery framework, that let you listen mp3 and ogg file over the html5 audio tag where supported or using an invisible flash player where not supported.
-	For more informations about html5 browsers' support go to <a href="http://www.jplayer.org/latest/developer-guide/" target="_blank">jPlayer documentation site</a>.
-	<br>
-	<br>
-	<br>
-    <a id="m1" class="audio {autoPlay:true, inLine:true}"
-       href="audio/audio.mp3">Airport Gate (Boarding)</a>
-<!--
-    <hr>
-    <a id="m2" class="audio {autoPlay:true, inLine:true}"
-       href="http://www.miaowmusic.com/mp3/Miaow-02-Hidden.mp3">Airport Gate (Boarding)</a>
--->
+    <h1>mb.miniAudioPlayer.demo</h1>
+    <br>
+    This is a GUI implementation of <a href="http://www.jplayer.org/" target="_blank"><strong>Happyworm jPlayer plugin</strong></a>, an HTML5 audio engine, developed on jQuery framework, that let you listen mp3 and ogg file over the html5 audio tag where supported or using an invisible flash player where not supported.
+    For more informations about html5 browsers' support go to <a href="http://www.jplayer.org/latest/developer-guide/" target="_blank">jPlayer documentation site</a>.
+    <br>
+    <br>
+    <br>
+    <a id="m1" class="audio {autoplay:true, inLine:false}" href="audio/audio.mp3">Airport Gate (Boarding)</a>
 </div>
 </body>
 </html>
