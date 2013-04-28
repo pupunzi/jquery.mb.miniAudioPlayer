@@ -15,7 +15,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 31/01/13 22.37
+  ~  last modified: 28/04/13 23.33
   ~  ******************************************************************************/
   -->
 
@@ -28,22 +28,34 @@
 	<script type="text/javascript" src="inc/jquery.jplayer.min.js"></script>
   <script type="text/javascript" src="inc/jquery.mb.miniPlayer.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/miniplayer.css" title="style"  media="screen"/>
-	<style type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
+    <style type="text/css">
 
 			/*Generic page style*/
 
 		body{
-			font:normal 13px/16px 'trebuchet MS', sans-serif;
-			margin:10px;
-			background: #ffffff;
-		}
+			margin:0px;
+			background: #ffc000;
+            font:normal 16px/20px Lekton, sans-serif;
+        }
+
 		.wrapper{
-			position:relative;
-			padding-top:90px;
-			padding-left:50px;
+			position:absolute;
+			padding:100px 50px;
 			width:80%;
-			margin:auto
-		}
+            min-height: 100%;
+            margin-left: 10% ;
+            top:0;
+            background: #e8e8e8;
+
+            font:normal 16px/20px Lekton, sans-serif;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-shadow: 0 0 10px rgba(0,0,0,0.4);
+            }
+
+
 		.wrapper h1{
 			font-family:Arial, Helvetica, sans-serif;
 			font-size:26px;
@@ -52,13 +64,11 @@
 			padding:3px;
 			display:inline-block;
 			cursor:pointer;
-			font:12px/14px Arial, Helvetica, sans-serif;
+			font:16px/18px Arial, Helvetica, sans-serif;
 			color:#fff;
 			background-color:#ccc;
-			-moz-border-radius:5px;
-			-webkit-border-radius:5px;
-			-moz-box-shadow:#999 1px 1px 3px;
-			-webkit-box-shadow:#999 1px 1px 3px;
+			border-radius:5px;
+			box-shadow:#999 1px 1px 3px;
 			border:1px solid white;
 			text-shadow: 1px -1px 2px #aaa9a9 !important;
 		}
@@ -70,6 +80,12 @@
 			background-color:#ccc;
 			height:1px;
 		}
+        .wrapper span.param{
+            font:normal 13px/15px Lekton, sans-serif;
+            color:#767676;
+            display: block;
+            margin-top: 10px;
+        }
 
 	</style>
 
@@ -79,8 +95,8 @@
 
 			if (self.location.href == top.location.href){
 				$("body").css({font:"normal 13px/16px 'trebuchet MS', verdana, sans-serif"});
-				var logo=$("<a href='http://pupunzi.com'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository' style='display:none;'></a>").css({position:"absolute"});
-				$("body").prepend(logo);
+				var logo=$("<a href='http://pupunzi.com'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository' style='display:none;'></a>").css({position:"absolute", top:10, left:10});
+				$(".wrapper").prepend(logo);
 				$("#logo").fadeIn();
 			}
 
@@ -106,21 +122,22 @@
 	For more informations about html5 browsers' support go to <a href="http://www.jplayer.org/latest/developer-guide/" target="_blank">jPlayer documentation site</a>.
 	<br>
 	<br>
+    <p><a href="skinmaker.html"> Customize the player skin</a></p>
 	<br>
 	<a id="m1" class="audio {ogg:'http://www.miaowmusic.com/ogg/Miaow-07-Bubble.ogg', loop:true,inLine:true, downloadable:true}" href="http://www.miaowmusic.com/mp3/Miaow-07-Bubble.mp3">miaowmusic - Bubble (mp3/ogg)</a>
 	<button onclick="$('#m1').mb_miniPlayer_play()">play</button>
 	<button onclick="$('#m1').mb_miniPlayer_stop()">stop</button>
 	<br>
-	<span>param -> all features</span>
+	<span class="param">param -> all features</span>
 	<hr>
 	<a id="m2" class="audio {skin:'orange', ogg:'http://www.miaowmusic.com/ogg/Miaow-02-Hidden.ogg', showTime:false}" href="http://www.miaowmusic.com/mp3/Miaow-02-Hidden.mp3">miaowmusic - Hidden (ogg/mp3)</a>
-	<span> param -> showTime:false, ogg:'http://www.miaowmusic.com/ogg/Miaow-02-Hidden.ogg' (FF will play it as HTML5)</span>
+	<span class="param"> param -> showTime:false, ogg:'http://www.miaowmusic.com/ogg/Miaow-02-Hidden.ogg' (FF will play it as HTML5)</span>
 	<hr>
 	<a id="m3" class="audio {skin:'blue', autoPlay:false,showRew:false}" href="http://www.miaowmusic.com/mp3/Miaow-08-Stirring-of-a-fool.mp3">miaowmusic - Stirring of a Fool (mp3)</a>
-	<span>param -> showRew:false</span>
+	<span class="param">param -> showRew:false</span>
 	<hr>
 	<a id="m4" class="audio {skin:'red', autoPlay:false,showRew:false, showTime:false}" href="http://www.miaowmusic.com/mp3/Miaow-04-Lismore.mp3">miaowmusic - Lismore (mp3)</a>
-	<span>param -> showRew:false, showTime:false</span>
+	<span class="param">param -> showRew:false, showTime:false</span>
 	<hr>
 	<a id="m5" class="audio {skin:'green', autoPlay:false, addShadow:false}" href="http://www.miaowmusic.com/mp3/Miaow-08-Stirring-of-a-fool.mp3">miaowmusic - Stirring of a Fool (mp3)</a>
 	<br>

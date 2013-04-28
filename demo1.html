@@ -15,7 +15,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 27/02/13 23.53
+  ~  last modified: 28/04/13 23.33
   ~  ******************************************************************************/
   -->
 
@@ -28,26 +28,31 @@
     <script type="text/javascript" src="inc/jquery.jplayer.min.js"></script>
     <script type="text/javascript" src="inc/jquery.mb.miniPlayer.js"></script>
     <link rel="stylesheet" type="text/css" href="css/miniplayer.css" title="style" media="screen"/>
+    <link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
     <style type="text/css">
 
             /*Generic page style*/
 
-        body {
-            font: normal 13px/16px 'trebuchet MS', sans-serif;
-            margin: 10px;
-            background: #ffffff;
+        body{
+            margin:0px;
+            background: #ffc000;
+            font:normal 16px/20px Lekton, sans-serif;
         }
 
-        .wrapper {
-            position: relative;
-            padding-top: 90px;
-            padding-left: 50px;
-            width: 80%;
-            margin: auto
+        .wrapper{
+            position:absolute;
+            padding:100px 50px;
+            width:80%;
+            min-height: 100%;
+            margin-left: 10% ;
+            top:0;
+            background: #e8e8e8;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-shadow: 0 0 10px rgba(0,0,0,0.4);
         }
 
         .wrapper h1 {
-            font-family: Arial, Helvetica, sans-serif;
             font-size: 26px;
         }
 
@@ -55,7 +60,6 @@
             padding: 3px;
             display: inline-block;
             cursor: pointer;
-            font: 12px/14px Arial, Helvetica, sans-serif;
             color: #fff;
             background-color: #ccc;
             -moz-border-radius: 5px;
@@ -84,8 +88,8 @@
         $(function () {
 
             if (self.location.href == top.location.href) {
-                var logo = $("<a href='http://pupunzi.com'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository' style='display:none;'></a>").css({position: "absolute"});
-                $("body").css({font: "normal 13px/16px 'trebuchet MS', verdana, sans-serif"}).prepend(logo);
+                var logo=$("<a href='http://pupunzi.com'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository' style='display:none;'></a>").css({position:"absolute", top:10, left:10});
+                $(".wrapper").prepend(logo);
                 $("#logo").fadeIn();
             }
 
@@ -116,8 +120,9 @@
     For more informations about html5 browsers' support go to <a href="http://www.jplayer.org/latest/developer-guide/"
                                                                  target="_blank">jPlayer documentation site</a>.
     <br>
+    <p><a href="skinmaker.html"> Customize the player skin</a></p>
     <br>
-    <a id="m1" class="audio {autoPlay:true, inLine:true}"
+    <a id="m1" class="audio {autoplay:true, inLine:true}"
        href="http://www.pacdv.com/sounds/ambience_sounds/airport-gate-1.mp3">Airport Gate (Boarding)</a>
     <button onclick="$('#m1').mb_miniPlayer_stop()">stop</button>
     <button onclick="$('#m1').mb_miniPlayer_play()">play</button>
@@ -140,7 +145,7 @@
     All the music are provided by <a href="http://www.pacdv.com" target="_blank">© pacdv.com</a>.
     <br>
 
-    <p style="font: 16px/22px 'trebuchet MS', sans-serif;">
+    <p>
         Here is a demo of a custom behaviour applied as callback for the "end" event of each player:
         <br>
         The first player has the "autoPlay" parameter set as true and therefor it'll start playing on page load; once
@@ -150,7 +155,7 @@
         <br>
         This behaviour can't works on iOs devices due to their security restrictions.
     </p>
-	<pre style="margin-left: 100px; "><code>
+	<pre style="margin-left: 0px;overflow:auto; background: #dcdcdc; padding: 10px "><code>
         // this is the initializer function
 
         $(".audio").mb_miniPlayer({

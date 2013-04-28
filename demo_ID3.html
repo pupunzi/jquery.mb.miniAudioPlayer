@@ -15,7 +15,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 07/03/13 23.23
+  ~  last modified: 28/04/13 23.33
   ~  ******************************************************************************/
   -->
 
@@ -26,25 +26,34 @@
 
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
     <script type="text/javascript" src="inc/jquery.jplayer.min.js"></script>
-    <script type="text/javascript" src="inc/id3/id3.min.js"></script>
     <script type="text/javascript" src="inc/jquery.mb.miniPlayer.js"></script>
     <link rel="stylesheet" type="text/css" href="css/miniplayer.css" title="style"  media="screen"/>
+    <link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
     <style type="text/css">
 
             /*Generic page style*/
 
         body{
-            font:normal 13px/16px 'trebuchet MS', sans-serif;
-            margin:10px;
-            background: #ffffff;
+            margin:0px;
+            background: #ffc000;
+            font:normal 16px/20px Lekton, sans-serif;
         }
+
         .wrapper{
-            position:relative;
-            padding-top:90px;
-            padding-left:50px;
+            position:absolute;
+            padding:100px 50px;
             width:80%;
-            margin:auto
+            min-height: 100%;
+            margin-left: 10% ;
+            top:0;
+            background: #e8e8e8;
+
+            font:normal 16px/20px Lekton, sans-serif;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-shadow: 0 0 10px rgba(0,0,0,0.4);
         }
+
         .wrapper h1{
             font-family:Arial, Helvetica, sans-serif;
             font-size:26px;
@@ -80,14 +89,15 @@
 
             if (self.location.href == top.location.href){
                 $("body").css({font:"normal 13px/16px 'trebuchet MS', verdana, sans-serif"});
-                var logo=$("<a href='http://pupunzi.com'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository' style='display:none;'></a>").css({position:"absolute"});
-                $("body").prepend(logo);
+                var logo=$("<a href='http://pupunzi.com'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository' style='display:none;'></a>").css({position:"absolute", top:10, left:10});
+                $(".wrapper").prepend(logo);
                 $("#logo").fadeIn();
             }
 
             $(".audio").mb_miniPlayer({
                 width:250,
-                inLine:false
+                inLine:false,
+                id3:true
             });
 
         });
@@ -102,6 +112,8 @@
 <br>
 <div class="wrapper">
     <h1>mb.miniAudioPlayer.demo</h1>
+    <br>
+    <p><a href="skinmaker.html"> Customize the player skin</a></p>
     <br>
     This is a GUI implementation of <a href="http://www.jplayer.org/" target="_blank"><strong>Happyworm jPlayer plugin</strong></a>, an HTML5 audio engine, developed on jQuery framework, that let you listen mp3 and ogg file over the html5 audio tag where supported or using an invisible flash player where not supported.
     For more informations about html5 browsers' support go to <a href="http://www.jplayer.org/latest/developer-guide/" target="_blank">jPlayer documentation site</a>.

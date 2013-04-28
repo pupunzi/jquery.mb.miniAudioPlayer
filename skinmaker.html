@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<!--
+  ~ /*******************************************************************************
+  ~  jquery.mb.components
+  ~  file: skinmaker.html
+  ~
+  ~  Copyright (c) 2001-2013. Matteo Bicocchi (Pupunzi);
+  ~  Open lab srl, Firenze - Italy
+  ~  email: matteo@open-lab.com
+  ~  site: 	http://pupunzi.com
+  ~  blog:	http://pupunzi.open-lab.com
+  ~ 	http://open-lab.com
+  ~
+  ~  Licences: MIT, GPL
+  ~  http://www.opensource.org/licenses/mit-license.php
+  ~  http://www.gnu.org/licenses/gpl.html
+  ~
+  ~  last modified: 29/04/13 0.45
+  ~  ******************************************************************************/
+  -->
+
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>mb.miniAudioPlayer.skinMaker</title>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+<script type="text/javascript" src="inc/jquery.jplayer.min.js"></script>
+<script type="text/javascript" src="inc/jquery.mb.miniPlayer.js"></script>
+
+<script type="text/javascript" src="inc/farbtastic/farbtastic.js"></script>
+<link rel="stylesheet" href="inc/farbtastic/farbtastic.css" type="text/css" />
+
+<link rel="stylesheet" type="text/css" href="css/miniplayer.css" title="style"  media="screen"/>
+<link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
+<style type="text/css">
+
+        /*Generic page style*/
+
+    *{
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        outline: none;
+    }
+
+    body{
+        margin:0px;
+        background: #ffc000;
+        font:normal 16px/20px Lekton, sans-serif;
+    }
+
+    .wrapper{
+        position:absolute;
+        padding:50px 50px;
+        width:80%;
+        min-height: 100%;
+        margin-left: 10% ;
+        top:0;
+        background: #e8e8e8;
+
+        font:normal 16px/20px Lekton, sans-serif;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-shadow: 0 0 10px rgba(0,0,0,0.4);
+    }
+
+
+    .wrapper h1{
+        font-family:Arial, Helvetica, sans-serif;
+        font-size:26px;
+        line-height:30px;
+    }
+    .wrapper h2{
+        font-family:Arial, Helvetica, sans-serif;
+        font-size:22px;
+        line-height: 26px;
+        font-weight: normal;
+    }
+    .wrapper h3{
+        font-family:Arial, Helvetica, sans-serif;
+        font-size:18px;
+        line-height: 24px;
+        font-weight: normal;
+    }
+    button{
+        padding:5px;
+        display:inline-block;
+        cursor:pointer;
+        font:16px/18px Arial, Helvetica, sans-serif;
+        color:#fff;
+        background-color: #ffc000;
+        border-radius:5px;
+        box-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+        border:1px solid white;
+        text-shadow: 1px -1px 2px rgba(0,0,0,0.2); !important;
+    }
+    button:hover{
+        background-color: #5a5a5a;
+    }
+    hr{
+        border:none;
+        background-color:#ccc;
+        height:1px;
+    }
+    .wrapper span.param{
+        font:normal 13px/15px Lekton, sans-serif;
+        color:#767676;
+        display: block;
+        margin-top: 10px;
+    }
+
+    .formatBox, #player{
+        padding: 5px;
+        position: relative;
+    }
+
+    .formatBox{
+        width: 100%;
+        background: rgba(255, 255, 255, 0.44);
+        margin: 5px 0;
+        border-radius: 5px;
+    }
+
+    .simulate{
+        background: transparent;
+        text-align: right;
+        border-top: 1px solid #ffffff;
+        padding-top: 10px;
+    }
+
+    #player{
+        background: transparent;
+        margin-bottom: 10px;
+        padding: 25px;
+        background: #ffc000;
+        border-radius: 5px;
+        box-shadow: 0 0 5px rgba(0,0,0,0.3);
+    }
+
+    .code{
+        font-size: 12px;
+        color: #3e3e3e
+    }
+    label{
+        display: inline-block;
+        width: 150px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    input{
+        width: 100px;
+        font-size: 20px;
+    }
+    input#skname{
+        width: 100%;
+        font-size: 30px;
+    }
+
+    #skincolorpicker{
+        position: relative;
+        /*margin: auto;*/
+        width: 200px;
+        opacity: .1;
+    }
+
+    #colorP{
+        width: 550px;
+        position: relative;
+    }
+
+    #generatedCode{
+        resize: none;
+        width: 100%;
+        height: 450px;
+        background: #ffc000;
+        padding: 10px;
+        font-size: 12px;
+        line-height: 18px;
+        color: #fff;
+        border: none;
+    }
+
+    #codeBox{
+        padding: 10px;
+        width: 100%;
+        display: none;
+        position: absolute;
+        top:0;
+        border-radius: 5px;
+        box-shadow: 0 0 5px rgba(0,0,0,0.3);
+        background: #ffc000;
+
+    }
+
+    .skinName{
+        width: 250px;
+        font-size: 20px;
+        background:#ffc000;
+        color: white;
+    }
+
+    #skinNameVal{
+        color: #5a5a5a;
+        font-size: 20px;
+    }
+
+    ::selection, ::-moz-selection{
+        background:#ffc000 !important;
+        color:#fff !important;
+    }
+
+    #close{
+        position: absolute;
+        top:10px;
+        right: 10px;
+        padding: 10px;
+        background: #000;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    #cpBox{
+        position: relative;
+    }
+
+    #cpOverlay{
+        position: absolute;
+        top:0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    a{
+        color:#ffc000;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 18px;
+    }
+    a:hover{
+        color:#ffc000;
+        text-decoration: underline;
+    }
+
+</style>
+
+<style id="customSkin">
+
+    .mbMiniPlayer.custom table span{
+        background-color:#333;
+    }
+
+    .mbMiniPlayer.custom table span.map_play{
+        border-left:1px solid #000;
+    }
+
+    .mbMiniPlayer.custom table span.map_volume{
+        border-right:1px solid #333;
+    }
+
+    .mbMiniPlayer.custom table span.map_volume.mute{
+        color: #333;
+    }
+
+    .mbMiniPlayer.custom .map_download:hover{
+        color: #000;
+    }
+
+</style>
+
+<script type="text/javascript">
+
+    $(function(){
+
+        if (self.location.href == top.location.href){
+            $("body").css({font:"normal 13px/16px 'trebuchet MS', verdana, sans-serif"});
+            var logo=$("<a href='http://pupunzi.com'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository' style='display:none;'></a>").css({position:"absolute", top:10, left:10});
+            $(".wrapper").prepend(logo);
+            $("#logo").fadeIn();
+        }
+
+        $(".audio").mb_miniPlayer({
+            width:100
+        });
+
+        function changeCSS(wrapperBgnd, skinName, background, text, border, borderLeft, borderRight, mute , download, downloadHover){
+
+            var style="";
+            style += "/*++++++++++++++++++++++++++++++++++++++++++++++++++\n";
+            style += "MAP custom skin: "+skinName+"\n";
+            style += "background: "+background+"\n";
+            style += "icons: "+text+"\n";
+            style += "border: "+border+"\n";
+            style += "borderLeft: "+borderLeft+"\n";
+            style += "borderRight: "+borderRight+"\n";
+            style += "mute: "+mute+"\n";
+            style += "download: "+download+"\n";
+            style += "downloadHover: "+downloadHover+"\n";
+            style += "++++++++++++++++++++++++++++++++++++++++++++++++++*/\n";
+            style += "\n";
+
+
+            style += ".mbMiniPlayer."+skinName+" table span{background-color:"+background+";}\n";
+            style += ".mbMiniPlayer."+skinName+" table span.map_play{border-left:1px solid "+borderLeft+";}\n";
+            style += ".mbMiniPlayer."+skinName+" table span.map_volume{border-right:1px solid "+borderRight+";}\n";
+            style += ".mbMiniPlayer."+skinName+" table span.map_volume.mute{color: "+mute+";}\n";
+            style += ".mbMiniPlayer."+skinName+" .map_download{color: "+download+";}\n";
+            style += ".mbMiniPlayer."+skinName+" .map_download:hover{color: "+downloadHover+";}\n";
+            style += ".mbMiniPlayer."+skinName+" table span{color: "+text+"}\n";
+            style += ".mbMiniPlayer."+skinName+" table {border: 1px solid "+border+" !important}\n";
+            style += ".mbMiniPlayer."+skinName+" table span.map_title{color: #000}\n";
+            style += "\n";
+            style += "/*++++++++++++++++++++++++++++++++++++++++++++++++*/\n";
+
+            // $(".wrapper").css("background",wrapperBgnd );
+            $("#customSkin").html(style);
+            $("#generatedCode").html(style);
+            $("#mp_mbmap").addClass(skinName);
+            $("#skinNameVal").html(skinName);
+
+
+            return style;
+        }
+
+        $('#skincolorpicker').farbtastic();
+
+        function updateCSS(){
+            document.updater = setInterval(function(){
+                var skinName = $("#skinName input").val();
+                var background = $("#background input").val();
+                var text = $("#text input").val();
+                var borderLeft = $("#borderLeft input").val();
+                var borderRight= $("#borderRight input").val();
+                var mute= $("#mute input").val();
+                var download= $("#download input").val();
+                var downloadHover= $("#downloadHover input").val();
+                var wrapperBgnd= $("#wrapperBgnd input").val();
+                var border= $("#border input").val();
+
+                changeCSS(wrapperBgnd, skinName, background, text, border, borderLeft, borderRight, mute , download,downloadHover);
+            },1)
+        }
+
+        updateCSS();
+
+        $("input").click();
+
+
+        $("#skname").on("keypress",function(e) {
+
+            var char = String.fromCharCode(e.keyCode);
+            if (char.match(/[^a-zA-Z0-9 ]/g)) {
+                return false
+            }
+        }).on("keyup",function(){
+                    this.value = this.value.replace(" ", "_");
+                });
+
+        $("input").not("#skname").on("focus",function(){
+            $("#skincolorpicker").stop().fadeTo(300,1);
+            $("#cpOverlay").hide();
+        })
+        $("input").on("blur",function(){
+            $("#skincolorpicker").stop().fadeTo(300,.1);
+            $("#cpOverlay").show();
+        })
+        $('#skname').click().focus();
+
+        $("#generatedCode").on("mouseup", function(){
+
+            if(this.isSelected)
+                return false;
+
+            this.select();
+            this.isSelected = true;
+        }).on("blur", function(){
+                    this.isSelected = false;
+                })
+    });
+
+    function updateBg(c){
+        $("#player").css({
+            backgroundColor:c,
+            color: $.farbtastic('#skincolorpicker').hsl[2] > 0.5 ? '#000' : '#fff'
+        })
+        $('#simulateVal').val(c)
+    }
+
+
+</script>
+</head>
+
+<body>
+<div class="wrapper">
+    <h1 style="font-size: 45px">mb.miniAudioPlayer Skin Maker</h1>
+    <h2>
+        This tool let you create your own skin for the mb.miniAudioPlayer jQuery component<sup style="color: darkred">*</sup>.
+    </h2>
+    <p style="font-weight: bold"><sup style="color: darkred">*</sup>Not available for the WordPress component.</p>
+    <hr>
+    <br>
+    <div id="colorP" style="float: right;">
+        <h2>How it works</h2>
+        <p>
+        <ol>
+            <li>Give it a name.
+            <li>Customize each elements giving them a color with the color-picker.
+            <li>Generate the CSS code.
+            <li>Copy and paste it into your CSS.
+            <li>Add the name you give as value of the "skin" parameter.
+        </ol>
+        </p>
+        <hr>
+
+        <div id="cpBox">
+            <div id="skincolorpicker"></div>
+            <div id="cpOverlay"></div>
+        </div>
+        <hr>
+        <p><a href="http://pupunzi.com/mb.components/mb.miniAudioPlayer/demo/demo.html" target="_blank">See the on-line demo</a></p>
+        <hr><p><a href="http://pupunzi.open-lab.com" target="_blank">go to my blog</a></p>
+        <hr><p><a href="http://pupunzi.com" target="_blank">go to my site</a></p>
+        <hr><p><a href="http://wordpress.org/extend/plugins/wp-miniaudioplayer" target="_blank">get the WordPress component</a></p>
+        <hr>
+        <!-- Begin MailChimp Signup Form -->
+        <link href="http://cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+        <style type="text/css">
+            #mc_embed_signup{background:transparent; clear:left; font:14px Helvetica,Arial,sans-serif; }
+                /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+                   We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+        </style>
+        <div id="mc_embed_signup" >
+            <form action="http://pupunzi.us6.list-manage2.com/subscribe/post?u=4346dc9633&amp;id=91a005172f" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                <label for="mce-EMAIL" style="width: 100%">Subscribe to my mailing list<br>to stay in touch.</label>
+                <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+                <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+            </form>
+        </div>
+        <!--End mc_embed_signup-->
+
+
+
+
+        <div id="codeBox">
+            <div id="close" onclick="$('#codeBox').fadeOut()">close</div>
+            <h2>Here is your skin!</h2>
+            <h3>1. Copy the below text <br>and paste it in your CSS file:</h3>
+            <textarea id="generatedCode"></textarea>
+            <h3>2. Set <span id="skinNameVal"></span> as value of <br>the "skin" parameter of your player.</h3>
+        </div>
+    </div>
+    <div style="float: left; width: 450px">
+
+        <div id="player">
+            <h2>How your skin will affect the player?</h2>
+            <a id="mbmap" class="audio {skin:'custom',ogg:'http://www.miaowmusic.com/ogg/Miaow-07-Bubble.ogg', loop:true,inLine:false, downloadable:true}" href="http://www.miaowmusic.com/mp3/Miaow-07-Bubble.mp3">miaowmusic - Bubble (mp3/ogg)</a>
+            <br>
+            <div class="simulate" >
+                simulate your background color:<br>
+                <input id="simulateVal" class="color" onclick="$.farbtastic('#skincolorpicker').linkTo(updateBg)" value="#ffc000" onblur="$.farbtastic('#skincolorpicker').setColor(this.value)">
+            </div>
+
+        </div>
+        <hr>
+
+        <div class="formatBox code" >
+            <div id="skinName"><label>Skin name:</label> <input id="skname" class="skinName" value="mySkin">  </div>
+        </div>
+
+        <div class="formatBox code" >
+            <div id="background"><label>Backgroud:</label> <input  class="color" onclick="$.farbtastic('#skincolorpicker').linkTo('#background input')" value="#000"> chose the color -> </div>
+        </div>
+        <div class="formatBox code">
+            <div id="text"><label>icons:</label> <input class="color" onclick="$.farbtastic('#skincolorpicker').linkTo('#text input')" value="#fbcc28"> chose the color -> </div>
+        </div>
+        <div class="formatBox code">
+            <div id="border"><label>border:</label> <input class="color" onclick="$.farbtastic('#skincolorpicker').linkTo('#border input')" value="#fbcc28"> chose the color -> </div>
+        </div>
+        <div class="formatBox code">
+            <div id="borderLeft"><label>border left:</label> <input class="color" onclick="$.farbtastic('#skincolorpicker').linkTo('#borderLeft input')" value="#333"> chose the color -> </div>
+        </div>
+        <div class="formatBox code">
+            <div id="borderRight"><label>border right:</label> <input class="color" onclick="$.farbtastic('#skincolorpicker').linkTo('#borderRight input')" value="#000"> chose the color -> </div>
+        </div>
+        <div class="formatBox code">
+            <div id="mute"><label>mute:</label> <input class="color" onclick="$.farbtastic('#skincolorpicker').linkTo('#mute input')" value="#ccc"> chose the color -> </div>
+        </div>
+        <div class="formatBox code">
+            <div id="download"><label>download:</label> <input class="color" onclick="$.farbtastic('#skincolorpicker').linkTo('#download input')" value="#e5ac24"> chose the color -> </div>
+        </div>
+        <div class="formatBox code">
+            <div id="downloadHover"><label>download hover:</label> <input class="color" onclick="$.farbtastic('#skincolorpicker').linkTo('#downloadHover input')" value="#000"> chose the color -> </div>
+        </div>
+        <hr>
+        <div style="text-align: right">
+            <button onclick="$('#codeBox').slideDown('slow');$('#generatedCode').select();$('#generatedCode').get(0).isSelected = true ">generate the css code</button>
+        </div>
+
+    </div>
+    <br style="clear: both">
+
+</div>
+</body>
+</html>
