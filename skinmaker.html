@@ -15,7 +15,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 29/04/13 1.11
+  ~  last modified: 30/04/13 1.39
   ~  ******************************************************************************/
   -->
 
@@ -28,220 +28,262 @@
 <script type="text/javascript" src="inc/jquery.jplayer.min.js"></script>
 <script type="text/javascript" src="inc/jquery.mb.miniPlayer.js"></script>
 
-<script type="text/javascript" src="inc/farbtastic/farbtastic.js"></script>
-<link rel="stylesheet" href="inc/farbtastic/farbtastic.css" type="text/css" />
+<script type="text/javascript" src="inc/miniColors/jquery.minicolors.js"></script>
+<link rel="stylesheet" href="inc/miniColors/jquery.minicolors.css" type="text/css" />
 
 <link rel="stylesheet" type="text/css" href="css/miniplayer.css" title="style"  media="screen"/>
 <link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
 <style type="text/css">
 
-        /*Generic page style*/
+    /*Generic page style*/
 
-    *{
-        -moz-box-sizing: border-box;
-        -webkit-box-sizing: border-box;
-        box-sizing: border-box;
-        outline: none;
-    }
+*{
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    outline: none;
+}
 
-    body{
-        margin:0px;
-        background: #ffc000;
-        font:normal 16px/20px Lekton, sans-serif;
-    }
+body{
+    margin:0px;
+    background: #ffc000;
+    font:normal 16px/20px Lekton, sans-serif;
+}
 
-    .wrapper{
-        position:absolute;
-        padding:50px 50px;
-        width:80%;
-        min-height: 100%;
-        margin-left: 10% ;
-        top:0;
-        background: #e8e8e8;
+.wrapper{
+    position:absolute;
+    padding:50px 50px;
+    width:80%;
+    min-height: 100%;
+    min-width: 950px;
+    margin-left: 10% ;
+    top:0;
+    background: #e8e8e8;
 
-        font:normal 16px/20px Lekton, sans-serif;
-        -moz-box-sizing: border-box;
-        -webkit-box-sizing: border-box;
-        box-shadow: 0 0 10px rgba(0,0,0,0.4);
-    }
+    font:normal 16px/20px Lekton, sans-serif;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-shadow: 0 0 10px rgba(0,0,0,0.4);
+}
 
 
-    .wrapper h1{
-        font-family:Arial, Helvetica, sans-serif;
-        font-size:26px;
-        line-height:30px;
-    }
-    .wrapper h2{
-        font-family:Arial, Helvetica, sans-serif;
-        font-size:22px;
-        line-height: 26px;
-        font-weight: normal;
-    }
-    .wrapper h3{
-        font-family:Arial, Helvetica, sans-serif;
-        font-size:18px;
-        line-height: 24px;
-        font-weight: normal;
-    }
-    button{
-        padding:5px;
-        display:inline-block;
-        cursor:pointer;
-        font:16px/18px Arial, Helvetica, sans-serif;
-        color:#fff;
-        background-color: #ffc000;
-        border-radius:5px;
-        box-shadow: 1px 1px 3px rgba(0,0,0,0.4);
-        border:1px solid white;
-        text-shadow: 1px -1px 2px rgba(0,0,0,0.2); !important;
-    }
-    button:hover{
-        background-color: #5a5a5a;
-    }
-    hr{
-        border:none;
-        background-color:#ccc;
-        height:1px;
-    }
-    .wrapper span.param{
-        font:normal 13px/15px Lekton, sans-serif;
-        color:#767676;
-        display: block;
-        margin-top: 10px;
-    }
+.wrapper h1{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:26px;
+    line-height:30px;
+}
+.wrapper h2{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:22px;
+    line-height: 26px;
+    font-weight: normal;
+}
+.wrapper h3{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:18px;
+    line-height: 24px;
+    font-weight: normal;
+}
 
-    .formatBox, #player{
-        padding: 5px;
-        position: relative;
-    }
 
-    .formatBox{
-        width: 100%;
-        background: rgba(255, 255, 255, 0.44);
-        margin: 5px 0;
-        border-radius: 5px;
-    }
+#rightCol {
+    width: 45%;
+    position: relative;
+}
 
-    .simulate{
-        background: transparent;
-        text-align: right;
-        border-top: 1px solid #ffffff;
-        padding-top: 10px;
-    }
+#leftCol {
+    position: relative;
+    float: left;
+    width: 45%;
+}
 
-    #player{
-        background: transparent;
-        margin-bottom: 10px;
-        padding: 25px;
-        background: #ffc000;
-        border-radius: 5px;
-        box-shadow: 0 0 5px rgba(0,0,0,0.3);
-    }
+button{
+    padding:5px;
+    display:inline-block;
+    cursor:pointer;
+    font:16px/18px Arial, Helvetica, sans-serif;
+    color:#fff;
+    background-color: #ffc000;
+    border-radius:5px;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+    border:1px solid white;
+    text-shadow: 1px -1px 2px rgba(0,0,0,0.2); !important;
+}
+button:hover{
+    background-color: #5a5a5a;
+}
+hr{
+    border:none;
+    background-color:#ccc;
+    height:1px;
+}
+.wrapper span.param{
+    font:normal 13px/15px Lekton, sans-serif;
+    color:#767676;
+    display: block;
+    margin-top: 10px;
+}
 
-    .code{
-        font-size: 12px;
-        color: #3e3e3e
-    }
-    label{
-        display: inline-block;
-        width: 150px;
-        font-size: 16px;
-        font-weight: bold;
-    }
-    input{
-        width: 100px;
-        font-size: 20px;
-    }
-    input#skname{
-        width: 100%;
-        font-size: 30px;
-    }
+.formatBox, #player{
+    padding: 5px;
+    position: relative;
+}
 
-    #skincolorpicker{
-        position: relative;
-        /*margin: auto;*/
-        width: 200px;
-        opacity: .1;
-    }
+.formatBox{
+    width: 100%;
+    background: rgba(255, 255, 255, 0.44);
+    margin: 5px 0;
+    border-radius: 5px;
+}
 
-    #colorP{
-        width: 550px;
-        position: relative;
-    }
+.simulate{
+    background: transparent;
+    text-align: right;
+    border-top: 1px solid #ffffff;
+    padding-top: 10px;
+}
 
-    #generatedCode{
-        resize: none;
-        width: 100%;
-        height: 450px;
-        background: #ffc000;
-        padding: 10px;
-        font-size: 12px;
-        line-height: 18px;
-        color: #fff;
-        border: none;
-    }
+#player{
+    background: transparent;
+    margin-bottom: 10px;
+    padding: 25px;
+    background: #ffc000;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+}
 
-    #codeBox{
-        padding: 10px;
-        width: 100%;
-        display: none;
-        position: absolute;
-        top:0;
-        border-radius: 5px;
-        box-shadow: 0 0 5px rgba(0,0,0,0.3);
-        background: #ffc000;
+.code{
+    font-size: 12px;
+    color: #3e3e3e
+}
+label{
+    display: inline-block;
+    width: 150px;
+    font-size: 16px;
+    font-weight: bold;
+}
+input{
+    width: 100px;
+    font-size: 20px;
+    color: #747474;
+    background: #e8e8e8;
+}
+input#skname{
+    width: 100%;
+    font-size: 30px;
+}
 
-    }
+#skincolorpicker{
+    position: relative;
+    /*margin: auto;*/
+    width: 200px;
+    opacity: .1;
+}
 
-    .skinName{
-        width: 250px;
-        font-size: 20px;
-        background:#ffc000;
-        color: white;
-    }
+#generatedCode{
+    resize: none;
+    width: 100%;
+    height: 450px;
+    background: #ffc000;
+    padding: 10px;
+    font-size: 12px;
+    line-height: 18px;
+    color: #fff;
+    border: none;
+}
 
-    #skinNameVal{
-        color: #5a5a5a;
-        font-size: 20px;
-    }
+#codeBox{
+    padding: 10px;
+    width: 100%;
+    display: none;
+    position: absolute;
+    top:0;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+    background: #ffc000;
 
-    ::selection, ::-moz-selection{
-        background:#ffc000 !important;
-        color:#fff !important;
-    }
+}
 
-    #close{
-        position: absolute;
-        top:10px;
-        right: 10px;
-        padding: 10px;
-        background: #000;
-        color: #fff;
-        cursor: pointer;
-    }
+.skinName{
+    width: 250px;
+    font-size: 20px;
+    background:#ffc000;
+    color: white;
+}
 
-    #cpBox{
-        position: relative;
-    }
+#skinNameVal{
+    color: #5a5a5a;
+    font-size: 20px;
+}
 
-    #cpOverlay{
-        position: absolute;
-        top:0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-    }
-    a{
-        color:#ffc000;
-        text-decoration: none;
-        font-weight: bold;
-        font-size: 18px;
-    }
-    a:hover{
-        color:#ffc000;
-        text-decoration: underline;
-    }
+::selection, ::-moz-selection{
+    background:#ffc000 !important;
+    color:#fff !important;
+}
+
+#close{
+    position: absolute;
+    top:10px;
+    right: 10px;
+    padding: 10px;
+    background: #000;
+    color: #fff;
+    cursor: pointer;
+}
+
+#cpBox{
+    position: relative;
+}
+
+#cpOverlay{
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+a{
+    color:#ffc000;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+}
+a:hover{
+    color:#ffc000;
+    text-decoration: underline;
+}
+
+.minicolors.minicolors-theme-default .minicolors-input {
+    margin: 0px;
+    margin-right: 3px;
+    border: solid 1px
+    #CCC;
+    font: 16px sans-serif;
+    width: 80px;
+    height: 30px;
+    border-radius: 2px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, .04);
+    padding: 2px;
+    margin-right: -1px;
+}
+
+.minicolors-swatch {
+    position: relative;
+    width: 35px;
+    height: 30px;
+    text-align: left;
+    background-position: -80 0;
+    border: solid 1px
+    #CCC;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.displayVal{
+    display: inline-block;
+    padding: 5px;
+}
 
 </style>
 
@@ -273,6 +315,24 @@
 
     $(function(){
 
+        $(window).scroll(function(){
+            if( $(window).scrollTop() >240){
+
+                if(!$(".playerClone").length){
+                    var clone = $("#player").clone();
+                    var height = $("#player").outerHeight();
+                    clone.addClass("playerClone").css({opacity:0, height:height}).empty();
+                    $("#player").after(clone);
+                }
+                var left = $("#player").offset().left;
+                var width =  $(".playerClone").outerWidth();
+                $("#player").css({position:"fixed", top:20, left:left, width:width, zIndex:5});
+            }else{
+                $("#player").css({position:"static", left:0,width:"auto", zIndex:0});
+                $(".playerClone").remove();
+            }
+        })
+
         if (self.location.href == top.location.href){
             $("body").css({font:"normal 13px/16px 'trebuchet MS', verdana, sans-serif"});
             var logo=$("<a href='http://pupunzi.com'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository' style='display:none;'></a>").css({position:"absolute", top:10, left:10});
@@ -284,33 +344,58 @@
             width:100
         });
 
-        function changeCSS(wrapperBgnd, skinName, background, text, border, borderLeft, borderRight, mute , download, downloadHover){
+        function changeCSS(skinName, background, text, textShadow, border, borderLeft, borderRight, mute , download, downloadHover){
 
             var style="";
             style += "/*++++++++++++++++++++++++++++++++++++++++++++++++++\n";
-            style += "MAP custom skin: "+skinName+"\n";
-            style += "background: "+background+"\n";
-            style += "icons: "+text+"\n";
-            style += "border: "+border+"\n";
-            style += "borderLeft: "+borderLeft+"\n";
-            style += "borderRight: "+borderRight+"\n";
-            style += "mute: "+mute+"\n";
-            style += "download: "+download+"\n";
-            style += "downloadHover: "+downloadHover+"\n";
+            style += "MAP custom skin: "+skinName[0]+"\n";
+            style += "background: "+background[0]+"\n";
+            style += "icons: "+text[0]+"\n";
+            style += "border: "+border[0]+"\n";
+            style += "borderLeft: "+borderLeft[0]+"\n";
+            style += "borderRight: "+borderRight[0]+"\n";
+            style += "mute: "+mute[0]+"\n";
+            style += "download: "+download[0]+"\n";
+            style += "downloadHover: "+downloadHover[0]+"\n";
             style += "++++++++++++++++++++++++++++++++++++++++++++++++++*/\n";
             style += "\n";
 
-
-            style += ".mbMiniPlayer."+skinName+" table span{background-color:"+background+";}\n";
-            style += ".mbMiniPlayer."+skinName+" table span.map_play{border-left:1px solid "+borderLeft+";}\n";
-            style += ".mbMiniPlayer."+skinName+" table span.map_volume{border-right:1px solid "+borderRight+";}\n";
-            style += ".mbMiniPlayer."+skinName+" table span.map_volume.mute{color: "+mute+";}\n";
-            style += ".mbMiniPlayer."+skinName+" .map_download{color: "+download+";}\n";
-            style += ".mbMiniPlayer."+skinName+" .map_download:hover{color: "+downloadHover+";}\n";
-            style += ".mbMiniPlayer."+skinName+" table span{color: "+text+"}\n";
-            style += ".mbMiniPlayer."+skinName+" table {border: 1px solid "+border+" !important}\n";
-            style += ".mbMiniPlayer."+skinName+" table span.map_title{color: #000}\n";
+            style += "/* Older browser */ \n";
+            if(background[0] != background[1])
+                style += ".mbMiniPlayer."+skinName+" table span{background-color:"+background[1]+";}\n";
+            if(borderLeft[0] != borderLeft[1])
+                style += ".mbMiniPlayer."+skinName+" table span.map_play{border-left:1px solid "+borderLeft[1]+";}\n";
+            if(borderRight[0] != borderRight[1])
+                style += ".mbMiniPlayer."+skinName+" table span.map_volume{border-right:1px solid "+borderRight[1]+";}\n";
+            if(mute[0] != mute[1])
+                style += ".mbMiniPlayer."+skinName+" table span.map_volume.mute{color: "+mute[1]+";}\n";
+            if(download[0] != download[1])
+                style += ".mbMiniPlayer."+skinName+" .map_download{color: "+download[1]+";}\n";
+            if(downloadHover[0] != downloadHover[1])
+                style += ".mbMiniPlayer."+skinName+" .map_download:hover{color: "+downloadHover[1]+";}\n";
+            if(text[0] != text[1])
+                style += ".mbMiniPlayer."+skinName+" table span{color: "+text[1]+";}\n";
+            if(border[0] != border[1])
+                style += ".mbMiniPlayer."+skinName+" table {border: 1px solid "+border[1]+" !important;}\n";
             style += "\n";
+
+
+
+
+            style += "/*++++++++++++++++++++++++++++++++++++++++++++++++*/\n";
+            style += "\n";
+            style += ".mbMiniPlayer."+skinName+" table{background-color:transparent;}\n";
+            style += ".mbMiniPlayer."+skinName+" table span{background-color:"+background[0]+";}\n";
+            style += ".mbMiniPlayer."+skinName+" table span.map_play{border-left:1px solid "+borderLeft[0]+";}\n";
+            style += ".mbMiniPlayer."+skinName+" table span.map_volume{border-right:1px solid "+borderRight[0]+";}\n";
+            style += ".mbMiniPlayer."+skinName+" table span.map_volume.mute{color: "+mute[0]+";}\n";
+            style += ".mbMiniPlayer."+skinName+" .map_download{color: "+download[0]+";}\n";
+            style += ".mbMiniPlayer."+skinName+" .map_download:hover{color: "+downloadHover[0]+";}\n";
+            style += ".mbMiniPlayer."+skinName+" table span{color: "+text[0]+";text-shadow: 1px -1px 1px "+textShadow[0]+"!important;}\n";
+            style += ".mbMiniPlayer."+skinName+" table span{color: "+text[0]+";}\n";
+            style += ".mbMiniPlayer."+skinName+" table {border: 1px solid "+border[0]+" !important;}\n";
+            style += ".mbMiniPlayer."+skinName+" table span.map_title{color: #000}\n";
+
             style += "/*++++++++++++++++++++++++++++++++++++++++++++++++*/\n";
 
             // $(".wrapper").css("background",wrapperBgnd );
@@ -323,22 +408,78 @@
             return style;
         }
 
-        $('#skincolorpicker').farbtastic();
+        RGBToHSL = function (rgb) {
+            var min, max, delta, h, s, l;
+            var r = rgb[0], g = rgb[1], b = rgb[2];
+            min = Math.min(r, Math.min(g, b));
+            max = Math.max(r, Math.max(g, b));
+            delta = max - min;
+            l = (min + max) / 2;
+            s = 0;
+            if (l > 0 && l < 1) {
+                s = delta / (l < 0.5 ? (2 * l) : (2 - 2 * l));
+            }
+            h = 0;
+            if (delta > 0) {
+                if (max == r && max != g) h += (g - b) / delta;
+                if (max == g && max != b) h += (2 + (b - r) / delta);
+                if (max == b && max != r) h += (4 + (r - g) / delta);
+                h /= 6;
+            }
+            return [h, s, l];
+        }
+
+        function updateBg(c){
+            $("#player").css({
+                backgroundColor:"rgb("+c[0]+","+c[1]+","+c[2]+")",
+                color: RGBToHSL(c)[2] > 40 ? '#000' : '#fff'
+            })
+        }
+
+
+        $('input.color').each(function(){
+
+            if(!$(this).hasClass("bodySimulator")){
+                var displayVal = $("<span/>").addClass("displayVal");
+                $(this).after(displayVal);
+                var hiddenValue = $("<input/>").attr("type","hidden").addClass("hiddenValue").val($(this).val());
+                $(this).after(hiddenValue);
+            }
+
+            $(this).minicolors({
+                opacity: !$(this).hasClass("bodySimulator"),
+                textfield:true,
+                swatchPosition:'left',
+                change: function(hex, opacity){
+                    if($(this).hasClass("bodySimulator")){
+                        var rgba =  $(this).minicolors('rgbObject');
+                        var rgb = [rgba["r"],rgba["g"],rgba["b"]];
+                        updateBg(rgb);
+                    }else{
+                        var col = $(this).minicolors('rgbaString');
+                        $(this).closest("div").find(".hiddenValue").val(col);
+                        $(this).closest("div").find(".displayVal").html(col);
+                    }
+                }
+            });
+
+        });
+
 
         function updateCSS(){
             document.updater = setInterval(function(){
                 var skinName = $("#skinName input").val();
-                var background = $("#background input").val();
-                var text = $("#text input").val();
-                var borderLeft = $("#borderLeft input").val();
-                var borderRight= $("#borderRight input").val();
-                var mute= $("#mute input").val();
-                var download= $("#download input").val();
-                var downloadHover= $("#downloadHover input").val();
-                var wrapperBgnd= $("#wrapperBgnd input").val();
-                var border= $("#border input").val();
+                var background = [ $("#background input.hiddenValue").val(), $("#background input").val() ];
+                var text = [$("#text input.hiddenValue").val(), $("#text input").val()];
+                var textShadow = [$("#textShadow input.hiddenValue").val(), $("#textShadow input").val()];
+                var borderLeft = [$("#borderLeft input.hiddenValue").val(),$("#borderLeft input").val()];
+                var borderRight= [$("#borderRight input.hiddenValue").val(), $("#borderRight input").val()];
+                var mute= [$("#mute input.hiddenValue").val(), $("#mute input").val()];
+                var download= [$("#download input.hiddenValue").val(),$("#download input").val()];
+                var downloadHover= [$("#downloadHover input.hiddenValue").val(),$("#downloadHover input").val()];
+                var border= [$("#border input.hiddenValue").val(), $("#border input").val()];
 
-                changeCSS(wrapperBgnd, skinName, background, text, border, borderLeft, borderRight, mute , download,downloadHover);
+                changeCSS(skinName, background, text, textShadow, border, borderLeft, borderRight, mute , download, downloadHover);
             },1)
         }
 
@@ -379,14 +520,6 @@
                 })
     });
 
-    function updateBg(c){
-        $("#player").css({
-            backgroundColor:c,
-            color: $.farbtastic('#skincolorpicker').hsl[2] > 0.5 ? '#000' : '#fff'
-        })
-        $('#simulateVal').val(c)
-    }
-
 
 </script>
 </head>
@@ -398,7 +531,7 @@
     <p style="font-weight: bold"><sup style="color: darkred">*</sup>Not available for the WordPress component.</p>
     <hr>
     <br>
-    <div id="colorP" style="float: right;">
+    <div id="rightCol" style="float: right;">
         <h2>How it works</h2>
         <p>
         <ol>
@@ -448,7 +581,7 @@
             <h3>2. Set <span id="skinNameVal"></span> as value of <br>the "skin" parameter of your player.</h3>
         </div>
     </div>
-    <div style="float: left; width: 450px">
+    <div id="leftCol">
 
         <div id="player">
             <h2>How your skin will affect the player?</h2>
@@ -456,7 +589,7 @@
             <br>
             <div class="simulate" >
                 simulate your background color:<br>
-                <input id="simulateVal" class="color" onclick="$.farbtastic('#skincolorpicker').linkTo(updateBg)" value="#ffc000" onblur="$.farbtastic('#skincolorpicker').setColor(this.value)">
+                <input id="simulateVal" class="color bodySimulator" value="#ffc000">
             </div>
 
         </div>
@@ -467,28 +600,31 @@
         </div>
 
         <div class="formatBox code" >
-            <div id="background"><label>Backgroud:</label> <input  class="color" onclick="$.farbtastic('#skincolorpicker').linkTo('#background input')" value="#000"> chose the color -> </div>
+            <div id="background"><label>Backgroud:</label> <input  class="color" value="#000000"></div>
         </div>
         <div class="formatBox code">
-            <div id="text"><label>icons:</label> <input class="color" onclick="$.farbtastic('#skincolorpicker').linkTo('#text input')" value="#fbcc28"> chose the color -> </div>
+            <div id="text"><label>icons:</label> <input class="color"  value="#fbcc28"></div>
         </div>
         <div class="formatBox code">
-            <div id="border"><label>border:</label> <input class="color" onclick="$.farbtastic('#skincolorpicker').linkTo('#border input')" value="#fbcc28"> chose the color -> </div>
+            <div id="textShadow"><label>icons  shadow:</label> <input class="color"  value="#000"></div>
         </div>
         <div class="formatBox code">
-            <div id="borderLeft"><label>border left:</label> <input class="color" onclick="$.farbtastic('#skincolorpicker').linkTo('#borderLeft input')" value="#333"> chose the color -> </div>
+            <div id="border"><label>border:</label> <input class="color"  value="#fbcc28"></div>
         </div>
         <div class="formatBox code">
-            <div id="borderRight"><label>border right:</label> <input class="color" onclick="$.farbtastic('#skincolorpicker').linkTo('#borderRight input')" value="#000"> chose the color -> </div>
+            <div id="borderLeft"><label>border left:</label> <input class="color"  value="#333333"></div>
         </div>
         <div class="formatBox code">
-            <div id="mute"><label>mute:</label> <input class="color" onclick="$.farbtastic('#skincolorpicker').linkTo('#mute input')" value="#ccc"> chose the color -> </div>
+            <div id="borderRight"><label>border right:</label> <input class="color"  value="#000000"></div>
         </div>
         <div class="formatBox code">
-            <div id="download"><label>download:</label> <input class="color" onclick="$.farbtastic('#skincolorpicker').linkTo('#download input')" value="#e5ac24"> chose the color -> </div>
+            <div id="mute"><label>mute:</label> <input class="color"  value="#cccccc"></div>
         </div>
         <div class="formatBox code">
-            <div id="downloadHover"><label>download hover:</label> <input class="color" onclick="$.farbtastic('#skincolorpicker').linkTo('#downloadHover input')" value="#000"> chose the color -> </div>
+            <div id="download"><label>download:</label> <input class="color"  value="#e5ac24"></div>
+        </div>
+        <div class="formatBox code">
+            <div id="downloadHover"><label>download hover:</label> <input class="color" value="#000000"></div>
         </div>
         <hr>
         <div style="text-align: right">
