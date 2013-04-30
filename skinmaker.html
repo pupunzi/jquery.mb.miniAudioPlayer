@@ -15,7 +15,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 30/04/13 1.39
+  ~  last modified: 30/04/13 1.46
   ~  ******************************************************************************/
   -->
 
@@ -341,7 +341,7 @@ a:hover{
         }
 
         $(".audio").mb_miniPlayer({
-            width:100
+            width:200
         });
 
         function changeCSS(skinName, background, text, textShadow, border, borderLeft, borderRight, mute , download, downloadHover){
@@ -380,8 +380,6 @@ a:hover{
             style += "\n";
 
 
-
-
             style += "/*++++++++++++++++++++++++++++++++++++++++++++++++*/\n";
             style += "\n";
             style += ".mbMiniPlayer."+skinName+" table{background-color:transparent;}\n";
@@ -394,7 +392,7 @@ a:hover{
             style += ".mbMiniPlayer."+skinName+" table span{color: "+text[0]+";text-shadow: 1px -1px 1px "+textShadow[0]+"!important;}\n";
             style += ".mbMiniPlayer."+skinName+" table span{color: "+text[0]+";}\n";
             style += ".mbMiniPlayer."+skinName+" table {border: 1px solid "+border[0]+" !important;}\n";
-            style += ".mbMiniPlayer."+skinName+" table span.map_title{color: #000}\n";
+            style += ".mbMiniPlayer."+skinName+" table span.map_title{color: #000; text-shadow:none!important}\n";
 
             style += "/*++++++++++++++++++++++++++++++++++++++++++++++++*/\n";
 
