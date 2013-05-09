@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 28/04/13 23.37
+ *  last modified: 01/05/13 0.13
  *  *****************************************************************************
  */
 
@@ -96,8 +96,7 @@ a.audio{
   position:relative;
   background-color: #fff;
   height:8px;
-  margin:2px;
-  margin-top:0;
+  margin: 0 2px 2px;
   top:-2px;
   -moz-box-sizing:border-box;
   cursor:pointer;
@@ -224,9 +223,9 @@ a.audio{
 }
 
 .mbMiniPlayer[isplaying=true] table span.map_play{
-  -webkit-animation: playing 1s infinite alternate;
-  -moz-animation: playing 1s infinite alternate;
-  animation: playing 1s infinite alternate;
+  -webkit-animation: playing .7s infinite alternate;
+  -moz-animation: playing .7s infinite alternate;
+  /*animation: playing 1s infinite alternate;*/
 }
 
 @keyframes playing {
