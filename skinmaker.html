@@ -2,7 +2,7 @@
 <!--
   ~ /*******************************************************************************
   ~  jquery.mb.components
-  ~  file: skinmaker.html
+  ~  file: skinMaker.html
   ~
   ~  Copyright (c) 2001-2013. Matteo Bicocchi (Pupunzi);
   ~  Open lab srl, Firenze - Italy
@@ -15,7 +15,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 30/04/13 1.46
+  ~  last modified: 01/05/13 17.32
   ~  ******************************************************************************/
   -->
 
@@ -71,7 +71,7 @@ body{
 .wrapper h1{
     font-family:Arial, Helvetica, sans-serif;
     font-size:26px;
-    line-height:30px;
+    line-height:40px;
 }
 .wrapper h2{
     font-family:Arial, Helvetica, sans-serif;
@@ -213,7 +213,7 @@ input#skname{
 }
 
 #skinNameVal{
-    color: #5a5a5a;
+    color: #ffffff;
     font-size: 20px;
 }
 
@@ -316,7 +316,7 @@ a:hover{
     $(function(){
 
         $(window).scroll(function(){
-            if( $(window).scrollTop() >240){
+            if( $(window).scrollTop() >273){
 
                 if(!$(".playerClone").length){
                     var clone = $("#player").clone();
@@ -360,7 +360,8 @@ a:hover{
             style += "++++++++++++++++++++++++++++++++++++++++++++++++++*/\n";
             style += "\n";
 
-            style += "/* Older browser */ \n";
+            style += "/* Older browser (IE8) \n";
+            style += "   not supporting rgba() */ \n";
             if(background[0] != background[1])
                 style += ".mbMiniPlayer."+skinName+" table span{background-color:"+background[1]+";}\n";
             if(borderLeft[0] != borderLeft[1])
@@ -524,9 +525,9 @@ a:hover{
 
 <body>
 <div class="wrapper">
-    <h1 style="font-size: 45px">mb.miniAudioPlayer Skin Maker</h1>
-    <h2>This tool let you create your own skin for the mb.miniAudioPlayer v. 1.6.+ jQuery component<sup style="color: darkred">*</sup>.</h2>
-    <p style="font-weight: bold"><sup style="color: darkred">*</sup>Not available for the WordPress component.</p>
+    <h1 style="font-size: 30px">mb.miniAudioPlayer <br><span style="color: #ffc000; font-size: 70px">Skin Maker</span></h1>
+    <h2>This tool let you create your own skin for the mb.miniAudioPlayer v. 1.6.+ jQuery component<sup style="color: #ffc000">*</sup>.</h2>
+    <p style="font-weight: bold"><sup style="color: #ffc000">*</sup>Not available for the mb.miniAudioPlayer WordPress component.</p>
     <hr>
     <br>
     <div id="rightCol" style="float: right;">
@@ -555,6 +556,7 @@ a:hover{
         <!-- Begin MailChimp Signup Form -->
         <link href="http://cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
         <style type="text/css">
+            #mc_embed_signup form{padding: 20px 0 0 0}
             #mc_embed_signup{background:transparent; clear:left; font:14px Helvetica,Arial,sans-serif; }
                 /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
                    We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
@@ -574,9 +576,9 @@ a:hover{
         <div id="codeBox">
             <div id="close" onclick="$('#codeBox').fadeOut()">close</div>
             <h2>Here is your skin!</h2>
-            <h3>1. Copy the below text <br>and paste it in your CSS file:</h3>
+            <h3>1. <b>Copy</b> the below text <br>and paste it in your CSS file:</h3>
             <textarea id="generatedCode"></textarea>
-            <h3>2. Set <span id="skinNameVal"></span> as value of <br>the "skin" parameter of your player.</h3>
+            <h3>2. Set <b><span id="skinNameVal"></span></b> as value of <br>the "skin" parameter of your player.</h3>
         </div>
     </div>
     <div id="leftCol">

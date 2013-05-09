@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 09/05/13 23.30
+ *  last modified: 10/05/13 0.12
  *  *****************************************************************************
  */
 
@@ -304,7 +304,6 @@ if(typeof map != "object")
 									});
 								}
 							}
-
 						}
 
 						if (!player.opt.animate)
@@ -349,6 +348,10 @@ if(typeof map != "object")
 								$controlsBox.attr("isPlaying", "false");
 								el.jPlayer("pause");
 							}
+
+							e.stopPropagation();
+							return false;
+
 						}).hover(
 								function () {
 									jQuery(this).css({opacity: .8})

@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 01/05/13 0.13
+ *  last modified: 10/05/13 0.19
  *  *****************************************************************************
  */
 
@@ -60,7 +60,7 @@ a.audio{
 }
 
 .mbMiniPlayer span{
-  font:20px/22px "mb_audio_fontRegular";
+  font:20px/20px "mb_audio_fontRegular";
 }
 
 .mbMiniPlayer table{
