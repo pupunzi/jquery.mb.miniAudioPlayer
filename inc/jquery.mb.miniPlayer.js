@@ -21,6 +21,17 @@
 /*Browser detection patch*/
 (function(){if(!(8>jQuery.fn.jquery.split(".")[1])){jQuery.browser={};jQuery.browser.mozilla=!1;jQuery.browser.webkit=!1;jQuery.browser.opera=!1;jQuery.browser.msie=!1;var a=navigator.userAgent;jQuery.browser.name=navigator.appName;jQuery.browser.fullVersion=""+parseFloat(navigator.appVersion);jQuery.browser.majorVersion=parseInt(navigator.appVersion,10);var c,b;if(-1!=(b=a.indexOf("Opera"))){if(jQuery.browser.opera=!0,jQuery.browser.name="Opera",jQuery.browser.fullVersion=a.substring(b+6),-1!=(b= a.indexOf("Version")))jQuery.browser.fullVersion=a.substring(b+8)}else if(-1!=(b=a.indexOf("MSIE")))jQuery.browser.msie=!0,jQuery.browser.name="Microsoft Internet Explorer",jQuery.browser.fullVersion=a.substring(b+5);else if(-1!=(b=a.indexOf("Chrome")))jQuery.browser.webkit=!0,jQuery.browser.name="Chrome",jQuery.browser.fullVersion=a.substring(b+7);else if(-1!=(b=a.indexOf("Safari"))){if(jQuery.browser.webkit=!0,jQuery.browser.name="Safari",jQuery.browser.fullVersion=a.substring(b+7),-1!=(b=a.indexOf("Version")))jQuery.browser.fullVersion= a.substring(b+8)}else if(-1!=(b=a.indexOf("Firefox")))jQuery.browser.mozilla=!0,jQuery.browser.name="Firefox",jQuery.browser.fullVersion=a.substring(b+8);else if((c=a.lastIndexOf(" ")+1)<(b=a.lastIndexOf("/")))jQuery.browser.name=a.substring(c,b),jQuery.browser.fullVersion=a.substring(b+1),jQuery.browser.name.toLowerCase()==jQuery.browser.name.toUpperCase()&&(jQuery.browser.name=navigator.appName);if(-1!=(a=jQuery.browser.fullVersion.indexOf(";")))jQuery.browser.fullVersion=jQuery.browser.fullVersion.substring(0, a);if(-1!=(a=jQuery.browser.fullVersion.indexOf(" ")))jQuery.browser.fullVersion=jQuery.browser.fullVersion.substring(0,a);jQuery.browser.majorVersion=parseInt(""+jQuery.browser.fullVersion,10);isNaN(jQuery.browser.majorVersion)&&(jQuery.browser.fullVersion=""+parseFloat(navigator.appVersion),jQuery.browser.majorVersion=parseInt(navigator.appVersion,10));jQuery.browser.version=jQuery.browser.majorVersion}})(jQuery);
 
+
+var ua = navigator.userAgent.toLowerCase();
+var isAndroid = /android/.test(ua);
+var isAndroidDefault = isAndroid && !(/chrome/i).test(ua);
+var isiOs = /(iphone|ipod|ipad)/.test(ua);
+var isStandAlone = window.navigator.standalone;
+var isiPad = ua.match(/ipad/);
+var isDevice = 'ontouchstart' in window;
+var isChrome = "chrome" in window;
+var isMoz = "mozAnimationStartTime" in window;
+
 /*Metadata.js*/
 (function(c){c.extend({metadata:{defaults:{type:"class",name:"metadata",cre:/({.*})/,single:"metadata"},setType:function(b,c){this.defaults.type=b;this.defaults.name=c},get:function(b,f){var d=c.extend({},this.defaults,f);d.single.length||(d.single="metadata");var a=c.data(b,d.single);if(a)return a;a="{}";if("class"==d.type){var e=d.cre.exec(b.className);e&&(a=e[1])}else if("elem"==d.type){if(!b.getElementsByTagName)return;e=b.getElementsByTagName(d.name);e.length&&(a=c.trim(e[0].innerHTML))}else void 0!= b.getAttribute&&(e=b.getAttribute(d.name))&&(a=e);0>a.indexOf("{")&&(a="{"+a+"}");a=eval("("+a+")");c.data(b,d.single,a);return a}}});c.fn.metadata=function(b){return c.metadata.get(this[0],b)}})(jQuery);
 
@@ -64,7 +75,6 @@ if(typeof map != "object")
 		author  : "Matteo Bicocchi",
 		version : "1.6.5",
 		name    : "mb.miniPlayer",
-
 		isMobile: false,
 
 		icon    : {
@@ -76,6 +86,7 @@ if(typeof map != "object")
 			volumeMute: "Vm"
 		},
 		defaults: {
+			ogg                 :null,
 			width               : 150,
 			skin                : "black", // available: black, blue, orange, red, gray or use the skinMaker tool to create your.
 			volume              : .5,
@@ -106,6 +117,16 @@ if(typeof map != "object")
 				var ID = "mp_" + ($master.attr("id") ? $master.attr("id") : new Date().getTime());
 				var title = $master.html();
 
+
+				// There are serious problems with the player events and Android default browser.
+				// the default HTML5 player is used on that case.
+				if(isAndroidDefault){
+					var androidPlayer = jQuery("<audio/>").attr({src: url, controls: "controls"}).css({display:"block"});
+					$master.after(androidPlayer);
+
+					return;
+				}
+
 				var downloadURL = $master.attr("href").replace(".mp3", "").split("/");
 				downloadURL = downloadURL[downloadURL.length - 1];
 
@@ -114,14 +135,14 @@ if(typeof map != "object")
 				player.opt = {};
 				jQuery.extend(player.opt, jQuery.mbMiniPlayer.defaults, options);
 
-				player.isMobile = 'ontouchstart' in window;
-
-				player.eventEnd = player.isMobile ? "touchend" : "mouseup";
+				jQuery.mbMiniPlayer.isMobile = 'ontouchstart' in window;
+				jQuery.mbMiniPlayer.eventEnd = jQuery.mbMiniPlayer.isMobile ? "touchend" : "mouseup";
 
 				player.idx = idx;
 				player.title = title;
 
 				player.opt.isIE9 = jQuery.browser.msie && jQuery.browser.version == 9;
+				player.opt.isAndroid = jQuery.browser.msie && jQuery.browser.version == 9;
 
 				if (jQuery.metadata) {
 					jQuery.metadata.setType("class");
@@ -138,7 +159,7 @@ if(typeof map != "object")
 					player.opt.showControls = false;
 				}
 
-				if (player.isMobile) { //'ontouchstart' in window
+				if (jQuery.mbMiniPlayer.isMobile) { //'ontouchstart' in window
 
 					player.opt.showVolumeLevel = false;
 					player.opt.autoplay = false;
@@ -162,7 +183,7 @@ if(typeof map != "object")
 				$master.after($controlsBox);
 				$controlsBox.html($layout);
 
-				var download = jQuery("<span/>").addClass("map_download").css({display: "inline-block", cursor: "pointer"}).html("d").on(player.eventEnd,function () {
+				var download = jQuery("<span/>").addClass("map_download").css({display: "inline-block", cursor: "pointer"}).html("d").on(jQuery.mbMiniPlayer.eventEnd,function () {
 					var host = location.hostname.split(".");
 					host = host.length ==3 ? host[1] : host[0];
 					if(!map.downloadUrl || player.opt.mp3.indexOf(host)<0)
@@ -212,7 +233,8 @@ if(typeof map != "object")
 				$player.jPlayer({
 					ready              : function () {
 						var el = jQuery(this);
-						el.jPlayer("setMedia", {mp3: player.opt.mp3, oga: player.opt.ogg});
+
+						el.jPlayer("setMedia", {mp3: player.opt.mp3, oga: player.opt.ogg ? player.opt.ogg : null});
 
 						if (player.opt.id3 && typeof ID3 == "object") {
 							ID3.loadTags(player.opt.mp3, function () {
@@ -309,7 +331,7 @@ if(typeof map != "object")
 						if (!player.opt.animate)
 							animatePlayer(false)
 
-						$playBox.on(player.eventEnd, function (e) {
+						$playBox.on(jQuery.mbMiniPlayer.eventEnd, function (e) {
 
 							if (!player.isOpen) {
 
@@ -319,15 +341,13 @@ if(typeof map != "object")
 								player.isOpen = true;
 
 								if (player.opt.playAlone) {
-									jQuery("[isPlaying=true]").find(".map_play").trigger(player.eventEnd);
+									jQuery("[isPlaying='true']").find(".map_play").trigger(jQuery.mbMiniPlayer.eventEnd);
 								}
 
 								jQuery(this).html(jQuery.mbMiniPlayer.icon.pause);
 
-
-								$controlsBox.attr("isPlaying", "true");
-
 								el.jPlayer("play");
+								$controlsBox.attr("isPlaying", "true");
 
 								//add track for Google Analytics
 								if (typeof _gaq != "undefined")
@@ -361,7 +381,7 @@ if(typeof map != "object")
 								}
 						);
 
-						$volumeBox.on(player.eventEnd,
+						$volumeBox.on(jQuery.mbMiniPlayer.eventEnd,
 								function () {
 									if (jQuery(this).hasClass("mute")) {
 										jQuery(this).removeClass("mute");
@@ -381,7 +401,7 @@ if(typeof map != "object")
 								}
 						);
 
-						$rewBox.on(player.eventEnd, function () {
+						$rewBox.on(jQuery.mbMiniPlayer.eventEnd, function () {
 							el.jPlayer("playHead", 0);
 						}).hover(
 								function () {
@@ -407,7 +427,7 @@ if(typeof map != "object")
 								$volumeLevel.find("a").eq(x).css({opacity: .4}).addClass("sel");
 							}
 
-							jQuery(this).on(player.eventEnd, function () {
+							jQuery(this).on(jQuery.mbMiniPlayer.eventEnd, function () {
 								var vol = (i + 1) * barVol;
 								el.jPlayer("volume", vol);
 								if (i == 0)el.jPlayer("volume", .1);
@@ -427,8 +447,8 @@ if(typeof map != "object")
 
 						});
 						// autoplay can't work on devices
-						if (!player.isMobile && player.opt.autoplay && ((player.opt.playAlone && jQuery("[isPlaying=true]").length == 0) || !player.opt.playAlone))
-							$playBox.trigger(player.eventEnd);
+						if (!jQuery.mbMiniPlayer.isMobile && player.opt.autoplay && ((player.opt.playAlone && jQuery("[isPlaying=true]").length == 0) || !player.opt.playAlone))
+							$playBox.trigger(jQuery.mbMiniPlayer.eventEnd);
 					},
 					customCssIds       : true,
 					volume             : player.opt.volume,
@@ -445,10 +465,14 @@ if(typeof map != "object")
 				})
 						.on(jQuery.jPlayer.event.play, function (e) {})
 						.on(jQuery.jPlayer.event.ended, function () {
+
+							if(isAndroidDefault)
+								return;
+
 							if (player.opt.loop)
 								$player.jPlayer("play");
 							else
-								$playBox.trigger(player.eventEnd);
+								$playBox.trigger(jQuery.mbMiniPlayer.eventEnd);
 							if (typeof player.opt.onEnd == "function")
 								player.opt.onEnd(player);
 						})
@@ -483,24 +507,25 @@ if(typeof map != "object")
 		play       : function () {
 			return this.each(function () {
 				var id = jQuery(this).attr("id");
-				var player = jQuery("#mp_" + id);
-				if (player.attr("isplaying") == "false")
-					player.find(".map_play").trigger(player.eventEnd);
+				var $player = jQuery("#mp_" + id);
+
+				if ($player.attr("isplaying") == "false")
+					$player.find(".map_play").trigger(jQuery.mbMiniPlayer.eventEnd);
 			})
 		},
 		stop       : function () {
 			return this.each(function () {
 				var id = jQuery(this).attr("id");
-				var player = jQuery("#mp_" + id);
-				if (player.attr("isplaying") == "true")
-					player.find(".map_play").trigger(player.eventEnd);
+				var $player = jQuery("#mp_" + id);
+				if ($player.attr("isplaying") == "true")
+					$player.find(".map_play").trigger(jQuery.mbMiniPlayer.eventEnd);
 			})
 		},
 		destroy    : function () {
 			return this.each(function () {
 				var id = this.attr("id");
-				var player = jQuery("#mp_" + id);
-				player.remove();
+				var $player = jQuery("#mp_" + id);
+				$player.remove();
 			})
 		},
 		getPlayer  : function () {

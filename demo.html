@@ -100,7 +100,11 @@
 				$("#logo").fadeIn();
 			}
 
-			$(".audio").mb_miniPlayer({
+            if(isAndroidDefault){
+                alert("Sorry, your browser does not support this implementation of the player. It will be used the standard HTML5 audio player instead")
+            }
+
+                $(".audio").mb_miniPlayer({
 				width:240,
 				inLine:false
 			});
