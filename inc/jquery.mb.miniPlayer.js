@@ -14,13 +14,12 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 10/05/13 0.12
+ *  last modified: 11/05/13 16.04
  *  *****************************************************************************
  */
 
 /*Browser detection patch*/
 (function(){if(!(8>jQuery.fn.jquery.split(".")[1])){jQuery.browser={};jQuery.browser.mozilla=!1;jQuery.browser.webkit=!1;jQuery.browser.opera=!1;jQuery.browser.msie=!1;var a=navigator.userAgent;jQuery.browser.name=navigator.appName;jQuery.browser.fullVersion=""+parseFloat(navigator.appVersion);jQuery.browser.majorVersion=parseInt(navigator.appVersion,10);var c,b;if(-1!=(b=a.indexOf("Opera"))){if(jQuery.browser.opera=!0,jQuery.browser.name="Opera",jQuery.browser.fullVersion=a.substring(b+6),-1!=(b= a.indexOf("Version")))jQuery.browser.fullVersion=a.substring(b+8)}else if(-1!=(b=a.indexOf("MSIE")))jQuery.browser.msie=!0,jQuery.browser.name="Microsoft Internet Explorer",jQuery.browser.fullVersion=a.substring(b+5);else if(-1!=(b=a.indexOf("Chrome")))jQuery.browser.webkit=!0,jQuery.browser.name="Chrome",jQuery.browser.fullVersion=a.substring(b+7);else if(-1!=(b=a.indexOf("Safari"))){if(jQuery.browser.webkit=!0,jQuery.browser.name="Safari",jQuery.browser.fullVersion=a.substring(b+7),-1!=(b=a.indexOf("Version")))jQuery.browser.fullVersion= a.substring(b+8)}else if(-1!=(b=a.indexOf("Firefox")))jQuery.browser.mozilla=!0,jQuery.browser.name="Firefox",jQuery.browser.fullVersion=a.substring(b+8);else if((c=a.lastIndexOf(" ")+1)<(b=a.lastIndexOf("/")))jQuery.browser.name=a.substring(c,b),jQuery.browser.fullVersion=a.substring(b+1),jQuery.browser.name.toLowerCase()==jQuery.browser.name.toUpperCase()&&(jQuery.browser.name=navigator.appName);if(-1!=(a=jQuery.browser.fullVersion.indexOf(";")))jQuery.browser.fullVersion=jQuery.browser.fullVersion.substring(0, a);if(-1!=(a=jQuery.browser.fullVersion.indexOf(" ")))jQuery.browser.fullVersion=jQuery.browser.fullVersion.substring(0,a);jQuery.browser.majorVersion=parseInt(""+jQuery.browser.fullVersion,10);isNaN(jQuery.browser.majorVersion)&&(jQuery.browser.fullVersion=""+parseFloat(navigator.appVersion),jQuery.browser.majorVersion=parseInt(navigator.appVersion,10));jQuery.browser.version=jQuery.browser.majorVersion}})(jQuery);
-
 
 var ua = navigator.userAgent.toLowerCase();
 var isAndroid = /android/.test(ua);
@@ -73,7 +72,7 @@ if(typeof map != "object")
 
 	jQuery.mbMiniPlayer = {
 		author  : "Matteo Bicocchi",
-		version : "1.6.5",
+		version : "1.7.0",
 		name    : "mb.miniPlayer",
 		isMobile: false,
 
@@ -110,13 +109,13 @@ if(typeof map != "object")
 		},
 
 		buildPlayer: function (options) {
+
 			this.each(function (idx) {
 				var $master = jQuery(this);
 				$master.hide();
 				var url = $master.attr("href");
-				var ID = "mp_" + ($master.attr("id") ? $master.attr("id") : new Date().getTime());
+				var playerID = "mp_" + ($master.attr("id") ? $master.attr("id") : new Date().getTime());
 				var title = $master.html();
-
 
 				// There are serious problems with the player events and Android default browser.
 				// the default HTML5 player is used on that case.
@@ -130,7 +129,7 @@ if(typeof map != "object")
 				var downloadURL = $master.attr("href").replace(".mp3", "").split("/");
 				downloadURL = downloadURL[downloadURL.length - 1];
 
-				var $player = jQuery("<div/>").attr({id: "JPL_" + ID});
+				var $player = jQuery("<div/>").attr({id: "JPL_" + playerID});
 				var player = $player.get(0);
 				player.opt = {};
 				jQuery.extend(player.opt, jQuery.mbMiniPlayer.defaults, options);
@@ -172,7 +171,7 @@ if(typeof map != "object")
 
 				var skin = player.opt.skin;
 
-				var $controlsBox = jQuery("<div/>").attr({id: ID, isPlaying: false}).addClass("mbMiniPlayer").addClass(skin);
+				var $controlsBox = jQuery("<div/>").attr({id: playerID, isPlaying: false}).addClass("mbMiniPlayer").addClass(skin);
 
 				if (player.opt.inLine)
 					$controlsBox.css({display: "inline-block", verticalAlign: "middle"});
@@ -216,8 +215,8 @@ if(typeof map != "object")
 				var $titleBox = jQuery("<span/>").addClass("map_title").html(player.title);
 				var $progress = jQuery("<div/>").addClass("jp-progress");
 
-				var $loadBar = jQuery("<div/>").addClass("jp-load-bar").attr("id", "loadBar_" + ID);
-				var $playBar = jQuery("<div/>").addClass("jp-play-bar").attr("id", "playBar_" + ID);
+				var $loadBar = jQuery("<div/>").addClass("jp-load-bar").attr("id", "loadBar_" + playerID);
+				var $playBar = jQuery("<div/>").addClass("jp-play-bar").attr("id", "playBar_" + playerID);
 				$progress.append($loadBar);
 				$loadBar.append($playBar);
 				$controls.append($titleBox).append($progress);
@@ -231,10 +230,11 @@ if(typeof map != "object")
 
 				//init jPlayer component (Happyworm Ltd - http://www.jplayer.org)
 				$player.jPlayer({
-					ready              : function () {
+
+					ready  : function () {
 						var el = jQuery(this);
 
-						el.jPlayer("setMedia", {mp3: player.opt.mp3, oga: player.opt.ogg ? player.opt.ogg : null});
+						el.jPlayer("setMedia", {mp3: player.opt.mp3, oga: player.opt.ogg});
 
 						if (player.opt.id3 && typeof ID3 == "object") {
 							ID3.loadTags(player.opt.mp3, function () {
@@ -450,16 +450,17 @@ if(typeof map != "object")
 						if (!jQuery.mbMiniPlayer.isMobile && player.opt.autoplay && ((player.opt.playAlone && jQuery("[isPlaying=true]").length == 0) || !player.opt.playAlone))
 							$playBox.trigger(jQuery.mbMiniPlayer.eventEnd);
 					},
+
 					customCssIds       : true,
 					volume             : player.opt.volume,
 					oggSupport         : player.opt.ogg ? true : false,
 					swfPath            : player.opt.swfPath,
 					preload            : "none",
 					solution: player.opt.isIE9 ? 'flash' : 'html, flash',
-					cssSelectorAncestor: "#" + ID, // Remove the ancestor css selector clause
+					cssSelectorAncestor: "#" + playerID, // Remove the ancestor css selector clause
 					cssSelector        : {
-						playBar: "#playBar_" + ID,
-						seekBar: "#loadBar_" + ID // Set a custom css selector for the play button
+						playBar: "#playBar_" + playerID,
+						seekBar: "#loadBar_" + playerID // Set a custom css selector for the play button
 						// The other defaults remain unchanged
 					}
 				})
