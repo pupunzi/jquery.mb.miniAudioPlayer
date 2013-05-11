@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 10/05/13 0.12
+ *  last modified: 11/05/13 12.48
  *  *****************************************************************************
  */
 
@@ -116,7 +116,7 @@ if(typeof map != "object")
 
 				player.isMobile = 'ontouchstart' in window;
 
-				player.eventEnd = player.isMobile ? "touchend" : "mouseup";
+				player.eventEnd = player.isMobile ? "touchend" : "click";
 
 				player.idx = idx;
 				player.title = title;
