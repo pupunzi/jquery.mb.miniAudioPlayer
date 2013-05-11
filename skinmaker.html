@@ -15,7 +15,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 01/05/13 17.32
+  ~  last modified: 11/05/13 16.36
   ~  ******************************************************************************/
   -->
 
@@ -479,7 +479,7 @@ a:hover{
                 var border= [$("#border input.hiddenValue").val(), $("#border input").val()];
 
                 changeCSS(skinName, background, text, textShadow, border, borderLeft, borderRight, mute , download, downloadHover);
-            },1)
+            },10)
         }
 
         updateCSS();
@@ -509,12 +509,14 @@ a:hover{
 
         $("#generatedCode").on("mouseup", function(){
 
+            clearInterval(document.updater);
             if(this.isSelected)
                 return false;
 
             this.select();
             this.isSelected = true;
         }).on("blur", function(){
+                    updateCSS();
                     this.isSelected = false;
                 })
     });
@@ -553,26 +555,6 @@ a:hover{
         <hr><p><a href="http://pupunzi.com" target="_blank">go to my site</a></p>
         <hr><p><a href="http://wordpress.org/extend/plugins/wp-miniaudioplayer" target="_blank">get the WordPress component</a></p>
         <hr>
-        <!-- Begin MailChimp Signup Form -->
-        <link href="http://cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
-        <style type="text/css">
-            #mc_embed_signup form{padding: 20px 0 0 0}
-            #mc_embed_signup{background:transparent; clear:left; font:14px Helvetica,Arial,sans-serif; }
-                /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
-                   We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
-        </style>
-        <div id="mc_embed_signup" >
-            <form action="http://pupunzi.us6.list-manage2.com/subscribe/post?u=4346dc9633&amp;id=91a005172f" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-                <label for="mce-EMAIL" style="width: 100%">Subscribe to my mailing list<br>to stay in touch.</label>
-                <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
-                <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
-            </form>
-        </div>
-        <!--End mc_embed_signup-->
-
-
-
-
         <div id="codeBox">
             <div id="close" onclick="$('#codeBox').fadeOut()">close</div>
             <h2>Here is your skin!</h2>
