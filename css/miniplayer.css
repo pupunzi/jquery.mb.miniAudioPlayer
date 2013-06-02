@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 10/05/13 0.19
+ *  last modified: 16/05/13 18.59
  *  *****************************************************************************
  */
 
@@ -200,7 +200,11 @@ a.audio{
   vertical-align:bottom !important;
   opacity:.1 ;
   cursor:pointer !important;
-  top:-3px;
+  top:-2px !important;
+}
+
+.mbMiniPlayer table span.map_volumeLevel a:hover{
+  opacity:1!important;
 }
 
 .mbMiniPlayer table span.map_volumeLevel a.sel{}
