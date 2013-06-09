@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 02/06/13 13.37
+ *  last modified: 09/06/13 17.24
  *  *****************************************************************************
  */
 
@@ -72,7 +72,7 @@ if(typeof map != "object")
 
 	jQuery.mbMiniPlayer = {
 		author  : "Matteo Bicocchi",
-		version : "1.7.0",
+		version : "1.7.1",
 		name    : "mb.miniPlayer",
 		isMobile: false,
 
@@ -113,8 +113,9 @@ if(typeof map != "object")
 
 			var $titleBox = player.controlBox.find(".map_title");
 
-			if (player.opt.id3 && typeof ID3 == "object") {
-				ID3.loadTags(player.opt.mp3, function () {
+			var url = (player.opt.id3 || player.opt.m4a);
+			if (url && typeof ID3 == "object") {
+				ID3.loadTags(url, function () {
 
 					var info = {};
 					info.title = ID3.getTag(player.opt.mp3, "title");
@@ -122,9 +123,8 @@ if(typeof map != "object")
 					info.album = ID3.getTag(player.opt.mp3, "album");
 					info.track = ID3.getTag(player.opt.mp3, "track");
 
-					if (ID3.getTag(player.opt.mp3, "title") != undefined){
+					if (info.title != undefined){
 						$titleBox.html(info.title + " - " + info.artist);
-
 					}
 
 					function drawInfoPanel() {
@@ -180,7 +180,7 @@ if(typeof map != "object")
 				player.idx = idx;
 				player.title = title;
 
-				player.opt.isIE9 = jQuery.browser.msie && jQuery.browser.version === 9;
+				player.opt.isIE = jQuery.browser.msie ;//&& jQuery.browser.version === 9;
 
 				if (jQuery.metadata) {
 					jQuery.metadata.setType("class");
@@ -207,14 +207,12 @@ if(typeof map != "object")
 
 				if (!player.opt.mp3 && url.indexOf("mp3")>0)
 					player.opt.mp3 = url;
-
-
 				if (!player.opt.m4a && url.indexOf("m4a")>0)
 					player.opt.m4a = url;
-
-
 				if( typeof player.opt.mp3 == "undefined")
 					player.opt.mp3 = null;
+				if( typeof player.opt.m4a == "undefined")
+					player.opt.m4a = null;
 
 
 				var skin = player.opt.skin;
@@ -304,7 +302,7 @@ if(typeof map != "object")
 
 						el.jPlayer("setMedia", player.opt.media);
 
-						if(player.opt.mp3)
+						//if(player.opt.mp3)
 							jQuery.mbMiniPlayer.getID3(player);
 
 						function animatePlayer(anim) {
@@ -490,7 +488,7 @@ if(typeof map != "object")
 					smoothPlayBar      : true,
 					volume             : player.opt.volume,
 					swfPath            : player.opt.swfPath,
-					solution           : player.opt.isIE9 ? 'flash' : 'html, flash',
+					solution           : player.opt.isIE ? 'flash' : 'html, flash',
 					preload            : isDevice ? 'none' : 'metadata',
 					cssSelectorAncestor: "#" + playerID, // Remove the ancestor css selector clause
 					cssSelector        : {
