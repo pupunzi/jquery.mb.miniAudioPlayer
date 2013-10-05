@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 09/06/13 17.24
+ *  last modified: 02/10/13 22.42
  *  *****************************************************************************
  */
 
@@ -213,6 +213,7 @@ if(typeof map != "object")
 					player.opt.mp3 = null;
 				if( typeof player.opt.m4a == "undefined")
 					player.opt.m4a = null;
+
 
 
 				var skin = player.opt.skin;

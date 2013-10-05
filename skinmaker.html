@@ -15,7 +15,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 11/05/13 16.36
+  ~  last modified: 02/10/13 22.42
   ~  ******************************************************************************/
   -->
 
@@ -431,7 +431,7 @@ a:hover{
         function updateBg(c){
             $("#player").css({
                 backgroundColor:"rgb("+c[0]+","+c[1]+","+c[2]+")",
-                color: RGBToHSL(c)[2] > 40 ? '#000' : '#fff'
+                color: RGBToHSL(c)[2] > 60 ? '#000' : '#fff'
             })
         }
 
@@ -488,9 +488,8 @@ a:hover{
 
 
         $("#skname").on("keypress",function(e) {
-
-            var char = String.fromCharCode(e.keyCode);
-            if (char.match(/[^a-zA-Z0-9 ]/g)) {
+            var char = String.fromCharCode(e.which);
+            if (e.which != 8 && char.match(/[^a-zA-Z0-9 ]/g)) {
                 return false
             }
         }).on("keyup",function(){

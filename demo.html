@@ -15,7 +15,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 02/06/13 15.32
+  ~  last modified: 02/10/13 22.42
   ~  ******************************************************************************/
   -->
 
@@ -28,7 +28,6 @@
     <script type="text/javascript" src="inc/jquery.jplayer.min.js"></script>
     <script type="text/javascript" src="inc/jquery.mb.miniPlayer.js"></script>
     <link rel="stylesheet" type="text/css" href="css/miniplayer.css" title="style"  media="screen"/>
-    <link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
     <style type="text/css">
 
@@ -60,6 +59,7 @@
             font-family:Arial, Helvetica, sans-serif;
             font-size:26px;
         }
+
         button{
             padding:3px;
             display:inline-block;
@@ -72,14 +72,17 @@
             border:1px solid white;
             text-shadow: 1px -1px 2px #aaa9a9 !important;
         }
+
         button:hover{
             color:#666;
         }
+
         hr{
             border:none;
             background-color:#ccc;
             height:1px;
         }
+
         .wrapper span.param{
             font:normal 13px/15px Lekton, sans-serif;
             color:#767676;
@@ -135,7 +138,7 @@
     <br>
     <span class="param">param -> all features</span>
     <hr>
-    <a id="m2" class="audio {skin:'orange', ogg:'http://www.miaowmusic.com/ogg/Miaow-02-Hidden.ogg', showTime:false}" href="http://www.miaowmusic.com/mp3/Miaow-02-Hidden.mp3">miaowmusic - Hidden (ogg/mp3)</a>
+    <a id="m2" class="audio {skin:'orange', ogg:'http://www.miaowmusic.com/ogg/Miaow-02-Hidden.ogg', showTime:false, downloadable:true}" href="http://www.miaowmusic.com/mp3/Miaow-02-Hidden.mp3">miaowmusic - Hidden (ogg/mp3)</a>
     <span class="param"> param -> showTime:false, ogg:'http://www.miaowmusic.com/ogg/Miaow-02-Hidden.ogg' (FF will play it as HTML5)</span>
     <hr>
     <a id="m3" class="audio {skin:'blue', autoPlay:false,showRew:false}" href="http://www.miaowmusic.com/mp3/Miaow-08-Stirring-of-a-fool.mp3">miaowmusic - Stirring of a Fool (mp3)</a>
@@ -153,11 +156,10 @@
     </div>
     <br>
     <hr>
-    <!--<a id="m6" class="audio {skin:'black', autoPlay:false, }" href="http://a905.phobos.apple.com/us/r1000/084/Music/26/b8/3a/mzm.lreizuhs.aac.p.m4a">Cro Magnon Man</a>-->
     <a id="m7" class="audio {skin:'black', autoPlay:false, }" href="http://www.jplayer.org/audio/m4a/TSP-01-Cro_magnon_man.m4a">Cro Magnon Man</a>
     <span class="param">param -> uses m4a audio</span>
     <hr>
-    This is a gray player: <a  class="audio {skin:'gray', autoPlay:false, inLine:true, showVolumeLevel:false, showRew:true, showTime:false, width:100, addShadow:false}" href="http://www.miaowmusic.com/mp3/Miaow-04-Lismore.mp3">miaowmusic - Lismore (mp3)</a>
+    This is a gray player: <a class="audio {skin:'gray', autoPlay:false, inLine:true, showVolumeLevel:false, showRew:true, showTime:false, width:100, addShadow:false}" href="http://www.miaowmusic.com/mp3/Miaow-04-Lismore.mp3">miaowmusic - Lismore (mp3)</a>
     <span>and it is inline</span>
 
     <hr>
