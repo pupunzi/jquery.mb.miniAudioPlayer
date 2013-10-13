@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 02/10/13 22.42
+ *  last modified: 13/10/13 0.04
  *  *****************************************************************************
  */
 
@@ -44,7 +44,6 @@
   display: none!important;
 }
 
-
 a.audio{
   display:none;
 }
@@ -60,7 +59,9 @@ a.audio{
 }
 
 .mbMiniPlayer span{
-  font:20px/20px "mb_audio_fontRegular";
+  font-family: "mb_audio_fontRegular"!important;
+  font-size:20px;
+  line-height: 20px!important;
 }
 
 .mbMiniPlayer table{
@@ -70,12 +71,12 @@ a.audio{
   margin:0 !important;
   padding:0 !important;
   border: 1px solid white !important;
-  color: #777;
-  background: #fff;
+  color: #777!important;
+  background: #fff!important;
   line-height: 0 !important;
   width: auto !important;
-  display: inline-block;
-  vertical-align: middle;
+  display: inline-block!important;
+  vertical-align: middle!important;
 }
 
 .mbMiniPlayer.shadow table{
@@ -89,7 +90,7 @@ a.audio{
   padding:0 !important;
   line-height: 0 !important;
   border: none!important;
-  vertical-align: middle;
+  vertical-align: middle!important;
 }
 
 .jp-progress{
@@ -118,22 +119,12 @@ a.audio{
 
 .mbMiniPlayer td.map_controlsBar{
   background-color:#ccc;
-/*
-  background-image:-moz-linear-gradient(19% 100% 90deg,#FFFFFF, #FFFFFF, #EBEBEB 100%);
-  background-image:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#DEDEDE), to(#FFFFFF), color-stop(.6,#FFFFFF));
-  background-image:-ms-linear-gradient(linear, 0% 0%, 0% 100%, from(#DEDEDE), to(#FFFFFF), color-stop(.6,#FFFFFF));
-*/
-  /* IE10 Consumer Preview */
+
   background-image: -ms-linear-gradient(bottom, #FFFFFF 0%, #FFFFFF 60%, #DBDBDB 100%);
-  /* Mozilla Firefox */
   background-image: -moz-linear-gradient(bottom, #FFFFFF 0%, #FFFFFF 60%, #DBDBDB 100%);
-  /* Opera */
   background-image: -o-linear-gradient(bottom, #FFFFFF 0%, #FFFFFF 60%, #DBDBDB 100%);
-  /* Webkit (Safari/Chrome 10) */
   background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #FFFFFF), color-stop(0.6, #FFFFFF), color-stop(1, #DBDBDB));
-  /* Webkit (Chrome 11+) */
   background-image: -webkit-linear-gradient(bottom, #FFFFFF 0%, #FFFFFF 60%, #DBDBDB 100%);
-  /* W3C Markup, IE10 Release Preview */
   background-image: linear-gradient(to top, #FFFFFF 0%, #FFFFFF 60%, #DBDBDB 100%);
 
   margin:0;
@@ -203,6 +194,7 @@ a.audio{
 }
 
 .mbMiniPlayer table span.map_volumeLevel{}
+
 .mbMiniPlayer table span.map_volumeLevel a{
   position:relative !important;
   display:inline-block !important;
