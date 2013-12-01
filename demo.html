@@ -15,7 +15,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 16/11/13 17.39
+  ~  last modified: 01/12/13 18.31
   ~  ******************************************************************************/
   -->
 
@@ -102,6 +102,9 @@
                 $(".wrapper").prepend(logo);
                 $("#logo").fadeIn();
             }
+            var ua = navigator.userAgent.toLowerCase();
+            var isAndroid = /android/.test(ua);
+            var isAndroidDefault = isAndroid && !(/chrome/i).test(ua);
 
             if(isAndroidDefault){
                 alert("Sorry, your browser does not support this implementation of the player. It will be used the standard HTML5 audio player instead")
@@ -158,8 +161,11 @@
     </div>
     <br>
     <hr>
-    <a id="m7" class="audio {skin:'black', autoPlay:false, }" href="http://www.jplayer.org/audio/m4a/TSP-01-Cro_magnon_man.m4a">Cro Magnon Man</a>
+    <a id="m7" class="audio {skin:'black', autoPlay:false}" href="http://www.jplayer.org/audio/m4a/TSP-01-Cro_magnon_man.m4a">Cro Magnon Man</a>
     <span class="param">param -> uses m4a audio</span>
+    <hr>
+    <a id="m8" class="audio {skin:'red', autoPlay:false, width:80}" href="http://listen.radionomy.com/abc-jazz/#.mp3">Jazz radio stream</a>
+    <span class="param">This example get the stream of <a href="http://radionomy.com">Radionomy</a> Jazz channel</span>
     <hr>
     This is a gray player: <a class="audio {skin:'gray', autoPlay:false, inLine:true, showVolumeLevel:false, showRew:true, showTime:false, width:100, addShadow:false}" href="http://www.miaowmusic.com/mp3/Miaow-04-Lismore.mp3">miaowmusic - Lismore (mp3)</a>
     <span>and it is inline</span>

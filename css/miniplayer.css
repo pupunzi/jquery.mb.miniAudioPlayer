@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 13/10/13 0.04
+ *  last modified: 01/12/13 17.14
  *  *****************************************************************************
  */
 
@@ -44,6 +44,7 @@
   display: none!important;
 }
 
+
 a.audio{
   display:none;
 }
@@ -71,12 +72,12 @@ a.audio{
   margin:0 !important;
   padding:0 !important;
   border: 1px solid white !important;
-  color: #777!important;
-  background: #fff!important;
+  color: #777;
+  background: #fff;
   line-height: 0 !important;
   width: auto !important;
-  display: inline-block!important;
-  vertical-align: middle!important;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .mbMiniPlayer.shadow table{
@@ -90,7 +91,7 @@ a.audio{
   padding:0 !important;
   line-height: 0 !important;
   border: none!important;
-  vertical-align: middle!important;
+  vertical-align: middle;
 }
 
 .jp-progress{
@@ -99,14 +100,18 @@ a.audio{
   height:8px;
   margin: 0 2px 2px;
   top:-2px;
-  -moz-box-sizing:border-box;
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
   cursor:pointer;
 }
 
 .jp-load-bar{
   background-color: #e9e6e6;
   height:6px;
-  -moz-box-sizing:border-box;
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
 }
 .jp-play-bar{
   background-color:black;
@@ -114,17 +119,29 @@ a.audio{
   background-image:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#7D7D7D), to(#262626), color-stop(.6,#333333));
   background-image:-ms-linear-gradient(linear, 0% 0%, 0% 100%, from(#7D7D7D), to(#262626), color-stop(.6,#333333));
   height:6px;
-  -moz-box-sizing:border-box;
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
 }
 
 .mbMiniPlayer td.map_controlsBar{
   background-color:#ccc;
-
+  /*
+    background-image:-moz-linear-gradient(19% 100% 90deg,#FFFFFF, #FFFFFF, #EBEBEB 100%);
+    background-image:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#DEDEDE), to(#FFFFFF), color-stop(.6,#FFFFFF));
+    background-image:-ms-linear-gradient(linear, 0% 0%, 0% 100%, from(#DEDEDE), to(#FFFFFF), color-stop(.6,#FFFFFF));
+  */
+  /* IE10 Consumer Preview */
   background-image: -ms-linear-gradient(bottom, #FFFFFF 0%, #FFFFFF 60%, #DBDBDB 100%);
+  /* Mozilla Firefox */
   background-image: -moz-linear-gradient(bottom, #FFFFFF 0%, #FFFFFF 60%, #DBDBDB 100%);
+  /* Opera */
   background-image: -o-linear-gradient(bottom, #FFFFFF 0%, #FFFFFF 60%, #DBDBDB 100%);
+  /* Webkit (Safari/Chrome 10) */
   background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #FFFFFF), color-stop(0.6, #FFFFFF), color-stop(1, #DBDBDB));
+  /* Webkit (Chrome 11+) */
   background-image: -webkit-linear-gradient(bottom, #FFFFFF 0%, #FFFFFF 60%, #DBDBDB 100%);
+  /* W3C Markup, IE10 Release Preview */
   background-image: linear-gradient(to top, #FFFFFF 0%, #FFFFFF 60%, #DBDBDB 100%);
 
   margin:0;
@@ -142,9 +159,6 @@ a.audio{
   width:1px;
   *border:1px solid gray;
   height:100%;
-  -moz-box-sizing:border-box;
-  -webkit-box-sizing:border-box;
-  box-sizing:border-box;
   overflow:hidden;
   white-space:nowrap;
 }
@@ -194,7 +208,6 @@ a.audio{
 }
 
 .mbMiniPlayer table span.map_volumeLevel{}
-
 .mbMiniPlayer table span.map_volumeLevel a{
   position:relative !important;
   display:inline-block !important;
@@ -218,7 +231,7 @@ a.audio{
 
 .mbMiniPlayer table span.map_time{
   width:1px;
-  font:11px/20px sans-serif;
+  font:11px/20px "DroidSansMonoRegular", sans-serif !important;
   overflow:hidden;
   white-space:nowrap;
   cursor:default !important;
@@ -236,7 +249,6 @@ a.audio{
 .mbMiniPlayer[isplaying=true] table span.map_play{
   -webkit-animation: playing .7s infinite alternate;
   -moz-animation: playing .7s infinite alternate;
-  /*animation: playing 1s infinite alternate;*/
 }
 
 @keyframes playing {
@@ -245,7 +257,6 @@ a.audio{
   }
   to {
     opacity:.5;
-    /*color:rgba(255,255,255,0.5);*/
   }
 }
 
@@ -255,7 +266,6 @@ a.audio{
   }
   to {
     opacity:.5;
-    /*background:rgba(0,0,0,1);*/
   }
 }
 @-moz-keyframes playing {
@@ -264,11 +274,8 @@ a.audio{
   }
   to {
     opacity:.5;
-    /*color:rgba(255,255,255,0.5);*/
   }
 }
-
-
 
 .mbMiniPlayer table span.map_volume{
   -moz-border-radius:4px 0 0 4px !important;
@@ -296,7 +303,6 @@ a.audio{
   font-size: 50px !important;
   line-height: 22px !important;
   color: rgba(0,0,0,.2);
-  /*text-shadow: 0 0 3px rgba(255,255,255,0.6);*/
 
   transition: color 1s;
   -moz-transition: color 1s;
