@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 01/12/13 18.33
+ *  last modified: 18/12/13 0.59
  *  *****************************************************************************
  */
 
@@ -210,7 +210,7 @@
 				jQuery.mbMiniPlayer.isMobile = 'ontouchstart' in window;
 				jQuery.mbMiniPlayer.eventEnd = jQuery.mbMiniPlayer.isMobile ? "touchend" : "mouseup";
 
-				player.idx = idx;
+				player.idx = idx+1;
 				player.title = title;
 
 				player.opt.isIE = jQuery.browser.msie ;//&& jQuery.browser.version === 9;
@@ -249,7 +249,7 @@
 
 				var skin = player.opt.skin;
 
-				var $controlsBox = jQuery("<div/>").attr({id: playerID, isPlaying: false}).addClass("mbMiniPlayer").addClass(skin);
+				var $controlsBox = jQuery("<div/>").attr({id: playerID, isPlaying: false, tabIndex: player.idx }).addClass("mbMiniPlayer").addClass(skin);
 				player.controlBox = $controlsBox;
 
 				if (player.opt.inLine)

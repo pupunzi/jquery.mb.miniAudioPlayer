@@ -15,7 +15,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 02/10/13 22.42
+  ~  last modified: 01/12/13 16.23
   ~  ******************************************************************************/
   -->
 
@@ -344,11 +344,11 @@ a:hover{
             width:200
         });
 
-        function changeCSS(skinName, background, text, textShadow, border, borderLeft, borderRight, mute , download, downloadHover){
+        function changeCSS(skinName, background, text, textShadow, border, borderLeft, borderRight, mute , download, downloadHover, shadow){
 
             var style="";
             style += "/*++++++++++++++++++++++++++++++++++++++++++++++++++\n";
-            style += "MAP custom skin: "+skinName[0]+"\n";
+            style += "MAP custom skin: "+skinName+"\n";
             style += "background: "+background[0]+"\n";
             style += "icons: "+text[0]+"\n";
             style += "border: "+border[0]+"\n";
@@ -362,6 +362,8 @@ a:hover{
 
             style += "/* Older browser (IE8) \n";
             style += "   not supporting rgba() */ \n";
+            if(shadow[0] != shadow[1])
+                style += ".mbMiniPlayer."+skinName+".shadow table{box-shadow:0 0 3px "+shadow[1]+";}\n";
             if(background[0] != background[1])
                 style += ".mbMiniPlayer."+skinName+" table span{background-color:"+background[1]+";}\n";
             if(borderLeft[0] != borderLeft[1])
@@ -384,6 +386,7 @@ a:hover{
             style += "/*++++++++++++++++++++++++++++++++++++++++++++++++*/\n";
             style += "\n";
             style += ".mbMiniPlayer."+skinName+" table{background-color:transparent;}\n";
+            style += ".mbMiniPlayer."+skinName+".shadow table{box-shadow:0 0 3px "+shadow[0]+";}\n";
             style += ".mbMiniPlayer."+skinName+" table span{background-color:"+background[0]+";}\n";
             style += ".mbMiniPlayer."+skinName+" table span.map_play{border-left:1px solid "+borderLeft[0]+";}\n";
             style += ".mbMiniPlayer."+skinName+" table span.map_volume{border-right:1px solid "+borderRight[0]+";}\n";
@@ -402,7 +405,6 @@ a:hover{
             $("#generatedCode").html(style);
             $("#mp_mbmap").addClass(skinName);
             $("#skinNameVal").html(skinName);
-
 
             return style;
         }
@@ -477,8 +479,9 @@ a:hover{
                 var download= [$("#download input.hiddenValue").val(),$("#download input").val()];
                 var downloadHover= [$("#downloadHover input.hiddenValue").val(),$("#downloadHover input").val()];
                 var border= [$("#border input.hiddenValue").val(), $("#border input").val()];
+                var shadow= [$("#playerShadow input.hiddenValue").val(), $("#playerShadow input").val()];
 
-                changeCSS(skinName, background, text, textShadow, border, borderLeft, borderRight, mute , download, downloadHover);
+                changeCSS(skinName, background, text, textShadow, border, borderLeft, borderRight, mute , download, downloadHover, shadow);
             },10)
         }
 
@@ -506,8 +509,7 @@ a:hover{
         })
         $('#skname').click().focus();
 
-        $("#generatedCode").on("mouseup", function(){
-
+        $("#generatedCode").on("focus", function(){
             clearInterval(document.updater);
             if(this.isSelected)
                 return false;
@@ -515,8 +517,8 @@ a:hover{
             this.select();
             this.isSelected = true;
         }).on("blur", function(){
-                    updateCSS();
                     this.isSelected = false;
+                    updateCSS();
                 })
     });
 
@@ -606,6 +608,9 @@ a:hover{
         </div>
         <div class="formatBox code">
             <div id="downloadHover"><label>download hover:</label> <input class="color" value="#000000"></div>
+        </div>
+        <div class="formatBox code">
+            <div id="playerShadow"><label>player shadow:</label> <input class="color" value="#000000"></div>
         </div>
         <hr>
         <div style="text-align: right">
