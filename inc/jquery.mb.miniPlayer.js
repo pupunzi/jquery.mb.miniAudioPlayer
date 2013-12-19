@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 18/12/13 0.59
+ *  last modified: 20/12/13 0.12
  *  *****************************************************************************
  */
 
@@ -103,7 +103,7 @@
 
 	jQuery.mbMiniPlayer = {
 		author  : "Matteo Bicocchi",
-		version : "1.7.3",
+		version : "1.7.5",
 		name    : "mb.miniPlayer",
 		isMobile: false,
 
@@ -143,36 +143,22 @@
 
 		getID3        : function (player) {
 
+			if(!player.opt.id3)
+				return;
+
 			var $titleBox = player.controlBox.find(".map_title");
-
-			var url = (player.opt.id3 || player.opt.m4a);
+			var url = (player.opt.mp3 || player.opt.m4a);
 			if (url && typeof ID3 == "object") {
-				ID3.loadTags(url, function () {
 
+				ID3.loadTags(url, function () {
 					var info = {};
-					info.title = ID3.getTag(player.opt.mp3, "title");
-					info.artist = ID3.getTag(player.opt.mp3, "artist");
-					info.album = ID3.getTag(player.opt.mp3, "album");
-					info.track = ID3.getTag(player.opt.mp3, "track");
+					info.title = ID3.getTag(url, "title");
+					info.artist = ID3.getTag(url, "artist");
+					info.album = ID3.getTag(url, "album");
+					info.track = ID3.getTag(url, "track");
 
 					if (info.title != undefined){
 						$titleBox.html(info.title + " - " + info.artist);
-					}
-
-					function drawInfoPanel() {
-						var getInfo = jQuery("<div/>").addClass("map_info");
-						for (var i in info) {
-							if (info[i] != null) {
-								var str = "<div>" + i + ": " + info[i] + "</div>";
-								getInfo.append(str);
-							}
-						}
-						player.controlBox.append(getInfo);
-						$titleBox.on("mouseenter",function (e) {
-							getInfo.fadeIn(300);
-						}).on("mouseleave", function () {
-									getInfo.fadeOut(300);
-								})
 					}
 				})
 			}
@@ -261,11 +247,12 @@
 				$master.after($controlsBox);
 				$controlsBox.html($layout);
 
-				var fileName = encodeURI($master.attr("href").replace(".mp3", "").split("/").pop());
 				var fileUrl = encodeURI(player.opt.mp3 || player.opt.m4a);
+				var fileExtension = fileUrl.substr((Math.max(0, fileUrl.lastIndexOf(".")) || Infinity) + 1);
+				var fileName = encodeURI(fileUrl.replace("."+fileExtension, "").split("/").pop());
 
 				var download = jQuery("<span/>").addClass("map_download").css({display: "inline-block", cursor: "pointer"}).html("d").on(jQuery.mbMiniPlayer.eventEnd,function () {
-					jQuery.mbMiniPlayer.saveFile(player, fileUrl, fileName);
+					jQuery.mbMiniPlayer.saveFile(player, fileUrl, fileName, fileExtension);
 
 				}).attr("title", "download: " + fileName);
 
@@ -327,8 +314,9 @@
 
 						el.jPlayer("setMedia", player.opt.media);
 
-						//if(player.opt.mp3)
-						jQuery.mbMiniPlayer.getID3(player);
+						if(player.opt.mp3){
+							jQuery.mbMiniPlayer.getID3(player);
+						}
 
 						function animatePlayer(anim) {
 
@@ -400,6 +388,8 @@
 									animatePlayer();
 
 								player.isOpen = true;
+
+								jQuery.mbMiniPlayer.actualPlayer = $master;
 
 								if (player.opt.playAlone) {
 									jQuery("[isPlaying='true']").find(".map_play").trigger(jQuery.mbMiniPlayer.eventEnd);
@@ -477,7 +467,6 @@
 						var barVol = 1 / bars;
 						$volumeLevel.find("a").each(function (i) {
 							jQuery(this).css({opacity: .3, height: "80%", width: Math.floor(35 / bars)});
-
 							var IDX = Math.floor(player.opt.volume / barVol) - 1;
 							if (player.opt.volume < .1 && player.opt.volume > 0)
 								IDX = 0;
@@ -490,18 +479,8 @@
 							jQuery(this).on(jQuery.mbMiniPlayer.eventEnd, function () {
 								var vol = (i + 1) * barVol;
 								el.jPlayer("volume", vol);
-								if (i == 0)el.jPlayer("volume", .1);
+								if (i == 0) el.jPlayer("volume", .1);
 								$volumeBox.removeClass("mute");
-								player.opt.volume = vol;
-
-								var IDX = Math.floor(vol / barVol) - 1;
-								if (vol < .1 && vol > 0)
-									IDX = 0;
-
-								$volumeLevel.find("a").css({opacity: .1}).removeClass("sel");
-								for (var x = 0; x <= IDX; x++) {
-									$volumeLevel.find("a").eq(x).css({opacity: .4}).addClass("sel");
-								}
 							});
 						});
 						// autoplay can't work on devices
@@ -510,7 +489,7 @@
 					},
 					supplied           : player.opt.supplied,
 					wmode              : "transparent",
-					smoothPlayBar      : false,
+					smoothPlayBar      : true,
 					volume             : player.opt.volume,
 					swfPath            : player.opt.swfPath,
 					solution           : player.opt.isIE ? 'flash' : 'html, flash',
@@ -541,11 +520,62 @@
 							player.currentTime = e.jPlayer.status.currentTime;
 							player.seekPercent = e.jPlayer.status.seekPercent;
 
-//							$loadBar.css({width: ((player.opt.width - 5) * player.seekPercent) / 100});
-//							$playBar.css({width: ((player.opt.width - 5) * player.currentTime) / player.duration});
-
 							$timeBox.html(jQuery.jPlayer.convertTime(e.jPlayer.status.currentTime)).attr("title", jQuery.jPlayer.convertTime(e.jPlayer.status.duration));
 						})
+						.on( jQuery.jPlayer.event.volumechange,function (event) {
+							var bars = player.opt.volumeLevels;
+							var barVol = 1 / bars;
+							player.opt.volume = event.jPlayer.options.volume;
+							var IDX = Math.floor(player.opt.volume / barVol) - 1;
+							if (player.opt.volume < .1 && player.opt.volume > 0)
+								IDX = 0;
+
+							$volumeLevel.find("a").css({opacity: .1}).removeClass("sel");
+							for (var x = 0; x <= IDX; x++) {
+								$volumeLevel.find("a").eq(x).css({opacity: .4}).addClass("sel");
+							}
+				})
+
+				$controlsBox.on("keydown",function(e){
+					if (e.keyCode == 32) { //toggle play
+						$master.mb_miniPlayer_toggle();
+						e.preventDefault();
+						e.stopPropagation();
+					}
+					if (e.keyCode == 171) { // volume +
+
+						var bars = player.opt.volumeLevels;
+						var barVol = 1 / bars;
+
+						var vol = player.opt.volume + barVol;
+
+						if(vol>1)
+							vol = 1;
+
+						$player.jPlayer("volume", vol);
+						$volumeBox.removeClass("mute");
+
+						e.preventDefault();
+						e.stopPropagation();
+					}
+					if (e.keyCode == 173) { //volume -
+
+						var bars = player.opt.volumeLevels;
+						var barVol = 1 / bars;
+
+						var vol = player.opt.volume - barVol;
+						if(vol<0)
+							vol = 0;
+
+						$player.jPlayer("volume", vol);
+
+						if(vol<=0)
+							$volumeBox.addClass("mute");
+
+						e.preventDefault();
+						e.stopPropagation();
+					}
+				})
 			})
 		},
 
@@ -570,14 +600,33 @@
 			jQuery.mbMiniPlayer.getID3(player);
 		},
 
-		saveFile      : function (player, fileUrl, fileName) {
+		saveFile      : function (player, fileUrl, fileName, fileExtension) {
 			var host = location.hostname.split(".");
 			host = host.length == 3 ? host[1] : host[0];
+			var isSameDomain = (fileUrl.indexOf(host) >= 0) || fileUrl.indexOf("http") <0;
 
-			if (!player.opt.downloadPage ) { // || fileUrl.indexOf(host) < 0
+			var a = document.createElement('a');
+			if (!player.opt.downloadPage && isSameDomain && typeof a.download != "undefined") {
+
+				var downloadA = jQuery("<a/>").attr({id:"mb_dwnl",href: encodeURI(fileUrl), download: fileName+"."+fileExtension}).html("dwnload")//.hide();
+				jQuery("body").append(downloadA);
+
+				function fakeClick(anchorObj) {
+					if (anchorObj.click) {
+						anchorObj.click()
+					} else if(document.createEvent) {
+						var evt = document.createEvent("MouseEvents");
+						evt.initMouseEvent("click", true, true, window,
+								0, 0, 0, 0, 0, false, false, false, false, 0, null);
+						var allowDefault = anchorObj.dispatchEvent(evt);
+					}
+				}
+				fakeClick(downloadA.get(0));
+				downloadA.remove();
+
+			} else if(!player.opt.downloadPage) {
 				window.open(fileUrl, "map_download");
 			} else {
-
 				/* player.opt.downloadPage = path to the PHP page that stream the file and download it.*/
 				location.href = player.opt.downloadPage + "?filename=" + encodeURI(fileName) + ".mp3" + "&fileurl=" + encodeURI(fileUrl);
 			}
@@ -592,6 +641,7 @@
 					$player.find(".map_play").trigger(jQuery.mbMiniPlayer.eventEnd);
 			})
 		},
+
 		stop       : function () {
 			return this.each(function () {
 				var id = jQuery(this).attr("id");
@@ -600,6 +650,15 @@
 					$player.find(".map_play").trigger(jQuery.mbMiniPlayer.eventEnd);
 			})
 		},
+
+		toggle       : function () {
+			return this.each(function () {
+				var id = jQuery(this).attr("id");
+				var $player = jQuery("#mp_" + id);
+				$player.find(".map_play").trigger(jQuery.mbMiniPlayer.eventEnd);
+			})
+		},
+
 		destroy    : function () {
 			return this.each(function () {
 				var id = this.attr("id");
@@ -607,6 +666,7 @@
 				$player.remove();
 			})
 		},
+
 		getPlayer  : function () {
 			var id = this.attr("id");
 			return jQuery("#mp_" + id);
@@ -623,18 +683,28 @@
 		});
 		return jQuery(this);
 	};
+
 	//Public method
 	jQuery.fn.mb_miniPlayer = jQuery.mbMiniPlayer.buildPlayer;
 	jQuery.fn.mb_miniPlayer_changeFile = jQuery.mbMiniPlayer.changeFile;
 	jQuery.fn.mb_miniPlayer_play = jQuery.mbMiniPlayer.play;
 	jQuery.fn.mb_miniPlayer_stop = jQuery.mbMiniPlayer.stop;
+	jQuery.fn.mb_miniPlayer_toggle = jQuery.mbMiniPlayer.toggle;
 	jQuery.fn.mb_miniPlayer_destroy = jQuery.mbMiniPlayer.destroy;
 	jQuery.fn.mb_miniPlayer_getPlayer = jQuery.mbMiniPlayer.getPlayer;
 
-	/*
-	 String.prototype.asId = function () {
-	 return this.replace(/[^a-zA-Z0-9_]+/g, '');
-	 };
-	 */
+	jQuery(document).on("keydown.mbMiniPlayer",function(e){
+
+		if (e.keyCode == 32) {
+
+			if(jQuery(e.target).is("textarea, input, [contenteditable]") || jQuery(e.target).parents().is("[contenteditable]"))
+				return;
+
+			if (jQuery.mbMiniPlayer.actualPlayer){
+				jQuery.mbMiniPlayer.actualPlayer.mb_miniPlayer_toggle();
+				e.preventDefault();
+			}
+		}
+	});
 
 })(jQuery);

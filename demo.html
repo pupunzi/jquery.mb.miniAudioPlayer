@@ -15,7 +15,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 01/12/13 18.31
+  ~  last modified: 20/12/13 0.00
   ~  ******************************************************************************/
   -->
 
@@ -137,11 +137,11 @@
     <br>
     <p><a href="skinmaker.html"> Customize the player skin</a></p>
     <br>
-    <a id="m1" class="audio {ogg:'http://www.miaowmusic.com/ogg/Miaow-07-Bubble.ogg', loop:true,inLine:true, downloadable:true}" href="http://www.miaowmusic.com/mp3/Miaow-07-Bubble.mp3">miaowmusic - Bubble (mp3/ogg)</a>
+    <a id="m1" class="audio {ogg:'audio/allegro.ogg', loop:true, inLine:true, downloadable:true}" href="audio/allegro.mp3">miaowmusic - Bubble (mp3/ogg)</a>
     <button onclick="$('#m1').mb_miniPlayer_play()">play</button>
     <button onclick="$('#m1').mb_miniPlayer_stop()">stop</button>
     <br>
-    <span class="param">param -> all features</span>
+    <span class="param">param -> all features - loop = true</span>
     <hr>
     <a id="m2" class="audio {skin:'orange', ogg:'http://www.miaowmusic.com/ogg/Miaow-02-Hidden.ogg', showTime:false, downloadable:true}" href="http://www.miaowmusic.com/mp3/Miaow-02-Hidden.mp3">miaowmusic - Hidden (ogg/mp3)</a>
     <span class="param"> param -> showTime:false, ogg:'http://www.miaowmusic.com/ogg/Miaow-02-Hidden.ogg' (FF will play it as HTML5)</span>
@@ -167,7 +167,7 @@
     <a id="m8" class="audio {skin:'red', autoPlay:false, width:80}" href="http://listen.radionomy.com/abc-jazz/#.mp3">Jazz radio stream</a>
     <span class="param">This example get the stream of <a href="http://radionomy.com">Radionomy</a> Jazz channel</span>
     <hr>
-    This is a gray player: <a class="audio {skin:'gray', autoPlay:false, inLine:true, showVolumeLevel:false, showRew:true, showTime:false, width:100, addShadow:false}" href="http://www.miaowmusic.com/mp3/Miaow-04-Lismore.mp3">miaowmusic - Lismore (mp3)</a>
+    This is a gray player: <a id="m9" class="audio {skin:'gray', autoPlay:false, inLine:true, showVolumeLevel:false, showRew:true, showTime:false, width:100, addShadow:false}" href="http://www.miaowmusic.com/mp3/Miaow-04-Lismore.mp3">miaowmusic - Lismore (mp3)</a>
     <span>and it is inline</span>
 
     <hr>

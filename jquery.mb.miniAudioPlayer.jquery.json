@@ -1,7 +1,7 @@
 {
 	"name": "jquery.mb.miniAudioPlayer",
 	"title": "jQuery mb.miniAudioPlayer",
-	"description": "This plugin let you add a minimal full featured small player that takes advantage of the new HTML5 AUDIO tag with a flash fallback for browsers that don't support it.",
+	"description": "This plugin let you add a minimal full featured player that takes advantage of the new HTML5 AUDIO tag with a flash fallback for browsers that don't support it. It is built on the jPlayer library",
 	"keywords": [
 		"audio",
 		"HTML5",
@@ -9,7 +9,7 @@
 		"jPlayer",
 		"ui"
 	],
-	"version": "1.7.3",
+	"version": "1.7.5",
 	"author": {
 		"name": "Pupunzi (Matteo Bicocchi)",
 		"email": "matteo@open-lab.com",
