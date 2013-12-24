@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 20/12/13 0.12
+ *  last modified: 24/12/13 19.37
  *  *****************************************************************************
  */
 
@@ -103,7 +103,7 @@
 
 	jQuery.mbMiniPlayer = {
 		author  : "Matteo Bicocchi",
-		version : "1.7.5",
+		version : "1.7.6",
 		name    : "mb.miniPlayer",
 		isMobile: false,
 
@@ -200,6 +200,8 @@
 				player.title = title;
 
 				player.opt.isIE = jQuery.browser.msie ;//&& jQuery.browser.version === 9;
+
+				this.player = player;
 
 				if (jQuery.metadata) {
 					jQuery.metadata.setType("class");
@@ -539,6 +541,7 @@
 				$controlsBox.on("keydown",function(e){
 					if (e.keyCode == 32) { //toggle play
 						$master.mb_miniPlayer_toggle();
+
 						e.preventDefault();
 						e.stopPropagation();
 					}
@@ -654,7 +657,8 @@
 		toggle       : function () {
 			return this.each(function () {
 				var id = jQuery(this).attr("id");
-				var $player = jQuery("#mp_" + id);
+				var player = this.player;
+				var $player = player.controlBox;
 				$player.find(".map_play").trigger(jQuery.mbMiniPlayer.eventEnd);
 			})
 		},
