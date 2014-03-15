@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 27/01/14 20.07
+ *  last modified: 15/03/14 12.59
  *  *****************************************************************************
  */
 
@@ -26,18 +26,42 @@
 	var isDevice = 'ontouchstart' in window;
 
 	/*Browser detection patch*/
+	var nAgt = navigator.userAgent;
 	if (!jQuery.browser) {
-		jQuery.browser = {}, jQuery.browser.mozilla = !1, jQuery.browser.webkit = !1, jQuery.browser.opera = !1, jQuery.browser.safari = !1, jQuery.browser.chrome = !1, jQuery.browser.msie = !1;
-		var nAgt = navigator.userAgent;
-		jQuery.browser.ua = nAgt, jQuery.browser.name = navigator.appName, jQuery.browser.fullVersion = "" + parseFloat(navigator.appVersion), jQuery.browser.majorVersion = parseInt(navigator.appVersion, 10);
+		jQuery.browser = {};
+		jQuery.browser.mozilla = !1;
+		jQuery.browser.webkit = !1;
+		jQuery.browser.opera = !1;
+		jQuery.browser.safari = !1;
+		jQuery.browser.chrome = !1;
+		jQuery.browser.msie = !1;
+		jQuery.browser.ua = nAgt;
+		jQuery.browser.name = navigator.appName;
+		jQuery.browser.fullVersion = "" + parseFloat(navigator.appVersion);
+		jQuery.browser.majorVersion = parseInt(navigator.appVersion, 10);
 		var nameOffset, verOffset, ix;
 		if (-1 != (verOffset = nAgt.indexOf("Opera")))jQuery.browser.opera = !0, jQuery.browser.name = "Opera", jQuery.browser.fullVersion = nAgt.substring(verOffset + 6), -1 != (verOffset = nAgt.indexOf("Version")) && (jQuery.browser.fullVersion = nAgt.substring(verOffset + 8)); else if (-1 != (verOffset = nAgt.indexOf("MSIE")))jQuery.browser.msie = !0, jQuery.browser.name = "Microsoft Internet Explorer", jQuery.browser.fullVersion = nAgt.substring(verOffset + 5); else if (-1 != nAgt.indexOf("Trident")) {
-			jQuery.browser.msie = !0, jQuery.browser.name = "Microsoft Internet Explorer";
+			jQuery.browser.msie = !0;
+			jQuery.browser.name = "Microsoft Internet Explorer";
 			var start = nAgt.indexOf("rv:") + 3, end = start + 4;
 			jQuery.browser.fullVersion = nAgt.substring(start, end)
 		} else-1 != (verOffset = nAgt.indexOf("Chrome")) ? (jQuery.browser.webkit = !0, jQuery.browser.chrome = !0, jQuery.browser.name = "Chrome", jQuery.browser.fullVersion = nAgt.substring(verOffset + 7)) : -1 != (verOffset = nAgt.indexOf("Safari")) ? (jQuery.browser.webkit = !0, jQuery.browser.safari = !0, jQuery.browser.name = "Safari", jQuery.browser.fullVersion = nAgt.substring(verOffset + 7), -1 != (verOffset = nAgt.indexOf("Version")) && (jQuery.browser.fullVersion = nAgt.substring(verOffset + 8))) : -1 != (verOffset = nAgt.indexOf("AppleWebkit")) ? (jQuery.browser.webkit = !0, jQuery.browser.name = "Safari", jQuery.browser.fullVersion = nAgt.substring(verOffset + 7), -1 != (verOffset = nAgt.indexOf("Version")) && (jQuery.browser.fullVersion = nAgt.substring(verOffset + 8))) : -1 != (verOffset = nAgt.indexOf("Firefox")) ? (jQuery.browser.mozilla = !0, jQuery.browser.name = "Firefox", jQuery.browser.fullVersion = nAgt.substring(verOffset + 8)) : (nameOffset = nAgt.lastIndexOf(" ") + 1) < (verOffset = nAgt.lastIndexOf("/")) && (jQuery.browser.name = nAgt.substring(nameOffset, verOffset), jQuery.browser.fullVersion = nAgt.substring(verOffset + 1), jQuery.browser.name.toLowerCase() == jQuery.browser.name.toUpperCase() && (jQuery.browser.name = navigator.appName));
-		-1 != (ix = jQuery.browser.fullVersion.indexOf(";")) && (jQuery.browser.fullVersion = jQuery.browser.fullVersion.substring(0, ix)), -1 != (ix = jQuery.browser.fullVersion.indexOf(" ")) && (jQuery.browser.fullVersion = jQuery.browser.fullVersion.substring(0, ix)), jQuery.browser.majorVersion = parseInt("" + jQuery.browser.fullVersion, 10), isNaN(jQuery.browser.majorVersion) && (jQuery.browser.fullVersion = "" + parseFloat(navigator.appVersion), jQuery.browser.majorVersion = parseInt(navigator.appVersion, 10)), jQuery.browser.version = jQuery.browser.majorVersion
+		-1 != (ix = jQuery.browser.fullVersion.indexOf(";")) && (jQuery.browser.fullVersion = jQuery.browser.fullVersion.substring(0, ix));
+		-1 != (ix = jQuery.browser.fullVersion.indexOf(" ")) && (jQuery.browser.fullVersion = jQuery.browser.fullVersion.substring(0, ix));
+		jQuery.browser.majorVersion = parseInt("" + jQuery.browser.fullVersion, 10);
+		isNaN(jQuery.browser.majorVersion) && (jQuery.browser.fullVersion = "" + parseFloat(navigator.appVersion), jQuery.browser.majorVersion = parseInt(navigator.appVersion, 10));
+		jQuery.browser.version = jQuery.browser.majorVersion
 	}
+
+	jQuery.browser.android = /Android/i.test(nAgt);
+	jQuery.browser.blackberry = /BlackBerry/i.test(nAgt);
+	jQuery.browser.ios = /iPhone|iPad|iPod/i.test(nAgt);
+	jQuery.browser.operaMobile = /Opera Mini/i.test(nAgt);
+	jQuery.browser.windowsMobile = /IEMobile/i.test(nAgt);
+	jQuery.browser.mobile = jQuery.browser.android || jQuery.browser.blackberry || jQuery.browser.ios || jQuery.browser.windowsMobile || jQuery.browser.operaMobile;
+
+
+	jQuery.isMobile = jQuery.browser.mobile;
 
 	/*******************************************************************************
 	 * jQuery.mb.components: jquery.mb.CSSAnimate
@@ -91,7 +115,7 @@
 
 	jQuery.mbMiniPlayer = {
 		author  : "Matteo Bicocchi",
-		version : "1.7.6",
+		version : "1.7.7",
 		name    : "mb.miniPlayer",
 		isMobile: false,
 
@@ -104,8 +128,8 @@
 			volumeMute: "Vm"
 		},
 		defaults: {
-			ogg                 :null,
-			m4a                 :null,
+			ogg                 : null,
+			m4a                 : null,
 			width               : 150,
 			skin                : "black", // available: black, blue, orange, red, gray or use the skinMaker tool to create your.
 			volume              : .5,
@@ -123,8 +147,9 @@
 			addShadow           : true,
 			downloadable        : false,
 			downloadablesecurity: false,
-			downloadPage        :null,
+			downloadPage        : null,
 			swfPath             : "inc/",
+			onReady             : function () {},
 			onPlay              : function () {},
 			onEnd               : function () {}
 		},
@@ -145,7 +170,7 @@
 					info.album = ID3.getTag(url, "album");
 					info.track = ID3.getTag(url, "track");
 
-					if (info.title != undefined){
+					if (typeof info.title != "undefined"){
 						$titleBox.html(info.title + " - " + info.artist);
 					}
 				})
@@ -180,9 +205,7 @@
 				var player = $player.get(0);
 				player.opt = {};
 				jQuery.extend(player.opt, jQuery.mbMiniPlayer.defaults, options);
-
-				jQuery.mbMiniPlayer.isMobile = 'ontouchstart' in window;
-				jQuery.mbMiniPlayer.eventEnd = jQuery.mbMiniPlayer.isMobile ? "touchend" : "mouseup";
+				jQuery.mbMiniPlayer.eventEnd = jQuery.isMobile ? "touchend" : "mouseup";
 
 				player.idx = idx+1;
 				player.title = title;
@@ -206,8 +229,7 @@
 					player.opt.showControls = false;
 				}
 
-				if (jQuery.mbMiniPlayer.isMobile) { //'ontouchstart' in window
-
+				if (jQuery.isMobile) { //'ontouchstart' in window
 					player.opt.showVolumeLevel = false;
 					player.opt.autoplay = false;
 					player.opt.downloadable = false;
@@ -233,12 +255,24 @@
 				if (player.opt.addShadow)
 					$controlsBox.addClass("shadow");
 				var $layout = "<table cellpadding='0' cellspacing='0' border='0'><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr></table>";
-				jQuery("body").append($player);
+
+				if(!jQuery("#JPLContainer").length){
+					var JPLContainer = jQuery("<div/>").attr({id:"JPLContainer"}).hide();
+					jQuery("body").append(JPLContainer);
+				}
+				jQuery("#JPLContainer").append($player);
+
 				$master.after($controlsBox);
 				$controlsBox.html($layout);
 
 				var fileUrl = encodeURI(player.opt.mp3 || player.opt.m4a);
 				var fileExtension = fileUrl.substr((Math.max(0, fileUrl.lastIndexOf(".")) || Infinity) + 1);
+
+				//if there's a querystring remove it
+				if(fileExtension.indexOf("?")>=0){
+					fileExtension = fileExtension.split("?")[0];
+				}
+
 				var fileName = encodeURI(fileUrl.replace("."+fileExtension, "").split("/").pop());
 
 				var download = jQuery("<span/>").addClass("map_download").css({display: "inline-block", cursor: "pointer"}).html("d").on(jQuery.mbMiniPlayer.eventEnd,function () {
@@ -262,7 +296,8 @@
 				var $timeBox = jQuery("<span/>").addClass("map_time").html("").hide();
 
 				var $controls = jQuery("<div/>").addClass("map_controls");
-				var $titleBox = jQuery("<span/>").addClass("map_title").html(player.title);
+				var titleText = player.title;
+				var $titleBox = jQuery("<span/>").addClass("map_title").html(titleText);
 				var $progress = jQuery("<div/>").addClass("jp-progress");
 
 				var $loadBar = jQuery("<div/>").addClass("jp-load-bar").attr("id", "loadBar_" + playerID);
@@ -306,6 +341,10 @@
 
 						if(player.opt.mp3){
 							jQuery.mbMiniPlayer.getID3(player);
+						}
+
+						if(typeof player.opt.onReady == "function"){
+							player.opt.onReady(player, $controlsBox);
 						}
 
 						function animatePlayer(anim) {
@@ -474,8 +513,9 @@
 								$volumeBox.removeClass("mute");
 							});
 						});
+
 						// autoplay can't work on devices
-						if (!jQuery.mbMiniPlayer.isMobile && player.opt.autoplay && ((player.opt.playAlone && jQuery("[isPlaying=true]").length == 0) || !player.opt.playAlone))
+						if (!jQuery.isMobile && player.opt.autoplay && ((player.opt.playAlone && jQuery("[isPlaying=true]").length == 0) || !player.opt.playAlone))
 							$playBox.trigger(jQuery.mbMiniPlayer.eventEnd);
 					},
 					supplied           : player.opt.supplied,
@@ -484,7 +524,8 @@
 					volume             : player.opt.volume,
 					swfPath            : player.opt.swfPath,
 					solution           : player.opt.isIE ? 'flash' : 'html, flash',
-					preload            : isDevice ? 'none' : 'metadata',
+//					preload            : isDevice ? 'none' : 'metadata',
+					preload            : 'none',
 					cssSelectorAncestor: "#" + playerID, // Remove the ancestor css selector clause
 					cssSelector        : {
 						playBar: "#playBar_" + playerID,
@@ -669,13 +710,16 @@
 	jQuery.fn.unselectable = function () {
 		this.each(function () {
 			jQuery(this).css({
-				"-moz-user-select"  : "none",
-				"-khtml-user-select": "none",
-				"user-select"       : "none"
+				"-webkit-user-select": "none",
+				"-moz-user-select": "none",
+				"-ms-user-select": "none",
+				"-o-user-select": "none",
+				"user-select": "none"
 			}).attr("unselectable", "on");
 		});
 		return jQuery(this);
 	};
+
 	//Public method
 	jQuery.fn.mb_miniPlayer = jQuery.mbMiniPlayer.buildPlayer;
 	jQuery.fn.mb_miniPlayer_changeFile = jQuery.mbMiniPlayer.changeFile;

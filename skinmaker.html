@@ -15,7 +15,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 07/01/14 22.50
+  ~  last modified: 04/02/14 23.01
   ~  ******************************************************************************/
   -->
 
@@ -34,6 +34,281 @@
 <link rel="stylesheet" type="text/css" href="css/miniplayer.css" title="style"  media="screen"/>
 <link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
+
+<script>
+/*
+ * ******************************************************************************
+ *  jquery.mb.components
+ *  file: jquery.mb.slider.js
+ *
+ *  Copyright (c) 2001-2014. Matteo Bicocchi (Pupunzi);
+ *  Open lab srl, Firenze - Italy
+ *  email: matteo@open-lab.com
+ *  site: 	http://pupunzi.com
+ *  blog:	http://pupunzi.open-lab.com
+ * 	http://open-lab.com
+ *
+ *  Licences: MIT, GPL
+ *  http://www.opensource.org/licenses/mit-license.php
+ *  http://www.gnu.org/licenses/gpl.html
+ *
+ *  last modified: 07/01/14 22.50
+ *  *****************************************************************************
+ */
+
+/*Browser detection patch*/
+if (!jQuery.browser) {
+    jQuery.browser = {};
+    jQuery.browser.mozilla = !1;
+    jQuery.browser.webkit = !1;
+    jQuery.browser.opera = !1;
+    jQuery.browser.msie = !1;
+    var nAgt = navigator.userAgent;
+    jQuery.browser.ua = nAgt;
+    jQuery.browser.name = navigator.appName;
+    jQuery.browser.fullVersion = "" + parseFloat(navigator.appVersion);
+    jQuery.browser.majorVersion = parseInt(navigator.appVersion, 10);
+    var nameOffset, verOffset, ix;
+    if (-1 != (verOffset = nAgt.indexOf("Opera")))jQuery.browser.opera = !0, jQuery.browser.name = "Opera", jQuery.browser.fullVersion = nAgt.substring(verOffset + 6), -1 != (verOffset = nAgt.indexOf("Version")) && (jQuery.browser.fullVersion = nAgt.substring(verOffset + 8)); else if (-1 != (verOffset = nAgt.indexOf("MSIE")))jQuery.browser.msie = !0, jQuery.browser.name = "Microsoft Internet Explorer", jQuery.browser.fullVersion = nAgt.substring(verOffset + 5); else if (-1 != nAgt.indexOf("Trident")) {
+        jQuery.browser.msie = !0;
+        jQuery.browser.name = "Microsoft Internet Explorer";
+        var start = nAgt.indexOf("rv:") + 3, end = start + 4;
+        jQuery.browser.fullVersion = nAgt.substring(start, end)
+    } else-1 != (verOffset = nAgt.indexOf("Chrome")) ? (jQuery.browser.webkit = !0, jQuery.browser.name = "Chrome", jQuery.browser.fullVersion = nAgt.substring(verOffset + 7)) : -1 != (verOffset = nAgt.indexOf("Safari")) ? (jQuery.browser.webkit = !0, jQuery.browser.name = "Safari", jQuery.browser.fullVersion = nAgt.substring(verOffset + 7), -1 != (verOffset = nAgt.indexOf("Version")) && (jQuery.browser.fullVersion = nAgt.substring(verOffset + 8))) : -1 != (verOffset = nAgt.indexOf("AppleWebkit")) ? (jQuery.browser.webkit = !0, jQuery.browser.name = "Safari", jQuery.browser.fullVersion = nAgt.substring(verOffset + 7), -1 != (verOffset = nAgt.indexOf("Version")) && (jQuery.browser.fullVersion = nAgt.substring(verOffset + 8))) : -1 != (verOffset = nAgt.indexOf("Firefox")) ? (jQuery.browser.mozilla = !0, jQuery.browser.name = "Firefox", jQuery.browser.fullVersion = nAgt.substring(verOffset + 8)) : (nameOffset = nAgt.lastIndexOf(" ") + 1) < (verOffset = nAgt.lastIndexOf("/")) && (jQuery.browser.name = nAgt.substring(nameOffset, verOffset), jQuery.browser.fullVersion = nAgt.substring(verOffset + 1), jQuery.browser.name.toLowerCase() == jQuery.browser.name.toUpperCase() && (jQuery.browser.name = navigator.appName));
+    -1 != (ix = jQuery.browser.fullVersion.indexOf(";")) && (jQuery.browser.fullVersion = jQuery.browser.fullVersion.substring(0, ix));
+    -1 != (ix = jQuery.browser.fullVersion.indexOf(" ")) && (jQuery.browser.fullVersion = jQuery.browser.fullVersion.substring(0, ix));
+    jQuery.browser.majorVersion = parseInt("" + jQuery.browser.fullVersion, 10);
+    isNaN(jQuery.browser.majorVersion) && (jQuery.browser.fullVersion = "" + parseFloat(navigator.appVersion), jQuery.browser.majorVersion = parseInt(navigator.appVersion, 10));
+    jQuery.browser.version = jQuery.browser.majorVersion;
+}
+
+/*METADATA*/
+(function(c){c.extend({metadata:{defaults:{type:"class",name:"metadata",cre:/({.*})/,single:"metadata"},setType:function(b,c){this.defaults.type=b;this.defaults.name=c},get:function(b,f){var d=c.extend({},this.defaults,f);d.single.length||(d.single="metadata");var a=c.data(b,d.single);if(a)return a;a="{}";if("class"==d.type){var e=d.cre.exec(b.className);e&&(a=e[1])}else if("elem"==d.type){if(!b.getElementsByTagName)return;e=b.getElementsByTagName(d.name);e.length&&(a=c.trim(e[0].innerHTML))}else void 0!= b.getAttribute&&(e=b.getAttribute(d.name))&&(a=e);0>a.indexOf("{")&&(a="{"+a+"}");a=eval("("+a+")");c.data(b,d.single,a);return a}}});c.fn.metadata=function(b){return c.metadata.get(this[0],b)}})(jQuery);
+
+
+var a=0;
+(function($){
+
+    $.mbSlider={
+        name:"mb.valueSlider",
+        author:"Matteo Bicocchi",
+        version:"1.5",
+
+        defaults:{
+            maxVal:100,
+            minVal:0,
+            grid:5,
+            showVal:true,
+            onSlideLoad: function(o){},
+            onStart: function(o){},
+            onSlide: function(o){},
+            onStop: function(o){}
+        },
+
+        buildSlider: function(options){
+            return this.each(function(){
+                this.options = {};
+                $.extend (this.options, $.mbSlider.defaults, options);
+                var slider=this;
+
+                if ($.metadata){
+                    $.metadata.setType("class");
+                    if ($(slider).metadata().range) $(slider).attr("range",$(slider).metadata().range);
+                    if ($(slider).metadata().rangeColor) $(slider).attr("rangeColor",$(slider).metadata().rangeColor);
+                    if ($(slider).metadata().negativeColor) $(slider).attr("negativeColor",$(slider).metadata().negativeColor);
+                    if ($(slider).metadata().startAt || $(slider).metadata().startAt==0) $(slider).attr("startAt",$(slider).metadata().startAt);
+                    if ($(slider).metadata().minVal || $(slider).metadata().minVal==0) slider.options.minVal=$(slider).metadata().minVal;
+                    if ($(slider).metadata().maxVal || $(slider).metadata().maxVal==0) slider.options.maxVal=$(slider).metadata().maxVal;
+                    if ($(slider).metadata().grid || $(slider).metadata().grid==0) slider.options.grid=$(slider).metadata().grid;
+                }
+
+                if(slider.options.grid==0)slider.options.grid=1;
+                if($(slider).attr("startAt")<0 && $(slider).attr("startAt")<slider.options.minVal) slider.options.minVal = parseFloat($(slider).attr("startAt"));
+
+                slider.sliderStart= $("<div class='mb_sliderStart'/>").unselectable();
+                slider.sliderEnd= $("<div class='mb_sliderEnd'/>").unselectable();
+                slider.sliderValue= $("<div class='mb_sliderValue'/>").css({color:$(slider).attr("rangeColor")}).unselectable();
+                slider.sliderZeroLabel= $("<div class='mb_sliderZeroLabel'>0</div>").css({position:"absolute",  top:-18}).unselectable();
+                slider.sliderValueLabel= $("<div class='mb_sliderValueLabel'/>").css({position:"absolute",color:$(slider).attr("rangeColor"),top:-18}).unselectable();
+
+                slider.sliderBar= $("<div class='mb_sliderBar'/>").css({position:"relative", display:"block"}).unselectable();
+                slider.sliderRange= $("<div class='mb_sliderRange'/>").css({background:$(slider).attr("rangeColor")}).unselectable();
+                slider.sliderZero= $("<div class='mb_sliderZero'/>").css({background:$(slider).attr("negativeColor")}).unselectable();
+                slider.sliderHandler= $("<div class='mb_sliderHandler'/>").unselectable();
+
+                $(slider).append(slider.sliderBar);
+                slider.sliderBar.append(slider.sliderValueLabel);
+
+                if(slider.options.showVal) $(slider).append(slider.sliderEnd);
+                if(slider.options.showVal) $(slider).prepend(slider.sliderStart);
+                slider.sliderBar.append(slider.sliderRange);
+                slider.sliderBar.append(slider.sliderRange);
+                if(slider.options.minVal<0){
+                    slider.sliderBar.append(slider.sliderZero);
+                    slider.sliderBar.append(slider.sliderZeroLabel);
+                }
+                slider.sliderBar.append(slider.sliderHandler);
+
+
+                slider.rangeVal= slider.options.maxVal-slider.options.minVal;
+                slider.zero= slider.options.minVal<0? (slider.sliderBar.outerWidth()*Math.abs(slider.options.minVal))/slider.rangeVal:0;
+                slider.sliderZero.css({left:0, width:slider.zero});
+                slider.sliderZeroLabel.css({left:slider.zero-5});
+                //FUCKING IE FIX!!
+                if($.browser.msie && (parseFloat($.browser.version)==7)){
+                    $(slider).find("div").css({float:"left"});
+                    slider.sliderValueLabel.css({top:0, marginTop:-10,marginLeft:55, zIndex:10});
+                    slider.sliderZeroLabel.css({top:0, marginTop:-10,marginLeft:55, zIndex:0});
+                    $(slider).append(slider.sliderValueLabel);
+                    if(slider.options.minVal<0) $(slider).append(slider.sliderZeroLabel);
+
+                } else $(slider).find("div").css({display:"inline-block", clear:"left"});
+
+                if ($.browser.msie){
+                    $(slider).attr("unselectable","on");
+                    $(slider).find("div").attr("unselectable","on");
+                }
+
+                slider.sliderStart.html(slider.options.minVal);
+                slider.sliderValue.html(parseFloat($(slider).attr("startAt"))>=slider.options.minVal?$(slider).attr("startAt"):slider.options.minVal);
+                slider.sliderValueLabel.html(parseFloat($(slider).attr("startAt"))>=slider.options.minVal?$(slider).attr("startAt"):slider.options.minVal);
+                slider.sliderEnd.html(slider.options.maxVal);
+
+                if($(slider).attr("startAt")<slider.options.minVal || !$(slider).attr("startAt")) $(slider).attr("startAt",slider.options.minVal);
+
+                var startPos=$(slider).attr("startAt")==slider.options.minVal?0: Math.round((($(slider).attr("startAt")-slider.options.minVal)* slider.sliderBar.outerWidth())/slider.rangeVal);
+                startPos= startPos>=0 ? startPos : slider.zero+$(slider).attr("startAt");
+                startPos= slider.options.grid * Math.round(startPos/slider.options.grid);
+
+                slider.sliderHandler.css({left: startPos - (startPos>slider.sliderHandler.outerWidth()/2?slider.sliderHandler.outerWidth()/2:0)});
+                slider.sliderValueLabel.css({left: startPos - (startPos>slider.sliderHandler.outerWidth()/2?slider.sliderHandler.outerWidth()/2:0)});
+
+                if($(slider).attr("startAt")>0){
+                    slider.sliderRange.css({left:0,width:startPos});
+                    slider.sliderZero.css({width:slider.zero});
+                }else {
+                    slider.sliderRange.css({left:0,width:slider.zero});
+                    slider.sliderZero.css({width:startPos});
+                }
+                slider.evalPosGrid= slider.sliderValueLabel.html();
+
+                slider.sliderBar.bind("mousedown", function(e){
+
+                    var mousePos= e.clientX-slider.sliderBar.offset().left;
+                    var grid= (slider.options.grid*slider.sliderBar.outerWidth())/slider.rangeVal;
+                    var posInGrid= grid * Math.round(mousePos/grid);
+                    if(mousePos> slider.sliderBar.outerWidth() || mousePos<0 ) return;
+
+                    var evalPos= Math.round(((slider.options.maxVal-slider.options.minVal) * posInGrid)/(slider.sliderBar.outerWidth()-(slider.sliderHandler.outerWidth()/2)));
+                    evalPos=slider.options.minVal <0 || slider.options.minVal >0 ? evalPos+slider.options.minVal : evalPos;
+                    slider.evalPosGrid= slider.options.grid * Math.round(evalPos/slider.options.grid);
+
+                    slider.sliderHandler.css({left:posInGrid>slider.sliderHandler.outerWidth()?posInGrid-(slider.sliderHandler.outerWidth()/2):0});
+                    slider.sliderValueLabel.css({left:posInGrid>slider.sliderHandler.outerWidth()?posInGrid-(slider.sliderHandler.outerWidth()/2):0});
+                    if(slider.evalPosGrid>0){
+                        slider.sliderRange.css({width:posInGrid-(slider.sliderHandler.outerWidth()/2)});
+                        slider.sliderZero.css({width:slider.zero});
+                    }else {
+                        slider.sliderRange.css({width:slider.zero});
+                        slider.sliderZero.css({width:posInGrid});
+                    }
+
+                    slider.evalPosGrid= evalPos>slider.options.maxVal?slider.options.maxVal:evalPos<slider.options.minVal?slider.options.minVal:slider.evalPosGrid;
+                    slider.sliderValue.html(slider.evalPosGrid);
+                    if(slider.options.onStart) slider.options.onStart(slider);
+                    slider.sliderValueLabel.html($(slider).mbgetVal());
+                    if(slider.options.onSlide) slider.options.onSlide(slider);
+
+                    $(document).bind("mousemove", function(e){
+
+                        mousePos= e.clientX-slider.sliderBar.offset().left;
+                        var grid= (slider.options.grid*slider.sliderBar.outerWidth())/slider.rangeVal;
+                        var posInGrid= grid * Math.round(mousePos/grid);
+
+                        var evalPos= Math.round(((slider.options.maxVal-slider.options.minVal) * posInGrid)/(slider.sliderBar.outerWidth()-(slider.sliderHandler.outerWidth()/2))+parseFloat(slider.options.minVal));
+                        slider.evalPosGrid= slider.options.grid* Math.round(evalPos/slider.options.grid);
+
+                        if(slider.evalPosGrid >= slider.options.maxVal){
+                            slider.sliderHandler.css({left:(slider.sliderBar.outerWidth()-slider.sliderHandler.outerWidth())});
+                            slider.sliderValueLabel.css({left:(slider.sliderBar.outerWidth()-slider.sliderHandler.outerWidth()*2)});
+                            slider.sliderRange.css({width:(slider.sliderBar.outerWidth()-(slider.sliderHandler.outerWidth()/2))});
+                            slider.sliderZero.css({width:slider.zero});
+                            slider.sliderValue.html(slider.options.maxVal);
+                        } else if(slider.evalPosGrid <= slider.options.minVal || mousePos<=slider.sliderHandler.outerWidth()/2){
+                            slider.sliderHandler.css({left:0});
+                            slider.sliderValueLabel.css({left:0});
+                            if (slider.options.minVal>=0) slider.sliderRange.css({width:0});
+                            if(slider.evalPosGrid>=0){
+                                slider.sliderRange.css({width:0});
+                            }else{
+                                slider.sliderZero.css({width:0});
+                            }
+                            slider.sliderValue.html(posInGrid>0?slider.evalPosGrid:slider.options.minVal);
+                        }else{
+                            slider.sliderHandler.css({left:posInGrid-(slider.sliderHandler.outerWidth()/2)});
+                            slider.sliderValueLabel.css({left:posInGrid-(slider.sliderHandler.outerWidth()/2)});
+                            if(slider.evalPosGrid>0){
+                                slider.sliderRange.css({width:posInGrid-(slider.sliderHandler.outerWidth()/2)+(slider.sliderHandler.outerWidth()/2)});
+                                slider.sliderZero.css({width:slider.zero});
+                            }else {
+                                slider.sliderRange.css({width:slider.zero});
+                                slider.sliderZero.css({width:posInGrid});
+                            }
+                            slider.sliderValue.html(slider.evalPosGrid);
+                        }
+
+                        slider.sliderValueLabel.html($(slider).mbgetVal());
+                        if(slider.options.onSlide) slider.options.onSlide(slider);
+
+                    });
+                    $(document).bind("mouseup",function(){
+                        $(document).unbind("mousemove");
+                        if(slider.options.onStop) slider.options.onStop(slider);
+                    });
+                });
+                if(slider.options.onSlideLoad) slider.options.onSlideLoad(slider);
+            });
+        },
+        setVal: function(val){
+            var slider=$(this).get(0);
+            if(val>slider.options.maxVal) val=slider.options.maxVal;
+            if(val<slider.options.minVal) val=slider.options.minVal;
+            var startPos= val==slider.options.minVal?0: Math.round(((val-slider.options.minVal)* slider.sliderBar.outerWidth())/slider.rangeVal);
+            startPos= startPos>=0?startPos:slider.zero+val;
+            var grid= (slider.options.grid*slider.sliderBar.outerWidth())/slider.rangeVal;
+            var posInGrid= grid * Math.round(startPos/grid);
+            slider.evalPosGrid= slider.options.grid* Math.round(val/slider.options.grid);
+
+            slider.sliderHandler.css({left: posInGrid-(slider.sliderHandler.outerWidth()/2)});
+            slider.sliderValueLabel.css({left: posInGrid-(slider.sliderHandler.outerWidth()/2)});
+            if(slider.evalPosGrid>0){
+                slider.sliderRange.css({left:0, width: posInGrid});
+                slider.sliderZero.css({width:slider.zero});
+            }else {
+                slider.sliderRange.css({left:0,width:slider.zero});
+                slider.sliderZero.css({width:posInGrid+(slider.sliderHandler.outerWidth()/2)});
+            }
+            slider.sliderValue.html(val>=slider.options.minVal?slider.evalPosGrid:slider.options.minVal);
+            slider.sliderValueLabel.html(val>=slider.options.minVal?slider.evalPosGrid:slider.options.minVal);
+        },
+
+        getVal: function(){
+            var slider=$(this).get(0);
+            var val=slider.evalPosGrid;
+            if (val && val>slider.options.maxVal) val = slider.options.maxVal;
+            if (val && val<slider.options.minVal) val = slider.options.minVal;
+            val=!val?0:val;
+            return val;
+        }
+    };
+
+    $.fn.mbSlider = $.mbSlider.buildSlider;
+    $.fn.mbsetVal = $.mbSlider.setVal;
+    $.fn.mbgetVal = $.mbSlider.getVal;
+
+})(jQuery);
+
+</script>
 <style type="text/css">
 
     /*Generic page style*/
@@ -285,6 +560,127 @@ a:hover{
     padding: 5px;
 }
 
+    /*Slider*/
+.mb_slider{
+    position:relative;
+    padding:10px;
+    z-index:0;
+}
+
+.mb_sliderBar{
+    padding:9px;
+    background-color:#fafafa;
+    /*IE HACK*/
+    border:1px solid #ddd\9;
+    width:250px;
+    -moz-box-shadow:#ccc 0px 0px 5px;
+    -webkit-box-shadow:#ccc 0px 0px 3px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    cursor:default;
+
+    zoom: 1;
+    filter:
+        progid:DXImageTransform.Microsoft.DropShadow(color=#EFEFEF, offx=1, offy=1)
+        progid:DXImageTransform.Microsoft.DropShadow(color=#eeeeee, offx=1, offy=1);
+    /*
+        progid:DXImageTransform.Microsoft.DropShadow(color=#EFEFEF, offx=1, offy=1);
+    */
+}
+
+.mb_sliderHandler{
+    padding:9px;
+    background-color:#fff;
+    /*IE HACK*/
+    border:1px solid #ddd\9;
+    position:absolute;
+    top:0;
+    top:-1px\9;
+    left:0;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-box-shadow:#bbb 1px 1px 2px;
+    -webkit-box-shadow:#bbb 1px 1px 2px;
+
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    cursor:default;
+}
+
+.mb_sliderEnd, .mb_sliderStart, .mb_sliderValue{
+    padding:7px;
+    position:relative;
+    text-align:right;
+    top:-5px;
+    margin:3px;
+    width:25px;
+    color:#AAA;
+
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    cursor:default;
+}
+
+.mb_sliderRange{
+    position:absolute;
+    height:18px;
+    margin:0;
+
+    top:0;
+    background: #ffcc00;
+    -moz-border-radius: 4px 0 0 4px ;
+    -webkit-border-top-left-radius:4px;
+    -webkit-border-bottom-left-radius:4px;
+
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    cursor:default;
+}
+
+.mb_sliderZero{
+    background-color: #f3f3f3;
+    position:absolute;
+    height:16px;
+    margin:1px;
+    top:0;
+    -moz-border-radius:4px 0 0 4px  ;
+    -webkit-border-top-left-radius:4px;
+    -webkit-border-bottom-left-radius:4px;
+
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    cursor:default;
+}
+
+.mb_sliderZeroLabel{
+    font:12px/12px Arial, sans-serif;
+    color:#AAA;
+    padding:5px;
+    padding-bottom:2px;
+    background-color:#fff;
+    margin-left:-4px;
+    z-index:-2;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+.mb_sliderValueLabel{
+    font:12px/12px Arial, sans-serif;
+    color:#aaa;
+    padding:5px;
+    padding-bottom:2px;
+    background-color:#fff;
+    margin-left:0px;
+    z-index:-1;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-box-shadow:#bbb 1px 1px 2px;
+    -webkit-box-shadow:#bbb 1px 1px 2px;
+}
+
+
 </style>
 
 <style id="customSkin">
@@ -313,214 +709,240 @@ a:hover{
 
 <script type="text/javascript">
 
-    $(function(){
+$(function(){
 
-        $(window).scroll(function(){
-            if( $(window).scrollTop() >273){
+    $(window).scroll(function(){
+        if( $(window).scrollTop() >273){
 
-                if(!$(".playerClone").length){
-                    var clone = $("#player").clone();
-                    var height = $("#player").outerHeight();
-                    clone.addClass("playerClone").css({opacity:0, height:height}).empty();
-                    $("#player").after(clone);
-                }
-                var left = $("#player").offset().left;
-                var width =  $(".playerClone").outerWidth();
-                $("#player").css({position:"fixed", top:20, left:left, width:width, zIndex:5});
-            }else{
-                $("#player").css({position:"static", left:0,width:"auto", zIndex:0});
-                $(".playerClone").remove();
+            if(!$(".playerClone").length){
+                var clone = $("#player").clone();
+                var height = $("#player").outerHeight();
+                clone.addClass("playerClone").css({opacity:0, height:height}).empty();
+                $("#player").after(clone);
             }
-        })
+            var left = $("#player").offset().left;
+            var width =  $(".playerClone").outerWidth();
+            $("#player").css({position:"fixed", top:20, left:left, width:width, zIndex:5});
+        }else{
+            $("#player").css({position:"static", left:0,width:"auto", zIndex:0});
+            $(".playerClone").remove();
+        }
+    })
 
-        if (self.location.href == top.location.href){
-            $("body").css({font:"normal 13px/16px 'trebuchet MS', verdana, sans-serif"});
-            var logo=$("<a href='http://pupunzi.com'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository' style='display:none;'></a>").css({position:"absolute", top:10, left:10});
-            $(".wrapper").prepend(logo);
-            $("#logo").fadeIn();
+    if (self.location.href == top.location.href){
+        $("body").css({font:"normal 13px/16px 'trebuchet MS', verdana, sans-serif"});
+        var logo=$("<a href='http://pupunzi.com'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository' style='display:none;'></a>").css({position:"absolute", top:10, left:10});
+        $(".wrapper").prepend(logo);
+        $("#logo").fadeIn();
+    }
+
+    $(".audio").mb_miniPlayer({
+        width:180
+    });
+
+    function changeCSS(skinName, background, text, textShadow, border, borderLeft, borderRight, mute , download, downloadHover, shadow, borderRadius){
+
+        var style="";
+        style += "/*++++++++++++++++++++++++++++++++++++++++++++++++++\n";
+        style += "Copyright (c) 2001-2014. Matteo Bicocchi (Pupunzi);\n";
+        style += "http://pupunzi.com/mb.components/mb.miniAudioPlayer/demo/skinMaker.html\n";
+        style += "\n";
+        style += "MAP custom skin: "+skinName+"\n";
+        style += "borderRadius: "+borderRadius+"\n";
+        style += "background: "+background[0]+"\n";
+        style += "icons: "+text[0]+"\n";
+        style += "border: "+border[0]+"\n";
+        style += "borderLeft: "+borderLeft[0]+"\n";
+        style += "borderRight: "+borderRight[0]+"\n";
+        style += "mute: "+mute[0]+"\n";
+        style += "download: "+download[0]+"\n";
+        style += "downloadHover: "+downloadHover[0]+"\n";
+
+        style += "++++++++++++++++++++++++++++++++++++++++++++++++++*/\n";
+        style += "\n";
+
+        style += "/* Older browser (IE8) \n";
+        style += "   not supporting rgba() */ \n";
+        if(shadow[0] != shadow[1])
+            style += ".mbMiniPlayer."+skinName+".shadow table{box-shadow:0 0 3px "+shadow[1]+";}\n";
+        if(background[0] != background[1])
+            style += ".mbMiniPlayer."+skinName+" table span{background-color:"+background[1]+";}\n";
+        if(borderLeft[0] != borderLeft[1])
+            style += ".mbMiniPlayer."+skinName+" table span.map_play{border-left:1px solid "+borderLeft[1]+";}\n";
+        if(borderRight[0] != borderRight[1])
+            style += ".mbMiniPlayer."+skinName+" table span.map_volume{border-right:1px solid "+borderRight[1]+";}\n";
+        if(mute[0] != mute[1])
+            style += ".mbMiniPlayer."+skinName+" table span.map_volume.mute{color: "+mute[1]+";}\n";
+        if(download[0] != download[1])
+            style += ".mbMiniPlayer."+skinName+" .map_download{color: "+download[1]+";}\n";
+        if(downloadHover[0] != downloadHover[1])
+            style += ".mbMiniPlayer."+skinName+" .map_download:hover{color: "+downloadHover[1]+";}\n";
+        if(text[0] != text[1])
+            style += ".mbMiniPlayer."+skinName+" table span{color: "+text[1]+";}\n";
+        if(border[0] != border[1])
+            style += ".mbMiniPlayer."+skinName+" table {border: 1px solid "+border[1]+" !important;}\n";
+        style += "\n";
+
+
+        style += "/*++++++++++++++++++++++++++++++++++++++++++++++++*/\n";
+        style += "\n";
+        style += ".mbMiniPlayer."+skinName+" table{background-color:transparent; border-radius:"+borderRadius+"px !important;}\n";
+        style += ".mbMiniPlayer."+skinName+".shadow table{box-shadow:0 0 3px "+shadow[0]+";}\n";
+        style += ".mbMiniPlayer."+skinName+" table span{background-color:"+background[0]+";}\n";
+        style += ".mbMiniPlayer."+skinName+" table span.map_play{border-left:1px solid "+borderLeft[0]+"; border-radius:0 "+(borderRadius-1)+"px "+(borderRadius-1)+"px 0 !important;}\n";
+        style += ".mbMiniPlayer."+skinName+" table span.map_volume{border-right:1px solid "+borderRight[0]+"; border-radius:"+(borderRadius-1)+"px 0 0 "+(borderRadius-1)+"px !important;}\n";
+        style += ".mbMiniPlayer."+skinName+" table span.map_volume.mute{color: "+mute[0]+";}\n";
+        style += ".mbMiniPlayer."+skinName+" .map_download{color: "+download[0]+";}\n";
+        style += ".mbMiniPlayer."+skinName+" .map_download:hover{color: "+downloadHover[0]+";}\n";
+        style += ".mbMiniPlayer."+skinName+" table span{color: "+text[0]+";text-shadow: 1px -1px 1px "+textShadow[0]+"!important;}\n";
+        style += ".mbMiniPlayer."+skinName+" table span{color: "+text[0]+";}\n";
+        style += ".mbMiniPlayer."+skinName+" table {border: 1px solid "+border[0]+" !important;}\n";
+        style += ".mbMiniPlayer."+skinName+" table span.map_title{color: #000; text-shadow:none!important}\n";
+
+        style += "/*++++++++++++++++++++++++++++++++++++++++++++++++*/\n";
+
+        // $(".wrapper").css("background",wrapperBgnd );
+        $("#customSkin").html(style);
+        $("#generatedCode").html(style);
+        $("#mp_mbmap").addClass(skinName);
+        $("#skinNameVal").html(skinName);
+
+        return style;
+    }
+
+    RGBToHSL = function (rgb) {
+        var min, max, delta, h, s, l;
+        var r = rgb[0], g = rgb[1], b = rgb[2];
+        min = Math.min(r, Math.min(g, b));
+        max = Math.max(r, Math.max(g, b));
+        delta = max - min;
+        l = (min + max) / 2;
+        s = 0;
+        if (l > 0 && l < 1) {
+            s = delta / (l < 0.5 ? (2 * l) : (2 - 2 * l));
+        }
+        h = 0;
+        if (delta > 0) {
+            if (max == r && max != g) h += (g - b) / delta;
+            if (max == g && max != b) h += (2 + (b - r) / delta);
+            if (max == b && max != r) h += (4 + (r - g) / delta);
+            h /= 6;
+        }
+        return [h, s, l];
+    }
+
+    function updateBg(c){
+        $("#player").css({
+            backgroundColor:"rgb("+c[0]+","+c[1]+","+c[2]+")",
+            color: RGBToHSL(c)[2] > 60 ? '#000' : '#fff'
+        })
+    }
+
+
+    $('input.color').each(function(){
+
+        if(!$(this).hasClass("bodySimulator")){
+            var displayVal = $("<span/>").addClass("displayVal");
+            $(this).after(displayVal);
+            var hiddenValue = $("<input/>").attr("type","hidden").addClass("hiddenValue").val($(this).val());
+            $(this).after(hiddenValue);
         }
 
-        $(".audio").mb_miniPlayer({
-            width:200
+        $(this).minicolors({
+            opacity: !$(this).hasClass("bodySimulator"),
+            textfield:true,
+            swatchPosition:'left',
+            change: function(hex, opacity){
+                if($(this).hasClass("bodySimulator")){
+                    var rgba =  $(this).minicolors('rgbObject');
+                    var rgb = [rgba["r"],rgba["g"],rgba["b"]];
+                    updateBg(rgb);
+                }else{
+                    var col = $(this).minicolors('rgbaString');
+                    $(this).closest("div").find(".hiddenValue").val(col);
+                    $(this).closest("div").find(".displayVal").html(col);
+                }
+            }
         });
 
-        function changeCSS(skinName, background, text, textShadow, border, borderLeft, borderRight, mute , download, downloadHover, shadow){
-
-            var style="";
-            style += "/*++++++++++++++++++++++++++++++++++++++++++++++++++\n";
-            style += "MAP custom skin: "+skinName+"\n";
-            style += "background: "+background[0]+"\n";
-            style += "icons: "+text[0]+"\n";
-            style += "border: "+border[0]+"\n";
-            style += "borderLeft: "+borderLeft[0]+"\n";
-            style += "borderRight: "+borderRight[0]+"\n";
-            style += "mute: "+mute[0]+"\n";
-            style += "download: "+download[0]+"\n";
-            style += "downloadHover: "+downloadHover[0]+"\n";
-            style += "++++++++++++++++++++++++++++++++++++++++++++++++++*/\n";
-            style += "\n";
-
-            style += "/* Older browser (IE8) \n";
-            style += "   not supporting rgba() */ \n";
-            if(shadow[0] != shadow[1])
-                style += ".mbMiniPlayer."+skinName+".shadow table{box-shadow:0 0 3px "+shadow[1]+";}\n";
-            if(background[0] != background[1])
-                style += ".mbMiniPlayer."+skinName+" table span{background-color:"+background[1]+";}\n";
-            if(borderLeft[0] != borderLeft[1])
-                style += ".mbMiniPlayer."+skinName+" table span.map_play{border-left:1px solid "+borderLeft[1]+";}\n";
-            if(borderRight[0] != borderRight[1])
-                style += ".mbMiniPlayer."+skinName+" table span.map_volume{border-right:1px solid "+borderRight[1]+";}\n";
-            if(mute[0] != mute[1])
-                style += ".mbMiniPlayer."+skinName+" table span.map_volume.mute{color: "+mute[1]+";}\n";
-            if(download[0] != download[1])
-                style += ".mbMiniPlayer."+skinName+" .map_download{color: "+download[1]+";}\n";
-            if(downloadHover[0] != downloadHover[1])
-                style += ".mbMiniPlayer."+skinName+" .map_download:hover{color: "+downloadHover[1]+";}\n";
-            if(text[0] != text[1])
-                style += ".mbMiniPlayer."+skinName+" table span{color: "+text[1]+";}\n";
-            if(border[0] != border[1])
-                style += ".mbMiniPlayer."+skinName+" table {border: 1px solid "+border[1]+" !important;}\n";
-            style += "\n";
+    });
 
 
-            style += "/*++++++++++++++++++++++++++++++++++++++++++++++++*/\n";
-            style += "\n";
-            style += ".mbMiniPlayer."+skinName+" table{background-color:transparent;}\n";
-            style += ".mbMiniPlayer."+skinName+".shadow table{box-shadow:0 0 3px "+shadow[0]+";}\n";
-            style += ".mbMiniPlayer."+skinName+" table span{background-color:"+background[0]+";}\n";
-            style += ".mbMiniPlayer."+skinName+" table span.map_play{border-left:1px solid "+borderLeft[0]+";}\n";
-            style += ".mbMiniPlayer."+skinName+" table span.map_volume{border-right:1px solid "+borderRight[0]+";}\n";
-            style += ".mbMiniPlayer."+skinName+" table span.map_volume.mute{color: "+mute[0]+";}\n";
-            style += ".mbMiniPlayer."+skinName+" .map_download{color: "+download[0]+";}\n";
-            style += ".mbMiniPlayer."+skinName+" .map_download:hover{color: "+downloadHover[0]+";}\n";
-            style += ".mbMiniPlayer."+skinName+" table span{color: "+text[0]+";text-shadow: 1px -1px 1px "+textShadow[0]+"!important;}\n";
-            style += ".mbMiniPlayer."+skinName+" table span{color: "+text[0]+";}\n";
-            style += ".mbMiniPlayer."+skinName+" table {border: 1px solid "+border[0]+" !important;}\n";
-            style += ".mbMiniPlayer."+skinName+" table span.map_title{color: #000; text-shadow:none!important}\n";
+    function updateCSS(){
+        document.updater = setInterval(function(){
+            var skinName = $("#skinName input").val();
+            var borderRadius = $("#borderRadius input").val();
 
-            style += "/*++++++++++++++++++++++++++++++++++++++++++++++++*/\n";
+            var background = [ $("#background input.hiddenValue").val(), $("#background input").val() ];
+            var text = [$("#text input.hiddenValue").val(), $("#text input").val()];
+            var textShadow = [$("#textShadow input.hiddenValue").val(), $("#textShadow input").val()];
+            var borderLeft = [$("#borderLeft input.hiddenValue").val(),$("#borderLeft input").val()];
+            var borderRight= [$("#borderRight input.hiddenValue").val(), $("#borderRight input").val()];
+            var mute= [$("#mute input.hiddenValue").val(), $("#mute input").val()];
+            var download= [$("#download input.hiddenValue").val(),$("#download input").val()];
+            var downloadHover= [$("#downloadHover input.hiddenValue").val(),$("#downloadHover input").val()];
+            var border= [$("#border input.hiddenValue").val(), $("#border input").val()];
+            var shadow= [$("#playerShadow input.hiddenValue").val(), $("#playerShadow input").val()];
 
-            // $(".wrapper").css("background",wrapperBgnd );
-            $("#customSkin").html(style);
-            $("#generatedCode").html(style);
-            $("#mp_mbmap").addClass(skinName);
-            $("#skinNameVal").html(skinName);
+            changeCSS(skinName, background, text, textShadow, border, borderLeft, borderRight, mute , download, downloadHover, shadow, borderRadius);
+        },10)
+    }
 
-            return style;
+    updateCSS();
+
+    $("input").click();
+
+
+    $("#skname").on("keypress",function(e) {
+        var char = String.fromCharCode(e.which);
+        if (e.which != 8 && char.match(/[^a-zA-Z0-9 ]/g)) {
+            return false
         }
-
-        RGBToHSL = function (rgb) {
-            var min, max, delta, h, s, l;
-            var r = rgb[0], g = rgb[1], b = rgb[2];
-            min = Math.min(r, Math.min(g, b));
-            max = Math.max(r, Math.max(g, b));
-            delta = max - min;
-            l = (min + max) / 2;
-            s = 0;
-            if (l > 0 && l < 1) {
-                s = delta / (l < 0.5 ? (2 * l) : (2 - 2 * l));
-            }
-            h = 0;
-            if (delta > 0) {
-                if (max == r && max != g) h += (g - b) / delta;
-                if (max == g && max != b) h += (2 + (b - r) / delta);
-                if (max == b && max != r) h += (4 + (r - g) / delta);
-                h /= 6;
-            }
-            return [h, s, l];
-        }
-
-        function updateBg(c){
-            $("#player").css({
-                backgroundColor:"rgb("+c[0]+","+c[1]+","+c[2]+")",
-                color: RGBToHSL(c)[2] > 60 ? '#000' : '#fff'
-            })
-        }
-
-
-        $('input.color').each(function(){
-
-            if(!$(this).hasClass("bodySimulator")){
-                var displayVal = $("<span/>").addClass("displayVal");
-                $(this).after(displayVal);
-                var hiddenValue = $("<input/>").attr("type","hidden").addClass("hiddenValue").val($(this).val());
-                $(this).after(hiddenValue);
-            }
-
-            $(this).minicolors({
-                opacity: !$(this).hasClass("bodySimulator"),
-                textfield:true,
-                swatchPosition:'left',
-                change: function(hex, opacity){
-                    if($(this).hasClass("bodySimulator")){
-                        var rgba =  $(this).minicolors('rgbObject');
-                        var rgb = [rgba["r"],rgba["g"],rgba["b"]];
-                        updateBg(rgb);
-                    }else{
-                        var col = $(this).minicolors('rgbaString');
-                        $(this).closest("div").find(".hiddenValue").val(col);
-                        $(this).closest("div").find(".displayVal").html(col);
-                    }
-                }
+    }).on("keyup",function(){
+                this.value = this.value.replace(" ", "_");
             });
 
-        });
+    $("input").not("#skname").on("focus",function(){
+        $("#skincolorpicker").stop().fadeTo(300,1);
+        $("#cpOverlay").hide();
+    })
+    $("input").on("blur",function(){
+        $("#skincolorpicker").stop().fadeTo(300,.1);
+        $("#cpOverlay").show();
+    })
+    $('#skname').click().focus();
 
+    $("#generatedCode").on("focus", function(){
+        clearInterval(document.updater);
+        if(this.isSelected)
+            return false;
 
-        function updateCSS(){
-            document.updater = setInterval(function(){
-                var skinName = $("#skinName input").val();
-                var background = [ $("#background input.hiddenValue").val(), $("#background input").val() ];
-                var text = [$("#text input.hiddenValue").val(), $("#text input").val()];
-                var textShadow = [$("#textShadow input.hiddenValue").val(), $("#textShadow input").val()];
-                var borderLeft = [$("#borderLeft input.hiddenValue").val(),$("#borderLeft input").val()];
-                var borderRight= [$("#borderRight input.hiddenValue").val(), $("#borderRight input").val()];
-                var mute= [$("#mute input.hiddenValue").val(), $("#mute input").val()];
-                var download= [$("#download input.hiddenValue").val(),$("#download input").val()];
-                var downloadHover= [$("#downloadHover input.hiddenValue").val(),$("#downloadHover input").val()];
-                var border= [$("#border input.hiddenValue").val(), $("#border input").val()];
-                var shadow= [$("#playerShadow input.hiddenValue").val(), $("#playerShadow input").val()];
+        this.select();
+        this.isSelected = true;
+    }).on("blur", function(){
+                this.isSelected = false;
+                updateCSS();
+            });
 
-                changeCSS(skinName, background, text, textShadow, border, borderLeft, borderRight, mute , download, downloadHover, shadow);
-            },10)
+    $(".mb_slider").unselectable().mbSlider({
+        onSlide:function(o){
+            $("#"+o.id+"_val").val($(o).mbgetVal());
         }
-
-        updateCSS();
-
-        $("input").click();
-
-
-        $("#skname").on("keypress",function(e) {
-            var char = String.fromCharCode(e.which);
-            if (e.which != 8 && char.match(/[^a-zA-Z0-9 ]/g)) {
-                return false
-            }
-        }).on("keyup",function(){
-                    this.value = this.value.replace(" ", "_");
-                });
-
-        $("input").not("#skname").on("focus",function(){
-            $("#skincolorpicker").stop().fadeTo(300,1);
-            $("#cpOverlay").hide();
-        })
-        $("input").on("blur",function(){
-            $("#skincolorpicker").stop().fadeTo(300,.1);
-            $("#cpOverlay").show();
-        })
-        $('#skname').click().focus();
-
-        $("#generatedCode").on("focus", function(){
-            clearInterval(document.updater);
-            if(this.isSelected)
-                return false;
-
-            this.select();
-            this.isSelected = true;
-        }).on("blur", function(){
-                    this.isSelected = false;
-                    updateCSS();
-                })
     });
+
+    jQuery.fn.unselectable = function () {
+        return this.each(function () {
+            jQuery(this).css({
+                "-webkit-user-select": "none",
+                "-moz-user-select": "none",
+                "-ms-user-select": "none",
+                "-o-user-select": "none",
+                "user-select": "none"
+            }).attr("unselectable", "on");
+        });
+    };
+
+});
 
 
 </script>
@@ -528,23 +950,38 @@ a:hover{
 
 <body>
 <div class="wrapper">
-    <h1 style="font-size: 30px">mb.miniAudioPlayer <br><span style="color: #ffc000; font-size: 70px">Skin Maker</span></h1>
-    <h2>This tool let you create your own skin for the mb.miniAudioPlayer v. 1.6.+ jQuery component<sup style="color: #ffc000">*</sup>.</h2>
-    <p style="font-weight: bold"><sup style="color: #ffc000">*</sup>Not available for the mb.miniAudioPlayer WordPress component.</p>
+    <h1 style="font-size: 30px">mb.miniAudioPlayer <br><span style="color: #ffc000; font-size: 70px; line-height: 70px">Skin Maker</span></h1>
+    <h2>This tool let you create your own mb.miniAudioPlayer skin<!--<sup style="color: #ffc000">*</sup>-->.</h2>
+    <!--<p style="font-weight: bold"><sup style="color: #ffc000">*</sup>Not available for the mb.miniAudioPlayer WordPress component.</p>-->
     <hr>
     <br>
     <div id="rightCol" style="float: right;">
-        <h2>How it works</h2>
+        <h2>How it works (jQuery component)</h2>
         <p>
         <ol>
             <li>Give it a name.
-            <li>Customize each elements giving them a color with the color-picker.
+            <li>Customize each element.
             <li>Generate the CSS code.
             <li>Copy and paste it into your CSS.
             <li>Add the name you give as value of the "skin" parameter.
         </ol>
         </p>
+
+        <h2>How it works (Wordpress component)</h2>
+        <p>
+        <ol>
+            <li>Use "mySkin" as name.
+            <li>Customize each element.
+            <li>Generate the CSS code.
+            <li>Copy the generated CSS and paste it into the "mySkin" textarea in the component settings page.
+            <li>Choose "mySkin" from the skin selector.
+        </ol>
+        </p>
+
         <hr>
+        <div style="text-align: right">
+            <button onclick="$('#codeBox').slideDown('slow');$('#generatedCode').select();$('#generatedCode').get(0).isSelected = true ">generate the css code</button>
+        </div>
 
         <div id="cpBox">
             <div id="skincolorpicker"></div>
@@ -581,42 +1018,44 @@ a:hover{
         <div class="formatBox code" >
             <div id="skinName"><label>Skin name:</label> <input id="skname" class="skinName" value="mySkin">  </div>
         </div>
-
+        <div class="formatBox code">
+            <div id="borderRadius">
+                <label>Round corners:</label>
+                <div id="s1"  class="mb_slider {rangeColor:'#FFC000',negativeColor:'#ffcc00', startAt:5, maxVal:15, minVal:1, grid:0}" style="display:inline-block;*display:inherit;cursor: pointer;"></div>
+                <input id="s1_val" type="hidden" value="5">
+            </div>
+        </div>
         <div class="formatBox code" >
             <div id="background"><label>Backgroud:</label> <input  class="color" value="#000000"></div>
         </div>
         <div class="formatBox code">
-            <div id="text"><label>icons:</label> <input class="color"  value="#fbcc28"></div>
+            <div id="text"><label>Icons color:</label> <input class="color"  value="#fbcc28"></div>
         </div>
         <div class="formatBox code">
-            <div id="textShadow"><label>icons  shadow:</label> <input class="color"  value="#000"></div>
+            <div id="textShadow"><label>Icons shadow:</label> <input class="color"  value="#000"></div>
         </div>
         <div class="formatBox code">
-            <div id="border"><label>border:</label> <input class="color"  value="#fbcc28"></div>
+            <div id="border"><label>Border:</label> <input class="color"  value="#fbcc28"></div>
         </div>
         <div class="formatBox code">
-            <div id="borderLeft"><label>border left:</label> <input class="color"  value="#333333"></div>
+            <div id="borderLeft"><label>Separator left:</label> <input class="color"  value="#333333"></div>
         </div>
         <div class="formatBox code">
-            <div id="borderRight"><label>border right:</label> <input class="color"  value="#000000"></div>
+            <div id="borderRight"><label>Separator right:</label> <input class="color"  value="#000000"></div>
         </div>
         <div class="formatBox code">
-            <div id="mute"><label>mute:</label> <input class="color"  value="#cccccc"></div>
+            <div id="mute"><label>Mute color:</label> <input class="color"  value="#cccccc"></div>
         </div>
         <div class="formatBox code">
-            <div id="download"><label>download:</label> <input class="color"  value="#e5ac24"></div>
+            <div id="download"><label>Download:</label> <input class="color"  value="#e5ac24"></div>
         </div>
         <div class="formatBox code">
-            <div id="downloadHover"><label>download hover:</label> <input class="color" value="#000000"></div>
+            <div id="downloadHover"><label>Download hover:</label> <input class="color" value="#000000"></div>
         </div>
         <div class="formatBox code">
-            <div id="playerShadow"><label>player shadow:</label> <input class="color" value="#000000"></div>
+            <div id="playerShadow"><label>Player shadow:</label> <input class="color" value="#000000"></div>
         </div>
         <hr>
-        <div style="text-align: right">
-            <button onclick="$('#codeBox').slideDown('slow');$('#generatedCode').select();$('#generatedCode').get(0).isSelected = true ">generate the css code</button>
-        </div>
-
     </div>
     <br style="clear: both">
 
