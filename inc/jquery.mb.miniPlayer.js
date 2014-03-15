@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 15/03/14 12.59
+ *  last modified: 15/03/14 17.49
  *  *****************************************************************************
  */
 
@@ -52,14 +52,12 @@
 		isNaN(jQuery.browser.majorVersion) && (jQuery.browser.fullVersion = "" + parseFloat(navigator.appVersion), jQuery.browser.majorVersion = parseInt(navigator.appVersion, 10));
 		jQuery.browser.version = jQuery.browser.majorVersion
 	}
-
 	jQuery.browser.android = /Android/i.test(nAgt);
 	jQuery.browser.blackberry = /BlackBerry/i.test(nAgt);
 	jQuery.browser.ios = /iPhone|iPad|iPod/i.test(nAgt);
 	jQuery.browser.operaMobile = /Opera Mini/i.test(nAgt);
 	jQuery.browser.windowsMobile = /IEMobile/i.test(nAgt);
 	jQuery.browser.mobile = jQuery.browser.android || jQuery.browser.blackberry || jQuery.browser.ios || jQuery.browser.windowsMobile || jQuery.browser.operaMobile;
-
 
 	jQuery.isMobile = jQuery.browser.mobile;
 
@@ -257,7 +255,7 @@
 				var $layout = "<table cellpadding='0' cellspacing='0' border='0'><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr></table>";
 
 				if(!jQuery("#JPLContainer").length){
-					var JPLContainer = jQuery("<div/>").attr({id:"JPLContainer"}).hide();
+					var JPLContainer = jQuery("<div/>").attr({id:"JPLContainer"});
 					jQuery("body").append(JPLContainer);
 				}
 				jQuery("#JPLContainer").append($player);
@@ -523,9 +521,9 @@
 					smoothPlayBar      : true,
 					volume             : player.opt.volume,
 					swfPath            : player.opt.swfPath,
-					solution           : player.opt.isIE ? 'flash' : 'html, flash',
-//					preload            : isDevice ? 'none' : 'metadata',
-					preload            : 'none',
+					solution           : 'html, flash',
+//					solution           : player.opt.isIE && $.browser.version<11 ? 'flash' : 'html, flash',
+					preload            : isDevice ? 'none' : 'metadata',
 					cssSelectorAncestor: "#" + playerID, // Remove the ancestor css selector clause
 					cssSelector        : {
 						playBar: "#playBar_" + playerID,
