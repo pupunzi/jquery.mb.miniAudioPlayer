@@ -15,7 +15,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 01/03/14 22.41
+  ~  last modified: 02/05/14 23.58
   ~  ******************************************************************************/
   -->
 
@@ -24,7 +24,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>jquery.mb.miniAudioPlayer</title>
 
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.js"></script>
     <script type="text/javascript" src="inc/jquery.jplayer.min.js"></script>
     <script type="text/javascript" src="inc/jquery.mb.miniPlayer.js"></script>
     <link rel="stylesheet" type="text/css" href="css/miniplayer.css" title="style"  media="screen"/>
@@ -90,6 +90,22 @@
             margin-top: 10px;
         }
 
+        .attribution {
+            font-size: 12px;
+            margin-top: 10px;
+            color: #868686;
+        }
+
+        .attribution a{
+            color: #868686;
+        }
+
+
+/*
+            .map_download{opacity:0}
+            [isplaying=true] .map_download{opacity:1}
+*/
+
     </style>
 
     <script type="text/javascript">
@@ -143,21 +159,24 @@
     <br>
     <span class="param">param -> all features - loop = true</span>
     <hr>
-    <a id="m2" class="audio {skin:'orange', ogg:'http://www.miaowmusic.com/ogg/Miaow-02-Hidden.ogg', showTime:false, downloadable:true}" href="http://www.miaowmusic.com/mp3/Miaow-02-Hidden.mp3">miaowmusic - Hidden (ogg/mp3)</a>
-    <span class="param"> param -> showTime:false, ogg:'http://www.miaowmusic.com/ogg/Miaow-02-Hidden.ogg' (FF will play it as HTML5)</span>
+    <a id="m2" class="audio {skin:'orange', showTime:false, downloadable:true}" href="http://ubumexico.centro.org.mx/sound/satie_erik/poulenc/Satie-Eric_1-F-Poulenc-J-Fevrier_Satie-La-belle-excentrique.mp3">Erik Satie - La Belle Excentrique (mp3)</a>
+    <span class="param"> param -> showTime:false</span>
     <hr>
-    <a id="m3" class="audio {skin:'blue', autoPlay:false,showRew:false}" href="http://www.miaowmusic.com/mp3/Miaow-08-Stirring-of-a-fool.mp3">miaowmusic - Stirring of a Fool (mp3)</a>
+    <a id="m3" class="audio {skin:'blue', autoPlay:false,showRew:false}" href="http://ccmixter.org/content/unreal_dm/unreal_dm_-_Blue_Circles.mp3">unreal_dm - Blue Circles (mp3)</a>
+    <div class="attribution" xmlns:cc="http://creativecommons.org/ns#" about="urn:sha1:FSHFQVLQQAO2SQPOHDJU5DPFETOABOVE"><a rel="cc:attributionURL" property="cc:attributionName" href="http://ccmixter.org/files/unreal_dm/33850"> unreal_dm</a> / <a rel="license" href="http://creativecommons.org/licenses/by/2.5/">CC BY 2.5</a></div>
     <span class="param">param -> showRew:false</span>
     <hr>
-    <a id="m4" class="audio {skin:'red', autoPlay:false,showRew:false, showTime:false}" href="http://www.miaowmusic.com/mp3/Miaow-04-Lismore.mp3">miaowmusic - Lismore (mp3)</a>
+    <a id="m4" class="audio {skin:'red', autoPlay:false,showRew:false, showTime:false}" href="http://ccmixter.org/content/unreal_dm/unreal_dm_-_Falling.mp3">unreal_dm - Oh Dear Mr Williams - Tango ? (mp3)</a>
+    <div class="attribution" xmlns:cc="http://creativecommons.org/ns#" about="urn:sha1:FSHFQVLQQAO2SQPOHDJU5DPFETOABOVE"><a rel="cc:attributionURL" property="cc:attributionName" href="http://ccmixter.org/files/unreal_dm/33850"> unreal_dm</a> / <a rel="license" href="http://creativecommons.org/licenses/by/2.5/">CC BY 2.5</a></div>
     <span class="param">param -> showRew:false, showTime:false</span>
     <hr>
-    <a id="m5" class="audio {skin:'green', autoPlay:false, addShadow:false}" href="http://www.miaowmusic.com/mp3/Miaow-08-Stirring-of-a-fool.mp3">miaowmusic - Stirring of a Fool (mp3)</a>
+    <a id="m5" class="audio {skin:'green', autoPlay:false, addShadow:false}" href="http://ccmixter.org/content/urmymuse/urmymuse_-_colourbox.mp3">urmymuse - colourbox (mp3)</a>
+    <div class="attribution" xmlns:cc="http://creativecommons.org/ns#" about="urn:sha1:Q2I67MIV4BWT4AEZKB3I2PFNU47IULRB"><a rel="cc:attributionURL" property="cc:attributionName" href="http://ccmixter.org/files/urmymuse/45808"> urmymuse</a> / <a rel="license" href="http://creativecommons.org/licenses/by/2.5/">CC BY 2.5</a></div>
     <br>
     <div>change track:
         <br>
-        <button onclick="$('#m5').mb_miniPlayer_changeFile({mp3:'http://www.miaowmusic.com/mp3/Miaow-04-Lismore.mp3'},'Lismore (mp3)')">miaowmusic - Lismore</button>
-        <button onclick="$('#m5').mb_miniPlayer_changeFile({mp3:'http://www.miaowmusic.com/mp3/Miaow-02-Hidden.mp3'},'Hidden (mp3)')">miaowmusic - Hidden</button>
+        <button onclick="$('#m5').mb_miniPlayer_changeFile({mp3:'http://ccmixter.org/content/copperhead/copperhead_-_35_Years.mp3'},'35 Years (mp3)')">copperhead - 35 Years</button>
+        <button onclick="$('#m5').mb_miniPlayer_changeFile({mp3:'http://ccmixter.org/content/copperhead/copperhead_-_Chillin_With_Jeris.mp3'},'Chillin’ With Jeris (mp3)')">copperhead - Chillin’ With Jeris</button>
     </div>
     <br>
     <hr>
@@ -167,14 +186,12 @@
     <a id="m8" class="audio {skin:'red', autoPlay:false, width:80}" href="http://listen.radionomy.com/abc-jazz/#.mp3">Jazz radio stream</a>
     <span class="param">This example get the stream of <a href="http://radionomy.com">Radionomy</a> Jazz channel</span>
     <hr>
-    This is a gray player: <a id="m9" class="audio {skin:'gray', autoPlay:false, inLine:true, showVolumeLevel:false, showRew:true, showTime:false, width:100, addShadow:false}" href="http://www.miaowmusic.com/mp3/Miaow-04-Lismore.mp3">miaowmusic - Lismore (mp3)</a>
+    This is a gray player: <a id="m9" class="audio {skin:'gray', autoPlay:false, inLine:true, showVolumeLevel:false, showRew:true, showTime:false, width:100, addShadow:false}" href="http://ccmixter.org/content/copperhead/copperhead_-_Chillin_With_Jeris.mp3">copperhead - Chillin with Jeris (mp3)</a>
     <span>and it is inline</span>
-
+    <div class="attribution" xmlns:cc="http://creativecommons.org/ns#" about="urn:sha1:2HELCDGBAWGFYYFAVED5UWI7CA42B2OH"><a rel="cc:attributionURL" property="cc:attributionName" href="http://ccmixter.org/files/copperhead/35987"> copperhead</a> / <a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/">CC BY-NC 3.0</a></div>
     <hr>
     <br>
     <b>jquery.mb.miniPlayer</b> is a GUI implementation of the <a href="http://www.jplayer.org" target="_blank">jquery.jPlayer</a> plug-in realized by © Happyworm LTD. (many thanks to <a href="http://happyworm.com/blog/" target="_blank">Mark Boas</a>)
-    <br>
-    All the music are provided by <a href="http://www.miaowmusic.com" target="_blank">© miaowmusic</a>.
 </div>
 </body>
 </html>

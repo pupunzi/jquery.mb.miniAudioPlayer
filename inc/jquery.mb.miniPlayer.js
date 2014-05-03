@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 15/03/14 17.49
+ *  last modified: 03/05/14 19.20
  *  *****************************************************************************
  */
 
@@ -65,8 +65,7 @@
 	 * jQuery.mb.components: jquery.mb.CSSAnimate
 	 ******************************************************************************/
 
-	jQuery.fn.CSSAnimate=function(a,b,k,l,f){return this.each(function(){var c=jQuery(this);if(0!==c.length&&a){"function"==typeof b&&(f=b,b=jQuery.fx.speeds._default);"function"==typeof k&&(f=k,k=0);"function"==typeof l&&(f=l,l="cubic-bezier(0.65,0.03,0.36,0.72)");if("string"==typeof b)for(var j in jQuery.fx.speeds)if(b==j){b=jQuery.fx.speeds[j];break}else b=null;if(jQuery.support.transition){var e="",h="transitionEnd";jQuery.browser.webkit?(e="-webkit-",h="webkitTransitionEnd"):jQuery.browser.mozilla? (e="-moz-",h="transitionend"):jQuery.browser.opera?(e="-o-",h="otransitionend"):jQuery.browser.msie&&(e="-ms-",h="msTransitionEnd");j=[];for(d in a){var g=d;"transform"===g&&(g=e+"transform",a[g]=a[d],delete a[d]);"transform-origin"===g&&(g=e+"transform-origin",a[g]=a[d],delete a[d]);j.push(g);c.css(g)||c.css(g,0)}d=j.join(",");c.css(e+"transition-property",d);c.css(e+"transition-duration",b+"ms");c.css(e+"transition-delay",k+"ms");c.css(e+"transition-timing-function",l);c.css(e+"backface-visibility", "hidden");setTimeout(function(){c.css(a)},0);setTimeout(function(){c.called||!f?c.called=!1:f()},b+20);c.on(h,function(a){c.off(h);c.css(e+"transition","");a.stopPropagation();"function"==typeof f&&(c.called=!0,f());return!1})}else{for(var d in a)"transform"===d&&delete a[d],"transform-origin"===d&&delete a[d],"auto"===a[d]&&delete a[d];if(!f||"string"===typeof f)f="linear";c.animate(a,b,f)}}})}; jQuery.fn.CSSAnimateStop=function(){var a="",b="transitionEnd";jQuery.browser.webkit?(a="-webkit-",b="webkitTransitionEnd"):jQuery.browser.mozilla?(a="-moz-",b="transitionend"):jQuery.browser.opera?(a="-o-",b="otransitionend"):jQuery.browser.msie&&(a="-ms-",b="msTransitionEnd");jQuery(this).css(a+"transition","");jQuery(this).off(b)}; jQuery.support.transition=function(){var a=(document.body||document.documentElement).style;return void 0!==a.transition||void 0!==a.WebkitTransition||void 0!==a.MozTransition||void 0!==a.MsTransition||void 0!==a.OTransition}();
-
+	jQuery.fn.CSSAnimate=function(a,b,c,d,e){function f(a){return a.replace(/([A-Z])/g,function(a){return"-"+a.toLowerCase()})}function g(a,b){return"string"!=typeof a||a.match(/^[\-0-9\.]+$/)?""+a+b:a}return jQuery.support.transition=function(){var a=document.body||document.documentElement,b=a.style;return void 0!==b.transition||void 0!==b.WebkitTransition||void 0!==b.MozTransition||void 0!==b.MsTransition||void 0!==b.OTransition}(),this.each(function(){var h=this,i=jQuery(this);h.id=h.id||"CSSA_"+(new Date).getTime();var j=j||{type:"noEvent"};if(h.CSSAIsRunning&&h.eventType==j.type)return h.CSSqueue=function(){i.CSSAnimate(a,b,c,d,e)},void 0;if(h.CSSqueue=null,h.eventType=j.type,0!==i.length&&a){if(h.CSSAIsRunning=!0,"function"==typeof b&&(e=b,b=jQuery.fx.speeds._default),"function"==typeof c&&(e=c,c=0),"function"==typeof d&&(e=d,d="cubic-bezier(0.65,0.03,0.36,0.72)"),"string"==typeof b)for(var k in jQuery.fx.speeds){if(b==k){b=jQuery.fx.speeds[k];break}b=jQuery.fx.speeds._default}if(b||(b=jQuery.fx.speeds._default),!jQuery.support.transition){for(var l in a)"transform"===l&&delete a[l],"filter"===l&&delete a[l],"transform-origin"===l&&delete a[l],"auto"===a[l]&&delete a[l];return e&&"string"!=typeof e||(e="linear"),i.animate(a,b,e),void 0}var m={"default":"ease","in":"ease-in",out:"ease-out","in-out":"ease-in-out",snap:"cubic-bezier(0,1,.5,1)",easeOutCubic:"cubic-bezier(.215,.61,.355,1)",easeInOutCubic:"cubic-bezier(.645,.045,.355,1)",easeInCirc:"cubic-bezier(.6,.04,.98,.335)",easeOutCirc:"cubic-bezier(.075,.82,.165,1)",easeInOutCirc:"cubic-bezier(.785,.135,.15,.86)",easeInExpo:"cubic-bezier(.95,.05,.795,.035)",easeOutExpo:"cubic-bezier(.19,1,.22,1)",easeInOutExpo:"cubic-bezier(1,0,0,1)",easeInQuad:"cubic-bezier(.55,.085,.68,.53)",easeOutQuad:"cubic-bezier(.25,.46,.45,.94)",easeInOutQuad:"cubic-bezier(.455,.03,.515,.955)",easeInQuart:"cubic-bezier(.895,.03,.685,.22)",easeOutQuart:"cubic-bezier(.165,.84,.44,1)",easeInOutQuart:"cubic-bezier(.77,0,.175,1)",easeInQuint:"cubic-bezier(.755,.05,.855,.06)",easeOutQuint:"cubic-bezier(.23,1,.32,1)",easeInOutQuint:"cubic-bezier(.86,0,.07,1)",easeInSine:"cubic-bezier(.47,0,.745,.715)",easeOutSine:"cubic-bezier(.39,.575,.565,1)",easeInOutSine:"cubic-bezier(.445,.05,.55,.95)",easeInBack:"cubic-bezier(.6,-.28,.735,.045)",easeOutBack:"cubic-bezier(.175, .885,.32,1.275)",easeInOutBack:"cubic-bezier(.68,-.55,.265,1.55)"};m[d]&&(d=m[d]);var n="",o="transitionEnd";jQuery.browser.webkit?(n="-webkit-",o="webkitTransitionEnd"):jQuery.browser.mozilla?(n="-moz-",o="transitionend"):jQuery.browser.opera?(n="-o-",o="otransitionend"):jQuery.browser.msie&&(n="-ms-",o="msTransitionEnd");var p=[];for(var l in a){var q=l;"transform"===q&&(q=n+"transform",a[q]=a[l],delete a[l]),"filter"===q&&(q=n+"filter",a[q]=a[l],delete a[l]),("transform-origin"===q||"origin"===q)&&(q=n+"transform-origin",a[q]=a[l],delete a[l]),"x"===q&&(q=n+"transform",a[q]=a[q]||"",a[q]+=" translateX("+g(a[l],"px")+")",delete a[l]),"y"===q&&(q=n+"transform",a[q]=a[q]||"",a[q]+=" translateY("+g(a[l],"px")+")",delete a[l]),"z"===q&&(q=n+"transform",a[q]=a[q]||"",a[q]+=" translateZ("+g(a[l],"px")+")",delete a[l]),"rotate"===q&&(q=n+"transform",a[q]=a[q]||"",a[q]+=" rotate("+g(a[l],"deg")+")",delete a[l]),"rotateX"===q&&(q=n+"transform",a[q]=a[q]||"",a[q]+=" rotateX("+g(a[l],"deg")+")",delete a[l]),"rotateY"===q&&(q=n+"transform",a[q]=a[q]||"",a[q]+=" rotateY("+g(a[l],"deg")+")",delete a[l]),"rotateZ"===q&&(q=n+"transform",a[q]=a[q]||"",a[q]+=" rotateZ("+g(a[l],"deg")+")",delete a[l]),"scale"===q&&(q=n+"transform",a[q]=a[q]||"",a[q]+=" scale("+g(a[l],"")+")",delete a[l]),"scaleX"===q&&(q=n+"transform",a[q]=a[q]||"",a[q]+=" scaleX("+g(a[l],"")+")",delete a[l]),"scaleY"===q&&(q=n+"transform",a[q]=a[q]||"",a[q]+=" scaleY("+g(a[l],"")+")",delete a[l]),"scaleZ"===q&&(q=n+"transform",a[q]=a[q]||"",a[q]+=" scaleZ("+g(a[l],"")+")",delete a[l]),"skew"===q&&(q=n+"transform",a[q]=a[q]||"",a[q]+=" skew("+g(a[l],"deg")+")",delete a[l]),"skewX"===q&&(q=n+"transform",a[q]=a[q]||"",a[q]+=" skewX("+g(a[l],"deg")+")",delete a[l]),"skewY"===q&&(q=n+"transform",a[q]=a[q]||"",a[q]+=" skewY("+g(a[l],"deg")+")",delete a[l]),"perspective"===q&&(q=n+"transform",a[q]=a[q]||"",a[q]+=" perspective("+g(a[l],"px")+")",delete a[l]),p.indexOf(q)<0&&p.push(f(q))}var r=p.join(","),s=function(){i.off(o+"."+h.id),clearTimeout(h.timeout),i.css(n+"transition",""),"function"==typeof e&&e(i),h.called=!0,h.CSSAIsRunning=!1,"function"==typeof h.CSSqueue&&(h.CSSqueue(),h.CSSqueue=null)},t={};jQuery.extend(t,a),t[n+"transition-property"]=r,t[n+"transition-duration"]=b+"ms",t[n+"transition-delay"]=c+"ms",t[n+"transition-style"]="preserve-3d",t[n+"transition-timing-function"]=d,setTimeout(function(){i.one(o+"."+h.id,s),i.css(t)},1),h.timeout=setTimeout(function(){return i.called||!e?(i.called=!1,h.CSSAIsRunning=!1,void 0):(i.css(n+"transition",""),e(i),h.CSSAIsRunning=!1,"function"==typeof h.CSSqueue&&(h.CSSqueue(),h.CSSqueue=null),void 0)},b+c+100)}})},jQuery.fn.css3=function(a){return this.each(function(){jQuery(this).CSSAnimate(a,1,0,null)})};
 	/*
 	 * Metadata - jQuery plugin for parsing metadata from elements
 	 * Copyright (c) 2006 John Resig, Yehuda Katz, Jörn Zaefferer, Paul McLanahan
@@ -113,7 +112,7 @@
 
 	jQuery.mbMiniPlayer = {
 		author  : "Matteo Bicocchi",
-		version : "1.7.7",
+		version : "1.7.8",
 		name    : "mb.miniPlayer",
 		isMobile: false,
 
@@ -143,13 +142,15 @@
 			showTime            : true,
 			showRew             : true,
 			addShadow           : true,
+			gaTrack             :true,
 			downloadable        : false,
 			downloadablesecurity: false,
 			downloadPage        : null,
 			swfPath             : "inc/",
-			onReady             : function () {},
-			onPlay              : function () {},
-			onEnd               : function () {}
+			onReady             : function (player,$controlsBox) {},
+			onPlay              : function (player) {},
+			onEnd               : function (player) {},
+			onDownload          : function (player) {}
 		},
 
 		getID3        : function (player) {
@@ -231,7 +232,6 @@
 					player.opt.showVolumeLevel = false;
 					player.opt.autoplay = false;
 					player.opt.downloadable = false;
-
 				}
 
 				if (!player.opt.mp3 && url.indexOf("mp3")>0)
@@ -275,6 +275,14 @@
 
 				var download = jQuery("<span/>").addClass("map_download").css({display: "inline-block", cursor: "pointer"}).html("d").on(jQuery.mbMiniPlayer.eventEnd,function () {
 					jQuery.mbMiniPlayer.saveFile(player, fileUrl, fileName, fileExtension);
+
+					//add track for Google Analytics
+					if (typeof _gaq != "undefined" && player.opt.gaTrack)
+						_gaq.push(['_trackEvent', 'Audio', 'map_Download', player.title +" - "+ self.location.href]);
+
+					if(typeof player.opt.onDownload == "function")
+						player.opt.onDownload(player);
+
 
 				}).attr("title", "download: " + fileName);
 
@@ -428,8 +436,8 @@
 								$controlsBox.attr("isPlaying", "true");
 
 								//add track for Google Analytics
-								if (typeof _gaq != "undefined")
-									_gaq.push(['_trackEvent', 'Audio', 'Play', player.title]);
+								if (typeof _gaq != "undefined" && player.opt.gaTrack)
+									_gaq.push(['_trackEvent', 'Audio', 'Play', player.title +" - "+ self.location.href]);
 
 								if (typeof player.opt.onPlay == "function")
 									player.opt.onPlay(player);
@@ -622,6 +630,9 @@
 			if (!media.m4a) media.m4a = null;
 
 			if (!title) title = "audio file";
+
+			//console.debug($player, media)
+
 			$player.jPlayer("setMedia", media);
 
 			if ($controlsBox.attr("isPlaying") == "true")
