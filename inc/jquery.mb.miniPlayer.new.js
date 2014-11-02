@@ -1,24 +1,27 @@
-/*
- * ******************************************************************************
- *  jquery.mb.components
- *  file: jquery.mb.miniPlayer.js
- *
- *  Copyright (c) 2001-2014. Matteo Bicocchi (Pupunzi);
- *  Open lab srl, Firenze - Italy
- *  email: matteo@open-lab.com
- *  site: 	http://pupunzi.com
- *  blog:	http://pupunzi.open-lab.com
- * 	http://open-lab.com
- *
- *  Licences: MIT, GPL
- *  http://www.opensource.org/licenses/mit-license.php
- *  http://www.gnu.org/licenses/gpl.html
- *
- *  last modified: 03/05/14 19.20
- *  *****************************************************************************
- */
+/*___________________________________________________________________________________________________________________________________________________
+ _ jquery.mb.components                                                                                                                             _
+ _                                                                                                                                                  _
+ _ file: jquery.mb.miniPlayer.new.js                                                                                                                _
+ _ last modified: 02/11/14 18.11                                                                                                                    _
+ _                                                                                                                                                  _
+ _ Open Lab s.r.l., Florence - Italy                                                                                                                _
+ _                                                                                                                                                  _
+ _ email: matteo@open-lab.com                                                                                                                       _
+ _ site: http://pupunzi.com                                                                                                                         _
+ _       http://open-lab.com                                                                                                                        _
+ _ blog: http://pupunzi.open-lab.com                                                                                                                _
+ _ Q&A:  http://jquery.pupunzi.com                                                                                                                  _
+ _                                                                                                                                                  _
+ _ Licences: MIT, GPL                                                                                                                               _
+ _    http://www.opensource.org/licenses/mit-license.php                                                                                            _
+ _    http://www.gnu.org/licenses/gpl.html                                                                                                          _
+ _                                                                                                                                                  _
+ _ Copyright (c) 2001-2014. Matteo Bicocchi (Pupunzi);                                                                                              _
+ ___________________________________________________________________________________________________________________________________________________*/
 
 (function (jQuery) {
+
+	jQuery.support.cors = true;
 
 	/*Browser detection patch*/
 	var nAgt=navigator.userAgent; if(!jQuery.browser){jQuery.browser={};jQuery.browser.mozilla=!1;jQuery.browser.webkit=!1;jQuery.browser.opera=!1;jQuery.browser.safari=!1;jQuery.browser.chrome=!1;jQuery.browser.msie=!1;jQuery.browser.ua=nAgt;jQuery.browser.name=navigator.appName;jQuery.browser.fullVersion=""+parseFloat(navigator.appVersion);jQuery.browser.majorVersion=parseInt(navigator.appVersion,10);var nameOffset,verOffset,ix;if(-1!=(verOffset=nAgt.indexOf("Opera")))jQuery.browser.opera=!0,jQuery.browser.name="Opera",jQuery.browser.fullVersion= nAgt.substring(verOffset+6),-1!=(verOffset=nAgt.indexOf("Version"))&&(jQuery.browser.fullVersion=nAgt.substring(verOffset+8));else if(-1!=(verOffset=nAgt.indexOf("OPR")))jQuery.browser.opera=!0,jQuery.browser.name="Opera",jQuery.browser.fullVersion=nAgt.substring(verOffset+4);else if(-1!=(verOffset=nAgt.indexOf("MSIE")))jQuery.browser.msie=!0,jQuery.browser.name="Microsoft Internet Explorer",jQuery.browser.fullVersion=nAgt.substring(verOffset+5);else if(-1!=nAgt.indexOf("Trident")){jQuery.browser.msie= !0;jQuery.browser.name="Microsoft Internet Explorer";var start=nAgt.indexOf("rv:")+3,end=start+4;jQuery.browser.fullVersion=nAgt.substring(start,end)}else-1!=(verOffset=nAgt.indexOf("Chrome"))?(jQuery.browser.webkit=!0,jQuery.browser.chrome=!0,jQuery.browser.name="Chrome",jQuery.browser.fullVersion=nAgt.substring(verOffset+7)):-1!=(verOffset=nAgt.indexOf("Safari"))?(jQuery.browser.webkit=!0,jQuery.browser.safari=!0,jQuery.browser.name="Safari",jQuery.browser.fullVersion=nAgt.substring(verOffset+7), -1!=(verOffset=nAgt.indexOf("Version"))&&(jQuery.browser.fullVersion=nAgt.substring(verOffset+8))):-1!=(verOffset=nAgt.indexOf("AppleWebkit"))?(jQuery.browser.webkit=!0,jQuery.browser.name="Safari",jQuery.browser.fullVersion=nAgt.substring(verOffset+7),-1!=(verOffset=nAgt.indexOf("Version"))&&(jQuery.browser.fullVersion=nAgt.substring(verOffset+8))):-1!=(verOffset=nAgt.indexOf("Firefox"))?(jQuery.browser.mozilla=!0,jQuery.browser.name="Firefox",jQuery.browser.fullVersion=nAgt.substring(verOffset+ 8)):(nameOffset=nAgt.lastIndexOf(" ")+1)<(verOffset=nAgt.lastIndexOf("/"))&&(jQuery.browser.name=nAgt.substring(nameOffset,verOffset),jQuery.browser.fullVersion=nAgt.substring(verOffset+1),jQuery.browser.name.toLowerCase()==jQuery.browser.name.toUpperCase()&&(jQuery.browser.name=navigator.appName));-1!=(ix=jQuery.browser.fullVersion.indexOf(";"))&&(jQuery.browser.fullVersion=jQuery.browser.fullVersion.substring(0,ix));-1!=(ix=jQuery.browser.fullVersion.indexOf(" "))&&(jQuery.browser.fullVersion=jQuery.browser.fullVersion.substring(0, ix));jQuery.browser.majorVersion=parseInt(""+jQuery.browser.fullVersion,10);isNaN(jQuery.browser.majorVersion)&&(jQuery.browser.fullVersion=""+parseFloat(navigator.appVersion),jQuery.browser.majorVersion=parseInt(navigator.appVersion,10));jQuery.browser.version=jQuery.browser.majorVersion}jQuery.browser.android=/Android/i.test(nAgt);jQuery.browser.blackberry=/BlackBerry|BB|PlayBook/i.test(nAgt);jQuery.browser.ios=/iPhone|iPad|iPod|webOS/i.test(nAgt);jQuery.browser.operaMobile=/Opera Mini/i.test(nAgt); jQuery.browser.windowsMobile=/IEMobile|Windows Phone/i.test(nAgt);jQuery.browser.kindle=/Kindle|Silk/i.test(nAgt);jQuery.browser.mobile=jQuery.browser.android||jQuery.browser.blackberry||jQuery.browser.ios||jQuery.browser.windowsMobile||jQuery.browser.operaMobile||jQuery.browser.kindle;
@@ -105,6 +108,7 @@
 			showTime            : true,
 			showRew             : true,
 			addShadow           : true,
+			addGradientOverlay  : false,
 			gaTrack             : true,
 			downloadable        : false,
 			downloadablesecurity: false,
@@ -222,8 +226,11 @@
 				if (player.opt.addShadow)
 					$controlsBox.addClass("shadow");
 
-				var $layout = "<table cellpadding='0' cellspacing='0' border='0'><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr></table>";
-//				var $layout = "<div class='playerTable' style='display:table'> <div></div><div></div><div></div><div></div><div></div><div></div> </div>";
+				if (player.opt.addGradientOverlay)
+					$controlsBox.addClass("gradientOverlay");
+
+//				var $layout = "<table cellpadding='0' cellspacing='0' border='0'><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr></table>";
+				var $layout = "<div class='playerTable'> <div></div><div></div><div></div><div></div><div></div><div></div> </div>";
 
 				if (!jQuery("#JPLContainer").length) {
 					var JPLContainer = jQuery("<div/>").attr({id: "JPLContainer"});
@@ -265,8 +272,8 @@
 					$controlsBox.append(download);
 				}
 
-				var $tds = $controlsBox.find("td").unselectable();
-//				var $tds = $controlsBox.find("div").not('.playerTable').unselectable();
+//				var $tds = $controlsBox.find("td").unselectable();
+				var $tds = $controlsBox.find("div").not('.playerTable').unselectable();
 
 				var $volumeBox = jQuery("<span/>").addClass("map_volume").html(jQuery.mbMiniPlayer.icon.volume);
 				var $volumeLevel = jQuery("<span/>").addClass("map_volumeLevel").html("").hide();
@@ -294,9 +301,6 @@
 				$tds.eq(3).append($timeBox).hide();
 				$tds.eq(4).append($rewBox).hide();
 				$tds.eq(5).append($playBox);
-
-				console.debug($tds);
-
 
 				player.opt.media = {};
 				player.opt.supplied = [];
@@ -344,26 +348,26 @@
 							if (!player.isOpen) {
 
 								if (player.opt.showControls) {
-									$controls.parent("td").show();
+									$controls.parent("div").show();
 									$controls.css({display: "block", height: 20}).animate({width: player.opt.width}, speed);
 								}
 
 								if (player.opt.showRew) {
-									$rewBox.parent("td").show();
+									$rewBox.parent("div").show();
 									if (isIE)
 										$rewBox.show().css({width: 20, display: "block"});
 									else
 										$rewBox.show().animate({width: 20}, speed / 2);
 								}
 								if (player.opt.showTime) {
-									$timeBox.parent("td").show();
+									$timeBox.parent("div").show();
 									if (isIE)
 										$timeBox.show().css({width: 34, display: "block"});
 									else
 										$timeBox.animate({width: 34}, speed / 2).show();
 								}
 								if (player.opt.showVolumeLevel) {
-									$volumeLevel.parent("td").show();
+									$volumeLevel.parent("div").show();
 									if (isIE)
 										$volumeLevel.show().css({width: 40, display: "block"});
 									else
@@ -371,28 +375,28 @@
 								}
 							} else {
 								$controls.animate({width: 1}, speed, function () {
-									jQuery(this).parent("td").css({display: "none"})
+									jQuery(this).parent("div").css({display: "none"})
 								});
 								if (player.opt.showRew) {
 									$rewBox.animate({width: 1}, speed / 2, function () {
-										jQuery(this).parent("td").css({display: "none"})
+										jQuery(this).parent("div").css({display: "none"})
 									});
 								}
 								if (player.opt.showTime) {
 									$timeBox.animate({width: 1}, speed / 2, function () {
-										jQuery(this).parent("td").css({display: "none"})
+										jQuery(this).parent("div").css({display: "none"})
 									});
 								}
 								if (player.opt.showVolumeLevel) {
 									$volumeLevel.animate({width: 1}, speed / 2, function () {
-										jQuery(this).parent("td").css({display: "none"})
+										jQuery(this).parent("div").css({display: "none"})
 									});
 								}
 							}
 						}
 
 						if (!player.opt.animate)
-							animatePlayer(false)
+							animatePlayer(false);
 
 						$playBox.on(jQuery.mbMiniPlayer.eventEnd, function (e) {
 

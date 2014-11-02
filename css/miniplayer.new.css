@@ -1,0 +1,445 @@
+/*___________________________________________________________________________________________________________________________________________________
+ _ jquery.mb.components                                                                                                                             _
+ _                                                                                                                                                  _
+ _ file: miniplayer.new.css                                                                                                                         _
+ _ last modified: 09/07/14 23.09                                                                                                                    _
+ _                                                                                                                                                  _
+ _ Open Lab s.r.l., Florence - Italy                                                                                                                _
+ _                                                                                                                                                  _
+ _ email: matteo@open-lab.com                                                                                                                       _
+ _ site: http://pupunzi.com                                                                                                                         _
+ _       http://open-lab.com                                                                                                                        _
+ _ blog: http://pupunzi.open-lab.com                                                                                                                _
+ _ Q&A:  http://jquery.pupunzi.com                                                                                                                  _
+ _                                                                                                                                                  _
+ _ Licences: MIT, GPL                                                                                                                               _
+ _    http://www.opensource.org/licenses/mit-license.php                                                                                            _
+ _    http://www.gnu.org/licenses/gpl.html                                                                                                          _
+ _                                                                                                                                                  _
+ _ Copyright (c) 2001-2014. Matteo Bicocchi (Pupunzi);                                                                                              _
+ ___________________________________________________________________________________________________________________________________________________*/
+
+@charset "UTF-8";
+
+@font-face {
+  font-family: 'mb_audio_fontRegular';
+  src: url('mbAudioFont/mbaudio_font.eot');
+  src: local('?'), url('mbAudioFont/mbaudio_font.woff') format('woff'),
+  url('mbAudioFont/mbaudio_font.ttf') format('truetype'),
+  url('mbAudioFont/mbaudio_font.svg#webfontywr4YLri') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'DroidSansMonoRegular';
+  src: url('DroidSansMono/DroidSansMono.eot');
+  src: local('?'), url('DroidSansMono/DroidSansMono.woff') format('woff'),
+  url('DroidSansMono/DroidSansMono.ttf')  format('truetype'),
+  url('DroidSansMono/DroidSansMono.svg#webfontGzFJ3WpO') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.map_params{
+  display: none!important;
+}
+
+
+a.audio{
+  display:none;
+}
+
+.mbMiniPlayer:focus{
+  outline: none;
+}
+
+.mbMiniPlayer *{
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
+.mbMiniPlayer{
+  vertical-align: baseline!important;
+}
+
+.mbMiniPlayer span{
+  font-family: "mb_audio_fontRegular"!important;
+  font-size:20px;
+  line-height: 20px!important;
+}
+
+.mbMiniPlayer .playerTable{
+  -moz-border-radius:5px !important;
+  -webkit-border-radius:8px !important;
+  border-radius:5px !important;
+  margin:0 !important;
+  padding:0 !important;
+  border: 1px solid white !important;
+  color: #777;
+  background: #fff;
+  line-height: 0 !important;
+  width: auto !important;
+  display: inline-block;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.mbMiniPlayer:focus .playerTable{
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.38) !important;
+}
+
+
+.mbMiniPlayer.shadow .playerTable{
+  -moz-box-shadow: 0px 0px 3px rgba(0,0,0,0.4);
+  -webkit-box-shadow: 0px 0px 3px rgba(0,0,0,0.4);
+  box-shadow: 0px 0px 3px rgba(0,0,0,0.4);
+}
+
+.mbMiniPlayer .playerTable > div{
+  margin:0 !important;
+  padding:0 !important;
+  line-height: 0 !important;
+  border: none!important;
+  vertical-align: middle;
+  display: table-cell;
+}
+
+.jp-progress{
+  position:relative;
+  background-color: #fff;
+  height:8px;
+  margin: 0 2px 2px;
+  top:-2px;
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
+  cursor:pointer;
+}
+
+.jp-load-bar{
+  background-color: #e9e6e6;
+  height:6px;
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
+}
+.jp-play-bar{
+  background-color:black;
+  background-image:-moz-linear-gradient(85% 66% 90deg,#191919, #525252, #C7C7C7 100%);
+  background-image:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#7D7D7D), to(#262626), color-stop(.6,#333333));
+  background-image:-ms-linear-gradient(linear, 0% 0%, 0% 100%, from(#7D7D7D), to(#262626), color-stop(.6,#333333));
+  height:6px;
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
+.mbMiniPlayer div.map_controlsBar{
+  background-color:#ccc;
+  /*
+    background-image:-moz-linear-gradient(19% 100% 90deg,#FFFFFF, #FFFFFF, #EBEBEB 100%);
+    background-image:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#DEDEDE), to(#FFFFFF), color-stop(.6,#FFFFFF));
+    background-image:-ms-linear-gradient(linear, 0% 0%, 0% 100%, from(#DEDEDE), to(#FFFFFF), color-stop(.6,#FFFFFF));
+  */
+  /* IE10 Consumer Preview */
+  background-image: -ms-linear-gradient(bottom, #FFFFFF 0%, #FFFFFF 60%, #DBDBDB 100%);
+  /* Mozilla Firefox */
+  background-image: -moz-linear-gradient(bottom, #FFFFFF 0%, #FFFFFF 60%, #DBDBDB 100%);
+  /* Opera */
+  background-image: -o-linear-gradient(bottom, #FFFFFF 0%, #FFFFFF 60%, #DBDBDB 100%);
+  /* Webkit (Safari/Chrome 10) */
+  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #FFFFFF), color-stop(0.6, #FFFFFF), color-stop(1, #DBDBDB));
+  /* Webkit (Chrome 11+) */
+  background-image: -webkit-linear-gradient(bottom, #FFFFFF 0%, #FFFFFF 60%, #DBDBDB 100%);
+  /* W3C Markup, IE10 Release Preview */
+  background-image: linear-gradient(to top, #FFFFFF 0%, #FFFFFF 60%, #DBDBDB 100%);
+
+  margin:0;
+  padding:0;
+  cursor:default !important;
+  box-shadow:inset 1px 1px 2px #999;
+  -moz-box-shadow:inset 1px 1px 3px #999;
+  -webkit-box-shadow:inset 1px 1px 2px #999;
+}
+
+.mbMiniPlayer .map_controls{
+  position: relative;
+  margin:1px;
+  display:none;
+  width:1px;
+  *border:1px solid gray;
+  height:100%;
+  overflow:hidden;
+  white-space:nowrap;
+}
+
+.mbMiniPlayer .playerTable span{
+  margin:0 !important;
+  display:inline-block !important;
+  padding:3px !important;
+  height:20px !important;
+  color:white;
+  text-align:center!important;
+  text-transform:none!important;
+  text-shadow: 1px -1px 1px rgba(0,0,0,0.6)!important;
+  vertical-align: middle;
+}
+
+.mbMiniPlayer.gradientOverlay .playerTable span{
+  background-image:-moz-linear-gradient(100% 100% 110deg,rgba(255, 255, 255,0.3), transparent) !important;
+  background-image:-webkit-gradient(linear, 0% 5%, 85% 100%, from(transparent), to(rgba(255, 255, 255,0.3))) !important;
+  background-image:-o-linear-gradient(270deg, rgba(255, 255, 255,0.0), rgba(255, 255, 255,0.3)) !important;
+}
+
+.mbMiniPlayer .playerTable span.map_title{
+  position:relative;
+  color:#333;
+  font:10px/12px "DroidSansMonoRegular", sans-serif !important;
+  text-shadow: none !important;
+  letter-spacing:0 !important;
+  width:100% !important;
+  height:11px !important;
+  top:-2px !important;
+  background:transparent !important;
+  text-align:left !important;
+  cursor:default !important;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.mbMiniPlayer .map_info{
+  display: none;
+  background: rgb(48, 48, 48);
+  color: #D1D1D1;
+  padding: 1px 4px;
+  position: absolute;
+  z-index: 10;
+
+}
+
+.mbMiniPlayer .playerTable span.map_rew{
+  cursor:pointer !important;
+}
+
+.mbMiniPlayer .playerTable span.map_volumeLevel{}
+.mbMiniPlayer .playerTable span.map_volumeLevel a{
+  position:relative !important;
+  display:inline-block !important;
+  margin:0 ;
+  border-right:1px solid rgba(0,0,0,0.4) ;
+  width:2px;
+  padding:0 ;
+  background-color:white ;
+  height:0 ;
+  vertical-align:middle !important;
+  opacity:.1 ;
+  cursor:pointer !important;
+}
+
+.mbMiniPlayer .playerTable span.map_volumeLevel a:hover{
+  opacity:1!important;
+}
+
+.mbMiniPlayer .playerTable span.map_volumeLevel a.sel{}
+
+.mbMiniPlayer .playerTable span.map_time{
+  width:1px;
+  font:11px/20px "DroidSansMonoRegular", sans-serif !important;
+  overflow:hidden;
+  white-space:nowrap;
+  cursor:default !important;
+  text-shadow: 1px -1px 1px rgba(0,0,0,.6)!important;
+}
+
+.mbMiniPlayer .playerTable span.map_play{
+  border-radius:0 4px 4px 0 !important;
+  cursor:pointer !important;
+}
+
+.mbMiniPlayer[isplaying=true] .playerTable span.map_play{
+  -webkit-animation: playing .7s infinite alternate;
+  animation: playing .7s infinite alternate;
+}
+
+@keyframes playing {
+  from {
+    opacity:1;
+  }
+  to {
+    opacity:.5;
+  }
+}
+
+@-webkit-keyframes playing {
+  from {
+    opacity:1;
+  }
+  to {
+    opacity:.5;
+  }
+}
+@-moz-keyframes playing {
+  from {
+    opacity:1;
+  }
+  to {
+    opacity:.5;
+  }
+}
+
+.mbMiniPlayer .playerTable span.map_volume{
+  border-radius:4px 0 0 4px !important;
+  cursor:pointer !important;
+  padding-left:6px !important;
+  padding-right:0 !important;
+}
+
+.mbMiniPlayer .copy{
+  font: 10px/12px "DroidSansMonoRegular", sans-serif !important;
+  color: #e0e0e0;
+  padding-left: 10px;
+  display: none;
+}
+
+.mbMiniPlayer span.map_download{
+  display: inline-block !important;
+  vertical-align: top !important;
+  margin: 0 !important;
+  padding: 3px 5px !important;
+  font-family: "mb_audio_fontRegular" !important;
+  font-size: 50px !important;
+  line-height: 22px !important;
+  color: rgba(0,0,0,.2);
+
+  transition: color 1s;
+  -moz-transition: color 1s;
+  -webkit-transition: color 1s;
+  -o-transition: color 1s;
+}
+
+
+
+/*BLACK ----------------------------------------*/
+.mbMiniPlayer.black .playerTable span{
+  background-color:#333;
+}
+
+.mbMiniPlayer.black .playerTable span.map_play{
+  border-left:1px solid #000;
+}
+
+.mbMiniPlayer.black .playerTable span.map_volume{
+  border-right:1px solid #333;
+}
+
+.mbMiniPlayer.black .playerTable span.map_volume.mute{
+  color: #333;
+}
+
+.mbMiniPlayer.black .map_download:hover{
+  color: #000 ;
+}
+
+/*GRAY ----------------------------------------*/
+.mbMiniPlayer.gray .playerTable span{
+  background-color:#ccc;
+}
+
+.mbMiniPlayer.gray .playerTable span.map_play{
+  border-left:1px solid #9f9f9f;
+}
+
+.mbMiniPlayer.gray .playerTable span.map_volume{
+  border-right:1px solid #bdbcbc;
+}
+
+.mbMiniPlayer.gray .playerTable span.map_volume.mute{
+  color: #cccccc;
+}
+.mbMiniPlayer.gray .map_download:hover{
+  color: #666 ;
+}
+
+/*BLUE ----------------------------------------*/
+.mbMiniPlayer.blue .playerTable span{
+  background-color: #0099ff;
+}
+
+.mbMiniPlayer.blue .playerTable span.map_play{
+  border-left:1px solid #034383;
+}
+
+.mbMiniPlayer.blue .playerTable span.map_volume{
+  border-right:1px solid #18a2fe;
+}
+
+.mbMiniPlayer.blue .playerTable span.map_volume.mute{
+  color: #98bff9;
+}
+
+.mbMiniPlayer.blue .map_download:hover{
+  color: #0099ff ;
+}
+
+/*ORANGE ----------------------------------------*/
+.mbMiniPlayer.orange .playerTable span{
+  background-color: #ff9900;
+}
+
+.mbMiniPlayer.orange .playerTable span.map_play{
+  border-left:1px solid #8c5002;
+}
+
+.mbMiniPlayer.orange .playerTable span.map_volume{
+  border-right:1px solid #fea827;
+}
+
+.mbMiniPlayer.orange .playerTable span.map_volume.mute{
+  color: #eec957;
+}
+.mbMiniPlayer.orange .map_download:hover{
+  color: #ff9900;
+}
+
+/*RED ----------------------------------------*/
+.mbMiniPlayer.red .playerTable span{
+  background-color: #990000;
+}
+
+.mbMiniPlayer.red .playerTable span.map_play{
+  border-left:1px solid #5f0000;
+}
+
+.mbMiniPlayer.red .playerTable span.map_volume{
+  border-right:1px solid #990000;
+}
+
+.mbMiniPlayer.red .playerTable span.map_volume.mute{
+  color: #b90000;
+}
+.mbMiniPlayer.red .map_download:hover{
+  color: #990000 !important;
+}
+
+/*GREEN ----------------------------------------*/
+.mbMiniPlayer.green .playerTable span{
+  background-color: #339900;
+}
+
+.mbMiniPlayer.green .playerTable span.map_play{
+  border-left:1px solid #336600;
+}
+
+.mbMiniPlayer.green .playerTable span.map_volume{
+  border-right:1px solid #38a700;
+}
+
+.mbMiniPlayer.green .playerTable span.map_volume.mute{
+  color: #2aba5a;
+}
+
+.mbMiniPlayer.green .map_download:hover{
+  color: #339900 !important;
+}
