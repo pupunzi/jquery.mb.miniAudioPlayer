@@ -1,22 +1,23 @@
-/*
- * ******************************************************************************
- *  jquery.mb.components
- *  file: miniplayer.css
- *
- *  Copyright (c) 2001-2014. Matteo Bicocchi (Pupunzi);
- *  Open lab srl, Firenze - Italy
- *  email: matteo@open-lab.com
- *  site: 	http://pupunzi.com
- *  blog:	http://pupunzi.open-lab.com
- * 	http://open-lab.com
- *
- *  Licences: MIT, GPL
- *  http://www.opensource.org/licenses/mit-license.php
- *  http://www.gnu.org/licenses/gpl.html
- *
- *  last modified: 17/03/14 21.18
- *  *****************************************************************************
- */
+/*___________________________________________________________________________________________________________________________________________________
+ _ jquery.mb.components                                                                                                                             _
+ _                                                                                                                                                  _
+ _ file: miniplayer.new.css                                                                                                                         _
+ _ last modified: 09/07/14 23.09                                                                                                                    _
+ _                                                                                                                                                  _
+ _ Open Lab s.r.l., Florence - Italy                                                                                                                _
+ _                                                                                                                                                  _
+ _ email: matteo@open-lab.com                                                                                                                       _
+ _ site: http://pupunzi.com                                                                                                                         _
+ _       http://open-lab.com                                                                                                                        _
+ _ blog: http://pupunzi.open-lab.com                                                                                                                _
+ _ Q&A:  http://jquery.pupunzi.com                                                                                                                  _
+ _                                                                                                                                                  _
+ _ Licences: MIT, GPL                                                                                                                               _
+ _    http://www.opensource.org/licenses/mit-license.php                                                                                            _
+ _    http://www.gnu.org/licenses/gpl.html                                                                                                          _
+ _                                                                                                                                                  _
+ _ Copyright (c) 2001-2014. Matteo Bicocchi (Pupunzi);                                                                                              _
+ ___________________________________________________________________________________________________________________________________________________*/
 
 @charset "UTF-8";
 
@@ -49,6 +50,10 @@ a.audio{
   display:none;
 }
 
+.mbMiniPlayer{
+
+}
+
 .mbMiniPlayer:focus{
   outline: none;
 }
@@ -69,7 +74,7 @@ a.audio{
   line-height: 20px!important;
 }
 
-.mbMiniPlayer table{
+.mbMiniPlayer .playerTable{
   -moz-border-radius:5px !important;
   -webkit-border-radius:8px !important;
   border-radius:5px !important;
@@ -82,25 +87,27 @@ a.audio{
   width: auto !important;
   display: inline-block;
   vertical-align: middle;
+  display: inline-block;
 }
 
-.mbMiniPlayer:focus table{
+.mbMiniPlayer:focus .playerTable{
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.38) !important;
 }
 
 
-.mbMiniPlayer.shadow table{
+.mbMiniPlayer.shadow .playerTable{
   -moz-box-shadow: 0px 0px 3px rgba(0,0,0,0.4);
   -webkit-box-shadow: 0px 0px 3px rgba(0,0,0,0.4);
   box-shadow: 0px 0px 3px rgba(0,0,0,0.4);
 }
 
-.mbMiniPlayer td{
+.mbMiniPlayer .playerTable > div{
   margin:0 !important;
   padding:0 !important;
   line-height: 0 !important;
   border: none!important;
   vertical-align: middle;
+  display: table-cell;
 }
 
 .jp-progress{
@@ -133,7 +140,7 @@ a.audio{
   box-sizing: content-box;
 }
 
-.mbMiniPlayer td.map_controlsBar{
+.mbMiniPlayer div.map_controlsBar{
   background-color:#ccc;
   /*
     background-image:-moz-linear-gradient(19% 100% 90deg,#FFFFFF, #FFFFFF, #EBEBEB 100%);
@@ -172,7 +179,7 @@ a.audio{
   white-space:nowrap;
 }
 
-.mbMiniPlayer table span{
+.mbMiniPlayer .playerTable span{
   margin:0 !important;
   display:inline-block !important;
   padding:3px !important;
@@ -181,13 +188,16 @@ a.audio{
   text-align:center!important;
   text-transform:none!important;
   text-shadow: 1px -1px 1px rgba(0,0,0,0.6)!important;
-  background-image:-moz-linear-gradient(100% 100% 110deg,rgba(255, 255, 255,0.3), transparent) !important;
-  background-image:-webkit-gradient(linear, 0% 5%, 85% 100%, from(transparent), to(rgba(255, 255, 255,0.3))) !important;
-  background-image:-o-linear-gradient(270deg, rgba(255, 255, 255,0.0), rgba(255, 255, 255,0.3)) !important;
   vertical-align: middle;
 }
 
-.mbMiniPlayer table span.map_title{
+.mbMiniPlayer.gradientOverlay .playerTable span{
+  background-image:-moz-linear-gradient(100% 100% 110deg,rgba(255, 255, 255,0.3), transparent) !important;
+  background-image:-webkit-gradient(linear, 0% 5%, 85% 100%, from(transparent), to(rgba(255, 255, 255,0.3))) !important;
+  background-image:-o-linear-gradient(270deg, rgba(255, 255, 255,0.0), rgba(255, 255, 255,0.3)) !important;
+}
+
+.mbMiniPlayer .playerTable span.map_title{
   position:relative;
   color:#333;
   font:10px/12px "DroidSansMonoRegular", sans-serif !important;
@@ -213,12 +223,12 @@ a.audio{
 
 }
 
-.mbMiniPlayer table span.map_rew{
+.mbMiniPlayer .playerTable span.map_rew{
   cursor:pointer !important;
 }
 
-.mbMiniPlayer table span.map_volumeLevel{}
-.mbMiniPlayer table span.map_volumeLevel a{
+.mbMiniPlayer .playerTable span.map_volumeLevel{}
+.mbMiniPlayer .playerTable span.map_volumeLevel a{
   position:relative !important;
   display:inline-block !important;
   margin:0 ;
@@ -232,13 +242,13 @@ a.audio{
   cursor:pointer !important;
 }
 
-.mbMiniPlayer table span.map_volumeLevel a:hover{
+.mbMiniPlayer .playerTable span.map_volumeLevel a:hover{
   opacity:1!important;
 }
 
-.mbMiniPlayer table span.map_volumeLevel a.sel{}
+.mbMiniPlayer .playerTable span.map_volumeLevel a.sel{}
 
-.mbMiniPlayer table span.map_time{
+.mbMiniPlayer .playerTable span.map_time{
   width:1px;
   font:11px/20px "DroidSansMonoRegular", sans-serif !important;
   overflow:hidden;
@@ -247,12 +257,12 @@ a.audio{
   text-shadow: 1px -1px 1px rgba(0,0,0,.6)!important;
 }
 
-.mbMiniPlayer table span.map_play{
+.mbMiniPlayer .playerTable span.map_play{
   border-radius:0 4px 4px 0 !important;
   cursor:pointer !important;
 }
 
-.mbMiniPlayer[isplaying=true] table span.map_play{
+.mbMiniPlayer[isplaying=true] .playerTable span.map_play{
   -webkit-animation: playing .7s infinite alternate;
   animation: playing .7s infinite alternate;
 }
@@ -283,7 +293,7 @@ a.audio{
   }
 }
 
-.mbMiniPlayer table span.map_volume{
+.mbMiniPlayer .playerTable span.map_volume{
   border-radius:4px 0 0 4px !important;
   cursor:pointer !important;
   padding-left:6px !important;
@@ -316,19 +326,19 @@ a.audio{
 
 
 /*BLACK ----------------------------------------*/
-.mbMiniPlayer.black table span{
+.mbMiniPlayer.black .playerTable span{
   background-color:#333;
 }
 
-.mbMiniPlayer.black table span.map_play{
+.mbMiniPlayer.black .playerTable span.map_play{
   border-left:1px solid #000;
 }
 
-.mbMiniPlayer.black table span.map_volume{
+.mbMiniPlayer.black .playerTable span.map_volume{
   border-right:1px solid #333;
 }
 
-.mbMiniPlayer.black table span.map_volume.mute{
+.mbMiniPlayer.black .playerTable span.map_volume.mute{
   color: #333;
 }
 
@@ -337,19 +347,19 @@ a.audio{
 }
 
 /*GRAY ----------------------------------------*/
-.mbMiniPlayer.gray table span{
+.mbMiniPlayer.gray .playerTable span{
   background-color:#ccc;
 }
 
-.mbMiniPlayer.gray table span.map_play{
+.mbMiniPlayer.gray .playerTable span.map_play{
   border-left:1px solid #9f9f9f;
 }
 
-.mbMiniPlayer.gray table span.map_volume{
+.mbMiniPlayer.gray .playerTable span.map_volume{
   border-right:1px solid #bdbcbc;
 }
 
-.mbMiniPlayer.gray table span.map_volume.mute{
+.mbMiniPlayer.gray .playerTable span.map_volume.mute{
   color: #cccccc;
 }
 .mbMiniPlayer.gray .map_download:hover{
@@ -357,19 +367,19 @@ a.audio{
 }
 
 /*BLUE ----------------------------------------*/
-.mbMiniPlayer.blue table span{
+.mbMiniPlayer.blue .playerTable span{
   background-color: #0099ff;
 }
 
-.mbMiniPlayer.blue table span.map_play{
+.mbMiniPlayer.blue .playerTable span.map_play{
   border-left:1px solid #034383;
 }
 
-.mbMiniPlayer.blue table span.map_volume{
+.mbMiniPlayer.blue .playerTable span.map_volume{
   border-right:1px solid #18a2fe;
 }
 
-.mbMiniPlayer.blue table span.map_volume.mute{
+.mbMiniPlayer.blue .playerTable span.map_volume.mute{
   color: #98bff9;
 }
 
@@ -378,19 +388,19 @@ a.audio{
 }
 
 /*ORANGE ----------------------------------------*/
-.mbMiniPlayer.orange table span{
+.mbMiniPlayer.orange .playerTable span{
   background-color: #ff9900;
 }
 
-.mbMiniPlayer.orange table span.map_play{
+.mbMiniPlayer.orange .playerTable span.map_play{
   border-left:1px solid #8c5002;
 }
 
-.mbMiniPlayer.orange table span.map_volume{
+.mbMiniPlayer.orange .playerTable span.map_volume{
   border-right:1px solid #fea827;
 }
 
-.mbMiniPlayer.orange table span.map_volume.mute{
+.mbMiniPlayer.orange .playerTable span.map_volume.mute{
   color: #eec957;
 }
 .mbMiniPlayer.orange .map_download:hover{
@@ -398,19 +408,19 @@ a.audio{
 }
 
 /*RED ----------------------------------------*/
-.mbMiniPlayer.red table span{
+.mbMiniPlayer.red .playerTable span{
   background-color: #990000;
 }
 
-.mbMiniPlayer.red table span.map_play{
+.mbMiniPlayer.red .playerTable span.map_play{
   border-left:1px solid #5f0000;
 }
 
-.mbMiniPlayer.red table span.map_volume{
+.mbMiniPlayer.red .playerTable span.map_volume{
   border-right:1px solid #990000;
 }
 
-.mbMiniPlayer.red table span.map_volume.mute{
+.mbMiniPlayer.red .playerTable span.map_volume.mute{
   color: #b90000;
 }
 .mbMiniPlayer.red .map_download:hover{
@@ -418,19 +428,19 @@ a.audio{
 }
 
 /*GREEN ----------------------------------------*/
-.mbMiniPlayer.green table span{
+.mbMiniPlayer.green .playerTable span{
   background-color: #339900;
 }
 
-.mbMiniPlayer.green table span.map_play{
+.mbMiniPlayer.green .playerTable span.map_play{
   border-left:1px solid #336600;
 }
 
-.mbMiniPlayer.green table span.map_volume{
+.mbMiniPlayer.green .playerTable span.map_volume{
   border-right:1px solid #38a700;
 }
 
-.mbMiniPlayer.green table span.map_volume.mute{
+.mbMiniPlayer.green .playerTable span.map_volume.mute{
   color: #2aba5a;
 }
 
