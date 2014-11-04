@@ -91,7 +91,7 @@ a.audio{
 }
 
 .mbMiniPlayer:focus .playerTable{
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.38) !important;
+  box-shadow: 0 0 5px rgba(93, 146, 192, 0.8) !important;
 }
 
 
