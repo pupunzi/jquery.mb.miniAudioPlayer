@@ -129,11 +129,9 @@ a.audio{
   -webkit-box-sizing: content-box;
   box-sizing: content-box;
 }
+
 .jp-play-bar{
   background-color:black;
-  background-image:-moz-linear-gradient(85% 66% 90deg,#191919, #525252, #C7C7C7 100%);
-  background-image:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#7D7D7D), to(#262626), color-stop(.6,#333333));
-  background-image:-ms-linear-gradient(linear, 0% 0%, 0% 100%, from(#7D7D7D), to(#262626), color-stop(.6,#333333));
   height:6px;
   -moz-box-sizing: content-box;
   -webkit-box-sizing: content-box;
@@ -343,7 +341,15 @@ a.audio{
 }
 
 .mbMiniPlayer.black .map_download:hover{
-  color: #000 ;
+  color: #000;
+}
+
+.mbMiniPlayer.black .jp-load-bar{
+  background-color: rgba(0, 0, 0, 0.10);
+}
+
+.mbMiniPlayer.black .jp-play-bar {
+  background-color: #000;
 }
 
 /*GRAY ----------------------------------------*/
@@ -364,6 +370,14 @@ a.audio{
 }
 .mbMiniPlayer.gray .map_download:hover{
   color: #666 ;
+}
+
+.mbMiniPlayer.gray .jp-load-bar{
+  background-color: rgba(102, 102, 102, 0.20);
+}
+
+.mbMiniPlayer.gray .jp-play-bar {
+  background-color: #9f9f9f;
 }
 
 /*BLUE ----------------------------------------*/
@@ -387,6 +401,15 @@ a.audio{
   color: #0099ff ;
 }
 
+.mbMiniPlayer.blue .jp-load-bar{
+  background-color: rgba(0, 153, 255, 0.10);
+}
+
+.mbMiniPlayer.blue .jp-play-bar {
+  background-color: #0099ff;
+}
+
+
 /*ORANGE ----------------------------------------*/
 .mbMiniPlayer.orange .playerTable span{
   background-color: #ff9900;
@@ -403,9 +426,19 @@ a.audio{
 .mbMiniPlayer.orange .playerTable span.map_volume.mute{
   color: #eec957;
 }
+
 .mbMiniPlayer.orange .map_download:hover{
   color: #ff9900;
 }
+
+.mbMiniPlayer.orange .jp-load-bar{
+  background-color: rgba(255, 153, 0, 0.20);
+}
+
+.mbMiniPlayer.orange .jp-play-bar {
+  background-color: #ff9900;
+}
+
 
 /*RED ----------------------------------------*/
 .mbMiniPlayer.red .playerTable span{
@@ -425,6 +458,14 @@ a.audio{
 }
 .mbMiniPlayer.red .map_download:hover{
   color: #990000 !important;
+}
+
+.mbMiniPlayer.red .jp-load-bar{
+  background-color: rgba(153, 0, 0, 0.21);
+}
+
+.mbMiniPlayer.red .jp-play-bar {
+  background-color: #990000;
 }
 
 /*GREEN ----------------------------------------*/
@@ -447,3 +488,14 @@ a.audio{
 .mbMiniPlayer.green .map_download:hover{
   color: #339900 !important;
 }
+
+.mbMiniPlayer.green .jp-load-bar{
+  background-color: rgba(51, 153, 0, 0.20);
+}
+
+.mbMiniPlayer.green .jp-play-bar {
+  background-color: #339900;
+}
+
+/*BIG ----------------------------------------*/
+
