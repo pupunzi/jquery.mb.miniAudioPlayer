@@ -1,23 +1,24 @@
 <!DOCTYPE html>
-<!--
-  ~ /*******************************************************************************
-  ~  jquery.mb.components
-  ~  file: skinMaker.html
-  ~
-  ~  Copyright (c) 2001-2014. Matteo Bicocchi (Pupunzi);
-  ~  Open lab srl, Firenze - Italy
-  ~  email: matteo@open-lab.com
-  ~  site: 	http://pupunzi.com
-  ~  blog:	http://pupunzi.open-lab.com
-  ~ 	http://open-lab.com
-  ~
-  ~  Licences: MIT, GPL
-  ~  http://www.opensource.org/licenses/mit-license.php
-  ~  http://www.gnu.org/licenses/gpl.html
-  ~
-  ~  last modified: 04/02/14 23.01
-  ~  ******************************************************************************/
-  -->
+<!--–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+  jquery.mb.components                                                                                                                              –
+                                                                                                                                                    –
+  file: skinmaker.new.html                                                                                                                          –
+  last modified: 05/11/14 19.12                                                                                                                     –
+                                                                                                                                                    –
+  Open Lab s.r.l., Florence - Italy                                                                                                                 –
+                                                                                                                                                    –
+  email: matteo@open-lab.com                                                                                                                        –
+  site: http://pupunzi.com                                                                                                                          –
+        http://open-lab.com                                                                                                                         –
+  blog: http://pupunzi.open-lab.com                                                                                                                 –
+  Q&A:  http://jquery.pupunzi.com                                                                                                                   –
+                                                                                                                                                    –
+  Licences: MIT, GPL                                                                                                                                –
+     http://www.opensource.org/licenses/mit-license.php                                                                                             –
+     http://www.gnu.org/licenses/gpl.html                                                                                                           –
+                                                                                                                                                    –
+  Copyright (c) 2001-2014. Matteo Bicocchi (Pupunzi);                                                                                               –
+  –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––-->
 
 <html xmlns="http://www.w3.org/1999/html">
 <head>
@@ -36,6 +37,36 @@
 <link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
 
 <script>
+
+    /*
+    jColor: http://aaronrussell.github.io/jcolour
+    */
+    (function(){var o=Array.prototype.indexOf||function(d){for(var f=0,g=this.length;f<g;f++)if(this[f]===d)return f;return-1};(typeof exports!=="undefined"&&exports!==null?exports:this).jColour=function(){function d(a){var c,b;a==null&&(a="#ffffff");a.toLowerCase()in f&&(a=f[a]);if(b=a.match(/^#?([a-f0-9]{3})$/i))a=b[1].substring(0,1),c=b[1].substring(1,2),b=b[1].substring(2,3),a="#"+(a+a+c+c+b+b);if(b=a.match(/^#?([a-f0-9]{6,8})$/i))this.red=parseInt(b[1].substring(0,2),16),this.green=parseInt(b[1].substring(2,
+            4),16),this.blue=parseInt(b[1].substring(4,6),16),this.alpha=b[1].substring(6,8)?parseInt(b[1].substring(6,8),16)/255:1,h(this);else if(c=a.match(/^rgba?\(\s*(\d+)[,\s]*(\d+)[,\s]*(\d+)[,\s]*([\.\d]+)?\s*\)$/i))this.red=parseInt(c[1]),this.green=parseInt(c[2]),this.blue=parseInt(c[3]),this.alpha=c[4]?c[4]:1,h(this);else if(a=a.match(/^hsla?\(\s*(\d+)[,\s]*(\d+)[,\s]*(\d+)[,\s]*([\.\d]+)?\s*\)$/i))this.hue=parseInt(a[1]),this.saturation=parseInt(a[2]),this.lightness=parseInt(a[3]),this.alpha=a[4]?
+            a[4]:1,e(this);else throw"Invalid colour string.";}var f,g,e,k,j,l,h,m;d.prototype.hex=function(a){a==null&&(a=!1);return(a&&this.alpha<1?"#"+g(this.red)+g(this.green)+g(this.blue)+g(this.alpha*255):"#"+g(this.red)+g(this.green)+g(this.blue)).toLowerCase()};d.prototype.rgb=function(){return this.alpha===1?"rgb("+Math.round(this.red)+", "+Math.round(this.green)+", "+Math.round(this.blue)+")":"rgba("+Math.round(this.red)+", "+Math.round(this.green)+", "+Math.round(this.blue)+", "+Math.round(this.alpha*
+            100)/100+")"};d.prototype.hsl=function(){return this.alpha===1?"hsl("+Math.round(this.hue)+", "+Math.round(this.saturation)+", "+Math.round(this.lightness)+")":"hsla("+Math.round(this.hue)+", "+Math.round(this.saturation)+", "+Math.round(this.lightness)+", "+Math.round(this.alpha*100)/100+")"};d.prototype.toS=function(){var a,c;for(a in f)if(c=f[a],this.hex()===c.toLowerCase())return a;return this.hex()};d.prototype.lighten=function(a){this.lightness+=a;return e(this)};d.prototype.lightenPercent=
+            function(a){this.lightness+=this.lightness/100*a;return e(this)};d.prototype.darken=function(a){this.lightness-=a;return e(this)};d.prototype.darkenPercent=function(a){this.lightness-=this.lightness/100*a;return e(this)};d.prototype.saturate=function(a){this.saturation+=a;return e(this)};d.prototype.saturatePercent=function(a){this.saturation+=this.saturation/100*a;return e(this)};d.prototype.desaturate=function(a){this.saturation-=a;return e(this)};d.prototype.desaturatePercent=function(a){this.saturation-=
+            this.saturation/100*a;return e(this)};d.prototype.greyscale=function(){this.saturation=0;return e(this)};d.prototype.grayscale=function(){return this.greyscale()};d.prototype.adjustHue=function(a){this.hue+=a;return e(this)};d.prototype.complement=function(){this.hue+=180;return e(this)};d.prototype.opacify=function(a){this.alpha+=a;this.alpha=j(this.alpha,0,1);return this};d.prototype.transparentize=function(a){this.alpha-=a;this.alpha=j(this.alpha,0,1);return this};d.prototype.invert=function(){var a,
+            c,b,d;d=["red","green","blue"];c=0;for(b=d.length;c<b;c++)a=d[c],this[a]=255-this[a];return h(this)};d.prototype.adjustColour=function(a){var c,b;a==null&&(a={});b=m(a);for(c in a)o.call(l,c)>=0&&(this[c]+=a[c]);return b[0]?h(this):e(this)};d.prototype.scaleColour=function(a){var c,b;a==null&&(a={});b=m(a);for(c in a)o.call(l,c)>=0&&c!=="hue"&&(this[c]+=this[c]/100*a[c]);return b[0]?h(this):e(this)};d.prototype.changeColour=function(a){var c,b;a==null&&(a={});b=m(a);for(c in a)o.call(l,c)>=0&&(this[c]=
+            a[c]);return b[0]?h(this):e(this)};d.prototype.mixWith=function(a,c){var b,n,i;c==null&&(c=50);a instanceof d||(a=new d(a));n=c/100;i=n*2-1;b=a.alpha-this.alpha;b=((i*b===-1?i:(i+b)/(1+i*b))+1)/2;i=1-b;this.red=a.red*b+this.red*i;this.green=a.green*b+this.green*i;this.blue=a.blue*b+this.blue*i;this.alpha=a.alpha*n+this.alpha*(1-n);return h(this)};l=["red","green","blue","hue","saturation","lightness","alpha"];f={aliceblue:"#F0F8FF",antiquewhite:"#FAEBD7",aqua:"#00FFFF",aquamarine:"#7FFFD4",azure:"#F0FFFF",
+        beige:"#F5F5DC",bisque:"#FFE4C4",black:"#000000",blanchedalmond:"#FFEBCD",blue:"#0000FF",blueviolet:"#8A2BE2",brown:"#A52A2A",burlywood:"#DEB887",cadetblue:"#5F9EA0",chartreuse:"#7FFF00",chocolate:"#D2691E",coral:"#FF7F50",cornflowerblue:"#6495ED",cornsilk:"#FFF8DC",crimson:"#DC143C",cyan:"#00FFFF",darkblue:"#00008B",darkcyan:"#008B8B",darkgoldenrod:"#B8860B",darkgray:"#A9A9A9",darkgreen:"#006400",darkgrey:"#A9A9A9",darkkhaki:"#BDB76B",darkmagenta:"#8B008B",darkolivegreen:"#556B2F",darkorange:"#FF8C00",
+        darkorchid:"#9932CC",darkred:"#8B0000",darksalmon:"#E9967A",darkseagreen:"#8FBC8F",darkslateblue:"#483D8B",darkslategray:"#2F4F4F",darkslategrey:"#2F4F4F",darkturquoise:"#00CED1",darkviolet:"#9400D3",deeppink:"#FF1493",deepskyblue:"#00BFFF",dimgray:"#696969",dimgrey:"#696969",dodgerblue:"#1E90FF",firebrick:"#B22222",floralwhite:"#FFFAF0",forestgreen:"#228B22",fuchsia:"#FF00FF",gainsboro:"#DCDCDC",ghostwhite:"#F8F8FF",gold:"#FFD700",goldenrod:"#DAA520",gray:"#808080",green:"#008000",greenyellow:"#ADFF2F",
+        grey:"#808080",honeydew:"#F0FFF0",hotpink:"#FF69B4",indianred:"#CD5C5C",indigo:"#4B0082",ivory:"#FFFFF0",khaki:"#F0E68C",lavender:"#E6E6FA",lavenderblush:"#FFF0F5",lawngreen:"#7CFC00",lemonchiffon:"#FFFACD",lightblue:"#ADD8E6",lightcoral:"#F08080",lightcyan:"#E0FFFF",lightgoldenrodyellow:"#FAFAD2",lightgray:"#D3D3D3",lightgreen:"#90EE90",lightgrey:"#D3D3D3",lightpink:"#FFB6C1",lightsalmon:"#FFA07A",lightseagreen:"#20B2AA",lightskyblue:"#87CEFA",lightslategray:"#778899",lightslategrey:"#778899",lightsteelblue:"#B0C4DE",
+        lightyellow:"#FFFFE0",lime:"#00FF00",limegreen:"#32CD32",linen:"#FAF0E6",magenta:"#FF00FF",maroon:"#800000",mediumaquamarine:"#66CDAA",mediumblue:"#0000CD",mediumorchid:"#BA55D3",mediumpurple:"#9370DB",mediumseagreen:"#3CB371",mediumslateblue:"#7B68EE",mediumspringgreen:"#00FA9A",mediumturquoise:"#48D1CC",mediumvioletred:"#C71585",midnightblue:"#191970",mintcream:"#F5FFFA",mistyrose:"#FFE4E1",moccasin:"#FFE4B5",navajowhite:"#FFDEAD",navy:"#000080",oldlace:"#FDF5E6",olive:"#808000",olivedrab:"#6B8E23",
+        orange:"#FFA500",orangered:"#FF4500",orchid:"#DA70D6",palegoldenrod:"#EEE8AA",palegreen:"#98FB98",paleturquoise:"#AFEEEE",palevioletred:"#DB7093",papayawhip:"#FFEFD5",peachpuff:"#FFDAB9",peru:"#CD853F",pink:"#FFC0CB",plum:"#DDA0DD",powderblue:"#B0E0E6",purple:"#800080",red:"#FF0000",rosybrown:"#BC8F8F",royalblue:"#4169E1",saddlebrown:"#8B4513",salmon:"#FA8072",sandybrown:"#F4A460",seagreen:"#2E8B57",seashell:"#FFF5EE",sienna:"#A0522D",silver:"#C0C0C0",skyblue:"#87CEEB",slateblue:"#6A5ACD",slategray:"#708090",
+        slategrey:"#708090",snow:"#FFFAFA",springgreen:"#00FF7F",steelblue:"#4682B4",tan:"#D2B48C",teal:"#008080",thistle:"#D8BFD8",tomato:"#FF6347",turquoise:"#40E0D0",violet:"#EE82EE",wheat:"#F5DEB3",white:"#FFFFFF",whitesmoke:"#F5F5F5",yellow:"#FFFF00",yellowgreen:"#9ACD32"};h=function(a){var c,b,d,i,e,f,g,h;a.red=j(a.red,0,255);a.green=j(a.green,0,255);a.blue=j(a.blue,0,255);a.alpha=j(a.alpha,0,1);h=a.red/255;d=a.green/255;c=a.blue/255;f=Math.max(h,d,c);g=Math.min(h,d,c);b=f-g;i=function(){switch(f){case g:return 0;
+        case h:return 60*(d-c)/b;case d:return 60*(c-h)/b+120;case c:return 60*(h-d)/b+240}}();e=(f+g)/2;a.hue=i%360;a.saturation=(f===g?0:e<0.5?b/(2*e):b/(2-2*e))*100;a.lightness=e*100;return a};e=function(a){var c,b,d,e,f;a.hue>=360&&(a.hue-=Math.floor(a.hue/360)*360);a.hue<0&&(a.hue-=Math.ceil(a.hue/360)*360);a.saturation=j(a.saturation,0,100);a.lightness=j(a.lightness,0,100);a.alpha=j(a.alpha,0,1);c=a.hue/360;e=a.saturation/100;b=a.lightness/100;e=b<0.5?b*(e+1):b+e-b*e;d=b*2-e;f=k(d,e,c+1/3);b=k(d,e,
+            c);c=k(d,e,c-1/3);a.red=f*255;a.green=b*255;a.blue=c*255;return a};k=function(a,c,b){b<0&&(b+=1);b>1&&(b-=1);if(b*6<1)return a+(c-a)*b*6;if(b*2<1)return c;if(b*3<2)return a+(c-a)*(2/3-b)*6;return a};g=function(a){a==null&&(a="00");a=parseInt(a);if(a===0||isNaN(a))return"00";a=Math.round(j(a,0,255));return"0123456789ABCDEF".charAt((a-a%16)/16)+"0123456789ABCDEF".charAt(a%16)};j=function(a,c,b){return Math.min(Math.max(a,c),b)};m=function(a){var c,b,d;d=c=!1;for(b in a){if(b==="red"||b==="green"||b===
+            "blue")d=!0;if(b==="hue"||b==="saturation"||b==="luminosity")c=!0}if(d&&c)throw"Cannot change both RGB and HSL properties.";return[d,c]};return d}()}).call(this);
+
+</script>
+
+<script>
+
+    /*
+     SLIDER
+     */
+
     var a=0;
     (function(b){b.mbSlider={name:"mb.valueSlider",author:"Matteo Bicocchi",version:"1.5",defaults:{maxVal:100,minVal:0,grid:5,showVal:!0,onSlideLoad:function(b){},onStart:function(b){},onSlide:function(b){},onStop:function(b){}},buildSlider:function(d){return this.each(function(){this.options={};b.extend(this.options,b.mbSlider.defaults,d);var a=this;if(b.metadata){b.metadata.setType("class");b(a).metadata().range&&b(a).attr("range",b(a).metadata().range);b(a).metadata().rangeColor&&b(a).attr("rangeColor",
             b(a).metadata().rangeColor);b(a).metadata().negativeColor&&b(a).attr("negativeColor",b(a).metadata().negativeColor);(b(a).metadata().startAt||0==b(a).metadata().startAt)&&b(a).attr("startAt",b(a).metadata().startAt);if(b(a).metadata().minVal||0==b(a).metadata().minVal)a.options.minVal=b(a).metadata().minVal;if(b(a).metadata().maxVal||0==b(a).metadata().maxVal)a.options.maxVal=b(a).metadata().maxVal;if(b(a).metadata().grid||0==b(a).metadata().grid)a.options.grid=b(a).metadata().grid}0==a.options.grid&&
@@ -54,9 +85,10 @@
             a.sliderHandler.outerWidth()/2});0<a.evalPosGrid?(a.sliderRange.css({left:0,width:c}),a.sliderZero.css({width:a.zero})):(a.sliderRange.css({left:0,width:a.zero}),a.sliderZero.css({width:c+a.sliderHandler.outerWidth()/2}));a.sliderValue.html(d>=a.options.minVal?a.evalPosGrid:a.options.minVal);a.sliderValueLabel.html(d>=a.options.minVal?a.evalPosGrid:a.options.minVal)},getVal:function(){var d=b(this).get(0),a=d.evalPosGrid;a&&a>d.options.maxVal&&(a=d.options.maxVal);a&&a<d.options.minVal&&(a=d.options.minVal);
         return a?a:0}};b.fn.mbSlider=b.mbSlider.buildSlider;b.fn.mbsetVal=b.mbSlider.setVal;b.fn.mbgetVal=b.mbSlider.getVal})(jQuery);
 </script>
+
 <style type="text/css">
 
-/*Generic page style*/
+/* Generic page style */
 
 *{
     -moz-box-sizing: border-box;
@@ -165,10 +197,10 @@ hr{
 }
 
 #player{
-    background: transparent;
     margin-bottom: 10px;
     padding: 25px;
-    background: #ffc000;
+    background: #fff;
+    color: #333;
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0,0,0,0.3);
 }
@@ -192,6 +224,10 @@ input{
 input#skname{
     width: 100%;
     font-size: 30px;
+    color: #333;
+    border: 1px solid #ffc000;
+    padding: 5px;
+
 }
 
 #skincolorpicker{
@@ -223,13 +259,6 @@ input#skname{
     box-shadow: 0 0 5px rgba(0,0,0,0.3);
     background: #ffc000;
 
-}
-
-.skinName{
-    width: 250px;
-    font-size: 20px;
-    background:#ffc000;
-    color: white;
 }
 
 #skinNameVal{
@@ -305,126 +334,127 @@ a:hover{
     padding: 5px;
 }
 
-/*Slider*/
-.mb_slider{
-    position:relative;
-    padding:10px;
-    z-index:0;
-}
+</style>
 
-.mb_sliderBar{
-    padding:9px;
-    background-color:#fafafa;
-    /*IE HACK*/
-    border:1px solid #ddd\9;
-    width:250px;
-    -moz-box-shadow:#ccc 0px 0px 5px;
-    -webkit-box-shadow:#ccc 0px 0px 3px;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
+<style id="sliderStyle">
+    .mb_slider{
+        position:relative;
+        padding:10px;
+        z-index:0;
+    }
 
-    -moz-user-select: none;
-    -khtml-user-select: none;
-    cursor:default;
+    .mb_sliderBar{
+        padding:9px;
+        background-color:#fafafa;
+        /*IE HACK*/
+        border:1px solid #ddd\9;
+        width:250px;
+        -moz-box-shadow:#ccc 0px 0px 5px;
+        -webkit-box-shadow:#ccc 0px 0px 3px;
+        -moz-border-radius: 4px;
+        -webkit-border-radius: 4px;
 
-    zoom: 1;
-    filter:
-    progid:DXImageTransform.Microsoft.DropShadow(color=#EFEFEF, offx=1, offy=1)
-progid:DXImageTransform.Microsoft.DropShadow(color=#eeeeee, offx=1, offy=1);
-    /*
-        progid:DXImageTransform.Microsoft.DropShadow(color=#EFEFEF, offx=1, offy=1);
-    */
-}
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        cursor:default;
 
-.mb_sliderHandler{
-    padding:9px;
-    background-color:#fff;
-    /*IE HACK*/
-    border:1px solid #ddd\9;
-    position:absolute;
-    top:0;
-    top:-1px\9;
-    left:0;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    -moz-box-shadow:#bbb 1px 1px 2px;
-    -webkit-box-shadow:#bbb 1px 1px 2px;
+        zoom: 1;
+        filter:
+        progid:DXImageTransform.Microsoft.DropShadow(color=#EFEFEF, offx=1, offy=1)
+    progid:DXImageTransform.Microsoft.DropShadow(color=#eeeeee, offx=1, offy=1);
+        /*
+            progid:DXImageTransform.Microsoft.DropShadow(color=#EFEFEF, offx=1, offy=1);
+        */
+    }
 
-    -moz-user-select: none;
-    -khtml-user-select: none;
-    cursor:default;
-}
+    .mb_sliderHandler{
+        padding:9px;
+        background-color:#fff;
+        /*IE HACK*/
+        border:1px solid #ddd\9;
+        position:absolute;
+        top:0;
+        top:-1px\9;
+        left:0;
+        -moz-border-radius: 4px;
+        -webkit-border-radius: 4px;
+        -moz-box-shadow:#bbb 1px 1px 2px;
+        -webkit-box-shadow:#bbb 1px 1px 2px;
 
-.mb_sliderEnd, .mb_sliderStart, .mb_sliderValue{
-    padding:7px;
-    position:relative;
-    text-align:right;
-    top:-5px;
-    margin:3px;
-    width:25px;
-    color:#AAA;
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        cursor:default;
+    }
 
-    -moz-user-select: none;
-    -khtml-user-select: none;
-    cursor:default;
-}
+    .mb_sliderEnd, .mb_sliderStart, .mb_sliderValue{
+        padding:7px;
+        position:relative;
+        text-align:right;
+        top:-5px;
+        margin:3px;
+        width:25px;
+        color:#AAA;
 
-.mb_sliderRange{
-    position:absolute;
-    height:18px;
-    margin:0;
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        cursor:default;
+    }
 
-    top:0;
-    background: #ffcc00;
-    -moz-border-radius: 4px 0 0 4px ;
-    -webkit-border-top-left-radius:4px;
-    -webkit-border-bottom-left-radius:4px;
+    .mb_sliderRange{
+        position:absolute;
+        height:18px;
+        margin:0;
 
-    -moz-user-select: none;
-    -khtml-user-select: none;
-    cursor:default;
-}
+        top:0;
+        background: #ffcc00;
+        -moz-border-radius: 4px 0 0 4px ;
+        -webkit-border-top-left-radius:4px;
+        -webkit-border-bottom-left-radius:4px;
 
-.mb_sliderZero{
-    background-color: #f3f3f3;
-    position:absolute;
-    height:16px;
-    margin:1px;
-    top:0;
-    -moz-border-radius:4px 0 0 4px  ;
-    -webkit-border-top-left-radius:4px;
-    -webkit-border-bottom-left-radius:4px;
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        cursor:default;
+    }
 
-    -moz-user-select: none;
-    -khtml-user-select: none;
-    cursor:default;
-}
+    .mb_sliderZero{
+        background-color: #f3f3f3;
+        position:absolute;
+        height:16px;
+        margin:1px;
+        top:0;
+        -moz-border-radius:4px 0 0 4px  ;
+        -webkit-border-top-left-radius:4px;
+        -webkit-border-bottom-left-radius:4px;
 
-.mb_sliderZeroLabel{
-    font:12px/12px Arial, sans-serif;
-    color:#AAA;
-    padding:5px;
-    padding-bottom:2px;
-    background-color:#fff;
-    margin-left:-4px;
-    z-index:-2;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-}
-.mb_sliderValueLabel{
-    font:12px/12px Arial, sans-serif;
-    color:#aaa;
-    padding:5px;
-    padding-bottom:2px;
-    background-color:#fff;
-    margin-left:0px;
-    z-index:-1;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    -moz-box-shadow:#bbb 1px 1px 2px;
-    -webkit-box-shadow:#bbb 1px 1px 2px;
-}
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        cursor:default;
+    }
 
+    .mb_sliderZeroLabel{
+        font:12px/12px Arial, sans-serif;
+        color:#AAA;
+        padding:5px;
+        padding-bottom:2px;
+        background-color:#fff;
+        margin-left:-4px;
+        z-index:-2;
+        -moz-border-radius: 4px;
+        -webkit-border-radius: 4px;
+    }
+    .mb_sliderValueLabel{
+        font:12px/12px Arial, sans-serif;
+        color:#aaa;
+        padding:5px;
+        padding-bottom:2px;
+        background-color:#fff;
+        margin-left:0px;
+        z-index:-1;
+        -moz-border-radius: 4px;
+        -webkit-border-radius: 4px;
+        -moz-box-shadow:#bbb 1px 1px 2px;
+        -webkit-box-shadow:#bbb 1px 1px 2px;
+    }
 
 </style>
 
@@ -446,8 +476,12 @@ progid:DXImageTransform.Microsoft.DropShadow(color=#eeeeee, offx=1, offy=1);
         color: #333;
     }
 
+    .mbMiniPlayer.custom .map_download{
+        color: #fff;
+    }
+
     .mbMiniPlayer.custom .map_download:hover{
-        color: #000;
+        color: #fff;
     }
 
 </style>
@@ -472,7 +506,7 @@ $(function(){
             $("#player").css({position:"static", left:0,width:"auto", zIndex:0});
             $(".playerClone").remove();
         }
-    })
+    });
 
     if (self.location.href == top.location.href){
         $("body").css({font:"normal 13px/16px 'trebuchet MS', verdana, sans-serif"});
@@ -485,7 +519,16 @@ $(function(){
         width:180
     });
 
-    function changeCSS(skinName, background, text, textShadow, border, borderLeft, borderRight, mute , download, downloadHover, shadow, borderRadius){
+    function changeCSS(skinName, main, secondary, borderRadius, addGradientOverlay){
+
+        var borderC = new jColour(secondary[0]).darken(5).rgb();
+        var borderLeftC = new jColour(main[0]).darken(30).rgb();
+        var borderRightC = new jColour(main[0]).lighten(30).rgb();
+        var muteC = new jColour(secondary[0]).transparentize(0.70).rgb();
+        var volumeLevelC = new jColour(secondary[0]).lighten(10).rgb();
+        var downloadC = new jColour(main[1]).transparentize(0.60).rgb();
+        var downloadCHover = new jColour(main[1]).rgb();
+        var loadBarC = new jColour(main[1]).transparentize(0.70).rgb();
 
         var style="";
         style += "/*++++++++++++++++++++++++++++++++++++++++++++++++++\n";
@@ -494,55 +537,65 @@ $(function(){
         style += "\n";
         style += "MAP custom skin: "+skinName+"\n";
         style += "borderRadius: "+borderRadius+"\n";
-        style += "background: "+background[0]+"\n";
-        style += "icons: "+text[0]+"\n";
-        style += "border: "+border[0]+"\n";
-        style += "borderLeft: "+borderLeft[0]+"\n";
-        style += "borderRight: "+borderRight[0]+"\n";
-        style += "mute: "+mute[0]+"\n";
-        style += "download: "+download[0]+"\n";
-        style += "downloadHover: "+downloadHover[0]+"\n";
+        style += "background: "+main[0]+"\n";
+        style += "icons: "+secondary[0]+"\n";
+
+        style += "border: "+borderC+"\n";
+        style += "borderLeft: "+borderLeftC+"\n";
+        style += "borderRight: "+borderRightC+"\n";
+        style += "mute: "+muteC+"\n";
+        style += "download: "+downloadC+"\n";
+        style += "downloadHover: "+downloadCHover+"\n";
 
         style += "++++++++++++++++++++++++++++++++++++++++++++++++++*/\n";
         style += "\n";
 
         style += "/* Older browser (IE8) \n";
         style += "   not supporting rgba() */ \n";
-        if(shadow[0] != shadow[1])
-            style += ".mbMiniPlayer."+skinName+".shadow .playerTable{box-shadow:0 0 3px "+shadow[1]+";}\n";
-        if(background[0] != background[1])
-            style += ".mbMiniPlayer."+skinName+" .playerTable span{background-color:"+background[1]+";}\n";
-        if(borderLeft[0] != borderLeft[1])
-            style += ".mbMiniPlayer."+skinName+" .playerTable span.map_play{border-left:1px solid "+borderLeft[1]+";}\n";
-        if(borderRight[0] != borderRight[1])
-            style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volume{border-right:1px solid "+borderRight[1]+";}\n";
-        if(mute[0] != mute[1])
-            style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volume.mute{color: "+mute[1]+";}\n";
-        if(download[0] != download[1])
-            style += ".mbMiniPlayer."+skinName+" .map_download{color: "+download[1]+";}\n";
-        if(downloadHover[0] != downloadHover[1])
-            style += ".mbMiniPlayer."+skinName+" .map_download:hover{color: "+downloadHover[1]+";}\n";
-        if(text[0] != text[1])
-            style += ".mbMiniPlayer."+skinName+" .playerTable span{color: "+text[1]+";}\n";
-        if(border[0] != border[1])
-            style += ".mbMiniPlayer."+skinName+" .playerTable {border: 1px solid "+border[1]+" !important;}\n";
+
+        if(main[0] != main[1]){
+            style += ".mbMiniPlayer."+skinName+" .playerTable span{background-color:"+main[1]+";}\n";
+            style += ".mbMiniPlayer."+skinName+" .playerTable span.map_play{border-left:1px solid "+main[1]+";}\n";
+            style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volume{border-right:1px solid "+main[1]+";}\n";
+        }
+        if(secondary[0] != secondary[1]){
+            style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volume.mute{color: "+secondary[1]+";}\n";
+            style += ".mbMiniPlayer."+skinName+" .map_download{color: "+secondary[1]+";}\n";
+            style += ".mbMiniPlayer."+skinName+" .map_download:hover{color: "+secondary[1]+";}\n";
+            style += ".mbMiniPlayer."+skinName+" .playerTable span{color: "+secondary[1]+";}\n";
+            style += ".mbMiniPlayer."+skinName+" .playerTable {border: 1px solid "+secondary[1]+" !important;}\n";
+        }
+
         style += "\n";
 
 
         style += "/*++++++++++++++++++++++++++++++++++++++++++++++++*/\n";
         style += "\n";
+
+        /* background-image:-moz-linear-gradient(100% 100% 110deg,rgba(255, 255, 255,0.3), transparent) !important;
+         background-image:-webkit-gradient(linear, 0% 5%, 85% 100%, from(transparent), to(rgba(255, 255, 255,0.3))) !important;
+         background-image:-o-linear-gradient(270deg, rgba(255, 255, 255,0.0), rgba(255, 255, 255,0.3)) !important;
+         */
         style += ".mbMiniPlayer."+skinName+" .playerTable{background-color:transparent; border-radius:"+borderRadius+"px !important;}\n";
-        style += ".mbMiniPlayer."+skinName+".shadow .playerTable{box-shadow:0 0 3px "+shadow[0]+";}\n";
-        style += ".mbMiniPlayer."+skinName+" .playerTable span{background-color:"+background[0]+";}\n";
-        style += ".mbMiniPlayer."+skinName+" .playerTable span.map_play{border-left:1px solid "+borderLeft[0]+"; border-radius:0 "+(borderRadius-1)+"px "+(borderRadius-1)+"px 0 !important;}\n";
-        style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volume{border-right:1px solid "+borderRight[0]+"; border-radius:"+(borderRadius-1)+"px 0 0 "+(borderRadius-1)+"px !important;}\n";
-        style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volume.mute{color: "+mute[0]+";}\n";
-        style += ".mbMiniPlayer."+skinName+" .map_download{color: "+download[0]+";}\n";
-        style += ".mbMiniPlayer."+skinName+" .map_download:hover{color: "+downloadHover[0]+";}\n";
-        style += ".mbMiniPlayer."+skinName+" .playerTable span{color: "+text[0]+";text-shadow: 1px -1px 1px "+textShadow[0]+"!important;}\n";
-        style += ".mbMiniPlayer."+skinName+" .playerTable span{color: "+text[0]+";}\n";
-        style += ".mbMiniPlayer."+skinName+" .playerTable {border: 1px solid "+border[0]+" !important;}\n";
+        style += ".mbMiniPlayer."+skinName+" .playerTable span{background-color:"+main[0]+";}\n";
+        if(addGradientOverlay)
+            style += ".mbMiniPlayer."+skinName+" .playerTable span{background-image:linear-gradient(180deg, rgba(255, 255, 255,0.3) 0%,transparent 100%);}\n";
+//                                                                            linear-gradient(110deg, rgba(255, 255, 255,0.3) 0%,transparent 100%);
+
+        style += ".mbMiniPlayer."+skinName+" .playerTable span.map_play{border-left:1px solid "+borderLeftC+"; border-radius:0 "+(borderRadius-1)+"px "+(borderRadius-1)+"px 0 !important;}\n";
+        style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volume{border-right:1px solid "+borderRightC+"; border-radius:"+(borderRadius-1)+"px 0 0 "+(borderRadius-1)+"px !important;}\n";
+        style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volume.mute{color: "+muteC+";}\n";
+        style += ".mbMiniPlayer."+skinName+" .map_download{color: "+downloadC+";}\n";
+        style += ".mbMiniPlayer."+skinName+" .map_download:hover{color: "+downloadCHover+";}\n";
+        style += ".mbMiniPlayer."+skinName+" .playerTable span{color: "+secondary[0]+";text-shadow: none!important;}\n";
+        style += ".mbMiniPlayer."+skinName+" .playerTable span{color: "+secondary[0]+";}\n";
+        style += ".mbMiniPlayer."+skinName+" .playerTable {border: 1px solid "+borderC+" !important;}\n";
         style += ".mbMiniPlayer."+skinName+" .playerTable span.map_title{color: #000; text-shadow:none!important}\n";
+        style += ".mbMiniPlayer."+skinName+" .playerTable .jp-load-bar{background-color:"+loadBarC+";}\n";
+        style += ".mbMiniPlayer."+skinName+" .playerTable .jp-play-bar{background-color:"+main[1]+";}\n";
+        style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volumeLevel a{background-color:"+volumeLevelC+";}\n";
+        style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volumeLevel a.sel{background-color:"+secondary[1]+";}\n";
+
 
         style += "/*++++++++++++++++++++++++++++++++++++++++++++++++*/\n";
 
@@ -555,7 +608,16 @@ $(function(){
         return style;
     }
 
-    RGBToHSL = function (rgb) {
+    var HEXToRGB = function (hex) {
+        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+            r: parseInt(result[1], 16),
+            g: parseInt(result[2], 16),
+            b: parseInt(result[3], 16)
+        } : null;
+    };
+
+    var RGBToHSL = function (rgb) {
         var min, max, delta, h, s, l;
         var r = rgb[0], g = rgb[1], b = rgb[2];
         min = Math.min(r, Math.min(g, b));
@@ -599,6 +661,7 @@ $(function(){
             textfield:true,
             swatchPosition:'left',
             change: function(hex, opacity){
+
                 if($(this).hasClass("bodySimulator")){
                     var rgba =  $(this).minicolors('rgbObject');
                     var rgb = [rgba["r"],rgba["g"],rgba["b"]];
@@ -613,25 +676,16 @@ $(function(){
 
     });
 
-
     function updateCSS(){
         document.updater = setInterval(function(){
             var skinName = $("#skinName input").val();
             var borderRadius = $("#borderRadius input").val();
+            var main = [ $("#mainColor input.hiddenValue").val(), $("#mainColor input").val() ];
+            var secondary = [$("#secondaryColor input.hiddenValue").val(), $("#secondaryColor input").val()];
+            var addGradientOverlay = $("#addGradientInput").is(":checked");
 
-            var background = [ $("#background input.hiddenValue").val(), $("#background input").val() ];
-            var text = [$("#text input.hiddenValue").val(), $("#text input").val()];
-            var textShadow = [$("#textShadow input.hiddenValue").val(), $("#textShadow input").val()];
-            var borderLeft = [$("#borderLeft input.hiddenValue").val(),$("#borderLeft input").val()];
-            var borderRight= [$("#borderRight input.hiddenValue").val(), $("#borderRight input").val()];
-            var mute= [$("#mute input.hiddenValue").val(), $("#mute input").val()];
-            var download= [$("#download input.hiddenValue").val(),$("#download input").val()];
-            var downloadHover= [$("#downloadHover input.hiddenValue").val(),$("#downloadHover input").val()];
-            var border= [$("#border input.hiddenValue").val(), $("#border input").val()];
-            var shadow= [$("#playerShadow input.hiddenValue").val(), $("#playerShadow input").val()];
-
-            changeCSS(skinName, background, text, textShadow, border, borderLeft, borderRight, mute , download, downloadHover, shadow, borderRadius);
-        },10)
+            changeCSS(skinName, main, secondary, borderRadius, addGradientOverlay);
+        },100)
     }
 
     updateCSS();
@@ -647,16 +701,18 @@ $(function(){
     }).on("keyup",function(){
         this.value = this.value.replace(" ", "_");
     });
+    $('#skname').click().focus();
 
     $("input").not("#skname").on("focus",function(){
         $("#skincolorpicker").stop().fadeTo(300,1);
         $("#cpOverlay").hide();
-    })
+    });
+
     $("input").on("blur",function(){
         $("#skincolorpicker").stop().fadeTo(300,.1);
         $("#cpOverlay").show();
-    })
-    $('#skname').click().focus();
+    });
+
 
     $("#generatedCode").on("focus", function(){
         clearInterval(document.updater);
@@ -676,18 +732,6 @@ $(function(){
         }
     });
 
-    jQuery.fn.unselec.playerTable = function () {
-        return this.each(function () {
-            jQuery(this).css({
-                "-webkit-user-select": "none",
-                "-moz-user-select": "none",
-                "-ms-user-select": "none",
-                "-o-user-select": "none",
-                "user-select": "none"
-            }).attr("unselectable", "on");
-        });
-    };
-
 });
 
 
@@ -698,7 +742,6 @@ $(function(){
 <div class="wrapper">
     <h1 style="font-size: 30px">mb.miniAudioPlayer <br><span style="color: #ffc000; font-size: 70px; line-height: 70px">Skin Maker</span></h1>
     <h2>This tool let you create your own mb.miniAudioPlayer skin<!--<sup style="color: #ffc000">*</sup>-->.</h2>
-    <!--<p style="font-weight: bold"><sup style="color: #ffc000">*</sup>Not available for the mb.miniAudioPlayer WordPress component.</p>-->
     <hr>
     <br>
     <div id="rightCol" style="float: right;">
@@ -751,11 +794,11 @@ $(function(){
 
         <div id="player">
             <h2>How your skin will affect the player?</h2>
-            <a id="mbmap" class="audio {skin:'custom',ogg:'http://www.miaowmusic.com/ogg/Miaow-07-Bubble.ogg', loop:true,inLine:false, downloadable:true}" href="http://www.miaowmusic.com/mp3/Miaow-07-Bubble.mp3">miaowmusic - Bubble (mp3/ogg)</a>
+            <a id="mbmap" class="audio {skin:'custom', loop:true,inLine:false, downloadable:true}" href="http://pupunzi.open-lab.com/wp-content/uploads/2013/03/Pietro-Bicocchi-Allegro.mp3">Pietro Bicocchi - Allegro</a>
             <br>
             <div class="simulate" >
                 simulate your background color:<br>
-                <input id="simulateVal" class="color bodySimulator" value="#ffc000">
+                <input id="simulateVal" class="color bodySimulator" value="#fff">
             </div>
 
         </div>
@@ -767,39 +810,18 @@ $(function(){
         <div class="formatBox code">
             <div id="borderRadius">
                 <label>Round corners:</label>
-                <div id="s1"  class="mb_slider {rangeColor:'#FFC000',negativeColor:'#ffcc00', startAt:5, maxVal:15, minVal:1, grid:0}" style="display:inline-block;*display:inherit;cursor: pointer;"></div>
+                <div id="s1"  class="mb_slider {rangeColor:'#333',negativeColor:'#333', startAt:5, maxVal:15, minVal:1, grid:0}" style="display:inline-block;*display:inherit;cursor: pointer;"></div>
                 <input id="s1_val" type="hidden" value="5">
             </div>
         </div>
         <div class="formatBox code" >
-            <div id="background"><label>Backgroud:</label> <input  class="color" value="#000000"></div>
+            <div id="mainColor"><label>Main:</label> <input  class="color" value="#000"></div>
         </div>
         <div class="formatBox code">
-            <div id="text"><label>Icons color:</label> <input class="color"  value="#fbcc28"></div>
+            <div id="secondaryColor"><label>Secondary:</label> <input class="color" value="#fff"></div>
         </div>
         <div class="formatBox code">
-            <div id="textShadow"><label>Icons shadow:</label> <input class="color"  value="#000"></div>
-        </div>
-        <div class="formatBox code">
-            <div id="border"><label>Border:</label> <input class="color"  value="#fbcc28"></div>
-        </div>
-        <div class="formatBox code">
-            <div id="borderLeft"><label>Separator left:</label> <input class="color"  value="#333333"></div>
-        </div>
-        <div class="formatBox code">
-            <div id="borderRight"><label>Separator right:</label> <input class="color"  value="#000000"></div>
-        </div>
-        <div class="formatBox code">
-            <div id="mute"><label>Mute color:</label> <input class="color"  value="#cccccc"></div>
-        </div>
-        <div class="formatBox code">
-            <div id="download"><label>Download:</label> <input class="color"  value="#e5ac24"></div>
-        </div>
-        <div class="formatBox code">
-            <div id="downloadHover"><label>Download hover:</label> <input class="color" value="#000000"></div>
-        </div>
-        <div class="formatBox code">
-            <div id="playerShadow"><label>Player shadow:</label> <input class="color" value="#000000"></div>
+            <div id="addGradient"><label>Gradient overlay:</label><input id="addGradientInput" type="checkbox" value="true" style="padding: 10px; font-size: 20px"></div>
         </div>
         <hr>
     </div>
