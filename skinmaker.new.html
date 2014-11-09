@@ -91,8 +91,6 @@
 /* Generic page style */
 
 *{
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     outline: none;
 }
@@ -189,20 +187,25 @@ hr{
     border-radius: 5px;
 }
 
-.simulate{
-    background: transparent;
+.simulate {
+    background: none repeat scroll 0% 0% transparent;
     text-align: right;
-    border-top: 1px solid #ffffff;
+    border-top: 1px solid #FFF;
     padding-top: 10px;
+    position: absolute;
+    width: 85%;
+    bottom: 20px;
 }
 
 #player{
+    position: relative;
     margin-bottom: 10px;
     padding: 25px;
-    background: #fff;
-    color: #333;
+    background: #333;
+    color: #fff;
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0,0,0,0.3);
+    min-height: 280px;
 }
 
 .code{
@@ -503,7 +506,7 @@ $(function(){
             var width =  $(".playerClone").outerWidth();
             $("#player").css({position:"fixed", top:20, left:left, width:width, zIndex:5});
         }else{
-            $("#player").css({position:"static", left:0,width:"auto", zIndex:0});
+            $("#player").css({position:"relative", left:0,width:"auto", zIndex:0});
             $(".playerClone").remove();
         }
     });
@@ -516,10 +519,10 @@ $(function(){
     }
 
     $(".audio").mb_miniPlayer({
-        width:180
+        width:"50%"
     });
 
-    function changeCSS(skinName, main, secondary, borderRadius, addGradientOverlay){
+    function changeCSS(skinName, main, secondary, borderRadius, playerPadding, addGradientOverlay){
 
         var borderC = new jColour(secondary[0]).darken(5).rgb();
         var borderLeftC = new jColour(main[0]).darken(30).rgb();
@@ -554,7 +557,7 @@ $(function(){
         style += "   not supporting rgba() */ \n";
 
         if(main[0] != main[1]){
-            style += ".mbMiniPlayer."+skinName+" .playerTable span{background-color:"+main[1]+";}\n";
+            style += ".mbMiniPlayer."+skinName+" .playerTable span{background-color:"+main[1]+"}\n";
             style += ".mbMiniPlayer."+skinName+" .playerTable span.map_play{border-left:1px solid "+main[1]+";}\n";
             style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volume{border-right:1px solid "+main[1]+";}\n";
         }
@@ -568,20 +571,16 @@ $(function(){
 
         style += "\n";
 
-
         style += "/*++++++++++++++++++++++++++++++++++++++++++++++++*/\n";
         style += "\n";
 
-        /* background-image:-moz-linear-gradient(100% 100% 110deg,rgba(255, 255, 255,0.3), transparent) !important;
-         background-image:-webkit-gradient(linear, 0% 5%, 85% 100%, from(transparent), to(rgba(255, 255, 255,0.3))) !important;
-         background-image:-o-linear-gradient(270deg, rgba(255, 255, 255,0.0), rgba(255, 255, 255,0.3)) !important;
-         */
-        style += ".mbMiniPlayer."+skinName+" .playerTable{background-color:transparent; border-radius:"+borderRadius+"px !important;}\n";
-        style += ".mbMiniPlayer."+skinName+" .playerTable span{background-color:"+main[0]+";}\n";
-        if(addGradientOverlay)
-            style += ".mbMiniPlayer."+skinName+" .playerTable span{background-image:linear-gradient(180deg, rgba(255, 255, 255,0.3) 0%,transparent 100%);}\n";
-//                                                                            linear-gradient(110deg, rgba(255, 255, 255,0.3) 0%,transparent 100%);
 
+        style += ".mbMiniPlayer."+skinName+" .playerTable{background-color:transparent; border-radius:"+borderRadius+"px !important;}\n";
+        style += ".mbMiniPlayer."+skinName+" .playerTable span{background-color:"+main[0]+"; padding:"+(parseFloat(playerPadding)+4)+"px !important}\n";
+//        if(addGradientOverlay)
+//            style += ".mbMiniPlayer."+skinName+" .playerTable span{background-image:linear-gradient(180deg, rgba(255, 255, 255,0.3) 0%,transparent 100%);}\n";
+
+        style += ".mbMiniPlayer."+skinName+" .playerTable span.map_title{ padding:4px !important}\n";
         style += ".mbMiniPlayer."+skinName+" .playerTable span.map_play{border-left:1px solid "+borderLeftC+"; border-radius:0 "+(borderRadius-1)+"px "+(borderRadius-1)+"px 0 !important;}\n";
         style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volume{border-right:1px solid "+borderRightC+"; border-radius:"+(borderRadius-1)+"px 0 0 "+(borderRadius-1)+"px !important;}\n";
         style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volume.mute{color: "+muteC+";}\n";
@@ -595,9 +594,18 @@ $(function(){
         style += ".mbMiniPlayer."+skinName+" .playerTable .jp-play-bar{background-color:"+main[1]+";}\n";
         style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volumeLevel a{background-color:"+volumeLevelC+";}\n";
         style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volumeLevel a.sel{background-color:"+secondary[1]+";}\n";
+        style += ".mbMiniPlayer."+skinName+"  span.map_download{font-size:"+(50+parseFloat(playerPadding))+"px !important;}\n";
 
 
         style += "/*++++++++++++++++++++++++++++++++++++++++++++++++*/\n";
+
+        if(addGradientOverlay)
+            $("#mp_mbmap").addClass("gradientOverlay");
+        else{
+            $("#mp_mbmap").removeClass("gradientOverlay");
+
+        }
+
 
         // $(".wrapper").css("background",wrapperBgnd );
         $("#customSkin").html(style);
@@ -683,8 +691,9 @@ $(function(){
             var main = [ $("#mainColor input.hiddenValue").val(), $("#mainColor input").val() ];
             var secondary = [$("#secondaryColor input.hiddenValue").val(), $("#secondaryColor input").val()];
             var addGradientOverlay = $("#addGradientInput").is(":checked");
+            var playerPadding = $("#playerSize input").val();
 
-            changeCSS(skinName, main, secondary, borderRadius, addGradientOverlay);
+            changeCSS(skinName, main, secondary, borderRadius, playerPadding, addGradientOverlay);
         },100)
     }
 
@@ -726,9 +735,18 @@ $(function(){
         updateCSS();
     });
 
-    $(".mb_slider").unselectable().mbSlider({
+    $(".mb_slider#s1").unselectable().mbSlider({
         onSlide:function(o){
             $("#"+o.id+"_val").val($(o).mbgetVal());
+        }
+    });
+
+    $(".mb_slider#s2").unselectable().mbSlider({
+        onSlide:function(o){
+            $("#"+o.id+"_val").val($(o).mbgetVal());
+
+            console.debug(o.id, $(o).mbgetVal());
+
         }
     });
 
@@ -798,7 +816,7 @@ $(function(){
             <br>
             <div class="simulate" >
                 simulate your background color:<br>
-                <input id="simulateVal" class="color bodySimulator" value="#fff">
+                <input id="simulateVal" class="color bodySimulator" value="#333">
             </div>
 
         </div>
@@ -810,8 +828,15 @@ $(function(){
         <div class="formatBox code">
             <div id="borderRadius">
                 <label>Round corners:</label>
-                <div id="s1"  class="mb_slider {rangeColor:'#333',negativeColor:'#333', startAt:5, maxVal:15, minVal:1, grid:0}" style="display:inline-block;*display:inherit;cursor: pointer;"></div>
+                <div id="s1"  class="mb_slider {rangeColor:'#333',negativeColor:'#333', startAt:5, maxVal:15, minVal:0, grid:0}" style="display:inline-block;*display:inherit;cursor: pointer;"></div>
                 <input id="s1_val" type="hidden" value="5">
+            </div>
+        </div>
+        <div class="formatBox code">
+            <div id="playerSize">
+                <label>Player size:</label>
+                <div id="s2"  class="mb_slider {rangeColor:'#333',negativeColor:'#333', startAt:0, maxVal:10, minVal:0, grid:0}" style="display:inline-block;*display:inherit;cursor: pointer;"></div>
+                <input id="s2_val" type="hidden" value="0">
             </div>
         </div>
         <div class="formatBox code" >
