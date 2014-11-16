@@ -1,0 +1,24 @@
+{
+  "name": "jquery.mb.miniAudioPlayer",
+  "version": "1.8.0",
+  "homepage": "http://pupunzi.open-lab.com/mb-jquery-components/jquery-mb-miniaudioplayer/",
+  "authors": [
+    "pupunzi"
+  ],
+  "description": "This plugin let you add a minimal full featured player that takes advantage of the new HTML5 AUDIO tag with a flash fallback for browsers that don't support it. It is built on the jPlayer library",
+  "main": "inc/jquery.mb.miniPlayer.js",
+  "keywords": [
+    "jquery-plugin",
+    "audio",
+    "html5",
+    "player"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
