@@ -78,7 +78,7 @@
 
 	jQuery.mbMiniPlayer = {
 		author  : "Matteo Bicocchi",
-		version : "1.8.0",
+		version : "1.8.1",
 		name    : "mb.miniPlayer",
 		isMobile: false,
 
