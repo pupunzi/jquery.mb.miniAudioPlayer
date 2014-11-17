@@ -132,10 +132,6 @@
 			if (url) {
 				ID3.loadTags(url, function() {
 					player.info = ID3.getAllTags(url);
-					/*
-					 console.debug(url);
-					 console.log(player.info);
-					 */
 					if (typeof player.info.title != "undefined" && player.info.title != "null") {
 						$titleBox.html(player.info.title + " - " + player.info.artist);
 					}
@@ -191,16 +187,6 @@
 					jQuery.extend(player.opt, $master.metadata());
 				}
 
-				if (player.opt.width.toString().indexOf("%") >= 0) {
-
-					var margin = player.opt.downloadable ? 220 : 180;
-					var pW = $master.parent().outerWidth() - margin;
-					player.opt.width = (pW * (parseFloat(player.opt.width))) / 100;
-
-				} else if (player.opt.width == 0) {
-					player.opt.showControls = false;
-				}
-
 				if (jQuery.isMobile) { //'ontouchstart' in window
 					player.opt.showVolumeLevel = false;
 					player.opt.autoplay = false;
@@ -229,7 +215,7 @@
 				if (player.opt.addGradientOverlay)
 					$controlsBox.addClass("gradientOverlay");
 
-				var $layout = "<div class='playerTable'> <div></div><div></div><div></div><div></div><div></div><div></div> </div>";
+				var $layout = $("<div class='playerTable'> <div></div><div></div><div></div><div></div><div></div><div></div> </div>");
 
 				if (!jQuery("#JPLContainer").length) {
 					var JPLContainer = jQuery("<div/>").attr({id: "JPLContainer"});
@@ -273,7 +259,7 @@
 
 				var $tds = $controlsBox.find("div").not('.playerTable').unselectable();
 
-				var $volumeBox = jQuery("<span/>").addClass("map_volume").html(jQuery.mbMiniPlayer.icon.volume);
+				var $muteBox = jQuery("<span/>").addClass("map_volume").html(jQuery.mbMiniPlayer.icon.volume);
 				var $volumeLevel = jQuery("<span/>").addClass("map_volumeLevel").html("").hide();
 				for (var i = 0; i < player.opt.volumeLevels; i++) {
 					$volumeLevel.append("<a/>")
@@ -293,11 +279,11 @@
 				$loadBar.append($playBar);
 				$controls.append($titleBox).append($progress);
 
-				$tds.eq(0).append($volumeBox);
-				$tds.eq(1).append($volumeLevel).hide();
+				$tds.eq(0).addClass("muteBox").append($muteBox);
+				$tds.eq(1).addClass("volumeLevel").append($volumeLevel).hide();
 				$tds.eq(2).addClass("map_controlsBar").append($controls).hide();
-				$tds.eq(3).append($timeBox).hide();
-				$tds.eq(4).append($rewBox).hide();
+				$tds.eq(3).addClass("timeBox").append($timeBox).hide();
+				$tds.eq(4).addClass("rewBox").append($rewBox).hide();
 				$tds.eq(5).append($playBox);
 
 				player.opt.media = {};
@@ -336,6 +322,17 @@
 
 						function animatePlayer(anim) {
 
+							if (player.opt.width.toString().indexOf("%") >= 0) {
+
+								var m = $playBox.outerWidth() < 40 ? 40 : $playBox.outerWidth();
+								var margin = player.opt.downloadable ? (m+10) * 3 : 40;
+								var pW = $master.parent().outerWidth() - margin;
+								player.width = (pW * (parseFloat(player.opt.width))) / 100;
+
+							} else if (player.opt.width == 0) {
+								player.opt.showControls = false;
+							}
+
 							if (anim == undefined)
 								anim = true;
 
@@ -343,12 +340,9 @@
 
 							var isIE = jQuery.browser.msie && jQuery.browser.version < 9;
 
-							if (!player.isOpen) {
+							if (!player.isOpen) { // Open the player
 
-								if (player.opt.showControls) {
-									$controls.parent("div").show();
-									$controls.css({display: "block", height: 20}).animate({width: player.opt.width}, speed);
-								}
+								var widthToRemove = 0;
 
 								if (player.opt.showRew) {
 									$rewBox.parent("div").show();
@@ -356,22 +350,45 @@
 										$rewBox.show().css({width: 20, display: "block"});
 									else
 										$rewBox.show().animate({width: 20}, speed / 2);
+
+									widthToRemove +=30;
 								}
+
 								if (player.opt.showTime) {
 									$timeBox.parent("div").show();
 									if (isIE)
 										$timeBox.show().css({width: 34, display: "block"});
 									else
 										$timeBox.animate({width: 34}, speed / 2).show();
+
+									widthToRemove +=45;
+
 								}
+
 								if (player.opt.showVolumeLevel) {
 									$volumeLevel.parent("div").show();
+									jQuery("a",$volumeLevel).show();
+
 									if (isIE)
 										$volumeLevel.show().css({width: 40, display: "block"});
 									else
 										$volumeLevel.show().animate({width: 40}, speed / 2);
+
+									widthToRemove +=50;
+
 								}
-							} else {
+
+								if (player.opt.showControls) {
+									$controls.parent("div").show();
+
+									var w =  player.width - ($muteBox.outerWidth() + $playBox.outerWidth()+ widthToRemove);
+								  //w = w<40 ? 40 : w;
+									$controls.css({display: "block", height: 20}).animate({width:w}, speed);
+								}
+
+
+							} else { // Close the player
+
 								$controls.animate({width: 1}, speed, function () {
 									jQuery(this).parent("div").css({display: "none"})
 								});
@@ -386,10 +403,14 @@
 									});
 								}
 								if (player.opt.showVolumeLevel) {
+									jQuery("a",$volumeLevel).hide();
+
 									$volumeLevel.animate({width: 1}, speed / 2, function () {
 										jQuery(this).parent("div").css({display: "none"})
 									});
 								}
+
+
 							}
 						}
 
@@ -451,7 +472,7 @@
 								}
 						);
 
-						$volumeBox.on(jQuery.mbMiniPlayer.eventEnd,
+						$muteBox.on(jQuery.mbMiniPlayer.eventEnd,
 								function () {
 									if (jQuery(this).hasClass("mute")) {
 										jQuery(this).removeClass("mute");
@@ -500,7 +521,7 @@
 								var vol = (i + 1) * barVol;
 								el.jPlayer("volume", vol);
 								if (i == 0) el.jPlayer("volume", .1);
-								$volumeBox.removeClass("mute");
+								$muteBox.removeClass("mute");
 							});
 						});
 
@@ -572,7 +593,7 @@
 						if (vol > 1)
 							vol = 1;
 						$player.jPlayer("volume", vol);
-						$volumeBox.removeClass("mute");
+						$muteBox.removeClass("mute");
 						e.preventDefault();
 						e.stopPropagation();
 					}
@@ -585,7 +606,7 @@
 							vol = 0;
 						$player.jPlayer("volume", vol);
 						if (vol <= 0)
-							$volumeBox.addClass("mute");
+							$muteBox.addClass("mute");
 						e.preventDefault();
 						e.stopPropagation();
 					}

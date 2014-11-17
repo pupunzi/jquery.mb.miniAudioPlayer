@@ -519,7 +519,7 @@ $(function(){
     }
 
     $(".audio").mb_miniPlayer({
-        width:"50%"
+        width:"100%"
     });
 
     function changeCSS(skinName, main, secondary, borderRadius, playerPadding, addGradientOverlay){
@@ -576,9 +576,9 @@ $(function(){
 
 
         style += ".mbMiniPlayer."+skinName+" .playerTable{background-color:transparent; border-radius:"+borderRadius+"px !important;}\n";
-        style += ".mbMiniPlayer."+skinName+" .playerTable span{background-color:"+main[0]+"; padding:"+(parseFloat(playerPadding)+4)+"px !important}\n";
-//        if(addGradientOverlay)
-//            style += ".mbMiniPlayer."+skinName+" .playerTable span{background-image:linear-gradient(180deg, rgba(255, 255, 255,0.3) 0%,transparent 100%);}\n";
+        var fontsize = 20 + parseFloat(playerPadding);
+        style += ".mbMiniPlayer."+skinName+" .playerTable span{background-color:"+main[0]+"; padding:"+(parseFloat(playerPadding)+4)+"px !important; font-size: "+fontsize+"px;}\n";
+        style += ".mbMiniPlayer."+skinName+" .playerTable span.map_time{ font-size: "+(fontsize-8)+"px !important; width: 50px !important}\n";
 
         style += ".mbMiniPlayer."+skinName+" .playerTable span.map_title{ padding:4px !important}\n";
         style += ".mbMiniPlayer."+skinName+" .playerTable span.map_play{border-left:1px solid "+borderLeftC+"; border-radius:0 "+(borderRadius-1)+"px "+(borderRadius-1)+"px 0 !important;}\n";
@@ -592,7 +592,10 @@ $(function(){
         style += ".mbMiniPlayer."+skinName+" .playerTable span.map_title{color: #000; text-shadow:none!important}\n";
         style += ".mbMiniPlayer."+skinName+" .playerTable .jp-load-bar{background-color:"+loadBarC+";}\n";
         style += ".mbMiniPlayer."+skinName+" .playerTable .jp-play-bar{background-color:"+main[1]+";}\n";
-        style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volumeLevel a{background-color:"+volumeLevelC+";}\n";
+
+        var volumBar = (80 + (parseFloat(playerPadding)*2) ) + "%";
+
+        style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volumeLevel a{background-color:"+volumeLevelC+"; height:"+ volumBar +"!important }\n";
         style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volumeLevel a.sel{background-color:"+secondary[1]+";}\n";
         style += ".mbMiniPlayer."+skinName+"  span.map_download{font-size:"+(50+parseFloat(playerPadding))+"px !important;}\n";
 
@@ -744,9 +747,6 @@ $(function(){
     $(".mb_slider#s2").unselectable().mbSlider({
         onSlide:function(o){
             $("#"+o.id+"_val").val($(o).mbgetVal());
-
-            console.debug(o.id, $(o).mbgetVal());
-
         }
     });
 

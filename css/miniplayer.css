@@ -223,7 +223,10 @@ a.audio{
   cursor:pointer !important;
 }
 
-.mbMiniPlayer .playerTable span.map_volumeLevel{}
+.mbMiniPlayer .playerTable span.map_volumeLevel{
+  white-space: nowrap;
+  overflow: hidden;
+}
 .mbMiniPlayer .playerTable span.map_volumeLevel a{
   position:relative !important;
   display:inline-block !important;
@@ -252,6 +255,7 @@ a.audio{
   cursor:default !important;
   text-shadow: 1px -1px 1px rgba(0,0,0,.6)!important;
 }
+
 
 .mbMiniPlayer .playerTable span.map_play{
   border-radius:0 4px 4px 0 !important;
