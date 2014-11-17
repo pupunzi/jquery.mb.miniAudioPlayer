@@ -322,6 +322,7 @@
 
 						function animatePlayer(anim) {
 
+							player.width = player.opt.width;
 							if (player.opt.width.toString().indexOf("%") >= 0) {
 
 								var m = $playBox.outerWidth() < 40 ? 40 : $playBox.outerWidth();
@@ -382,6 +383,9 @@
 									$controls.parent("div").show();
 
 									var w =  player.width - ($muteBox.outerWidth() + $playBox.outerWidth()+ widthToRemove);
+
+									console.debug(player.width)
+
 								  //w = w<40 ? 40 : w;
 									$controls.css({display: "block", height: 20}).animate({width:w}, speed);
 								}
