@@ -236,38 +236,63 @@
 
 				var fileName = encodeURI(fileUrl.replace("." + fileExtension, "").split("/").pop());
 
-				var download;
-				if(!player.opt.downloadPage){
-					//if not use downloadPage, download html5Way
-					download = jQuery("<a/>")
-						.addClass("map_download")
-						.attr({href: fileUrl, download: fileName + "." + fileExtension})
-						.css({display: "inline-block", cursor: "pointer"})
-						.html("d");
-				}else{
-					download = jQuery("<span/>")
-						.addClass("map_download")
-						.css({display: "inline-block", cursor: "pointer"})
-						.html("d")
-						.on(jQuery.mbMiniPlayer.eventEnd, function () {
-							jQuery.mbMiniPlayer.saveFile(player, fileUrl, fileName, fileExtension);
-								//add track for Google Analytics
-								if (typeof _gaq != "undefined" && player.opt.gaTrack)
-									_gaq.push(['_trackEvent', 'Audio', 'map_Download', player.title + " - " + self.location.href]);
-
-								if (typeof ga != "undefined" && eval(player.opt.gaTrack))
-									ga('send', 'event', 'Audio', 'map_Download', player.title + " - " + self.location.href);
-
-								if (typeof player.opt.onDownload == "function")
-									player.opt.onDownload(player);
-						})
-						.attr("title", "download: " + fileName);
-				}
-
-
-				}).attr("title", "download: " + fileName);
-
 				if (player.opt.downloadable) {
+					var download;
+					var host = location.hostname.split(".");
+					host = host.length == 3 ? host[1] : host[0];
+					var isSameDomain = (fileUrl.indexOf(host) >= 0) || fileUrl.indexOf("http") < 0;
+					var a = document.createElement('a');
+
+					if (!player.opt.downloadPage) {
+						//if not use downloadPage, download html5Way
+
+						//if can download HTML5 way
+						if(isSameDomain && typeof a.download != "undefined")
+
+							download = jQuery("<a/>")
+									.addClass("map_download")
+									.attr({href: fileUrl, download: fileName + "." + fileExtension})
+									.css({display: "inline-block", cursor: "pointer"})
+									.html("d")
+									.attr("title", "download: " + fileName);
+
+						//if not open a new page with the audio file
+						else
+
+							download = jQuery("<span/>")
+									.addClass("map_download")
+									.css({display: "inline-block", cursor: "pointer"})
+									.html("d")
+									.on(jQuery.mbMiniPlayer.eventEnd, function () {
+										window.open(fileUrl, "map_download");
+									})
+									.attr("title", "open: " + fileName);
+
+					}else{
+
+						// use the PHP page
+						download = jQuery("<span/>")
+								.addClass("map_download")
+								.css({display: "inline-block", cursor: "pointer"})
+								.html("d")
+								.on(jQuery.mbMiniPlayer.eventEnd, function () {
+									location.href = player.opt.downloadPage + "?filename=" + fileName + "." + fileExtension + "&fileurl=" + fileUrl;
+								})
+								.attr("title", "download: " + fileName);
+					}
+
+					download.on(jQuery.mbMiniPlayer.eventEnd, function () {
+						//add track for Google Analytics
+						if (typeof _gaq != "undefined" && eval(player.opt.gaTrack))
+							_gaq.push(['_trackEvent', 'Audio', 'map_Download', player.title + " - " + self.location.href]);
+
+						if (typeof ga != "undefined" && eval(player.opt.gaTrack))
+							ga('send', 'event', 'Audio', 'map_Download', player.title + " - " + self.location.href);
+
+						if (typeof player.opt.onDownload == "function")
+							player.opt.onDownload(player);
+					});
+
 					$controlsBox.append(download);
 				}
 
@@ -400,7 +425,7 @@
 
 									console.debug(player.width)
 
-								  //w = w<40 ? 40 : w;
+									//w = w<40 ? 40 : w;
 									$controls.css({display: "block", height: 20}).animate({width:w}, speed);
 								}
 
@@ -658,39 +683,6 @@
 
 			jQuery.mbMiniPlayer.getID3(player);
 
-		},
-
-		saveFile: function (player, fileUrl, fileName, fileExtension) {
-			var host = location.hostname.split(".");
-			host = host.length == 3 ? host[1] : host[0];
-			var isSameDomain = (fileUrl.indexOf(host) >= 0) || fileUrl.indexOf("http") < 0;
-
-			var a = document.createElement('a');
-			if (!player.opt.downloadPage && isSameDomain && typeof a.download != "undefined") {
-
-				var downloadA = jQuery("<a/>").attr({id: "mb_dwnl", href: fileUrl, download: fileName + "." + fileExtension}).html("dwnload")//.hide();
-				jQuery("body").append(downloadA);
-
-				function fakeClick(anchorObj) {
-					if (anchorObj.click) {
-						anchorObj.click()
-					} else if (document.createEvent) {
-						var evt = document.createEvent("MouseEvents");
-						evt.initMouseEvent("click", true, true, window,
-								0, 0, 0, 0, 0, false, false, false, false, 0, null);
-						var allowDefault = anchorObj.dispatchEvent(evt);
-					}
-				}
-
-				fakeClick(downloadA.get(0));
-				downloadA.remove();
-
-			} else if (!player.opt.downloadPage) {
-				window.open(fileUrl, "map_download");
-			} else {
-				/* player.opt.downloadPage = path to the PHP page that stream the file and download it.*/
-				location.href = player.opt.downloadPage + "?filename=" + fileName + "." + fileExtension + "&fileurl=" + fileUrl;
-			}
 		},
 
 		play: function () {
