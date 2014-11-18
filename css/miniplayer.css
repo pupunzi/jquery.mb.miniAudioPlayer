@@ -185,7 +185,7 @@ a.audio{
   color:white;
   text-align:center!important;
   text-transform:none!important;
-  text-shadow: 1px -1px 1px rgba(0,0,0,0.6)!important;
+  /*text-shadow: 1px -1px 1px rgba(0,0,0,0.6)!important;*/
   vertical-align: middle;
 }
 
