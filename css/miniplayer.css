@@ -185,14 +185,12 @@ a.audio{
   color:white;
   text-align:center!important;
   text-transform:none!important;
-  text-shadow: 1px -1px 1px rgba(0,0,0,0.6)!important;
+  /*text-shadow: 1px -1px 1px rgba(0,0,0,0.6)!important;*/
   vertical-align: middle;
 }
 
 .mbMiniPlayer.gradientOverlay .playerTable span{
-  background-image:-moz-linear-gradient(100% 100% 110deg,rgba(255, 255, 255,0.3), transparent) !important;
-  background-image:-webkit-gradient(linear, 0% 5%, 85% 100%, from(transparent), to(rgba(255, 255, 255,0.3))) !important;
-  background-image:-o-linear-gradient(270deg, rgba(255, 255, 255,0.0), rgba(255, 255, 255,0.3)) !important;
+  background-image:linear-gradient(180deg, rgba(255, 255, 255,0.3) 0%,transparent 100%); !important;
 }
 
 .mbMiniPlayer .playerTable span.map_title{
@@ -225,7 +223,10 @@ a.audio{
   cursor:pointer !important;
 }
 
-.mbMiniPlayer .playerTable span.map_volumeLevel{}
+.mbMiniPlayer .playerTable span.map_volumeLevel{
+  white-space: nowrap;
+  overflow: hidden;
+}
 .mbMiniPlayer .playerTable span.map_volumeLevel a{
   position:relative !important;
   display:inline-block !important;
@@ -254,6 +255,7 @@ a.audio{
   cursor:default !important;
   text-shadow: 1px -1px 1px rgba(0,0,0,.6)!important;
 }
+
 
 .mbMiniPlayer .playerTable span.map_play{
   border-radius:0 4px 4px 0 !important;
@@ -307,9 +309,9 @@ a.audio{
 
 .mbMiniPlayer span.map_download{
   display: inline-block !important;
-  vertical-align: top !important;
+  vertical-align: middle !important;
   margin: 0 !important;
-  padding: 3px 5px !important;
+  padding: 0 5px !important;
   font-family: "mb_audio_fontRegular" !important;
   font-size: 50px !important;
   line-height: 22px !important;
@@ -321,6 +323,22 @@ a.audio{
   -o-transition: color 1s;
 }
 
+.mbMiniPlayer a.map_download{
+  text-decoration: none;
+  display: inline-block !important;
+  vertical-align: middle !important;
+  margin: 0 !important;
+  padding: 0 5px !important;
+  font-family: "mb_audio_fontRegular" !important;
+  font-size: 50px !important;
+  line-height: 22px !important;
+  color: rgba(0,0,0,.2);
+
+  transition: color 1s;
+  -moz-transition: color 1s;
+  -webkit-transition: color 1s;
+  -o-transition: color 1s;
+}
 
 
 /*BLACK ----------------------------------------*/
