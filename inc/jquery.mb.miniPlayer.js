@@ -236,19 +236,33 @@
 
 				var fileName = encodeURI(fileUrl.replace("." + fileExtension, "").split("/").pop());
 
-				var download = jQuery("<span/>").addClass("map_download").css({display: "inline-block", cursor: "pointer"}).html("d").on(jQuery.mbMiniPlayer.eventEnd, function () {
-					jQuery.mbMiniPlayer.saveFile(player, fileUrl, fileName, fileExtension);
+				var download;
+				if(!player.opt.downloadPage){
+					//if not use downloadPage, download html5Way
+					download = jQuery("<a/>")
+						.addClass("map_download")
+						.attr({href: fileUrl, download: fileName + "." + fileExtension})
+						.css({display: "inline-block", cursor: "pointer"})
+						.html("d");
+				}else{
+					download = jQuery("<span/>")
+						.addClass("map_download")
+						.css({display: "inline-block", cursor: "pointer"})
+						.html("d")
+						.on(jQuery.mbMiniPlayer.eventEnd, function () {
+							jQuery.mbMiniPlayer.saveFile(player, fileUrl, fileName, fileExtension);
+								//add track for Google Analytics
+								if (typeof _gaq != "undefined" && player.opt.gaTrack)
+									_gaq.push(['_trackEvent', 'Audio', 'map_Download', player.title + " - " + self.location.href]);
 
-					//add track for Google Analytics
-					if (typeof _gaq != "undefined" && player.opt.gaTrack)
-						_gaq.push(['_trackEvent', 'Audio', 'map_Download', player.title + " - " + self.location.href]);
+								if (typeof ga != "undefined" && eval(player.opt.gaTrack))
+									ga('send', 'event', 'Audio', 'map_Download', player.title + " - " + self.location.href);
 
-					if (typeof ga != "undefined" && eval(player.opt.gaTrack))
-						ga('send', 'event', 'Audio', 'map_Download', player.title + " - " + self.location.href);
-
-
-					if (typeof player.opt.onDownload == "function")
-						player.opt.onDownload(player);
+								if (typeof player.opt.onDownload == "function")
+									player.opt.onDownload(player);
+						})
+						.attr("title", "download: " + fileName);
+				}
 
 
 				}).attr("title", "download: " + fileName);

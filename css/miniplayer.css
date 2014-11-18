@@ -323,6 +323,22 @@ a.audio{
   -o-transition: color 1s;
 }
 
+.mbMiniPlayer a.map_download{
+  text-decoration: none;
+  display: inline-block !important;
+  vertical-align: middle !important;
+  margin: 0 !important;
+  padding: 0 5px !important;
+  font-family: "mb_audio_fontRegular" !important;
+  font-size: 50px !important;
+  line-height: 22px !important;
+  color: rgba(0,0,0,.2);
+
+  transition: color 1s;
+  -moz-transition: color 1s;
+  -webkit-transition: color 1s;
+  -o-transition: color 1s;
+}
 
 
 /*BLACK ----------------------------------------*/
