@@ -525,9 +525,9 @@ $(function(){
     function changeCSS(skinName, main, secondary, borderRadius, playerPadding, addGradientOverlay){
 
         var borderC = new jColour(secondary[0]).darken(5).rgb();
-        var borderLeftC = new jColour(main[0]).darken(30).rgb();
-        var borderRightC = new jColour(main[0]).lighten(30).rgb();
-        var muteC = new jColour(secondary[0]).transparentize(0.70).rgb();
+        var borderLeftC = new jColour(main[0]).lighten(10).rgb();
+        var borderRightC = new jColour(main[0]).darken(10).rgb();
+        var muteC = new jColour(secondary[0]).transparentize(0.40).rgb();
         var volumeLevelC = new jColour(secondary[0]).lighten(10).rgb();
         var downloadC = new jColour(main[1]).transparentize(0.60).rgb();
         var downloadCHover = new jColour(main[1]).rgb();
@@ -577,12 +577,13 @@ $(function(){
 
         style += ".mbMiniPlayer."+skinName+" .playerTable{background-color:transparent; border-radius:"+borderRadius+"px !important;}\n";
         var fontsize = 20 + parseFloat(playerPadding);
-        style += ".mbMiniPlayer."+skinName+" .playerTable span{background-color:"+main[0]+"; padding:"+(parseFloat(playerPadding)+4)+"px !important; font-size: "+fontsize+"px;}\n";
+        style += ".mbMiniPlayer."+skinName+" .playerTable span{background-color:"+main[0]+"; padding:"+(parseFloat(playerPadding)+3)+"px !important; font-size: "+fontsize+"px;}\n";
         style += ".mbMiniPlayer."+skinName+" .playerTable span.map_time{ font-size: "+(fontsize-8)+"px !important; width: 50px !important}\n";
 
         style += ".mbMiniPlayer."+skinName+" .playerTable span.map_title{ padding:4px !important}\n";
-        style += ".mbMiniPlayer."+skinName+" .playerTable span.map_play{border-left:1px solid "+borderLeftC+"; border-radius:0 "+(borderRadius-1)+"px "+(borderRadius-1)+"px 0 !important;}\n";
-        style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volume{border-right:1px solid "+borderRightC+"; border-radius:"+(borderRadius-1)+"px 0 0 "+(borderRadius-1)+"px !important;}\n";
+        style += ".mbMiniPlayer."+skinName+" .playerTable span.map_play{border-left:1px solid "+borderRightC+"; border-radius:0 "+(borderRadius-1)+"px "+(borderRadius-1)+"px 0 !important;}\n";
+        style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volume{padding-left:"+(parseFloat(playerPadding)+6)+"px !important}\n";
+        style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volume{border-right:1px solid "+borderLeftC+"; border-radius:"+(borderRadius-1)+"px 0 0 "+(borderRadius-1)+"px !important;}\n";
         style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volume.mute{color: "+muteC+";}\n";
         style += ".mbMiniPlayer."+skinName+" .map_download{color: "+downloadC+";}\n";
         style += ".mbMiniPlayer."+skinName+" .map_download:hover{color: "+downloadCHover+";}\n";
@@ -594,7 +595,6 @@ $(function(){
         style += ".mbMiniPlayer."+skinName+" .playerTable .jp-play-bar{background-color:"+main[1]+";}\n";
 
         var volumBar = (80 + (parseFloat(playerPadding)*2) ) + "%";
-
         style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volumeLevel a{background-color:"+volumeLevelC+"; height:"+ volumBar +"!important }\n";
         style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volumeLevel a.sel{background-color:"+secondary[1]+";}\n";
         style += ".mbMiniPlayer."+skinName+"  span.map_download{font-size:"+(50+parseFloat(playerPadding))+"px !important;}\n";

@@ -1,8 +1,8 @@
 /*___________________________________________________________________________________________________________________________________________________
  _ jquery.mb.components                                                                                                                             _
  _                                                                                                                                                  _
- _ file: jquery.mb.miniPlayer.new.js                                                                                                                _
- _ last modified: 02/11/14 18.11                                                                                                                    _
+ _ file: jquery.mb.miniPlayer.js                                                                                                                    _
+ _ last modified: 18/11/14 0.40                                                                                                                     _
  _                                                                                                                                                  _
  _ Open Lab s.r.l., Florence - Italy                                                                                                                _
  _                                                                                                                                                  _
@@ -215,7 +215,7 @@
 				if (player.opt.addGradientOverlay)
 					$controlsBox.addClass("gradientOverlay");
 
-				var $layout = $("<div class='playerTable'> <div></div><div></div><div></div><div></div><div></div><div></div> </div>");
+				var $layout = jQuery("<div class='playerTable'> <div></div><div></div><div></div><div></div><div></div><div></div> </div>");
 
 				if (!jQuery("#JPLContainer").length) {
 					var JPLContainer = jQuery("<div/>").attr({id: "JPLContainer"});
@@ -452,8 +452,6 @@
 										jQuery(this).parent("div").css({display: "none"})
 									});
 								}
-
-
 							}
 						}
 
