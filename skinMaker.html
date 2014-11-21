@@ -1,198 +1,880 @@
 <!DOCTYPE html>
-<!--
-  ~ /*******************************************************************************
-  ~  jquery.mb.components
-  ~  file: demo.html
-  ~
-  ~  Copyright (c) 2001-2014. Matteo Bicocchi (Pupunzi);
-  ~  Open lab srl, Firenze - Italy
-  ~  email: matteo@open-lab.com
-  ~  site: 	http://pupunzi.com
-  ~  blog:	http://pupunzi.open-lab.com
-  ~ 	http://open-lab.com
-  ~
-  ~  Licences: MIT, GPL
-  ~  http://www.opensource.org/licenses/mit-license.php
-  ~  http://www.gnu.org/licenses/gpl.html
-  ~
-  ~  last modified: 02/05/14 23.58
-  ~  ******************************************************************************/
-  -->
+<!--–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+  jquery.mb.components                                                                                                                              –
+                                                                                                                                                    –
+  file: skinMaker.html                                                                                                                          –
+  last modified: 05/11/14 19.12                                                                                                                     –
+                                                                                                                                                    –
+  Open Lab s.r.l., Florence - Italy                                                                                                                 –
+                                                                                                                                                    –
+  email: matteo@open-lab.com                                                                                                                        –
+  site: http://pupunzi.com                                                                                                                          –
+        http://open-lab.com                                                                                                                         –
+  blog: http://pupunzi.open-lab.com                                                                                                                 –
+  Q&A:  http://jquery.pupunzi.com                                                                                                                   –
+                                                                                                                                                    –
+  Licences: MIT, GPL                                                                                                                                –
+     http://www.opensource.org/licenses/mit-license.php                                                                                             –
+     http://www.gnu.org/licenses/gpl.html                                                                                                           –
+                                                                                                                                                    –
+  Copyright (c) 2001-2014. Matteo Bicocchi (Pupunzi);                                                                                               –
+  –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––-->
 
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>jquery.mb.miniAudioPlayer</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>mb.miniAudioPlayer.skinMaker</title>
 
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.js"></script>
-    <script type="text/javascript" src="inc/jquery.jplayer.min.js"></script>
-    <script type="text/javascript" src="inc/jquery.mb.miniPlayer.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/miniplayer.css" title="style"  media="screen"/>
-    <link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
-    <style type="text/css">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+<script type="text/javascript" src="inc/jquery.jplayer.min.js"></script>
+<script type="text/javascript" src="inc/jquery.mb.miniPlayer.js"></script>
 
-        /*Generic page style*/
+<script type="text/javascript" src="inc/miniColors/jquery.minicolors.js"></script>
+<link rel="stylesheet" href="inc/miniColors/jquery.minicolors.css" type="text/css" />
 
-        body{
-            margin:0px;
-            background: #ffc000;
-            font:normal 16px/20px Lekton, sans-serif;
-        }
+<link rel="stylesheet" type="text/css" href="css/miniplayer.css" title="style"  media="screen"/>
+<link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
 
-        .wrapper{
-            position:absolute;
-            padding:100px 50px;
-            width:80%;
-            min-height: 100%;
-            margin-left: 10% ;
-            top:0;
-            background: #e8e8e8;
+<script>
 
-            font:normal 16px/20px Lekton, sans-serif;
-            -moz-box-sizing: border-box;
-            -webkit-box-sizing: border-box;
-            box-shadow: 0 0 10px rgba(0,0,0,0.4);
-        }
+    /*
+     jColor: http://aaronrussell.github.io/jcolour
+     */
+    (function(){var o=Array.prototype.indexOf||function(d){for(var f=0,g=this.length;f<g;f++)if(this[f]===d)return f;return-1};(typeof exports!=="undefined"&&exports!==null?exports:this).jColour=function(){function d(a){var c,b;a==null&&(a="#ffffff");a.toLowerCase()in f&&(a=f[a]);if(b=a.match(/^#?([a-f0-9]{3})$/i))a=b[1].substring(0,1),c=b[1].substring(1,2),b=b[1].substring(2,3),a="#"+(a+a+c+c+b+b);if(b=a.match(/^#?([a-f0-9]{6,8})$/i))this.red=parseInt(b[1].substring(0,2),16),this.green=parseInt(b[1].substring(2,
+            4),16),this.blue=parseInt(b[1].substring(4,6),16),this.alpha=b[1].substring(6,8)?parseInt(b[1].substring(6,8),16)/255:1,h(this);else if(c=a.match(/^rgba?\(\s*(\d+)[,\s]*(\d+)[,\s]*(\d+)[,\s]*([\.\d]+)?\s*\)$/i))this.red=parseInt(c[1]),this.green=parseInt(c[2]),this.blue=parseInt(c[3]),this.alpha=c[4]?c[4]:1,h(this);else if(a=a.match(/^hsla?\(\s*(\d+)[,\s]*(\d+)[,\s]*(\d+)[,\s]*([\.\d]+)?\s*\)$/i))this.hue=parseInt(a[1]),this.saturation=parseInt(a[2]),this.lightness=parseInt(a[3]),this.alpha=a[4]?
+            a[4]:1,e(this);else throw"Invalid colour string.";}var f,g,e,k,j,l,h,m;d.prototype.hex=function(a){a==null&&(a=!1);return(a&&this.alpha<1?"#"+g(this.red)+g(this.green)+g(this.blue)+g(this.alpha*255):"#"+g(this.red)+g(this.green)+g(this.blue)).toLowerCase()};d.prototype.rgb=function(){return this.alpha===1?"rgb("+Math.round(this.red)+", "+Math.round(this.green)+", "+Math.round(this.blue)+")":"rgba("+Math.round(this.red)+", "+Math.round(this.green)+", "+Math.round(this.blue)+", "+Math.round(this.alpha*
+            100)/100+")"};d.prototype.hsl=function(){return this.alpha===1?"hsl("+Math.round(this.hue)+", "+Math.round(this.saturation)+", "+Math.round(this.lightness)+")":"hsla("+Math.round(this.hue)+", "+Math.round(this.saturation)+", "+Math.round(this.lightness)+", "+Math.round(this.alpha*100)/100+")"};d.prototype.toS=function(){var a,c;for(a in f)if(c=f[a],this.hex()===c.toLowerCase())return a;return this.hex()};d.prototype.lighten=function(a){this.lightness+=a;return e(this)};d.prototype.lightenPercent=
+            function(a){this.lightness+=this.lightness/100*a;return e(this)};d.prototype.darken=function(a){this.lightness-=a;return e(this)};d.prototype.darkenPercent=function(a){this.lightness-=this.lightness/100*a;return e(this)};d.prototype.saturate=function(a){this.saturation+=a;return e(this)};d.prototype.saturatePercent=function(a){this.saturation+=this.saturation/100*a;return e(this)};d.prototype.desaturate=function(a){this.saturation-=a;return e(this)};d.prototype.desaturatePercent=function(a){this.saturation-=
+            this.saturation/100*a;return e(this)};d.prototype.greyscale=function(){this.saturation=0;return e(this)};d.prototype.grayscale=function(){return this.greyscale()};d.prototype.adjustHue=function(a){this.hue+=a;return e(this)};d.prototype.complement=function(){this.hue+=180;return e(this)};d.prototype.opacify=function(a){this.alpha+=a;this.alpha=j(this.alpha,0,1);return this};d.prototype.transparentize=function(a){this.alpha-=a;this.alpha=j(this.alpha,0,1);return this};d.prototype.invert=function(){var a,
+            c,b,d;d=["red","green","blue"];c=0;for(b=d.length;c<b;c++)a=d[c],this[a]=255-this[a];return h(this)};d.prototype.adjustColour=function(a){var c,b;a==null&&(a={});b=m(a);for(c in a)o.call(l,c)>=0&&(this[c]+=a[c]);return b[0]?h(this):e(this)};d.prototype.scaleColour=function(a){var c,b;a==null&&(a={});b=m(a);for(c in a)o.call(l,c)>=0&&c!=="hue"&&(this[c]+=this[c]/100*a[c]);return b[0]?h(this):e(this)};d.prototype.changeColour=function(a){var c,b;a==null&&(a={});b=m(a);for(c in a)o.call(l,c)>=0&&(this[c]=
+            a[c]);return b[0]?h(this):e(this)};d.prototype.mixWith=function(a,c){var b,n,i;c==null&&(c=50);a instanceof d||(a=new d(a));n=c/100;i=n*2-1;b=a.alpha-this.alpha;b=((i*b===-1?i:(i+b)/(1+i*b))+1)/2;i=1-b;this.red=a.red*b+this.red*i;this.green=a.green*b+this.green*i;this.blue=a.blue*b+this.blue*i;this.alpha=a.alpha*n+this.alpha*(1-n);return h(this)};l=["red","green","blue","hue","saturation","lightness","alpha"];f={aliceblue:"#F0F8FF",antiquewhite:"#FAEBD7",aqua:"#00FFFF",aquamarine:"#7FFFD4",azure:"#F0FFFF",
+        beige:"#F5F5DC",bisque:"#FFE4C4",black:"#000000",blanchedalmond:"#FFEBCD",blue:"#0000FF",blueviolet:"#8A2BE2",brown:"#A52A2A",burlywood:"#DEB887",cadetblue:"#5F9EA0",chartreuse:"#7FFF00",chocolate:"#D2691E",coral:"#FF7F50",cornflowerblue:"#6495ED",cornsilk:"#FFF8DC",crimson:"#DC143C",cyan:"#00FFFF",darkblue:"#00008B",darkcyan:"#008B8B",darkgoldenrod:"#B8860B",darkgray:"#A9A9A9",darkgreen:"#006400",darkgrey:"#A9A9A9",darkkhaki:"#BDB76B",darkmagenta:"#8B008B",darkolivegreen:"#556B2F",darkorange:"#FF8C00",
+        darkorchid:"#9932CC",darkred:"#8B0000",darksalmon:"#E9967A",darkseagreen:"#8FBC8F",darkslateblue:"#483D8B",darkslategray:"#2F4F4F",darkslategrey:"#2F4F4F",darkturquoise:"#00CED1",darkviolet:"#9400D3",deeppink:"#FF1493",deepskyblue:"#00BFFF",dimgray:"#696969",dimgrey:"#696969",dodgerblue:"#1E90FF",firebrick:"#B22222",floralwhite:"#FFFAF0",forestgreen:"#228B22",fuchsia:"#FF00FF",gainsboro:"#DCDCDC",ghostwhite:"#F8F8FF",gold:"#FFD700",goldenrod:"#DAA520",gray:"#808080",green:"#008000",greenyellow:"#ADFF2F",
+        grey:"#808080",honeydew:"#F0FFF0",hotpink:"#FF69B4",indianred:"#CD5C5C",indigo:"#4B0082",ivory:"#FFFFF0",khaki:"#F0E68C",lavender:"#E6E6FA",lavenderblush:"#FFF0F5",lawngreen:"#7CFC00",lemonchiffon:"#FFFACD",lightblue:"#ADD8E6",lightcoral:"#F08080",lightcyan:"#E0FFFF",lightgoldenrodyellow:"#FAFAD2",lightgray:"#D3D3D3",lightgreen:"#90EE90",lightgrey:"#D3D3D3",lightpink:"#FFB6C1",lightsalmon:"#FFA07A",lightseagreen:"#20B2AA",lightskyblue:"#87CEFA",lightslategray:"#778899",lightslategrey:"#778899",lightsteelblue:"#B0C4DE",
+        lightyellow:"#FFFFE0",lime:"#00FF00",limegreen:"#32CD32",linen:"#FAF0E6",magenta:"#FF00FF",maroon:"#800000",mediumaquamarine:"#66CDAA",mediumblue:"#0000CD",mediumorchid:"#BA55D3",mediumpurple:"#9370DB",mediumseagreen:"#3CB371",mediumslateblue:"#7B68EE",mediumspringgreen:"#00FA9A",mediumturquoise:"#48D1CC",mediumvioletred:"#C71585",midnightblue:"#191970",mintcream:"#F5FFFA",mistyrose:"#FFE4E1",moccasin:"#FFE4B5",navajowhite:"#FFDEAD",navy:"#000080",oldlace:"#FDF5E6",olive:"#808000",olivedrab:"#6B8E23",
+        orange:"#FFA500",orangered:"#FF4500",orchid:"#DA70D6",palegoldenrod:"#EEE8AA",palegreen:"#98FB98",paleturquoise:"#AFEEEE",palevioletred:"#DB7093",papayawhip:"#FFEFD5",peachpuff:"#FFDAB9",peru:"#CD853F",pink:"#FFC0CB",plum:"#DDA0DD",powderblue:"#B0E0E6",purple:"#800080",red:"#FF0000",rosybrown:"#BC8F8F",royalblue:"#4169E1",saddlebrown:"#8B4513",salmon:"#FA8072",sandybrown:"#F4A460",seagreen:"#2E8B57",seashell:"#FFF5EE",sienna:"#A0522D",silver:"#C0C0C0",skyblue:"#87CEEB",slateblue:"#6A5ACD",slategray:"#708090",
+        slategrey:"#708090",snow:"#FFFAFA",springgreen:"#00FF7F",steelblue:"#4682B4",tan:"#D2B48C",teal:"#008080",thistle:"#D8BFD8",tomato:"#FF6347",turquoise:"#40E0D0",violet:"#EE82EE",wheat:"#F5DEB3",white:"#FFFFFF",whitesmoke:"#F5F5F5",yellow:"#FFFF00",yellowgreen:"#9ACD32"};h=function(a){var c,b,d,i,e,f,g,h;a.red=j(a.red,0,255);a.green=j(a.green,0,255);a.blue=j(a.blue,0,255);a.alpha=j(a.alpha,0,1);h=a.red/255;d=a.green/255;c=a.blue/255;f=Math.max(h,d,c);g=Math.min(h,d,c);b=f-g;i=function(){switch(f){case g:return 0;
+        case h:return 60*(d-c)/b;case d:return 60*(c-h)/b+120;case c:return 60*(h-d)/b+240}}();e=(f+g)/2;a.hue=i%360;a.saturation=(f===g?0:e<0.5?b/(2*e):b/(2-2*e))*100;a.lightness=e*100;return a};e=function(a){var c,b,d,e,f;a.hue>=360&&(a.hue-=Math.floor(a.hue/360)*360);a.hue<0&&(a.hue-=Math.ceil(a.hue/360)*360);a.saturation=j(a.saturation,0,100);a.lightness=j(a.lightness,0,100);a.alpha=j(a.alpha,0,1);c=a.hue/360;e=a.saturation/100;b=a.lightness/100;e=b<0.5?b*(e+1):b+e-b*e;d=b*2-e;f=k(d,e,c+1/3);b=k(d,e,
+            c);c=k(d,e,c-1/3);a.red=f*255;a.green=b*255;a.blue=c*255;return a};k=function(a,c,b){b<0&&(b+=1);b>1&&(b-=1);if(b*6<1)return a+(c-a)*b*6;if(b*2<1)return c;if(b*3<2)return a+(c-a)*(2/3-b)*6;return a};g=function(a){a==null&&(a="00");a=parseInt(a);if(a===0||isNaN(a))return"00";a=Math.round(j(a,0,255));return"0123456789ABCDEF".charAt((a-a%16)/16)+"0123456789ABCDEF".charAt(a%16)};j=function(a,c,b){return Math.min(Math.max(a,c),b)};m=function(a){var c,b,d;d=c=!1;for(b in a){if(b==="red"||b==="green"||b===
+            "blue")d=!0;if(b==="hue"||b==="saturation"||b==="luminosity")c=!0}if(d&&c)throw"Cannot change both RGB and HSL properties.";return[d,c]};return d}()}).call(this);
 
-        .wrapper h1{
-            font-family:Arial, Helvetica, sans-serif;
-            font-size:26px;
-        }
+</script>
 
-        button{
-            padding:3px;
-            display:inline-block;
-            cursor:pointer;
-            font:16px/18px Arial, Helvetica, sans-serif;
-            color:#fff;
-            background-color:#ccc;
-            border-radius:5px;
-            box-shadow:#999 1px 1px 3px;
-            border:1px solid white;
-            text-shadow: 1px -1px 2px #aaa9a9 !important;
-        }
+<script>
 
-        button:hover{
-            color:#666;
-        }
+    /*
+     SLIDER
+     */
 
-        hr{
-            border:none;
-            background-color:#ccc;
-            height:1px;
-        }
+    var a=0;
+    (function(b){b.mbSlider={name:"mb.valueSlider",author:"Matteo Bicocchi",version:"1.5",defaults:{maxVal:100,minVal:0,grid:5,showVal:!0,onSlideLoad:function(b){},onStart:function(b){},onSlide:function(b){},onStop:function(b){}},buildSlider:function(d){return this.each(function(){this.options={};b.extend(this.options,b.mbSlider.defaults,d);var a=this;if(b.metadata){b.metadata.setType("class");b(a).metadata().range&&b(a).attr("range",b(a).metadata().range);b(a).metadata().rangeColor&&b(a).attr("rangeColor",
+            b(a).metadata().rangeColor);b(a).metadata().negativeColor&&b(a).attr("negativeColor",b(a).metadata().negativeColor);(b(a).metadata().startAt||0==b(a).metadata().startAt)&&b(a).attr("startAt",b(a).metadata().startAt);if(b(a).metadata().minVal||0==b(a).metadata().minVal)a.options.minVal=b(a).metadata().minVal;if(b(a).metadata().maxVal||0==b(a).metadata().maxVal)a.options.maxVal=b(a).metadata().maxVal;if(b(a).metadata().grid||0==b(a).metadata().grid)a.options.grid=b(a).metadata().grid}0==a.options.grid&&
+    (a.options.grid=1);0>b(a).attr("startAt")&&b(a).attr("startAt")<a.options.minVal&&(a.options.minVal=parseFloat(b(a).attr("startAt")));a.sliderStart=b("<div class='mb_sliderStart'/>").unselectable();a.sliderEnd=b("<div class='mb_sliderEnd'/>").unselectable();a.sliderValue=b("<div class='mb_sliderValue'/>").css({color:b(a).attr("rangeColor")}).unselectable();a.sliderZeroLabel=b("<div class='mb_sliderZeroLabel'>0</div>").css({position:"absolute",top:-18}).unselectable();a.sliderValueLabel=b("<div class='mb_sliderValueLabel'/>").css({position:"absolute",
+        color:b(a).attr("rangeColor"),top:-18}).unselectable();a.sliderBar=b("<div class='mb_sliderBar'/>").css({position:"relative",display:"block"}).unselectable();a.sliderRange=b("<div class='mb_sliderRange'/>").css({background:b(a).attr("rangeColor")}).unselectable();a.sliderZero=b("<div class='mb_sliderZero'/>").css({background:b(a).attr("negativeColor")}).unselectable();a.sliderHandler=b("<div class='mb_sliderHandler'/>").unselectable();b(a).append(a.sliderBar);a.sliderBar.append(a.sliderValueLabel);
+        a.options.showVal&&b(a).append(a.sliderEnd);a.options.showVal&&b(a).prepend(a.sliderStart);a.sliderBar.append(a.sliderRange);a.sliderBar.append(a.sliderRange);0>a.options.minVal&&(a.sliderBar.append(a.sliderZero),a.sliderBar.append(a.sliderZeroLabel));a.sliderBar.append(a.sliderHandler);a.rangeVal=a.options.maxVal-a.options.minVal;a.zero=0>a.options.minVal?a.sliderBar.outerWidth()*Math.abs(a.options.minVal)/a.rangeVal:0;a.sliderZero.css({left:0,width:a.zero});a.sliderZeroLabel.css({left:a.zero-5});
+        b.browser.msie&&7==parseFloat(b.browser.version)?(b(a).find("div").css({"float":"left"}),a.sliderValueLabel.css({top:0,marginTop:-10,marginLeft:55,zIndex:10}),a.sliderZeroLabel.css({top:0,marginTop:-10,marginLeft:55,zIndex:0}),b(a).append(a.sliderValueLabel),0>a.options.minVal&&b(a).append(a.sliderZeroLabel)):b(a).find("div").css({display:"inline-block",clear:"left"});b.browser.msie&&(b(a).attr("unselectable","on"),b(a).find("div").attr("unselectable","on"));a.sliderStart.html(a.options.minVal);a.sliderValue.html(parseFloat(b(a).attr("startAt"))>=
+                a.options.minVal?b(a).attr("startAt"):a.options.minVal);a.sliderValueLabel.html(parseFloat(b(a).attr("startAt"))>=a.options.minVal?b(a).attr("startAt"):a.options.minVal);a.sliderEnd.html(a.options.maxVal);(b(a).attr("startAt")<a.options.minVal||!b(a).attr("startAt"))&&b(a).attr("startAt",a.options.minVal);var c=b(a).attr("startAt")==a.options.minVal?0:Math.round((b(a).attr("startAt")-a.options.minVal)*a.sliderBar.outerWidth()/a.rangeVal),c=0<=c?c:a.zero+b(a).attr("startAt"),c=a.options.grid*Math.round(c/
+                a.options.grid);a.sliderHandler.css({left:c-(c>a.sliderHandler.outerWidth()/2?a.sliderHandler.outerWidth()/2:0)});a.sliderValueLabel.css({left:c-(c>a.sliderHandler.outerWidth()/2?a.sliderHandler.outerWidth()/2:0)});0<b(a).attr("startAt")?(a.sliderRange.css({left:0,width:c}),a.sliderZero.css({width:a.zero})):(a.sliderRange.css({left:0,width:a.zero}),a.sliderZero.css({width:c}));a.evalPosGrid=a.sliderValueLabel.html();a.sliderBar.bind("mousedown",function(c){var d=c.clientX-a.sliderBar.offset().left;
+            c=a.options.grid*a.sliderBar.outerWidth()/a.rangeVal;c*=Math.round(d/c);if(!(d>a.sliderBar.outerWidth()||0>d)){var e=Math.round((a.options.maxVal-a.options.minVal)*c/(a.sliderBar.outerWidth()-a.sliderHandler.outerWidth()/2)),e=0>a.options.minVal||0<a.options.minVal?e+a.options.minVal:e;a.evalPosGrid=a.options.grid*Math.round(e/a.options.grid);a.sliderHandler.css({left:c>a.sliderHandler.outerWidth()?c-a.sliderHandler.outerWidth()/2:0});a.sliderValueLabel.css({left:c>a.sliderHandler.outerWidth()?c-
+                    a.sliderHandler.outerWidth()/2:0});0<a.evalPosGrid?(a.sliderRange.css({width:c-a.sliderHandler.outerWidth()/2}),a.sliderZero.css({width:a.zero})):(a.sliderRange.css({width:a.zero}),a.sliderZero.css({width:c}));a.evalPosGrid=e>a.options.maxVal?a.options.maxVal:e<a.options.minVal?a.options.minVal:a.evalPosGrid;a.sliderValue.html(a.evalPosGrid);if(a.options.onStart)a.options.onStart(a);a.sliderValueLabel.html(b(a).mbgetVal());if(a.options.onSlide)a.options.onSlide(a);b(document).bind("mousemove",function(c){d=
+                    c.clientX-a.sliderBar.offset().left;c=a.options.grid*a.sliderBar.outerWidth()/a.rangeVal;c*=Math.round(d/c);var e=Math.round((a.options.maxVal-a.options.minVal)*c/(a.sliderBar.outerWidth()-a.sliderHandler.outerWidth()/2)+parseFloat(a.options.minVal));a.evalPosGrid=a.options.grid*Math.round(e/a.options.grid);a.evalPosGrid>=a.options.maxVal?(a.sliderHandler.css({left:a.sliderBar.outerWidth()-a.sliderHandler.outerWidth()}),a.sliderValueLabel.css({left:a.sliderBar.outerWidth()-2*a.sliderHandler.outerWidth()}),
+                    a.sliderRange.css({width:a.sliderBar.outerWidth()-a.sliderHandler.outerWidth()/2}),a.sliderZero.css({width:a.zero}),a.sliderValue.html(a.options.maxVal)):a.evalPosGrid<=a.options.minVal||d<=a.sliderHandler.outerWidth()/2?(a.sliderHandler.css({left:0}),a.sliderValueLabel.css({left:0}),0<=a.options.minVal&&a.sliderRange.css({width:0}),0<=a.evalPosGrid?a.sliderRange.css({width:0}):a.sliderZero.css({width:0}),a.sliderValue.html(0<c?a.evalPosGrid:a.options.minVal)):(a.sliderHandler.css({left:c-a.sliderHandler.outerWidth()/
+                    2}),a.sliderValueLabel.css({left:c-a.sliderHandler.outerWidth()/2}),0<a.evalPosGrid?(a.sliderRange.css({width:c-a.sliderHandler.outerWidth()/2+a.sliderHandler.outerWidth()/2}),a.sliderZero.css({width:a.zero})):(a.sliderRange.css({width:a.zero}),a.sliderZero.css({width:c})),a.sliderValue.html(a.evalPosGrid));a.sliderValueLabel.html(b(a).mbgetVal());if(a.options.onSlide)a.options.onSlide(a)});b(document).bind("mouseup",function(){b(document).unbind("mousemove");if(a.options.onStop)a.options.onStop(a)})}});
+        if(a.options.onSlideLoad)a.options.onSlideLoad(a)})},setVal:function(d){var a=b(this).get(0);d>a.options.maxVal&&(d=a.options.maxVal);d<a.options.minVal&&(d=a.options.minVal);var c=d==a.options.minVal?0:Math.round((d-a.options.minVal)*a.sliderBar.outerWidth()/a.rangeVal),c=0<=c?c:a.zero+d,f=a.options.grid*a.sliderBar.outerWidth()/a.rangeVal,c=f*Math.round(c/f);a.evalPosGrid=a.options.grid*Math.round(d/a.options.grid);a.sliderHandler.css({left:c-a.sliderHandler.outerWidth()/2});a.sliderValueLabel.css({left:c-
+            a.sliderHandler.outerWidth()/2});0<a.evalPosGrid?(a.sliderRange.css({left:0,width:c}),a.sliderZero.css({width:a.zero})):(a.sliderRange.css({left:0,width:a.zero}),a.sliderZero.css({width:c+a.sliderHandler.outerWidth()/2}));a.sliderValue.html(d>=a.options.minVal?a.evalPosGrid:a.options.minVal);a.sliderValueLabel.html(d>=a.options.minVal?a.evalPosGrid:a.options.minVal)},getVal:function(){var d=b(this).get(0),a=d.evalPosGrid;a&&a>d.options.maxVal&&(a=d.options.maxVal);a&&a<d.options.minVal&&(a=d.options.minVal);
+        return a?a:0}};b.fn.mbSlider=b.mbSlider.buildSlider;b.fn.mbsetVal=b.mbSlider.setVal;b.fn.mbgetVal=b.mbSlider.getVal})(jQuery);
+</script>
 
-        .wrapper span.param{
-            font:normal 13px/15px Lekton, sans-serif;
-            color:#767676;
-            display: block;
-            margin-top: 10px;
-        }
+<style type="text/css">
 
-        .attribution {
-            font-size: 12px;
-            margin-top: 10px;
-            color: #868686;
-        }
+/* Generic page style */
 
-        .attribution a{
-            color: #868686;
-        }
+*{
+    box-sizing: border-box;
+    outline: none;
+}
+
+body{
+    margin:0px;
+    background: #ffc000;
+    font:normal 16px/20px Lekton, sans-serif;
+}
+
+.wrapper{
+    position:absolute;
+    padding:50px 50px;
+    width:80%;
+    min-height: 100%;
+    min-width: 950px;
+    margin-left: 10% ;
+    top:0;
+    background: #e8e8e8;
+
+    font:normal 16px/20px Lekton, sans-serif;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-shadow: 0 0 10px rgba(0,0,0,0.4);
+}
 
 
+.wrapper h1{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:26px;
+    line-height:40px;
+}
+.wrapper h2{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:22px;
+    line-height: 26px;
+    font-weight: normal;
+}
+.wrapper h3{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:18px;
+    line-height: 24px;
+    font-weight: normal;
+}
+
+
+#rightCol {
+    width: 45%;
+    position: relative;
+}
+
+#leftCol {
+    position: relative;
+    float: left;
+    width: 45%;
+}
+
+button{
+    padding:5px;
+    display:inline-block;
+    cursor:pointer;
+    font:16px/18px Arial, Helvetica, sans-serif;
+    color:#fff;
+    background-color: #ffc000;
+    border-radius:5px;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+    border:1px solid white;
+    text-shadow: 1px -1px 2px rgba(0,0,0,0.2); !important;
+}
+button:hover{
+    background-color: #5a5a5a;
+}
+hr{
+    border:none;
+    background-color:#ccc;
+    height:1px;
+}
+.wrapper span.param{
+    font:normal 13px/15px Lekton, sans-serif;
+    color:#767676;
+    display: block;
+    margin-top: 10px;
+}
+
+.formatBox, #player{
+    padding: 5px;
+    position: relative;
+}
+
+.formatBox{
+    width: 100%;
+    background: rgba(255, 255, 255, 0.44);
+    margin: 5px 0;
+    border-radius: 5px;
+}
+
+.simulate {
+    background: none repeat scroll 0% 0% transparent;
+    text-align: right;
+    border-top: 1px solid #FFF;
+    padding-top: 10px;
+    position: absolute;
+    width: 85%;
+    bottom: 20px;
+}
+
+#player{
+    position: relative;
+    margin-bottom: 10px;
+    padding: 25px;
+    background: #333;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+    min-height: 280px;
+}
+
+.code{
+    font-size: 12px;
+    color: #3e3e3e
+}
+label{
+    display: inline-block;
+    width: 150px;
+    font-size: 16px;
+    font-weight: bold;
+}
+input{
+    width: 100px;
+    font-size: 20px;
+    color: #747474;
+    background: #e8e8e8;
+}
+input#skname{
+    width: 100%;
+    font-size: 30px;
+    color: #333;
+    border: 1px solid #ffc000;
+    padding: 5px;
+
+}
+
+#skincolorpicker{
+    position: relative;
+    /*margin: auto;*/
+    width: 200px;
+    opacity: .1;
+}
+
+#generatedCode{
+    resize: none;
+    width: 100%;
+    height: 450px;
+    background: #ffc000;
+    padding: 10px;
+    font-size: 12px;
+    line-height: 18px;
+    color: #fff;
+    border: none;
+}
+
+#codeBox{
+    padding: 10px;
+    width: 100%;
+    display: none;
+    position: absolute;
+    top:0;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+    background: #ffc000;
+
+}
+
+#skinNameVal{
+    color: #ffffff;
+    font-size: 20px;
+}
+
+::selection, ::-moz-selection{
+    background:#ffc000 !important;
+    color:#fff !important;
+}
+
+#close{
+    position: absolute;
+    top:10px;
+    right: 10px;
+    padding: 10px;
+    background: #000;
+    color: #fff;
+    cursor: pointer;
+}
+
+#cpBox{
+    position: relative;
+}
+
+#cpOverlay{
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+a{
+    color:#ffc000;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+}
+a:hover{
+    color:#ffc000;
+    text-decoration: underline;
+}
+
+.minicolors.minicolors-theme-default .minicolors-input {
+    margin: 0px;
+    margin-right: 3px;
+    border: solid 1px
+    #CCC;
+    font: 16px sans-serif;
+    width: 80px;
+    height: 30px;
+    border-radius: 2px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, .04);
+    padding: 2px;
+    margin-right: -1px;
+}
+
+.minicolors-swatch {
+    position: relative;
+    width: 35px;
+    height: 30px;
+    text-align: left;
+    background-position: -80 0;
+    border: solid 1px
+    #CCC;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.displayVal{
+    display: inline-block;
+    padding: 5px;
+}
+
+</style>
+
+<style id="sliderStyle">
+    .mb_slider{
+        position:relative;
+        padding:10px;
+        z-index:0;
+    }
+
+    .mb_sliderBar{
+        padding:9px;
+        background-color:#fafafa;
+        /*IE HACK*/
+        border:1px solid #ddd\9;
+        width:250px;
+        -moz-box-shadow:#ccc 0px 0px 5px;
+        -webkit-box-shadow:#ccc 0px 0px 3px;
+        -moz-border-radius: 4px;
+        -webkit-border-radius: 4px;
+
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        cursor:default;
+
+        zoom: 1;
+        filter:
+        progid:DXImageTransform.Microsoft.DropShadow(color=#EFEFEF, offx=1, offy=1)
+    progid:DXImageTransform.Microsoft.DropShadow(color=#eeeeee, offx=1, offy=1);
         /*
-                    .map_download{opacity:0}
-                    [isplaying=true] .map_download{opacity:1}
+            progid:DXImageTransform.Microsoft.DropShadow(color=#EFEFEF, offx=1, offy=1);
         */
+    }
 
-    </style>
+    .mb_sliderHandler{
+        padding:9px;
+        background-color:#fff;
+        /*IE HACK*/
+        border:1px solid #ddd\9;
+        position:absolute;
+        top:0;
+        top:-1px\9;
+        left:0;
+        -moz-border-radius: 4px;
+        -webkit-border-radius: 4px;
+        -moz-box-shadow:#bbb 1px 1px 2px;
+        -webkit-box-shadow:#bbb 1px 1px 2px;
 
-    <script type="text/javascript">
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        cursor:default;
+    }
 
-        $(function(){
+    .mb_sliderEnd, .mb_sliderStart, .mb_sliderValue{
+        padding:7px;
+        position:relative;
+        text-align:right;
+        top:-5px;
+        margin:3px;
+        width:25px;
+        color:#AAA;
 
-            if (self.location.href == top.location.href){
-                $("body").css({font:"normal 13px/16px 'trebuchet MS', verdana, sans-serif"});
-                var logo=$("<a href='http://pupunzi.com'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository' style='display:none;'></a>").css({position:"absolute", top:10, left:10});
-                $(".wrapper").prepend(logo);
-                $("#logo").fadeIn();
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        cursor:default;
+    }
+
+    .mb_sliderRange{
+        position:absolute;
+        height:18px;
+        margin:0;
+
+        top:0;
+        background: #ffcc00;
+        -moz-border-radius: 4px 0 0 4px ;
+        -webkit-border-top-left-radius:4px;
+        -webkit-border-bottom-left-radius:4px;
+
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        cursor:default;
+    }
+
+    .mb_sliderZero{
+        background-color: #f3f3f3;
+        position:absolute;
+        height:16px;
+        margin:1px;
+        top:0;
+        -moz-border-radius:4px 0 0 4px  ;
+        -webkit-border-top-left-radius:4px;
+        -webkit-border-bottom-left-radius:4px;
+
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        cursor:default;
+    }
+
+    .mb_sliderZeroLabel{
+        font:12px/12px Arial, sans-serif;
+        color:#AAA;
+        padding:5px;
+        padding-bottom:2px;
+        background-color:#fff;
+        margin-left:-4px;
+        z-index:-2;
+        -moz-border-radius: 4px;
+        -webkit-border-radius: 4px;
+    }
+    .mb_sliderValueLabel{
+        font:12px/12px Arial, sans-serif;
+        color:#aaa;
+        padding:5px;
+        padding-bottom:2px;
+        background-color:#fff;
+        margin-left:0px;
+        z-index:-1;
+        -moz-border-radius: 4px;
+        -webkit-border-radius: 4px;
+        -moz-box-shadow:#bbb 1px 1px 2px;
+        -webkit-box-shadow:#bbb 1px 1px 2px;
+    }
+
+    .popup{
+        position: fixed;
+        width: 100%;
+        min-height: 40px;
+        padding: 20px;
+        background: rgba(134, 0, 16, 0.80);
+        color: #fff;
+        font-size: 18px;
+    }
+
+</style>
+
+<style id="customSkin">
+
+    .mbMiniPlayer.custom .playerTable span{
+        background-color:#333;
+    }
+
+    .mbMiniPlayer.custom .playerTable span.map_play{
+        border-left:1px solid #000;
+    }
+
+    .mbMiniPlayer.custom .playerTable span.map_volume{
+        border-right:1px solid #333;
+    }
+
+    .mbMiniPlayer.custom .playerTable span.map_volume.mute{
+        color: #333;
+    }
+
+    .mbMiniPlayer.custom .map_download{
+        color: #fff;
+    }
+
+    .mbMiniPlayer.custom .map_download:hover{
+        color: #fff;
+    }
+
+</style>
+
+<script type="text/javascript">
+
+$(function(){
+
+    $(window).scroll(function(){
+        if( $(window).scrollTop() >273){
+
+            if(!$(".playerClone").length){
+                var clone = $("#player").clone();
+                var height = $("#player").outerHeight();
+                clone.addClass("playerClone").css({opacity:0, height:height}).empty();
+                $("#player").after(clone);
             }
-            var ua = navigator.userAgent.toLowerCase();
-            var isAndroid = /android/.test(ua);
-            var isAndroidDefault = isAndroid && !(/chrome/i).test(ua);
+            var left = $("#player").offset().left;
+            var width =  $(".playerClone").outerWidth();
+            $("#player").css({position:"fixed", top:20, left:left, width:width, zIndex:5});
+        }else{
+            $("#player").css({position:"relative", left:0,width:"auto", zIndex:0});
+            $(".playerClone").remove();
+        }
+    });
 
-            if(isAndroidDefault){
-                alert("Sorry, your browser does not support this implementation of the player. It will be used the standard HTML5 audio player instead")
+    if (self.location.href == top.location.href){
+        $("body").css({font:"normal 13px/16px 'trebuchet MS', verdana, sans-serif"});
+        var logo=$("<a href='http://pupunzi.com'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository' style='display:none;'></a>").css({position:"absolute", top:10, left:10});
+        $(".wrapper").prepend(logo);
+        $("#logo").fadeIn();
+    }
+
+    $(".audio").mb_miniPlayer({
+        width:"100%"
+    });
+
+    function changeCSS(skinName, main, secondary, borderRadius, playerPadding, addGradientOverlay){
+
+        var borderC = new jColour(secondary[0]).darken(5).rgb();
+        var borderLeftC = new jColour(main[0]).lighten(10).rgb();
+        var borderRightC = new jColour(main[0]).darken(10).rgb();
+        var muteC = new jColour(secondary[0]).transparentize(0.40).rgb();
+        var volumeLevelC = new jColour(secondary[0]).lighten(10).rgb();
+        var downloadC = new jColour(main[1]).transparentize(0.60).rgb();
+        var downloadCHover = new jColour(main[1]).rgb();
+        var loadBarC = new jColour(main[1]).transparentize(0.70).rgb();
+
+        var style="";
+        style += "/*++++++++++++++++++++++++++++++++++++++++++++++++++\n";
+        style += "Copyright (c) 2001-2014. Matteo Bicocchi (Pupunzi);\n";
+        style += "http://pupunzi.com/mb.components/mb.miniAudioPlayer/demo/skinMaker.html\n";
+        style += "\n";
+        style += "MAP custom skin: "+skinName+"\n";
+        style += "borderRadius: "+borderRadius+"\n";
+        style += "background: "+main[0]+"\n";
+        style += "icons: "+secondary[0]+"\n";
+        style += "border: "+borderC+"\n";
+        style += "borderLeft: "+borderLeftC+"\n";
+        style += "borderRight: "+borderRightC+"\n";
+        style += "mute: "+muteC+"\n";
+        style += "download: "+downloadC+"\n";
+        style += "downloadHover: "+downloadCHover+"\n";
+
+        style += "++++++++++++++++++++++++++++++++++++++++++++++++++*/\n";
+        style += "\n";
+
+        style += "/* Older browser (IE8) \n";
+        style += "   not supporting rgba() */ \n";
+
+        if(main[0] != main[1]){
+            style += ".mbMiniPlayer."+skinName+" .playerTable span{background-color:"+main[1]+"}\n";
+            style += ".mbMiniPlayer."+skinName+" .playerTable span.map_play{border-left:1px solid "+main[1]+";}\n";
+            style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volume{border-right:1px solid "+main[1]+";}\n";
+        }
+        if(secondary[0] != secondary[1]){
+            style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volume.mute{color: "+secondary[1]+";}\n";
+            style += ".mbMiniPlayer."+skinName+" .map_download{color: "+secondary[1]+";}\n";
+            style += ".mbMiniPlayer."+skinName+" .map_download:hover{color: "+secondary[1]+";}\n";
+            style += ".mbMiniPlayer."+skinName+" .playerTable span{color: "+secondary[1]+";}\n";
+            style += ".mbMiniPlayer."+skinName+" .playerTable {border: 1px solid "+secondary[1]+" !important;}\n";
+        }
+
+        style += "\n";
+
+        style += "/*++++++++++++++++++++++++++++++++++++++++++++++++*/\n";
+        style += "\n";
+
+        style += ".mbMiniPlayer."+skinName+" .playerTable{background-color:transparent; border-radius:"+borderRadius+"px !important;}\n";
+        var fontsize = 20 + parseFloat(playerPadding);
+        style += ".mbMiniPlayer."+skinName+" .playerTable span{background-color:"+main[0]+"; padding:"+(parseFloat(playerPadding)+3)+"px !important; font-size: "+fontsize+"px;}\n";
+        style += ".mbMiniPlayer."+skinName+" .playerTable span.map_time{ font-size: "+(fontsize-8)+"px !important; width: 50px !important}\n";
+
+        style += ".mbMiniPlayer."+skinName+" .playerTable span.map_title{ padding:4px !important}\n";
+        style += ".mbMiniPlayer."+skinName+" .playerTable span.map_play{border-left:1px solid "+borderRightC+"; border-radius:0 "+(borderRadius-1)+"px "+(borderRadius-1)+"px 0 !important;}\n";
+        style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volume{padding-left:"+(parseFloat(playerPadding)+6)+"px !important}\n";
+        style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volume{border-right:1px solid "+borderLeftC+"; border-radius:"+(borderRadius-1)+"px 0 0 "+(borderRadius-1)+"px !important;}\n";
+        style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volume.mute{color: "+muteC+";}\n";
+        style += ".mbMiniPlayer."+skinName+" .map_download{color: "+downloadC+";}\n";
+        style += ".mbMiniPlayer."+skinName+" .map_download:hover{color: "+downloadCHover+";}\n";
+        style += ".mbMiniPlayer."+skinName+" .playerTable span{color: "+secondary[0]+";text-shadow: none!important;}\n";
+        style += ".mbMiniPlayer."+skinName+" .playerTable span{color: "+secondary[0]+";}\n";
+        style += ".mbMiniPlayer."+skinName+" .playerTable {border: 1px solid "+borderC+" !important;}\n";
+        style += ".mbMiniPlayer."+skinName+" .playerTable span.map_title{color: #000; text-shadow:none!important}\n";
+        style += ".mbMiniPlayer."+skinName+" .playerTable .jp-load-bar{background-color:"+loadBarC+";}\n";
+        style += ".mbMiniPlayer."+skinName+" .playerTable .jp-play-bar{background-color:"+main[1]+";}\n";
+
+        var volumBar = (80 + (parseFloat(playerPadding)*2) ) + "%";
+        style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volumeLevel a{background-color:"+volumeLevelC+"; height:"+ volumBar +"!important }\n";
+        style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volumeLevel a.sel{background-color:"+secondary[1]+";}\n";
+        style += ".mbMiniPlayer."+skinName+"  span.map_download{font-size:"+(50+parseFloat(playerPadding))+"px !important;}\n";
+
+
+        style += "/*++++++++++++++++++++++++++++++++++++++++++++++++*/\n";
+
+        if(addGradientOverlay)
+            $("#mp_mbmap").addClass("gradientOverlay");
+        else{
+            $("#mp_mbmap").removeClass("gradientOverlay");
+
+        }
+
+
+        // $(".wrapper").css("background",wrapperBgnd );
+        $("#customSkin").html(style);
+        $("#generatedCode").html(style);
+        $("#mp_mbmap").addClass(skinName);
+        $("#skinNameVal").html(skinName);
+
+        return style;
+    }
+
+    var HEXToRGB = function (hex) {
+        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+            r: parseInt(result[1], 16),
+            g: parseInt(result[2], 16),
+            b: parseInt(result[3], 16)
+        } : null;
+    };
+
+    var RGBToHSL = function (rgb) {
+        var min, max, delta, h, s, l;
+        var r = rgb[0], g = rgb[1], b = rgb[2];
+        min = Math.min(r, Math.min(g, b));
+        max = Math.max(r, Math.max(g, b));
+        delta = max - min;
+        l = (min + max) / 2;
+        s = 0;
+        if (l > 0 && l < 1) {
+            s = delta / (l < 0.5 ? (2 * l) : (2 - 2 * l));
+        }
+        h = 0;
+        if (delta > 0) {
+            if (max == r && max != g) h += (g - b) / delta;
+            if (max == g && max != b) h += (2 + (b - r) / delta);
+            if (max == b && max != r) h += (4 + (r - g) / delta);
+            h /= 6;
+        }
+        return [h, s, l];
+    }
+
+    function updateBg(c){
+        $("#player").css({
+            transition:"color .5s",
+            backgroundColor:"rgb("+c[0]+","+c[1]+","+c[2]+")",
+            color: RGBToHSL(c)[2] > 120 ? '#333' : '#fff'
+        })
+    }
+
+
+    $('input.color').each(function(){
+
+        if(!$(this).hasClass("bodySimulator")){
+            var displayVal = $("<span/>").addClass("displayVal");
+            $(this).after(displayVal);
+            var hiddenValue = $("<input/>").attr("type","hidden").addClass("hiddenValue").val($(this).val());
+            $(this).after(hiddenValue);
+        }
+
+        $(this).minicolors({
+            opacity: !$(this).hasClass("bodySimulator"),
+            textfield:true,
+            swatchPosition:'left',
+            change: function(hex, opacity){
+
+                if($(this).hasClass("bodySimulator")){
+                    var rgba =  $(this).minicolors('rgbObject');
+                    var rgb = [rgba["r"],rgba["g"],rgba["b"]];
+                    updateBg(rgb);
+                }else{
+                    var col = $(this).minicolors('rgbaString');
+                    $(this).closest("div").find(".hiddenValue").val(col);
+                    $(this).closest("div").find(".displayVal").html(col);
+                }
             }
-
-            $(".audio").mb_miniPlayer({
-                width:300,
-                inLine:false,
-                id3:true,
-                addShadow:false,
-                pauseOnWindowBlur: false,
-                downloadPage:null
-//                downloadPage:"map_download.php"
-            });
-
         });
 
-    </script>
+    });
+
+    function updateCSS(){
+        document.updater = setInterval(function(){
+            var skinName = $("#skinName input").val();
+            var borderRadius = $("#borderRadius input").val();
+            var main = [ $("#mainColor input.hiddenValue").val(), $("#mainColor input").val() ];
+            var secondary = [$("#secondaryColor input.hiddenValue").val(), $("#secondaryColor input").val()];
+            var addGradientOverlay = $("#addGradientInput").is(":checked");
+            var playerPadding = $("#playerSize input").val();
+
+            changeCSS(skinName, main, secondary, borderRadius, playerPadding, addGradientOverlay);
+        },100)
+    }
+
+    updateCSS();
+
+    $("input").click();
+
+
+    $("#skname").on("keypress",function(e) {
+        var char = String.fromCharCode(e.which);
+        if (e.which != 8 && char.match(/[^a-zA-Z0-9 ]/g)) {
+            return false
+        }
+    }).on("keyup",function(){
+        this.value = this.value.replace(" ", "_");
+    });
+    $('#skname').click().focus();
+
+    $("input").not("#skname").on("focus",function(){
+        $("#skincolorpicker").stop().fadeTo(300,1);
+        $("#cpOverlay").hide();
+    });
+
+    $("input").on("blur",function(){
+        $("#skincolorpicker").stop().fadeTo(300,.1);
+        $("#cpOverlay").show();
+    });
+
+
+    $("#generatedCode").on("focus", function(){
+        clearInterval(document.updater);
+        if(this.isSelected)
+            return false;
+
+        this.select();
+        this.isSelected = true;
+    }).on("blur", function(){
+        this.isSelected = false;
+        updateCSS();
+    });
+
+    $(".mb_slider#s1").unselectable().mbSlider({
+        onSlide:function(o){
+            $("#"+o.id+"_val").val($(o).mbgetVal());
+        }
+    });
+
+    $(".mb_slider#s2").unselectable().mbSlider({
+        onSlide:function(o){
+            $("#"+o.id+"_val").val($(o).mbgetVal());
+        }
+    });
+
+    function showPopUp(txt){
+        var popUp = $("<div/>").addClass("popup");
+        $("body").append(popUp);
+
+        popUp.html(txt);
+
+        setTimeout(function(){
+            popUp.fadeOut(1000);
+
+        },10000)
+    }
+
+    showPopUp('The skinMaker tool works only from <b>version 1.8.1 of the jQuery plug-in</b> and fron <b>version 1.5.8 of the Wordpress plug-in</b>')
+});
+
+</script>
 </head>
 
 <body>
-<br>
-<br>
-<br>
-<br>
 <div class="wrapper">
-    <h1>mb.miniAudioPlayer.demo</h1>
-    <br>
-    This is a GUI implementation of <a href="http://www.jplayer.org/" target="_blank"><strong>Happyworm jPlayer plugin</strong></a>, an HTML5 audio engine, developed on jQuery framework, that let you listen mp3 and ogg file over the html5 audio tag where supported or using an invisible flash player where not supported.
-    For more informations about html5 browsers' support go to <a href="http://www.jplayer.org/latest/developer-guide/" target="_blank">jPlayer documentation site</a>.
-    <br>
-    <br>
-    <p><a href="skinMaker.html"> Customize the player skin</a></p>
-    <br>
-    <a id="m1" class="audio {ogg:'audio/allegro.ogg', loop:true, inLine:true, downloadable:true}" href="http://pupunzi.open-lab.com/wp-content/uploads/2013/03/Pietro-Bicocchi-Allegro.mp3">Pietro Bicocchi - Allegro 2013</a>
-    <button onclick="$('#m1').mb_miniPlayer_play()">play</button>
-    <button onclick="$('#m1').mb_miniPlayer_stop()">stop</button>
-    <br>
-    <span class="param">param -> all features - loop = true</span>
+    <h1 style="font-size: 30px">mb.miniAudioPlayer <br><span style="color: #ffc000; font-size: 70px; line-height: 70px">Skin Maker</span></h1>
+    <h2>This tool let you create your own mb.miniAudioPlayer skin.</h2>
+    <h3>From version 1.8.1</h3>
     <hr>
-    <a id="m2" class="audio {skin:'orange', showTime:false, downloadable:true}" href="http://ubumexico.centro.org.mx/sound/satie_erik/poulenc/Satie-Eric_1-F-Poulenc-J-Fevrier_Satie-La-belle-excentrique.mp3">Erik Satie - La Belle Excentrique (mp3)</a>
-    <span class="param"> param -> showTime:false</span>
-    <hr>
-    <a id="m3" class="audio {skin:'blue', autoPlay:false,showRew:false}" href="http://ccmixter.org/content/unreal_dm/unreal_dm_-_Blue_Circles.mp3">unreal_dm - Blue Circles (mp3)</a>
-    <div class="attribution" xmlns:cc="http://creativecommons.org/ns#" about="urn:sha1:FSHFQVLQQAO2SQPOHDJU5DPFETOABOVE"><a rel="cc:attributionURL" property="cc:attributionName" href="http://ccmixter.org/files/unreal_dm/33850"> unreal_dm</a> / <a rel="license" href="http://creativecommons.org/licenses/by/2.5/">CC BY 2.5</a></div>
-    <span class="param">param -> showRew:false</span>
-    <hr>
-    <a id="m4" class="audio {skin:'red', autoPlay:false,showRew:false, showTime:false}" href="http://ccmixter.org/content/unreal_dm/unreal_dm_-_Falling.mp3">unreal_dm - Oh Dear Mr Williams - Tango ? (mp3)</a>
-    <div class="attribution" xmlns:cc="http://creativecommons.org/ns#" about="urn:sha1:FSHFQVLQQAO2SQPOHDJU5DPFETOABOVE"><a rel="cc:attributionURL" property="cc:attributionName" href="http://ccmixter.org/files/unreal_dm/33850"> unreal_dm</a> / <a rel="license" href="http://creativecommons.org/licenses/by/2.5/">CC BY 2.5</a></div>
-    <span class="param">param -> showRew:false, showTime:false</span>
-    <hr>
-    <a id="m5" class="audio {skin:'green', autoPlay:false, addShadow:false,addGradientOverlay:true}" href="http://ccmixter.org/content/urmymuse/urmymuse_-_colourbox.mp3">urmymuse - colourbox (mp3)</a>
-    <div class="attribution" xmlns:cc="http://creativecommons.org/ns#" about="urn:sha1:Q2I67MIV4BWT4AEZKB3I2PFNU47IULRB"><a rel="cc:attributionURL" property="cc:attributionName" href="http://ccmixter.org/files/urmymuse/45808"> urmymuse</a> / <a rel="license" href="http://creativecommons.org/licenses/by/2.5/">CC BY 2.5</a></div>
     <br>
-    <div>change track:
-        <br>
-        <button onclick="$('#m5').mb_miniPlayer_changeFile({mp3:'http://ubumexico.centro.org.mx/sound/dial_a_poem_poets/nova/Nova-Convention_06_glass.mp3'},'Philip Glass - Einstein on the beach')">Philip Glass</button>
-        <button onclick="$('#m5').mb_miniPlayer_changeFile({mp3:'http://ubumexico.centro.org.mx/sound/satie_erik/poulenc/Satie-Eric_1-F-Poulenc-J-Fevrier_Satie-La-belle-excentrique.mp3'},'Poulenc')">Poulenc</button>
+    <div id="rightCol" style="float: right;">
+        <h2>How it works (jQuery component)</h2>
+        <p>
+        <ol>
+            <li>Give it a name.
+            <li>Customize each element.
+            <li>Generate the CSS code.
+            <li>Copy and paste it into your CSS.
+            <li>Add the name you give as value of the "skin" parameter.
+        </ol>
+        </p>
+
+        <h2>How it works (Wordpress component)</h2>
+        <p>
+        <ol>
+            <li>Use "mySkin" as name.
+            <li>Customize each element.
+            <li>Generate the CSS code.
+            <li>Copy the generated CSS and paste it into the "mySkin" textarea in the component settings page.
+            <li>Choose "mySkin" from the skin selector.
+        </ol>
+        </p>
+
+        <hr>
+        <div style="text-align: right">
+            <button onclick="$('#codeBox').slideDown('slow');$('#generatedCode').select();$('#generatedCode').get(0).isSelected = true ">generate the css code</button>
+        </div>
+
+        <div id="cpBox">
+            <div id="skincolorpicker"></div>
+            <div id="cpOverlay"></div>
+        </div>
+        <hr>
+        <p><a href="http://pupunzi.com/mb.components/mb.miniAudioPlayer/demo/demo.html" target="_blank">See the on-line demo</a></p>
+        <hr><p><a href="http://pupunzi.open-lab.com" target="_blank">go to my blog</a></p>
+        <hr><p><a href="http://pupunzi.com" target="_blank">go to my site</a></p>
+        <hr><p><a href="http://wordpress.org/extend/plugins/wp-miniaudioplayer" target="_blank">get the WordPress component</a></p>
+        <hr>
+        <div id="codeBox">
+            <div id="close" onclick="$('#codeBox').fadeOut()">close</div>
+            <h2>Here is your skin!</h2>
+            <h3>1. <b>Copy</b> the below text <br>and paste it in your CSS file:</h3>
+            <textarea id="generatedCode"></textarea>
+            <h3>2. Set <b><span id="skinNameVal"></span></b> as value of <br>the "skin" parameter of your player.</h3>
+        </div>
     </div>
-    <br>
-    <hr>
-    <a id="m7" class="audio {skin:'black', autoPlay:false}" href="http://www.jplayer.org/audio/m4a/TSP-01-Cro_magnon_man.m4a">Cro Magnon Man</a>
-    <span class="param">param -> uses m4a audio</span>
-    <hr>
-    <a id="m8" class="audio {skin:'red', autoPlay:false, width:0}" href="http://listen.radionomy.com/abc-jazz/#.mp3">Jazz radio stream</a>
-    <span class="param">This example get the stream of <a href="http://radionomy.com">Radionomy</a> Jazz channel</span>
-    <hr>
-    This is a gray player: <a id="m9" class="audio {skin:'gray', autoPlay:false, inLine:true, showVolumeLevel:false, showRew:true, showTime:false, width:100, addShadow:false}" href="http://ccmixter.org/content/copperhead/copperhead_-_Chillin_With_Jeris.mp3">copperhead - Chillin with Jeris (mp3)</a>
-    <span>and it is inline</span>
-    <div class="attribution" xmlns:cc="http://creativecommons.org/ns#" about="urn:sha1:2HELCDGBAWGFYYFAVED5UWI7CA42B2OH"><a rel="cc:attributionURL" property="cc:attributionName" href="http://ccmixter.org/files/copperhead/35987"> copperhead</a> / <a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/">CC BY-NC 3.0</a></div>
-    <hr>
-    <br>
-    <b>jquery.mb.miniPlayer</b> is a GUI implementation of the <a href="http://www.jplayer.org" target="_blank">jquery.jPlayer</a> plug-in realized by © Happyworm LTD. (many thanks to <a href="http://happyworm.com/blog/" target="_blank">Mark Boas</a>)
+    <div id="leftCol">
+
+        <div id="player">
+            <h2>How your skin will affect the player?</h2>
+            <a id="mbmap" class="audio {skin:'custom', loop:true,inLine:false, downloadable:true}" href="http://pupunzi.open-lab.com/wp-content/uploads/2013/03/Pietro-Bicocchi-Allegro.mp3">Pietro Bicocchi - Allegro</a>
+            <br>
+            <div class="simulate" >
+                simulate your background color:<br>
+                <input id="simulateVal" class="color bodySimulator" value="#333">
+            </div>
+
+        </div>
+        <hr>
+
+        <div class="formatBox code" >
+            <div id="skinName"><label>Skin name:</label> <input id="skname" class="skinName" value="mySkin">  </div>
+        </div>
+        <div class="formatBox code">
+            <div id="borderRadius">
+                <label>Round corners:</label>
+                <div id="s1"  class="mb_slider {rangeColor:'#333',negativeColor:'#333', startAt:5, maxVal:15, minVal:0, grid:0}" style="display:inline-block;*display:inherit;cursor: pointer;"></div>
+                <input id="s1_val" type="hidden" value="5">
+            </div>
+        </div>
+        <div class="formatBox code">
+            <div id="playerSize">
+                <label>Player size:</label>
+                <div id="s2"  class="mb_slider {rangeColor:'#333',negativeColor:'#333', startAt:0, maxVal:10, minVal:0, grid:0}" style="display:inline-block;*display:inherit;cursor: pointer;"></div>
+                <input id="s2_val" type="hidden" value="0">
+            </div>
+        </div>
+        <div class="formatBox code" >
+            <div id="mainColor"><label>Main:</label> <input  class="color" value="#000"></div>
+        </div>
+        <div class="formatBox code">
+            <div id="secondaryColor"><label>Secondary:</label> <input class="color" value="#fff"></div>
+        </div>
+        <div class="formatBox code">
+            <div id="addGradient"><label>Gradient overlay:</label><input id="addGradientInput" type="checkbox" value="true" style="padding: 10px; font-size: 20px"></div>
+        </div>
+        <hr>
+    </div>
+    <br style="clear: both">
+
 </div>
+
+
 </body>
 </html>
