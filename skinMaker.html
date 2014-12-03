@@ -501,38 +501,143 @@ a:hover{
 
 <script type="text/javascript">
 
-$(function(){
+$.file = {
+    defaults:{
+        type: "txt,html,css"
+    },
+    save: function(targetID, defaultExtension, fileName){
 
-    $(window).scroll(function(){
-        if( $(window).scrollTop() >273){
+        function getFileExtension ( url ) {
+            return url.split('.').pop().split(/\#|\?/)[0];
+        }
 
-            if(!$(".playerClone").length){
+        var fileContent,
+                textFileAsBlob,
+                fileNameToSaveAs,
+                fileExtension,
+                mimeType,
+                elToSave = $("#" + targetID);
+
+        if(elToSave.is("img")) {
+            fileContent = elToSave.attr("src");
+            fileExtension = getFileExtension(fileContent);
+        }else if(elToSave.is("textarea")) {
+            fileContent = elToSave.val();
+            fileExtension = defaultExtension || "txt";
+
+            switch (defaultExtension){
+                case "txt":
+                    mimeType = "text/plain";
+                    break;
+                case "html":
+                    mimeType = "text/html";
+                    break;
+                case "css":
+                    mimeType = "text/css";
+                    break;
+            }
+
+            textFileAsBlob = new Blob([fileContent], {type: mimeType});
+        }
+
+        fileNameToSaveAs = (fileName || "untitled")+"."+fileExtension;
+        var downloadLink = document.createElement("a");
+        downloadLink.download = fileNameToSaveAs;
+        downloadLink.innerHTML = "Download File";
+        if (window.webkitURL != null) {
+            // Chrome allows the link to be clicked
+            // without actually adding it to the DOM.
+            downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+        } else {
+            // Firefox requires the link to be added to the DOM
+            // before it can be clicked.
+            downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+            downloadLink.onclick = $.file.destroyClickedElement;
+            downloadLink.style.display = "none";
+            document.body.appendChild(downloadLink);
+        }
+        downloadLink.click();
+    },
+
+    destroyClickedElement : function(event){
+        document.body.removeChild(event.target);
+    },
+
+    loadText: function(el, types, callback){
+
+        var fileName;
+
+        function test(obj,filter){
+            var file = obj.value.match(/[^\/\\]+$/gi)[0];
+            fileName = file.split(".")[0];
+            var filters = filter.split(",");
+
+            for (var x in filters){
+                var newFilter = filters[x].trim();
+
+                var rx = new RegExp('\\.(' + (newFilter?newFilter:'') + ')$','gi');
+                var canUpload = false;
+                if(newFilter && file && file.match(rx)){
+                    canUpload = true;
+                    break;
+                }
+            }
+            return canUpload;
+        }
+
+        var fileToLoad = el;
+        var canLoad = test(fileToLoad, types);
+        if(!canLoad){
+            alert("check the file types, only "+types+" is accepted");
+            fileToLoad.value = "";
+            return;
+        }
+
+        fileToLoad = fileToLoad.files[0];
+        var fileReader = new FileReader();
+        fileReader.onload = function(fileLoadedEvent){
+            var textFromFileLoaded = fileLoadedEvent.target.result;
+
+            if(typeof callback == "function")
+                callback(textFromFileLoaded, fileName);
+        };
+        fileReader.readAsText(fileToLoad, "UTF-8");
+    }
+};
+
+
+$(function() {
+
+    $(window).scroll(function () {
+        if ($(window).scrollTop() > 273) {
+
+            if (!$(".playerClone").length) {
                 var clone = $("#player").clone();
                 var height = $("#player").outerHeight();
-                clone.addClass("playerClone").css({opacity:0, height:height}).empty();
+                clone.addClass("playerClone").css({opacity: 0, height: height}).empty();
                 $("#player").after(clone);
             }
             var left = $("#player").offset().left;
-            var width =  $(".playerClone").outerWidth();
-            $("#player").css({position:"fixed", top:20, left:left, width:width, zIndex:5});
-        }else{
-            $("#player").css({position:"relative", left:0,width:"auto", zIndex:0});
+            var width = $(".playerClone").outerWidth();
+            $("#player").css({position: "fixed", top: 20, left: left, width: width, zIndex: 5});
+        } else {
+            $("#player").css({position: "relative", left: 0, width: "auto", zIndex: 0});
             $(".playerClone").remove();
         }
     });
 
-    if (self.location.href == top.location.href){
-        $("body").css({font:"normal 13px/16px 'trebuchet MS', verdana, sans-serif"});
-        var logo=$("<a href='http://pupunzi.com'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository' style='display:none;'></a>").css({position:"absolute", top:10, left:10});
+    if (self.location.href == top.location.href) {
+        $("body").css({font: "normal 13px/16px 'trebuchet MS', verdana, sans-serif"});
+        var logo = $("<a href='http://pupunzi.com'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository' style='display:none;'></a>").css({position: "absolute", top: 10, left: 10});
         $(".wrapper").prepend(logo);
         $("#logo").fadeIn();
     }
 
     $(".audio").mb_miniPlayer({
-        width:"100%"
+        width: "100%"
     });
 
-    function changeCSS(skinName, main, secondary, borderRadius, playerPadding, addGradientOverlay){
+    function changeCSS(skinName, main, secondary, borderRadius, playerPadding, addGradientOverlay) {
 
         var borderC = new jColour(secondary[0]).darken(5).rgb();
         var borderLeftC = new jColour(main[0]).lighten(10).rgb();
@@ -543,21 +648,30 @@ $(function(){
         var downloadCHover = new jColour(main[1]).rgb();
         var loadBarC = new jColour(main[1]).transparentize(0.70).rgb();
 
-        var style="";
+        var style = "";
+
+        style += "/*{";
+        style += "'skinName': '" + skinName + "', ";
+        style += "'borderRadius': " + borderRadius + ", ";
+        style += "'main': '" + main[0] + "', ";
+        style += "'secondary': '" + secondary[0] + "', ";
+        style += "'playerPadding': " + playerPadding + "";
+        style += "}*/\n";
+
         style += "/*++++++++++++++++++++++++++++++++++++++++++++++++++\n";
         style += "Copyright (c) 2001-2014. Matteo Bicocchi (Pupunzi);\n";
         style += "http://pupunzi.com/mb.components/mb.miniAudioPlayer/demo/skinMaker.html\n";
         style += "\n";
-        style += "MAP custom skin: "+skinName+"\n";
-        style += "borderRadius: "+borderRadius+"\n";
-        style += "background: "+main[0]+"\n";
-        style += "icons: "+secondary[0]+"\n";
-        style += "border: "+borderC+"\n";
-        style += "borderLeft: "+borderLeftC+"\n";
-        style += "borderRight: "+borderRightC+"\n";
-        style += "mute: "+muteC+"\n";
-        style += "download: "+downloadC+"\n";
-        style += "downloadHover: "+downloadCHover+"\n";
+        style += "Skin name: " + skinName + "\n";
+        style += "borderRadius: " + borderRadius + "\n";
+        style += "background: " + main[0] + "\n";
+        style += "icons: " + secondary[0] + "\n";
+        style += "border: " + borderC + "\n";
+        style += "borderLeft: " + borderLeftC + "\n";
+        style += "borderRight: " + borderRightC + "\n";
+        style += "mute: " + muteC + "\n";
+        style += "download: " + downloadC + "\n";
+        style += "downloadHover: " + downloadCHover + "\n";
 
         style += "++++++++++++++++++++++++++++++++++++++++++++++++++*/\n";
         style += "\n";
@@ -565,17 +679,17 @@ $(function(){
         style += "/* Older browser (IE8) \n";
         style += "   not supporting rgba() */ \n";
 
-        if(main[0] != main[1]){
-            style += ".mbMiniPlayer."+skinName+" .playerTable span{background-color:"+main[1]+"}\n";
-            style += ".mbMiniPlayer."+skinName+" .playerTable span.map_play{border-left:1px solid "+main[1]+";}\n";
-            style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volume{border-right:1px solid "+main[1]+";}\n";
+        if (main[0] != main[1]) {
+            style += ".mbMiniPlayer." + skinName + " .playerTable span{background-color:" + main[1] + "}\n";
+            style += ".mbMiniPlayer." + skinName + " .playerTable span.map_play{border-left:1px solid " + main[1] + ";}\n";
+            style += ".mbMiniPlayer." + skinName + " .playerTable span.map_volume{border-right:1px solid " + main[1] + ";}\n";
         }
-        if(secondary[0] != secondary[1]){
-            style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volume.mute{color: "+secondary[1]+";}\n";
-            style += ".mbMiniPlayer."+skinName+" .map_download{color: "+secondary[1]+";}\n";
-            style += ".mbMiniPlayer."+skinName+" .map_download:hover{color: "+secondary[1]+";}\n";
-            style += ".mbMiniPlayer."+skinName+" .playerTable span{color: "+secondary[1]+";}\n";
-            style += ".mbMiniPlayer."+skinName+" .playerTable {border: 1px solid "+secondary[1]+" !important;}\n";
+        if (secondary[0] != secondary[1]) {
+            style += ".mbMiniPlayer." + skinName + " .playerTable span.map_volume.mute{color: " + secondary[1] + ";}\n";
+            style += ".mbMiniPlayer." + skinName + " .map_download{color: " + secondary[1] + ";}\n";
+            style += ".mbMiniPlayer." + skinName + " .map_download:hover{color: " + secondary[1] + ";}\n";
+            style += ".mbMiniPlayer." + skinName + " .playerTable span{color: " + secondary[1] + ";}\n";
+            style += ".mbMiniPlayer." + skinName + " .playerTable {border: 1px solid " + secondary[1] + " !important;}\n";
         }
 
         style += "\n";
@@ -583,36 +697,36 @@ $(function(){
         style += "/*++++++++++++++++++++++++++++++++++++++++++++++++*/\n";
         style += "\n";
 
-        style += ".mbMiniPlayer."+skinName+" .playerTable{background-color:transparent; border-radius:"+borderRadius+"px !important;}\n";
+        style += ".mbMiniPlayer." + skinName + " .playerTable{background-color:transparent; border-radius:" + borderRadius + "px !important;}\n";
         var fontsize = 20 + parseFloat(playerPadding);
-        style += ".mbMiniPlayer."+skinName+" .playerTable span{background-color:"+main[0]+"; padding:"+(parseFloat(playerPadding)+3)+"px !important; font-size: "+fontsize+"px;}\n";
-        style += ".mbMiniPlayer."+skinName+" .playerTable span.map_time{ font-size: "+(fontsize-8)+"px !important; width: 50px !important}\n";
+        style += ".mbMiniPlayer." + skinName + " .playerTable span{background-color:" + main[0] + "; padding:" + (parseFloat(playerPadding) + 3) + "px !important; font-size: " + fontsize + "px;}\n";
+        style += ".mbMiniPlayer." + skinName + " .playerTable span.map_time{ font-size: " + (fontsize - 8) + "px !important; width: 50px !important}\n";
 
-        style += ".mbMiniPlayer."+skinName+" .playerTable span.map_title{ padding:4px !important}\n";
-        style += ".mbMiniPlayer."+skinName+" .playerTable span.map_play{border-left:1px solid "+borderRightC+"; border-radius:0 "+(borderRadius-1)+"px "+(borderRadius-1)+"px 0 !important;}\n";
-        style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volume{padding-left:"+(parseFloat(playerPadding)+6)+"px !important}\n";
-        style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volume{border-right:1px solid "+borderLeftC+"; border-radius:"+(borderRadius-1)+"px 0 0 "+(borderRadius-1)+"px !important;}\n";
-        style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volume.mute{color: "+muteC+";}\n";
-        style += ".mbMiniPlayer."+skinName+" .map_download{color: "+downloadC+";}\n";
-        style += ".mbMiniPlayer."+skinName+" .map_download:hover{color: "+downloadCHover+";}\n";
-        style += ".mbMiniPlayer."+skinName+" .playerTable span{color: "+secondary[0]+";text-shadow: none!important;}\n";
-        style += ".mbMiniPlayer."+skinName+" .playerTable span{color: "+secondary[0]+";}\n";
-        style += ".mbMiniPlayer."+skinName+" .playerTable {border: 1px solid "+borderC+" !important;}\n";
-        style += ".mbMiniPlayer."+skinName+" .playerTable span.map_title{color: #000; text-shadow:none!important}\n";
-        style += ".mbMiniPlayer."+skinName+" .playerTable .jp-load-bar{background-color:"+loadBarC+";}\n";
-        style += ".mbMiniPlayer."+skinName+" .playerTable .jp-play-bar{background-color:"+main[1]+";}\n";
+        style += ".mbMiniPlayer." + skinName + " .playerTable span.map_title{ padding:4px !important}\n";
+        style += ".mbMiniPlayer." + skinName + " .playerTable span.map_play{border-left:1px solid " + borderRightC + "; border-radius:0 " + (borderRadius - 1) + "px " + (borderRadius - 1) + "px 0 !important;}\n";
+        style += ".mbMiniPlayer." + skinName + " .playerTable span.map_volume{padding-left:" + (parseFloat(playerPadding) + 6) + "px !important}\n";
+        style += ".mbMiniPlayer." + skinName + " .playerTable span.map_volume{border-right:1px solid " + borderLeftC + "; border-radius:" + (borderRadius - 1) + "px 0 0 " + (borderRadius - 1) + "px !important;}\n";
+        style += ".mbMiniPlayer." + skinName + " .playerTable span.map_volume.mute{color: " + muteC + ";}\n";
+        style += ".mbMiniPlayer." + skinName + " .map_download{color: " + downloadC + ";}\n";
+        style += ".mbMiniPlayer." + skinName + " .map_download:hover{color: " + downloadCHover + ";}\n";
+        style += ".mbMiniPlayer." + skinName + " .playerTable span{color: " + secondary[0] + ";text-shadow: none!important;}\n";
+        style += ".mbMiniPlayer." + skinName + " .playerTable span{color: " + secondary[0] + ";}\n";
+        style += ".mbMiniPlayer." + skinName + " .playerTable {border: 1px solid " + borderC + " !important;}\n";
+        style += ".mbMiniPlayer." + skinName + " .playerTable span.map_title{color: #000; text-shadow:none!important}\n";
+        style += ".mbMiniPlayer." + skinName + " .playerTable .jp-load-bar{background-color:" + loadBarC + ";}\n";
+        style += ".mbMiniPlayer." + skinName + " .playerTable .jp-play-bar{background-color:" + main[1] + ";}\n";
 
-        var volumBar = (80 + (parseFloat(playerPadding)*2) ) + "%";
-        style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volumeLevel a{background-color:"+volumeLevelC+"; height:"+ volumBar +"!important }\n";
-        style += ".mbMiniPlayer."+skinName+" .playerTable span.map_volumeLevel a.sel{background-color:"+secondary[1]+";}\n";
-        style += ".mbMiniPlayer."+skinName+"  span.map_download{font-size:"+(50+parseFloat(playerPadding))+"px !important;}\n";
+        var volumBar = (80 + (parseFloat(playerPadding) * 2) ) + "%";
+        style += ".mbMiniPlayer." + skinName + " .playerTable span.map_volumeLevel a{background-color:" + volumeLevelC + "; height:" + volumBar + "!important }\n";
+        style += ".mbMiniPlayer." + skinName + " .playerTable span.map_volumeLevel a.sel{background-color:" + secondary[1] + ";}\n";
+        style += ".mbMiniPlayer." + skinName + "  span.map_download{font-size:" + (50 + parseFloat(playerPadding)) + "px !important;}\n";
 
 
         style += "/*++++++++++++++++++++++++++++++++++++++++++++++++*/\n";
 
-        if(addGradientOverlay)
+        if (addGradientOverlay)
             $("#mp_mbmap").addClass("gradientOverlay");
-        else{
+        else {
             $("#mp_mbmap").removeClass("gradientOverlay");
 
         }
@@ -657,35 +771,35 @@ $(function(){
         return [h, s, l];
     }
 
-    function updateBg(c){
+    function updateBg(c) {
         $("#player").css({
-            transition:"color .5s",
-            backgroundColor:"rgb("+c[0]+","+c[1]+","+c[2]+")",
-            color: RGBToHSL(c)[2] > 120 ? '#333' : '#fff'
+            transition     : "color .5s",
+            backgroundColor: "rgb(" + c[0] + "," + c[1] + "," + c[2] + ")",
+            color          : RGBToHSL(c)[2] > 120 ? '#333' : '#fff'
         })
     }
 
 
-    $('input.color').each(function(){
+    $('input.color').each(function () {
 
-        if(!$(this).hasClass("bodySimulator")){
+        if (!$(this).hasClass("bodySimulator")) {
             var displayVal = $("<span/>").addClass("displayVal");
             $(this).after(displayVal);
-            var hiddenValue = $("<input/>").attr("type","hidden").addClass("hiddenValue").val($(this).val());
+            var hiddenValue = $("<input/>").attr("type", "hidden").addClass("hiddenValue").val($(this).val());
             $(this).after(hiddenValue);
         }
 
         $(this).minicolors({
-            opacity: !$(this).hasClass("bodySimulator"),
-            textfield:true,
-            swatchPosition:'left',
-            change: function(hex, opacity){
+            opacity       : !$(this).hasClass("bodySimulator"),
+            textfield     : true,
+            swatchPosition: 'left',
+            change        : function (hex, opacity) {
 
-                if($(this).hasClass("bodySimulator")){
-                    var rgba =  $(this).minicolors('rgbObject');
-                    var rgb = [rgba["r"],rgba["g"],rgba["b"]];
+                if ($(this).hasClass("bodySimulator")) {
+                    var rgba = $(this).minicolors('rgbObject');
+                    var rgb = [rgba["r"], rgba["g"], rgba["b"]];
                     updateBg(rgb);
-                }else{
+                } else {
                     var col = $(this).minicolors('rgbaString');
                     $(this).closest("div").find(".hiddenValue").val(col);
                     $(this).closest("div").find(".displayVal").html(col);
@@ -695,8 +809,8 @@ $(function(){
 
     });
 
-    function updateCSS(){
-        document.updater = setInterval(function(){
+    function updateCSS() {
+        document.updater = setInterval(function () {
             var skinName = $("#skinName input").val();
             var borderRadius = $("#borderRadius input").val();
             var main = [ $("#mainColor input.hiddenValue").val(), $("#mainColor input").val() ];
@@ -705,7 +819,7 @@ $(function(){
             var playerPadding = $("#playerSize input").val();
 
             changeCSS(skinName, main, secondary, borderRadius, playerPadding, addGradientOverlay);
-        },100)
+        }, 100)
     }
 
     updateCSS();
@@ -713,65 +827,71 @@ $(function(){
     $("input").click();
 
 
-    $("#skname").on("keypress",function(e) {
+    $("#skname").on("keypress", function (e) {
         var char = String.fromCharCode(e.which);
         if (e.which != 8 && char.match(/[^a-zA-Z0-9 ]/g)) {
             return false
         }
-    }).on("keyup",function(){
+    }).on("keyup", function () {
         this.value = this.value.replace(" ", "_");
     });
     $('#skname').click().focus();
 
-    $("input").not("#skname").on("focus",function(){
-        $("#skincolorpicker").stop().fadeTo(300,1);
+    $("input").not("#skname").on("focus", function () {
+        $("#skincolorpicker").stop().fadeTo(300, 1);
         $("#cpOverlay").hide();
     });
 
-    $("input").on("blur",function(){
-        $("#skincolorpicker").stop().fadeTo(300,.1);
+    $("input").on("blur", function () {
+        $("#skincolorpicker").stop().fadeTo(300, .1);
         $("#cpOverlay").show();
     });
 
 
-    $("#generatedCode").on("focus", function(){
+    $("#generatedCode").on("focus", function () {
         clearInterval(document.updater);
-        if(this.isSelected)
+        if (this.isSelected)
             return false;
 
         this.select();
         this.isSelected = true;
-    }).on("blur", function(){
+    }).on("blur", function () {
         this.isSelected = false;
         updateCSS();
     });
 
     $(".mb_slider#s1").unselectable().mbSlider({
-        onSlide:function(o){
-            $("#"+o.id+"_val").val($(o).mbgetVal());
+        onSlide: function (o) {
+            $("#" + o.id + "_val").val($(o).mbgetVal());
         }
     });
 
     $(".mb_slider#s2").unselectable().mbSlider({
-        onSlide:function(o){
-            $("#"+o.id+"_val").val($(o).mbgetVal());
+        onSlide: function (o) {
+            $("#" + o.id + "_val").val($(o).mbgetVal());
         }
     });
 
-    function showPopUp(txt){
+    function showPopUp(txt) {
         var popUp = $("<div/>").addClass("popup");
         $("body").append(popUp);
 
         popUp.html(txt);
 
-        setTimeout(function(){
+        setTimeout(function () {
             popUp.fadeOut(1000);
 
-        },10000)
+        }, 10000)
     }
 
-    showPopUp('The skinMaker tool works only from <b>version 1.8.1 of the jQuery plug-in</b> and fron <b>version 1.5.8 of the Wordpress plug-in</b>')
+    showPopUp('The skinMaker tool works only from <b>version 1.8.1 of the jQuery plug-in</b> and fron <b>version 1.5.8 of the Wordpress plug-in</b>');
+
 });
+
+function setNameOnFileLoad(textFromFileLoaded, name){
+    $("#generatedCode").val(textFromFileLoaded);
+    $("#skname").val(name);
+}
 
 </script>
 </head>
@@ -826,6 +946,9 @@ $(function(){
             <h2>Here is your skin!</h2>
             <h3>1. <b>Copy</b> the below text <br>and paste it in your CSS file:</h3>
             <textarea id="generatedCode"></textarea>
+
+            <button onclick="$.file.save('generatedCode','css',$('#skname').val())">Save your skin</button>
+
             <h3>2. Set <b><span id="skinNameVal"></span></b> as value of <br>the "skin" parameter of your player.</h3>
         </div>
     </div>
@@ -870,6 +993,9 @@ $(function(){
             <div id="addGradient"><label>Gradient overlay:</label><input id="addGradientInput" type="checkbox" value="true" style="padding: 10px; font-size: 20px"></div>
         </div>
         <hr>
+
+        <input type="file" id="fileToLoad" accept="text/css" onchange="$.file.loadText(this,'css',setNameOnFileLoad)">
+
     </div>
     <br style="clear: both">
 
