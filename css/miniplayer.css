@@ -193,6 +193,10 @@ a.audio{
   background-image:linear-gradient(180deg, rgba(255, 255, 255,0.3) 0%,transparent 100%); !important;
 }
 
+.mbMiniPlayer .playerTable span.map_title *{
+  box-sizing: border-box;
+}
+
 .mbMiniPlayer .playerTable span.map_title{
   position:relative;
   color:#333;
@@ -200,13 +204,14 @@ a.audio{
   text-shadow: none !important;
   letter-spacing:0 !important;
   width:100% !important;
-  height:11px !important;
+  height:17px !important;
   top:-2px !important;
   background:transparent !important;
   text-align:left !important;
   cursor:default !important;
   text-overflow: ellipsis;
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 .mbMiniPlayer .map_info{
