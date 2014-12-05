@@ -118,6 +118,8 @@
 			onReady             : function (player, $controlsBox) {},
 			onPlay              : function (player) {},
 			onEnd               : function (player) {},
+			onPause               : function (player) {},
+			onMute               : function (player) {},
 			onDownload          : function (player) {}
 		},
 
@@ -423,9 +425,7 @@
 
 									var w =  player.width - ($muteBox.outerWidth() + $playBox.outerWidth()+ widthToRemove);
 
-									console.debug(player.width)
-
-									//w = w<40 ? 40 : w;
+									w = w<60 ? 60 : w;
 									$controls.css({display: "block", height: 20}).animate({width:w}, speed);
 								}
 
@@ -524,6 +524,10 @@
 										jQuery(this).html(jQuery.mbMiniPlayer.icon.volumeMute);
 										player.opt.vol = player.opt.volume;
 										el.jPlayer("volume", 0);
+
+										if(player.opt.onMute == "function")
+											player.opt.onMute(player);
+
 									}
 								}).hover(
 								function () {
@@ -592,12 +596,16 @@
 							if (isAndroidDefault)
 								return;
 
+							if (player.opt.onEnd == "function")
+								player.opt.onEnd(player);
+
 							if (player.opt.loop)
 								$player.jPlayer("play");
 							else
 								$playBox.trigger(jQuery.mbMiniPlayer.eventEnd);
-							if (typeof player.opt.onEnd == "function")
-								player.opt.onEnd(player);
+							if (typeof player.opt.onPause == "function"){
+								player.opt.onPause(player);
+							}
 
 						})
 						.on(jQuery.jPlayer.event.timeupdate, function (e) {
