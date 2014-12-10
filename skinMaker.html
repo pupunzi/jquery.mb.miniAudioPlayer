@@ -903,44 +903,6 @@ $(function() {
 
 });
 
-function setVarFromLoad(textFromFileLoaded){
-
-    var re = /\/\*{(.*)}\*\//;
-    var m = textFromFileLoaded.match(re);
-
-    if(!m){
-        alert("this is not a miniAudioPlayer skin, sorry.");
-        return;
-    }
-
-    var paramsString = "{" + m[1] + "}";
-    var params = JSON.parse( paramsString );
-
-//{"skinName": "mySkin", "borderRadius": 10, "main": "#ed1717", "secondary": "#240404", "playerPadding": 10}
-
-    $("#skname").val(params.skinName);
-
-    $("#s1_val").val(params.borderRadius);
-    $("#s1").mbsetVal(params.borderRadius);
-
-    $("#s2_val").val(params.playerPadding);
-    $("#s2").mbsetVal(params.playerPadding);
-
-    $("#mainColor input").on("change", function(){
-        $(this).closest("div").find(".hiddenValue").val($(this).val());
-        $(this).closest("div").find(".displayVal").html($(this).val());
-    }).val(params.main);
-    $("#secondaryColor input").on("change", function(){
-        $(this).closest("div").find(".hiddenValue").val($(this).val());
-        $(this).closest("div").find(".displayVal").html($(this).val());
-    }).val(params.secondary);
-
-    $("#mainColor input").spectrum("set", params.main);
-    $("#secondaryColor input").spectrum("set", params.secondary);
-
-    $(".audio").mb_miniPlayer_stop();
-
-}
 
 </script>
 </head>
@@ -1003,10 +965,53 @@ function setVarFromLoad(textFromFileLoaded){
             <h3>2. Set <b><span id="skinNameVal"></span></b> as value of <br>the "skin" parameter of your player.</h3>
         </div>
     </div>
+
     <div id="leftCol">
 
         <button onclick="$('#fileToLoad').click()">upload a saved skin</button>
         <input type="file" id="fileToLoad" accept="text/css" onchange="$.file.loadText(this,'css',setVarFromLoad)" style="display: none">
+
+        <script>
+
+            function setVarFromLoad(textFromFileLoaded) {
+
+                var re = /\/\*{(.*)}\*\//;
+                var m = textFromFileLoaded.match(re);
+
+                if(!m){
+                    alert("this is not a miniAudioPlayer skin, sorry.");
+                    return;
+                }
+
+                var paramsString = "{" + m[1] + "}";
+                var params = JSON.parse( paramsString );
+
+                //{"skinName": "mySkin", "borderRadius": 10, "main": "#ed1717", "secondary": "#240404", "playerPadding": 10}
+
+                $("#skname").val(params.skinName);
+
+                $("#s1_val").val(params.borderRadius);
+                $("#s1").mbsetVal(params.borderRadius);
+
+                $("#s2_val").val(params.playerPadding);
+                $("#s2").mbsetVal(params.playerPadding);
+
+                $("#mainColor input").on("change", function(){
+                    $(this).closest("div").find(".hiddenValue").val($(this).val());
+                    $(this).closest("div").find(".displayVal").html($(this).val());
+                }).val(params.main);
+                $("#secondaryColor input").on("change", function(){
+                    $(this).closest("div").find(".hiddenValue").val($(this).val());
+                    $(this).closest("div").find(".displayVal").html($(this).val());
+                }).val(params.secondary);
+
+                $("#mainColor input").spectrum("set", params.main);
+                $("#secondaryColor input").spectrum("set", params.secondary);
+
+                $(".audio").mb_miniPlayer_stop();
+
+            }
+        </script>
         <p>You can upload a previous saved CSS skin file to configure the player.</p>
         <hr>
 

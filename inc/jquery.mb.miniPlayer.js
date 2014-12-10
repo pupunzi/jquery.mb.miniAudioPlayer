@@ -659,7 +659,6 @@
 						e.preventDefault();
 						e.stopPropagation();
 					}
-
 				})
 			})
 		},
@@ -789,7 +788,7 @@
 		return jQuery(this);
 	};
 
-	//Public method
+	//Public methods
 	jQuery.fn.mb_miniPlayer = jQuery.mbMiniPlayer.buildPlayer;
 	jQuery.fn.mb_miniPlayer_changeFile = jQuery.mbMiniPlayer.changeFile;
 	jQuery.fn.mb_miniPlayer_play = jQuery.mbMiniPlayer.play;
