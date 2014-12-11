@@ -118,8 +118,8 @@
 			onReady             : function (player, $controlsBox) {},
 			onPlay              : function (player) {},
 			onEnd               : function (player) {},
-			onPause               : function (player) {},
-			onMute               : function (player) {},
+			onPause             : function (player) {},
+			onMute              : function (player) {},
 			onDownload          : function (player) {}
 		},
 
@@ -132,14 +132,14 @@
 			var url = (player.opt.mp3 || player.opt.m4a);
 
 			if (url) {
-				ID3.loadTags(url, function() {
+				ID3.loadTags(url, function () {
 					player.info = ID3.getAllTags(url);
 					if (typeof player.info.title != "undefined" && player.info.title != "null") {
 						$titleBox.html(player.info.title + " - " + player.info.artist);
 					}
-				},{
-					tags: ["artist", "title", "album", "year", "comment", "track", "genre", "lyrics", "picture"],
-					onError: function(reason) {
+				}, {
+					tags   : ["artist", "title", "album", "year", "comment", "track", "genre", "lyrics", "picture"],
+					onError: function (reason) {
 						if (reason.error === "xhr") {
 							console.log("There was a network error: ", reason.xhr);
 						}
@@ -249,7 +249,7 @@
 						//if not use downloadPage, download html5Way
 
 						//if can download HTML5 way
-						if(isSameDomain && typeof a.download != "undefined")
+						if (isSameDomain && typeof a.download != "undefined")
 
 							download = jQuery("<a/>")
 									.addClass("map_download")
@@ -270,7 +270,7 @@
 									})
 									.attr("title", "open: " + fileName);
 
-					}else{
+					} else {
 
 						// use the PHP page
 						download = jQuery("<span/>")
@@ -367,7 +367,7 @@
 							if (player.opt.width.toString().indexOf("%") >= 0) {
 
 								var m = $playBox.outerWidth() < 40 ? 40 : $playBox.outerWidth();
-								var margin = player.opt.downloadable ? (m+10) * 3 : 40;
+								var margin = player.opt.downloadable ? (m + 10) * 3 : 40;
 								var pW = $master.parent().outerWidth() - margin;
 								player.width = (pW * (parseFloat(player.opt.width))) / 100;
 
@@ -393,7 +393,7 @@
 									else
 										$rewBox.show().animate({width: 20}, speed / 2);
 
-									widthToRemove +=30;
+									widthToRemove += 30;
 								}
 
 								if (player.opt.showTime) {
@@ -403,30 +403,30 @@
 									else
 										$timeBox.animate({width: 34}, speed / 2).show();
 
-									widthToRemove +=45;
+									widthToRemove += 45;
 
 								}
 
 								if (player.opt.showVolumeLevel) {
 									$volumeLevel.parent("div").show();
-									jQuery("a",$volumeLevel).show();
+									jQuery("a", $volumeLevel).show();
 
 									if (isIE)
 										$volumeLevel.show().css({width: 40, display: "block"});
 									else
 										$volumeLevel.show().animate({width: 40}, speed / 2);
 
-									widthToRemove +=50;
+									widthToRemove += 50;
 
 								}
 
 								if (player.opt.showControls) {
 									$controls.parent("div").show();
 
-									var w =  player.width - ($muteBox.outerWidth() + $playBox.outerWidth()+ widthToRemove);
+									var w = player.width - ($muteBox.outerWidth() + $playBox.outerWidth() + widthToRemove);
 
-									w = w<60 ? 60 : w;
-									$controls.css({display: "block", height: 20}).animate({width:w}, speed);
+									w = w < 60 ? 60 : w;
+									$controls.css({display: "block", height: 20}).animate({width: w}, speed);
 								}
 
 
@@ -446,7 +446,7 @@
 									});
 								}
 								if (player.opt.showVolumeLevel) {
-									jQuery("a",$volumeLevel).hide();
+									jQuery("a", $volumeLevel).hide();
 
 									$volumeLevel.animate({width: 1}, speed / 2, function () {
 										jQuery(this).parent("div").css({display: "none"})
@@ -525,7 +525,7 @@
 										player.opt.vol = player.opt.volume;
 										el.jPlayer("volume", 0);
 
-										if(player.opt.onMute == "function")
+										if (player.opt.onMute == "function")
 											player.opt.onMute(player);
 
 									}
@@ -581,7 +581,8 @@
 					swfPath            : player.opt.swfPath,
 					solution           : 'html, flash',
 //					solution           : player.opt.isIE && $.browser.version<11 ? 'flash' : 'html, flash',
-					preload            : jQuery.isMobile ? 'none' : 'metadata',
+//					preload            : jQuery.isMobile ? 'none' : 'metadata',
+					preload            : 'none',
 					cssSelectorAncestor: "#" + playerID, // Remove the ancestor css selector clause
 					cssSelector        : {
 						playBar: "#playBar_" + playerID,
@@ -590,7 +591,7 @@
 					}
 				})
 						.on(jQuery.jPlayer.event.play, function (e) {})
-						.on(jQuery.jPlayer.event.loadedmetadata, function(){})
+						.on(jQuery.jPlayer.event.loadedmetadata, function () {})
 						.on(jQuery.jPlayer.event.ended, function () {
 
 							if (isAndroidDefault)
@@ -603,7 +604,7 @@
 								$player.jPlayer("play");
 							else
 								$playBox.trigger(jQuery.mbMiniPlayer.eventEnd);
-							if (typeof player.opt.onPause == "function"){
+							if (typeof player.opt.onPause == "function") {
 								player.opt.onPause(player);
 							}
 
@@ -779,10 +780,10 @@
 		this.each(function () {
 			jQuery(this).css({
 				"-webkit-user-select": "none",
-				"-moz-user-select": "none",
-				"-ms-user-select": "none",
-				"-o-user-select": "none",
-				"user-select": "none"
+				"-moz-user-select"   : "none",
+				"-ms-user-select"    : "none",
+				"-o-user-select"     : "none",
+				"user-select"        : "none"
 			}).attr("unselectable", "on");
 		});
 		return jQuery(this);
