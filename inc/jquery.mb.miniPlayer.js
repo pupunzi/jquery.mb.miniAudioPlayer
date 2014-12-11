@@ -78,7 +78,7 @@
 
 	jQuery.mbMiniPlayer = {
 		author  : "Matteo Bicocchi",
-		version : "1.8.1",
+		version : "1.8.2",
 		name    : "mb.miniPlayer",
 		isMobile: false,
 
@@ -90,6 +90,7 @@
 			volume    : "Vm",
 			volumeMute: "Vm"
 		},
+
 		defaults: {
 			ogg                 : null,
 			m4a                 : null,
@@ -298,7 +299,7 @@
 					$controlsBox.append(download);
 				}
 
-				var $tds = $controlsBox.find("div").not('.playerTable').unselectable();
+				var $parts = $controlsBox.find("div").not('.playerTable').unselectable();
 
 				var $muteBox = jQuery("<span/>").addClass("map_volume").html(jQuery.mbMiniPlayer.icon.volume);
 				var $volumeLevel = jQuery("<span/>").addClass("map_volumeLevel").html("").hide();
@@ -320,12 +321,12 @@
 				$loadBar.append($playBar);
 				$controls.append($titleBox).append($progress);
 
-				$tds.eq(0).addClass("muteBox").append($muteBox);
-				$tds.eq(1).addClass("volumeLevel").append($volumeLevel).hide();
-				$tds.eq(2).addClass("map_controlsBar").append($controls).hide();
-				$tds.eq(3).addClass("timeBox").append($timeBox).hide();
-				$tds.eq(4).addClass("rewBox").append($rewBox).hide();
-				$tds.eq(5).append($playBox);
+				$parts.eq(0).addClass("muteBox").append($muteBox);
+				$parts.eq(1).addClass("volumeLevel").append($volumeLevel).hide();
+				$parts.eq(2).addClass("map_controlsBar").append($controls).hide();
+				$parts.eq(3).addClass("timeBox").append($timeBox).hide();
+				$parts.eq(4).addClass("rewBox").append($rewBox).hide();
+				$parts.eq(5).append($playBox);
 
 				player.opt.media = {};
 				player.opt.supplied = [];
@@ -777,7 +778,7 @@
 	});
 
 	jQuery.fn.unselectable = function () {
-		this.each(function () {
+		return this.each(function () {
 			jQuery(this).css({
 				"-webkit-user-select": "none",
 				"-moz-user-select"   : "none",
@@ -786,7 +787,6 @@
 				"user-select"        : "none"
 			}).attr("unselectable", "on");
 		});
-		return jQuery(this);
 	};
 
 	//Public methods
