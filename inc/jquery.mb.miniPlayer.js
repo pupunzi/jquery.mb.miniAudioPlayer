@@ -76,6 +76,8 @@
 
 	var map = map || {};
 
+	jQuery.isMobile = jQuery.isMobile && !jQuery.browser.windowsMobile;
+
 	jQuery.mbMiniPlayer = {
 		author  : "Matteo Bicocchi",
 		version : "1.8.2",
