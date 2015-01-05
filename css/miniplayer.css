@@ -190,7 +190,7 @@ a.audio{
 }
 
 .mbMiniPlayer.gradientOverlay .playerTable span{
-  background-image:linear-gradient(180deg, rgba(255, 255, 255,0.3) 0%,transparent 100%); !important;
+  background-image:linear-gradient(180deg, rgba(255, 255, 255,0.3) 0%,transparent 100%) !important;
 }
 
 .mbMiniPlayer .playerTable span.map_title *{
