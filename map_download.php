@@ -67,53 +67,53 @@ if(!fileExists($file_url))
 //This will set the Content-Type to the appropriate setting for the file
 switch ($file_extension)
 {
-/*
-    case 'kmz':
-        $content_type = 'application/vnd.google-earth.kmz' ;
-        break ;
-    case 'kml':
-        $content_type = 'application/vnd.google-earth.kml+xml' ;
-        break ;
-    case 'pdf':
-        $content_type = 'application/pdf' ;
-        break ;
-    case 'exe':
-        $content_type = 'application/octet-stream' ;
-        break ;
-    case 'zip':
-        $content_type = 'application/zip' ;
-        break ;
-    case 'doc':
-        $content_type = 'application/msword' ;
-        break ;
-    case 'xls':
-        $content_type = 'application/vnd.ms-excel' ;
-        break ;
-    case 'ppt':
-        $content_type = 'application/vnd.ms-powerpoint' ;
-        break ;
-    case 'gif':
-        $content_type = 'image/gif' ;
-        break ;
-    case 'png':
-        $content_type = 'image/png' ;
-        break ;
-    case 'jpeg':
-    case 'jpg':
-        $content_type = 'image/jpg' ;
-        break ;
-    case 'mpeg':
-    case 'mpg':
-    case 'mpe':
-        $content_type = 'video/mpeg' ;
-        break ;
-    case 'mov':
-        $content_type = 'video/quicktime' ;
-        break ;
-    case 'avi':
-        $content_type = 'video/x-msvideo' ;
-        break ;
-*/
+    /*
+        case 'kmz':
+            $content_type = 'application/vnd.google-earth.kmz' ;
+            break ;
+        case 'kml':
+            $content_type = 'application/vnd.google-earth.kml+xml' ;
+            break ;
+        case 'pdf':
+            $content_type = 'application/pdf' ;
+            break ;
+        case 'exe':
+            $content_type = 'application/octet-stream' ;
+            break ;
+        case 'zip':
+            $content_type = 'application/zip' ;
+            break ;
+        case 'doc':
+            $content_type = 'application/msword' ;
+            break ;
+        case 'xls':
+            $content_type = 'application/vnd.ms-excel' ;
+            break ;
+        case 'ppt':
+            $content_type = 'application/vnd.ms-powerpoint' ;
+            break ;
+        case 'gif':
+            $content_type = 'image/gif' ;
+            break ;
+        case 'png':
+            $content_type = 'image/png' ;
+            break ;
+        case 'jpeg':
+        case 'jpg':
+            $content_type = 'image/jpg' ;
+            break ;
+        case 'mpeg':
+        case 'mpg':
+        case 'mpe':
+            $content_type = 'video/mpeg' ;
+            break ;
+        case 'mov':
+            $content_type = 'video/quicktime' ;
+            break ;
+        case 'avi':
+            $content_type = 'video/x-msvideo' ;
+            break ;
+    */
 
     case 'mp3':
         $content_type = 'audio/mpeg' ;
