@@ -738,7 +738,6 @@
 		}
 	};
 
-
 	jQuery(document).on("keypress.mbMiniPlayer", function (e) {
 		if (e.keyCode == 32) {
 			if (jQuery(e.target).is("textarea, input, [contenteditable]") || jQuery(e.target).parents().is("[contenteditable]"))
