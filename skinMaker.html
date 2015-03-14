@@ -929,11 +929,10 @@ $(function() {
         <h2>How it works (Wordpress component)</h2>
         <p>
         <ol>
-            <li>Use "mySkin" as name.
+            <li>Give it a name.
             <li>Customize each element.
-            <li>Generate the CSS code.
-            <li>Copy the generated CSS and paste it into the "mySkin" textarea in the component settings page.
-            <li>Choose "mySkin" from the skin selector.
+            <li>download it.
+            <li>upload it from the mb.miniAudioPlayer Wordpress settings page.
         </ol>
         </p>
 
@@ -941,8 +940,8 @@ $(function() {
         <div style="text-align: right">
             <button onclick="$('#codeBox').slideDown('slow');$('#generatedCode').select();$('#generatedCode').get(0).isSelected = true ">copy the css code</button>
 
-            <h3><b>Or save</b> the CSS file:</h3>
-            <button onclick="$.file.save('generatedCode','css',$('#skname').val())">Save your skin</button>
+            <h3><b>Or download</b> the CSS file:</h3>
+            <button onclick="$.file.save('generatedCode','css',$('#skname').val())">download your skin</button>
 
         </div>
 
@@ -1057,7 +1056,5 @@ $(function() {
     <br style="clear: both">
 
 </div>
-
-
 </body>
 </html>
