@@ -231,7 +231,7 @@
 				$master.after($controlsBox);
 				$controlsBox.html($layout);
 
-				var fileUrl = encodeURI(player.opt.mp3 || player.opt.m4a);
+				var fileUrl = encodeURI(player.opt.mp3 || player.opt.m4a || player.opt.ogg);
 				var fileExtension = fileUrl.substr((Math.max(0, fileUrl.lastIndexOf(".")) || Infinity) + 1);
 
 				//if there's a querystring remove it
