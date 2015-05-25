@@ -1,34 +1,35 @@
 <!DOCTYPE html>
-<!--
-  ~ /*******************************************************************************
-  ~  jquery.mb.components
-  ~  file: demo.html
-  ~
-  ~  Copyright (c) 2001-2014. Matteo Bicocchi (Pupunzi);
-  ~  Open lab srl, Firenze - Italy
-  ~  email: matteo@open-lab.com
-  ~  site: 	http://pupunzi.com
-  ~  blog:	http://pupunzi.open-lab.com
-  ~ 	http://open-lab.com
-  ~
-  ~  Licences: MIT, GPL
-  ~  http://www.opensource.org/licenses/mit-license.php
-  ~  http://www.gnu.org/licenses/gpl.html
-  ~
-  ~  last modified: 02/05/14 23.58
-  ~  ******************************************************************************/
-  -->
+<!--–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+  jquery.mb.components                                                                                                                              –
+                                                                                                                                                    –
+  file: index.tmpl                                                                                                                                  –
+  last modified: 25/05/15 22.20                                                                                                                     –
+                                                                                                                                                    –
+  Open Lab s.r.l., Florence - Italy                                                                                                                 –
+                                                                                                                                                    –
+  email: matteo@open-lab.com                                                                                                                        –
+  site: http://pupunzi.com                                                                                                                          –
+        http://open-lab.com                                                                                                                         –
+  blog: http://pupunzi.open-lab.com                                                                                                                 –
+  Q&A:  http://jquery.pupunzi.com                                                                                                                   –
+                                                                                                                                                    –
+  Licences: MIT, GPL                                                                                                                                –
+     http://www.opensource.org/licenses/mit-license.php                                                                                             –
+     http://www.gnu.org/licenses/gpl.html                                                                                                           –
+                                                                                                                                                    –
+  Copyright (c) 2001-2015. Matteo Bicocchi (Pupunzi);                                                                                               –
+  –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––-->
 
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>jquery.mb.miniAudioPlayer</title>
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
-    <script type="text/javascript" src="inc/jquery.jplayer.min.js"></script>
-    <script type="text/javascript" src="inc/jquery.mb.miniPlayer.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/miniplayer.css" title="style"  media="screen"/>
     <link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="css/jQuery.mb.miniAudioPlayer.min.css?_v= 1.8.2" title="style"  media="screen"/>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
+    <script type="text/javascript" src="jQuery.mb.miniAudioPlayer.min.js?_v= 1.8.2"></script>
     <style type="text/css">
 
        /*Generic page style*/
@@ -99,11 +100,6 @@
             color: #868686;
         }
 
-/*
-            .map_download{opacity:0}
-            [isplaying=true] .map_download{opacity:1}
-*/
-
     </style>
 
     <script type="text/javascript">
@@ -112,11 +108,7 @@
 
             var isIframe=function(){var a=!1;try{self.location.href!=top.location.href&&(a=!0)}catch(b){a=!0}return a};if(!isIframe()){var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");$("#wrapper").prepend(logo),$("#logo").fadeIn()}
 
-            var ua = navigator.userAgent.toLowerCase();
-            var isAndroid = /android/.test(ua);
-            var isAndroidDefault = isAndroid && !(/chrome/i).test(ua);
-
-            if(isAndroidDefault){
+            if(jQuery.isAndroidDefault){
                 alert("Sorry, your browser does not support this implementation of the player. It will be used the standard HTML5 audio player instead")
             }
 

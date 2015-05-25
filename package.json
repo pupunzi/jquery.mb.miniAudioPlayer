@@ -1,6 +1,6 @@
 {
   "name": "jquery.mb.miniaudioplayer",
-  "title": "jQuery mb.miniAudioPlayer",
+  "title": "jQuery.mb.miniAudioPlayer",
   "description": "This plugin let you add a minimal full featured player that takes advantage of the new HTML5 AUDIO tag with a flash fallback for browsers that don't support it. It is built on the jPlayer library",
   "keywords": [
     "jquery-plugin",
@@ -42,5 +42,15 @@
     "type": "git",
     "url": "https://github.com/pupunzi/jquery.mb.miniAudioPlayer"
   },
-  "license": "MIT"
+  "license": "MIT",
+	"devDependencies": {
+		"grunt": "^0.4.5",
+		"grunt-contrib-concat": "^0.5.1",
+		"grunt-contrib-copy": "^0.8.0",
+		"grunt-contrib-cssmin": "^0.12.3",
+		"grunt-contrib-uglify": "^0.9.1",
+		"grunt-contrib-watch": "^0.6.1",
+		"grunt-include-replace": "^3.0.0"
+	}
 }
+

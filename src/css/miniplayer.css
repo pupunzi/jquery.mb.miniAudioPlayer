@@ -23,20 +23,20 @@
 
 @font-face {
   font-family: 'mb_audio_fontRegular';
-  src: url('mbAudioFont/mbaudio_font.eot');
-  src: local('?'), url('mbAudioFont/mbaudio_font.woff') format('woff'),
-  url('mbAudioFont/mbaudio_font.ttf') format('truetype'),
-  url('mbAudioFont/mbaudio_font.svg#webfontywr4YLri') format('svg');
+  src: url('font/mbAudioFont/mbaudio_font.eot');
+  src: local('?'), url('font/mbAudioFont/mbaudio_font.woff') format('woff'),
+  url('font/mbAudioFont/mbaudio_font.ttf') format('truetype'),
+  url('font/mbAudioFont/mbaudio_font.svg#webfontywr4YLri') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'DroidSansMonoRegular';
-  src: url('DroidSansMono/DroidSansMono.eot');
-  src: local('?'), url('DroidSansMono/DroidSansMono.woff') format('woff'),
-  url('DroidSansMono/DroidSansMono.ttf')  format('truetype'),
-  url('DroidSansMono/DroidSansMono.svg#webfontGzFJ3WpO') format('svg');
+  src: url('font/DroidSansMono/DroidSansMono.eot');
+  src: local('?'), url('font/DroidSansMono/DroidSansMono.woff') format('woff'),
+  url('font/DroidSansMono/DroidSansMono.ttf')  format('truetype'),
+  url('font/DroidSansMono/DroidSansMono.svg#webfontGzFJ3WpO') format('svg');
   font-weight: normal;
   font-style: normal;
 }
