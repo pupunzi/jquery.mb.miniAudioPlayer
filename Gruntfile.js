@@ -54,12 +54,12 @@ module.exports = function(grunt) {
 			options: {
 				banner: '/*' +
 						'<%= pkg.title %> <%= grunt.template.today("dd-mm-yyyy") %>\n' +
-						' _ jquery.mb.components                                                                                                                             _\n' +
-						' _ email: matteo@open-lab.com                                                                                                                       _\n' +
-						' _ Copyright (c) 2001-<%= grunt.template.today("yyyy") %>. Matteo Bicocchi (Pupunzi);                                                                                              _\n' +
-						' _ blog: http://pupunzi.open-lab.com                                                                                                                _\n' +
-						' _ Open Lab s.r.l., Florence - Italy                                                                                                                _\n' +
-						' */\n'
+						' _ jquery.mb.components \n' +
+						' _ email: matteo@open-lab.com \n' +
+						' _ Copyright (c) 2001-<%= grunt.template.today("yyyy") %>. Matteo Bicocchi (Pupunzi); \n' +
+						' _ blog: http://pupunzi.open-lab.com \n' +
+						' _ Open Lab s.r.l., Florence - Italy \n' +
+						' */ \n'
 			},
 
 			dist: {
@@ -103,6 +103,32 @@ module.exports = function(grunt) {
 		watch: {
 			files: ['src/css/*.css','src/*.js','src/*.html', 'Gruntfile.js'],
 			tasks: ['copy','concat', 'uglify', 'cssmin', 'includereplace']
+		},
+
+		buildnumber: {
+			options: {
+				field: 'buildnum'
+			},
+			files: ['package.json', 'bower.json']
+		},
+
+		bump: {
+			options: {
+				files: ['package.json'],
+				updateConfigs: [],
+				commit: true,
+				commitMessage: 'Release v%VERSION%',
+				commitFiles: ['-a'],
+				createTag: true,
+				tagName: 'v%VERSION%',
+				tagMessage: 'Version %VERSION%',
+				push: true,
+				pushTo: 'git push origin master',
+				gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d',
+				globalReplace: false,
+				prereleaseName: false,
+				regExp: false
+			}
 		}
 
 	});
@@ -113,7 +139,10 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-build-number');
+	grunt.loadNpmTasks('grunt-bump');
 
-	grunt.registerTask('default', ['copy','concat', 'uglify', 'cssmin', 'includereplace']);
+	grunt.registerTask('buildN', ['buildnumber']);
+	grunt.registerTask('default', ['copy','concat', 'uglify', 'cssmin', 'includereplace', 'buildnumber']);
 
 };

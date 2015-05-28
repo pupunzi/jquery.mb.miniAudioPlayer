@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 /*___________________________________________________________________________________________________________________________________________________
  _ jquery.mb.components                                                                                                                             _
  _                                                                                                                                                  _
@@ -18,8 +20,6 @@
  _                                                                                                                                                  _
  _ Copyright (c) 2001-2014. Matteo Bicocchi (Pupunzi);                                                                                              _
  ___________________________________________________________________________________________________________________________________________________*/
-
-@charset "UTF-8";
 
 @font-face {
   font-family: 'mb_audio_fontRegular';
@@ -45,14 +45,11 @@
   display: none!important;
 }
 
-
 a.audio{
   display:none;
 }
 
-.mbMiniPlayer{
-
-}
+.mbMiniPlayer{}
 
 .mbMiniPlayer:focus{
   outline: none;
@@ -93,7 +90,6 @@ a.audio{
 .mbMiniPlayer:focus .playerTable{
   box-shadow: 0 0 5px rgba(93, 146, 192, 0.8) !important;
 }
-
 
 .mbMiniPlayer.shadow .playerTable{
   -moz-box-shadow: 0px 0px 3px rgba(0,0,0,0.4);
@@ -171,7 +167,6 @@ a.audio{
   margin:1px;
   display:none;
   width:1px;
-  *border:1px solid gray;
   height:100%;
   overflow:hidden;
   white-space:nowrap;
@@ -221,7 +216,6 @@ a.audio{
   padding: 1px 4px;
   position: absolute;
   z-index: 10;
-
 }
 
 .mbMiniPlayer .playerTable span.map_rew{
@@ -232,6 +226,7 @@ a.audio{
   white-space: nowrap;
   overflow: hidden;
 }
+
 .mbMiniPlayer .playerTable span.map_volumeLevel a{
   position:relative !important;
   display:inline-block !important;
@@ -260,7 +255,6 @@ a.audio{
   cursor:default !important;
   text-shadow: 1px -1px 1px rgba(0,0,0,.6)!important;
 }
-
 
 .mbMiniPlayer .playerTable span.map_play{
   border-radius:0 4px 4px 0 !important;
@@ -432,7 +426,6 @@ a.audio{
   background-color: #0099ff;
 }
 
-
 /*ORANGE ----------------------------------------*/
 .mbMiniPlayer.orange .playerTable span{
   background-color: #ff9900;
@@ -461,7 +454,6 @@ a.audio{
 .mbMiniPlayer.orange .jp-play-bar {
   background-color: #ff9900;
 }
-
 
 /*RED ----------------------------------------*/
 .mbMiniPlayer.red .playerTable span{
@@ -518,4 +510,82 @@ a.audio{
 
 .mbMiniPlayer.green .jp-play-bar {
   background-color: #339900;
+}
+
+/* Wordpress Playlist (needed only by wordpress) ---------------------------------------*/
+
+.map_pl_container{
+  margin: 10px 0;
+  padding-left: 5px;
+  border-left: 3px dotted rgba(0, 0, 0, 0.10);
+}
+
+.map_pl_container .pl_items_container{
+  max-height: 300px;
+  overflow: hidden;
+  overflow-y: auto;
+  width: 99%;
+}
+
+.map_pl_container .pl_item{
+  position: relative;
+  margin: 5px 0;
+  padding: 5px;
+  border-bottom: 1px dotted #ccc;
+  font: 14px/14px "DroidSansMonoRegular", sans-serif !important;
+  display: block;
+}
+
+.map_pl_container .pl_item:hover{
+  color: #999;
+}
+
+.map_pl_container .pl_item span.map_download{
+  position: absolute;
+  right: 5px;
+  top: 2px;
+  display: block !important;
+  vertical-align: middle !important;
+  margin: 0 !important;
+  padding: 0 2px !important;
+  font-family: "mb_audio_fontRegular" !important;
+  font-size: 34px !important;
+  line-height: 22px !important;
+  color: rgba(0,0,0,.2);
+
+  transition: color 1s;
+  -moz-transition: color 1s;
+  -webkit-transition: color 1s;
+  -o-transition: color 1s;
+}
+
+.map_pl_container .pl_item span.map_download:hover{
+  color: rgba(0,0,0,.8);
+
+  transition: color 0.5s;
+  -moz-transition: color 0.5s;
+  -webkit-transition: color 0.5s;
+  -o-transition: color 0.5s;
+}
+
+.map_pl_container .pl_item.sel{
+  color: #666;
+  background: rgba(0, 0, 0, 0.10);
+  border-radius: 8px;
+}
+
+.map_album_infobox{
+  margin-bottom: 10px;
+}
+
+.map_item_title{
+  font-weight: 600;
+}
+
+.map_item_album{
+  font-style: italic;
+}
+
+.map_item_artist{
+  display: block;
 }

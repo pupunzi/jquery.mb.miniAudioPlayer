@@ -57,7 +57,7 @@
 			showVolumeLevel     : true,
 			showTime            : true,
 			showRew             : true,
-			addShadow           : true,
+			addShadow           : false,
 			addGradientOverlay  : false,
 			gaTrack             : true,
 			downloadable        : false,
@@ -100,14 +100,16 @@
 
 		buildPlayer: function (options) {
 
-			this.each(function (idx) {
+			return this.each(function (idx) {
 
-				if (this.isInit)
+				var master = this;
+
+				if (master.isInit)
 					return;
 
-				this.isInit = true;
+				master.isInit = true;
 
-				var $master = jQuery(this);
+				var $master = jQuery(master);
 				$master.hide();
 				var url = $master.attr("href");
 				var playerID = "mp_" + ($master.attr("id") ? $master.attr("id") : new Date().getTime());
@@ -122,49 +124,47 @@
 				}
 
 				var $player = jQuery("<div/>").attr({id: "JPL_" + playerID});
-				var player = $player.get(0);
-				player.opt = {};
-				jQuery.extend(player.opt, jQuery.mbMiniPlayer.defaults, options);
+				master.player = $player.get(0);
+				master.player.opt = {};
+				jQuery.extend(master.player.opt, jQuery.mbMiniPlayer.defaults, options);
 				jQuery.mbMiniPlayer.eventEnd = jQuery.isMobile ? "touchend" : "mouseup";
 
-				player.idx = idx + 1;
-				player.title = title;
+				master.player.idx = idx + 1;
+				master.player.title = title;
 
-				player.opt.isIE = jQuery.browser.msie;//&& jQuery.browser.version === 9;
-
-				this.player = player;
+				master.player.opt.isIE = jQuery.browser.msie;//&& jQuery.browser.version === 9;
 
 				if (jQuery.metadata) {
 					jQuery.metadata.setType("class");
-					jQuery.extend(player.opt, $master.metadata());
+					jQuery.extend(master.player.opt, $master.metadata());
 				}
 
 				if (jQuery.isMobile) { //'ontouchstart' in window
-					player.opt.showVolumeLevel = false;
-					player.opt.autoplay = false;
-					player.opt.downloadable = false;
+					master.player.opt.showVolumeLevel = false;
+					master.player.opt.autoplay = false;
+					master.player.opt.downloadable = false;
 				}
 
-				if (!player.opt.mp3 && url.indexOf("mp3") > 0)
-					player.opt.mp3 = url;
-				if (!player.opt.m4a && url.indexOf("m4a") > 0)
-					player.opt.m4a = url;
-				if (typeof player.opt.mp3 == "undefined")
-					player.opt.mp3 = null;
-				if (typeof player.opt.m4a == "undefined")
-					player.opt.m4a = null;
+				if (!master.player.opt.mp3 && url.indexOf("mp3") > 0)
+					master.player.opt.mp3 = url;
+				if (!master.player.opt.m4a && url.indexOf("m4a") > 0)
+					master.player.opt.m4a = url;
+				if (typeof master.player.opt.mp3 == "undefined")
+					master.player.opt.mp3 = null;
+				if (typeof master.player.opt.m4a == "undefined")
+					master.player.opt.m4a = null;
 
-				var skin = player.opt.skin;
+				var skin = master.player.opt.skin;
 
-				var $controlsBox = jQuery("<div/>").attr({id: playerID, isPlaying: false, tabIndex: player.idx }).addClass("mbMiniPlayer").addClass(skin);
-				player.controlBox = $controlsBox;
+				var $controlsBox = jQuery("<div/>").attr({id: playerID, isPlaying: false, tabIndex: master.player.idx }).addClass("mbMiniPlayer").addClass(skin);
+				master.player.controlBox = $controlsBox;
 
-				if (player.opt.inLine)
+				if (master.player.opt.inLine)
 					$controlsBox.css({display: "inline-block", verticalAlign: "middle"});
-				if (player.opt.addShadow)
+				if (master.player.opt.addShadow)
 					$controlsBox.addClass("shadow");
 
-				if (player.opt.addGradientOverlay)
+				if (master.player.opt.addGradientOverlay)
 					$controlsBox.addClass("gradientOverlay");
 
 				var $layout = jQuery("<div class='playerTable'> <div></div><div></div><div></div><div></div><div></div><div></div> </div>");
@@ -178,40 +178,47 @@
 				$master.after($controlsBox);
 				$controlsBox.html($layout);
 
-				var fileUrl = encodeURI(player.opt.mp3 || player.opt.m4a);
-				var fileExtension = fileUrl.substr((Math.max(0, fileUrl.lastIndexOf(".")) || Infinity) + 1);
+				master.player.fileUrl = encodeURI(master.player.opt.mp3 || master.player.opt.m4a);
+				var fileExtension = master.player.fileUrl.substr((Math.max(0, master.player.fileUrl.lastIndexOf(".")) || Infinity) + 1);
 
 				//if there's a querystring remove it
 				if (fileExtension.indexOf("?") >= 0) {
 					fileExtension = fileExtension.split("?")[0];
 				}
 
-				var fileName = encodeURI(fileUrl.replace("." + fileExtension, "").split("/").pop());
+				master.player.fileName = encodeURI(master.player.fileUrl.replace("." + fileExtension, "").split("/").pop());
 
-				if (player.opt.downloadable) {
-					var download;
+				master.player.createDownload = function(fileUrl, fileName){
+
+					fileUrl = fileUrl || master.player.fileUrl;
+					fileName = fileName || master.player.fileName;
+
 					var host = location.hostname.split(".");
 					host = host.length == 3 ? host[1] : host[0];
 					var isSameDomain = (fileUrl.indexOf(host) >= 0) || fileUrl.indexOf("http") < 0;
 					var a = document.createElement('a');
 
-					if (!player.opt.downloadPage) {
+					if (!master.player.opt.downloadPage) {
 						//if not use downloadPage, download html5Way
 
 						//if can download HTML5 way
-						if (isSameDomain && typeof a.download != "undefined")
+						if(isSameDomain && typeof a.download != "undefined"){
 
-							download = jQuery("<a/>")
+							master.player.download = jQuery("<a/>")
 									.addClass("map_download")
 									.attr({href: fileUrl, download: fileName + "." + fileExtension})
 									.css({display: "inline-block", cursor: "pointer"})
 									.html("d")
-									.attr("title", "download: " + fileName);
+									.attr("title", "download: " + fileName)
+									.on("mouseover", function(){
+										jQuery(this).attr("title", "download: " + fileName);
+									});
+						}
 
 						//if not open a new page with the audio file
 						else
 
-							download = jQuery("<span/>")
+							master.player.download = jQuery("<span/>")
 									.addClass("map_download")
 									.css({display: "inline-block", cursor: "pointer"})
 									.html("d")
@@ -220,39 +227,55 @@
 									})
 									.attr("title", "open: " + fileName);
 
-					} else {
+					}else{
 
 						// use the PHP page
-						download = jQuery("<span/>")
+						master.player.download = jQuery("<span/>")
 								.addClass("map_download")
 								.css({display: "inline-block", cursor: "pointer"})
 								.html("d")
-								.on(jQuery.mbMiniPlayer.eventEnd, function () {
-									location.href = player.opt.downloadPage + "?filename=" + fileName + "." + fileExtension + "&fileurl=" + fileUrl;
+								.on(jQuery.mbMiniPlayer.eventEnd, function (e) {
+
+									e.preventDefault();
+									e.stopPropagation();
+
+									expires = "";
+									document.cookie = "mapdownload=true" + expires + "; path=/";
+									location.href = master.player.opt.downloadPage + "?filename=" + fileName + "." + fileExtension + "&fileurl=" + fileUrl;
+								}).on("mouseover", function(){
+									jQuery(this).attr("title", "download: " + fileName);
+								}).on("click", function(e){
+									e.preventDefault();
+									e.stopPropagation();
 								})
 								.attr("title", "download: " + fileName);
 					}
 
-					download.on(jQuery.mbMiniPlayer.eventEnd, function () {
+					master.player.download.on(jQuery.mbMiniPlayer.eventEnd, function () {
 						//add track for Google Analytics
-						if (typeof _gaq != "undefined" && eval(player.opt.gaTrack))
-							_gaq.push(['_trackEvent', 'Audio', 'map_Download', player.title + " - " + self.location.href]);
+						if (typeof _gaq != "undefined" && eval(master.player.opt.gaTrack))
+							_gaq.push(['_trackEvent', 'Audio', 'map_Download', fileName + " - " + self.location.href]);
 
-						if (typeof ga != "undefined" && eval(player.opt.gaTrack))
-							ga('send', 'event', 'Audio', 'map_Download', player.title + " - " + self.location.href);
+						if (typeof ga != "undefined" && eval(master.player.opt.gaTrack))
+							ga('send', 'event', 'Audio', 'map_Download', fileName + " - " + self.location.href);
 
-						if (typeof player.opt.onDownload == "function")
-							player.opt.onDownload(player);
+						if (typeof master.player.opt.onDownload == "function")
+							master.player.opt.onDownload(master.player);
 					});
 
-					$controlsBox.append(download);
+					return master.player.download;
+
+				};
+
+				if (master.player.opt.downloadable) {
+					$controlsBox.append(master.player.createDownload());
 				}
 
 				var $parts = $controlsBox.find("div").not('.playerTable').unselectable();
 
 				var $muteBox = jQuery("<span/>").addClass("map_volume").html(jQuery.mbMiniPlayer.icon.volume);
 				var $volumeLevel = jQuery("<span/>").addClass("map_volumeLevel").html("").hide();
-				for (var i = 0; i < player.opt.volumeLevels; i++) {
+				for (var i = 0; i < master.player.opt.volumeLevels; i++) {
 					$volumeLevel.append("<a/>")
 				}
 				var $playBox = jQuery("<span/>").addClass("map_play").html(jQuery.mbMiniPlayer.icon.play);
@@ -260,7 +283,7 @@
 				var $timeBox = jQuery("<span/>").addClass("map_time").html("").hide();
 
 				var $controls = jQuery("<div/>").addClass("map_controls");
-				var titleText = player.title;
+				var titleText = master.player.title;
 				var $titleBox = jQuery("<span/>").addClass("map_title").html(titleText);
 				var $progress = jQuery("<div/>").addClass("jp-progress");
 
@@ -277,23 +300,23 @@
 				$parts.eq(4).addClass("rewBox").append($rewBox).hide();
 				$parts.eq(5).append($playBox);
 
-				player.opt.media = {};
-				player.opt.supplied = [];
+				master.player.opt.media = {};
+				master.player.opt.supplied = [];
 
-				if (player.opt.mp3) {
-					player.opt.media.mp3 = player.opt.mp3;
-					player.opt.supplied.push("mp3");
+				if (master.player.opt.mp3) {
+					master.player.opt.media.mp3 = master.player.opt.mp3;
+					master.player.opt.supplied.push("mp3");
 				}
-				if (player.opt.m4a) {
-					player.opt.media.m4a = player.opt.m4a;
-					player.opt.supplied.push("m4a");
+				if (master.player.opt.m4a) {
+					master.player.opt.media.m4a = master.player.opt.m4a;
+					master.player.opt.supplied.push("m4a");
 				}
-				if (player.opt.ogg) {
-					player.opt.media.oga = player.opt.ogg;
-					player.opt.supplied.push("oga");
+				if (master.player.opt.ogg) {
+					master.player.opt.media.oga = master.player.opt.ogg;
+					master.player.opt.supplied.push("oga");
 				}
 
-				player.opt.supplied = player.opt.supplied.toString();
+				master.player.opt.supplied = master.player.opt.supplied.toString();
 
 
 				//init jPlayer component (Happyworm Ltd - http://www.jplayer.org)
@@ -302,27 +325,29 @@
 					ready              : function () {
 						var el = jQuery(this);
 
-						el.jPlayer("setMedia", player.opt.media);
+						el.jPlayer("setMedia", master.player.opt.media);
 
-						if (player.opt.mp3)
-							jQuery.mbMiniPlayer.getID3(player);
+						if (master.player.opt.mp3)
+							jQuery.mbMiniPlayer.getID3(master.player);
 
-						if (typeof player.opt.onReady == "function") {
-							player.opt.onReady(player, $controlsBox);
+						if (typeof master.player.opt.onReady == "function") {
+							master.player.opt.onReady(master.player, $controlsBox);
 						}
 
 						function animatePlayer(anim) {
 
-							player.width = player.opt.width;
-							if (player.opt.width.toString().indexOf("%") >= 0) {
-
-								var m = $playBox.outerWidth() < 40 ? 40 : $playBox.outerWidth();
-								var margin = player.opt.downloadable ? (m + 10) * 3 : 40;
+							master.player.width = master.player.opt.width;
+							if (master.player.opt.width.toString().indexOf("%") >= 0) {
+								/*
+								 var m = $playBox.outerWidth() < 40 ? 40 : $playBox.outerWidth();
+								 var margin = player.opt.downloadable ? (m) * 2 : 40;
+								 */
+								var margin = master.player.opt.downloadable ? 60 : 0;
 								var pW = $master.parent().outerWidth() - margin;
-								player.width = (pW * (parseFloat(player.opt.width))) / 100;
+								master.player.width = (pW * (parseFloat(master.player.opt.width))) / 100;
 
-							} else if (player.opt.width == 0) {
-								player.opt.showControls = false;
+							} else if (master.player.opt.width == 0) {
+								master.player.opt.showControls = false;
 							}
 
 							if (anim == undefined)
@@ -332,51 +357,51 @@
 
 							var isIE = jQuery.browser.msie && jQuery.browser.version < 9;
 
-							if (!player.isOpen) { // Open the player
+							if (!master.player.isOpen) { // Open the player
 
 								var widthToRemove = 0;
 
-								if (player.opt.showRew) {
+								if (master.player.opt.showRew) {
 									$rewBox.parent("div").show();
 									if (isIE)
 										$rewBox.show().css({width: 20, display: "block"});
 									else
 										$rewBox.show().animate({width: 20}, speed / 2);
 
-									widthToRemove += 30;
+									widthToRemove +=30;
 								}
 
-								if (player.opt.showTime) {
+								if (master.player.opt.showTime) {
 									$timeBox.parent("div").show();
 									if (isIE)
 										$timeBox.show().css({width: 34, display: "block"});
 									else
 										$timeBox.animate({width: 34}, speed / 2).show();
 
-									widthToRemove += 45;
+									widthToRemove +=45;
 
 								}
 
-								if (player.opt.showVolumeLevel) {
+								if (master.player.opt.showVolumeLevel) {
 									$volumeLevel.parent("div").show();
-									jQuery("a", $volumeLevel).show();
+									jQuery("a",$volumeLevel).show();
 
 									if (isIE)
 										$volumeLevel.show().css({width: 40, display: "block"});
 									else
 										$volumeLevel.show().animate({width: 40}, speed / 2);
 
-									widthToRemove += 50;
+									widthToRemove +=50;
 
 								}
 
-								if (player.opt.showControls) {
+								if (master.player.opt.showControls) {
 									$controls.parent("div").show();
 
-									var w = player.width - ($muteBox.outerWidth() + $playBox.outerWidth() + widthToRemove);
+									var w =  master.player.width - ($muteBox.outerWidth() + $playBox.outerWidth()+ widthToRemove);
 
-									w = w < 60 ? 60 : w;
-									$controls.css({display: "block", height: 20}).animate({width: w}, speed);
+									w = w<60 ? 60 : w;
+									$controls.css({display: "block", height: 20}).animate({width:w}, speed);
 								}
 
 
@@ -385,18 +410,18 @@
 								$controls.animate({width: 1}, speed, function () {
 									jQuery(this).parent("div").css({display: "none"})
 								});
-								if (player.opt.showRew) {
+								if (master.player.opt.showRew) {
 									$rewBox.animate({width: 1}, speed / 2, function () {
 										jQuery(this).parent("div").css({display: "none"})
 									});
 								}
-								if (player.opt.showTime) {
+								if (master.player.opt.showTime) {
 									$timeBox.animate({width: 1}, speed / 2, function () {
 										jQuery(this).parent("div").css({display: "none"})
 									});
 								}
-								if (player.opt.showVolumeLevel) {
-									jQuery("a", $volumeLevel).hide();
+								if (master.player.opt.showVolumeLevel) {
+									jQuery("a",$volumeLevel).hide();
 
 									$volumeLevel.animate({width: 1}, speed / 2, function () {
 										jQuery(this).parent("div").css({display: "none"})
@@ -405,21 +430,21 @@
 							}
 						}
 
-						if (!player.opt.animate)
+						if (!master.player.opt.animate)
 							animatePlayer(false);
 
 						$playBox.on(jQuery.mbMiniPlayer.eventEnd, function (e) {
 
-							if (!player.isOpen) {
+							if (!master.player.isOpen) {
 
-								if (player.opt.animate)
+								if (master.player.opt.animate)
 									animatePlayer();
 
-								player.isOpen = true;
+								master.player.isOpen = true;
 
 								jQuery.mbMiniPlayer.actualPlayer = $master;
 
-								if (player.opt.playAlone) {
+								if (master.player.opt.playAlone) {
 									jQuery("[isPlaying='true']").find(".map_play").trigger(jQuery.mbMiniPlayer.eventEnd);
 								}
 
@@ -429,21 +454,21 @@
 								$controlsBox.attr("isPlaying", "true");
 
 								//add track for Google Analytics
-								if (typeof _gaq != "undefined" && player.opt.gaTrack)
-									_gaq.push(['_trackEvent', 'Audio', 'Play', player.title + " - " + self.location.href]);
+								if (typeof _gaq != "undefined" && master.player.opt.gaTrack)
+									_gaq.push(['_trackEvent', 'Audio', 'Play', master.player.title + " - " + self.location.href]);
 
-								if (typeof ga != "undefined" && eval(player.opt.gaTrack))
-									ga('send', 'event', 'Audio', 'Play', player.title + " - " + self.location.href);
+								if (typeof ga != "undefined" && eval(master.player.opt.gaTrack))
+									ga('send', 'event', 'Audio', 'Play', master.player.title + " - " + self.location.href);
 
-								if (typeof player.opt.onPlay == "function")
-									player.opt.onPlay(player);
+								if (typeof master.player.opt.onPlay == "function")
+									master.player.opt.onPlay(master.player);
 
 							} else {
 
-								if (player.opt.animate)
+								if (master.player.opt.animate)
 									animatePlayer();
 
-								player.isOpen = false;
+								master.player.isOpen = false;
 
 								jQuery(this).html(jQuery.mbMiniPlayer.icon.play);
 
@@ -468,15 +493,15 @@
 									if (jQuery(this).hasClass("mute")) {
 										jQuery(this).removeClass("mute");
 										jQuery(this).html(jQuery.mbMiniPlayer.icon.volume);
-										el.jPlayer("volume", player.opt.vol);
+										el.jPlayer("volume", master.player.opt.vol);
 									} else {
 										jQuery(this).addClass("mute");
 										jQuery(this).html(jQuery.mbMiniPlayer.icon.volumeMute);
-										player.opt.vol = player.opt.volume;
+										master.player.opt.vol = master.player.opt.volume;
 										el.jPlayer("volume", 0);
 
-										if (player.opt.onMute == "function")
-											player.opt.onMute(player);
+										if(master.player.opt.onMute == "function")
+											master.player.opt.onMute(master.player);
 
 									}
 								}).hover(
@@ -499,12 +524,12 @@
 								}
 						);
 
-						var bars = player.opt.volumeLevels;
+						var bars = master.player.opt.volumeLevels;
 						var barVol = 1 / bars;
 						$volumeLevel.find("a").each(function (i) {
 							jQuery(this).css({opacity: .3, height: "80%", width: Math.floor(35 / bars)});
-							var IDX = Math.floor(player.opt.volume / barVol) - 1;
-							if (player.opt.volume < .1 && player.opt.volume > 0)
+							var IDX = Math.floor(master.player.opt.volume / barVol) - 1;
+							if (master.player.opt.volume < .1 && master.player.opt.volume > 0)
 								IDX = 0;
 
 							$volumeLevel.find("a").css({opacity: .1}).removeClass("sel");
@@ -521,14 +546,14 @@
 						});
 
 						// autoplay can't work on devices
-						if (!jQuery.isMobile && player.opt.autoplay && ((player.opt.playAlone && jQuery("[isPlaying=true]").length == 0) || !player.opt.playAlone))
+						if (!jQuery.isMobile && master.player.opt.autoplay && ((master.player.opt.playAlone && jQuery("[isPlaying=true]").length == 0) || !master.player.opt.playAlone))
 							$playBox.trigger(jQuery.mbMiniPlayer.eventEnd);
 					},
-					supplied           : player.opt.supplied,
+					supplied           : master.player.opt.supplied,
 					wmode              : "transparent",
 					smoothPlayBar      : true,
-					volume             : player.opt.volume,
-					swfPath            : player.opt.swfPath,
+					volume             : master.player.opt.volume,
+					swfPath            : master.player.opt.swfPath,
 					solution           : 'html, flash',
 //					solution           : player.opt.isIE && $.browser.version<11 ? 'flash' : 'html, flash',
 //					preload            : jQuery.isMobile ? 'none' : 'metadata',
@@ -541,36 +566,36 @@
 					}
 				})
 						.on(jQuery.jPlayer.event.play, function (e) {})
-						.on(jQuery.jPlayer.event.loadedmetadata, function () {})
+						.on(jQuery.jPlayer.event.loadedmetadata, function(){})
 						.on(jQuery.jPlayer.event.ended, function () {
 
-							if (isAndroidDefault)
+							if (jQuery.isAndroidDefault)
 								return;
 
-							if (player.opt.onEnd == "function")
-								player.opt.onEnd(player);
+							if (master.player.opt.onEnd == "function")
+								master.player.opt.onEnd(master.player);
 
-							if (player.opt.loop)
+							if (master.player.opt.loop)
 								$player.jPlayer("play");
 							else
 								$playBox.trigger(jQuery.mbMiniPlayer.eventEnd);
-							if (typeof player.opt.onPause == "function") {
-								player.opt.onPause(player);
+							if (typeof master.player.opt.onPause == "function"){
+								master.player.opt.onPause(player);
 							}
 
 						})
 						.on(jQuery.jPlayer.event.timeupdate, function (e) {
-							player.duration = e.jPlayer.status.duration;
-							player.currentTime = e.jPlayer.status.currentTime;
-							player.seekPercent = e.jPlayer.status.seekPercent;
+							master.player.duration = e.jPlayer.status.duration;
+							master.player.currentTime = e.jPlayer.status.currentTime;
+							master.player.seekPercent = e.jPlayer.status.seekPercent;
 							$timeBox.html(jQuery.jPlayer.convertTime(e.jPlayer.status.currentTime)).attr("title", jQuery.jPlayer.convertTime(e.jPlayer.status.duration));
 						})
 						.on(jQuery.jPlayer.event.volumechange, function (event) {
-							var bars = player.opt.volumeLevels;
+							var bars = master.player.opt.volumeLevels;
 							var barVol = 1 / bars;
-							player.opt.volume = event.jPlayer.options.volume;
-							var IDX = Math.floor(player.opt.volume / barVol) - 1;
-							if (player.opt.volume < .1 && player.opt.volume > 0)
+							master.player.opt.volume = event.jPlayer.options.volume;
+							var IDX = Math.floor(master.player.opt.volume / barVol) - 1;
+							if (master.player.opt.volume < .1 && master.player.opt.volume > 0)
 								IDX = 0;
 							$volumeLevel.find("a").css({opacity: .1}).removeClass("sel");
 							for (var x = 0; x <= IDX; x++) {
@@ -587,9 +612,9 @@
 					}
 
 					if (e.charCode == 43) { // volume +
-						var bars = player.opt.volumeLevels;
+						var bars = master.player.opt.volumeLevels;
 						var barVol = 1 / bars;
-						var vol = player.opt.volume + barVol;
+						var vol = master.player.opt.volume + barVol;
 						if (vol > 1)
 							vol = 1;
 						$player.jPlayer("volume", vol);
@@ -599,9 +624,9 @@
 					}
 
 					if (e.charCode == 45) { //volume -
-						var bars = player.opt.volumeLevels;
+						var bars = master.player.opt.volumeLevels;
 						var barVol = 1 / bars;
-						var vol = player.opt.volume - barVol;
+						var vol = master.player.opt.volume - barVol;
 						if (vol < 0)
 							vol = 0;
 						$player.jPlayer("volume", vol);
@@ -631,6 +656,11 @@
 
 			$player.jPlayer("setMedia", media);
 			$player.jPlayer("load");
+
+			var fileExtension = player.fileUrl.substr((Math.max(0, player.fileUrl.lastIndexOf(".")) || Infinity) + 1);
+
+			player.fileUrl = encodeURI(media.mp3 || media.m4a);
+			player.fileName = encodeURI(player.fileUrl.replace("." + fileExtension, "").split("/").pop());
 
 			if ($controlsBox.attr("isPlaying") == "true")
 				$player.jPlayer("play");

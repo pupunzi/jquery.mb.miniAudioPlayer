@@ -20,5 +20,6 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "buildnum": "49855"
 }

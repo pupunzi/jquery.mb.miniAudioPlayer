@@ -703,6 +703,8 @@ function changeCSS(skinName, main, secondary, borderRadius, playerPadding, addGr
     style += ".mbMiniPlayer." + skinName + " .playerTable span.map_volumeLevel a.sel{background-color:" + secondary[1] + ";}\n";
     style += ".mbMiniPlayer." + skinName + "  span.map_download{font-size:" + (50 + parseFloat(playerPadding)) + "px !important;}\n";
 
+    style += "/* Wordpress playlist select */\n";
+    style += ".map_pl_container .pl_item.sel{background-color:" + (new jColour(main[0]).transparentize(0.90).rgb()) + " !important; color: #999}\n";
 
     style += "/*++++++++++++++++++++++++++++++++++++++++++++++++*/\n";
 
