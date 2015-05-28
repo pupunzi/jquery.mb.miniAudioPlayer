@@ -120,7 +120,7 @@ module.exports = function(grunt) {
 				commitMessage: 'Release v%VERSION%',
 				commitFiles: ['-a'],
 				createTag: true,
-				tagName: 'v%VERSION%',
+				tagName: '%VERSION%',
 				tagMessage: 'Version %VERSION%',
 				push: true,
 				pushTo: 'https://github.com/pupunzi/jquery.mb.miniAudioPlayer.git',
