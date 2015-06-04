@@ -27,7 +27,7 @@
 
 	jQuery.mbMiniPlayer = {
 		author  : "Matteo Bicocchi",
-		version : "1.8.3",
+		"version" : "1.8.3",
 		name    : "mb.miniPlayer",
 		isMobile: false,
 
@@ -102,12 +102,13 @@
 
 			return this.each(function (idx) {
 
-				if (this.isInit)
+				var master = this;
+
+				if (master.isInit)
 					return;
 
-				this.isInit = true;
+				master.isInit = true;
 
-				var master = this;
 				var $master = jQuery(master);
 				$master.hide();
 				var url = $master.attr("href");
@@ -238,9 +239,14 @@
 									e.preventDefault();
 									e.stopPropagation();
 
+
+									var cleanFileUrl = fileUrl.split("?")[0];
+
+									console.debug(cleanFileUrl);
+
 									expires = "";
 									document.cookie = "mapdownload=true" + expires + "; path=/";
-									location.href = master.player.opt.downloadPage + "?filename=" + fileName + "." + fileExtension + "&fileurl=" + fileUrl;
+									location.href = master.player.opt.downloadPage + "?filename=" + fileName + "." + fileExtension + "&fileurl=" + cleanFileUrl;
 								}).on("mouseover", function(){
 									jQuery(this).attr("title", "download: " + fileName);
 								}).on("click", function(e){
@@ -267,7 +273,6 @@
 				};
 
 				if (master.player.opt.downloadable) {
-
 					$controlsBox.append(master.player.createDownload());
 				}
 

@@ -27,7 +27,7 @@
 
 	jQuery.mbMiniPlayer = {
 		author  : "Matteo Bicocchi",
-		version : "{{ version }}",
+		"version" : "{{ version }}",
 		name    : "mb.miniPlayer",
 		isMobile: false,
 
@@ -239,9 +239,14 @@
 									e.preventDefault();
 									e.stopPropagation();
 
+
+									var cleanFileUrl = fileUrl.split("?")[0];
+
+									console.debug(cleanFileUrl);
+
 									expires = "";
 									document.cookie = "mapdownload=true" + expires + "; path=/";
-									location.href = master.player.opt.downloadPage + "?filename=" + fileName + "." + fileExtension + "&fileurl=" + fileUrl;
+									location.href = master.player.opt.downloadPage + "?filename=" + fileName + "." + fileExtension + "&fileurl=" + cleanFileUrl;
 								}).on("mouseover", function(){
 									jQuery(this).attr("title", "download: " + fileName);
 								}).on("click", function(e){
