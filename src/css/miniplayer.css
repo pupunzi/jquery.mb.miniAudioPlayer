@@ -354,7 +354,7 @@ a.audio{
 }
 
 .mbMiniPlayer.black .playerTable span.map_volume.mute{
-  color: #333;
+  color: rgba(255, 255, 255, 0.50);
 }
 
 .mbMiniPlayer.black .map_download:hover{
@@ -383,7 +383,7 @@ a.audio{
 }
 
 .mbMiniPlayer.gray .playerTable span.map_volume.mute{
-  color: #cccccc;
+  color: rgba(255, 255, 255, 0.50);
 }
 .mbMiniPlayer.gray .map_download:hover{
   color: #666 ;
@@ -411,7 +411,7 @@ a.audio{
 }
 
 .mbMiniPlayer.blue .playerTable span.map_volume.mute{
-  color: #98bff9;
+  color: rgba(255, 255, 255, 0.50);
 }
 
 .mbMiniPlayer.blue .map_download:hover{
@@ -440,7 +440,7 @@ a.audio{
 }
 
 .mbMiniPlayer.orange .playerTable span.map_volume.mute{
-  color: #eec957;
+  color: rgba(255, 255, 255, 0.50);
 }
 
 .mbMiniPlayer.orange .map_download:hover{
@@ -469,7 +469,7 @@ a.audio{
 }
 
 .mbMiniPlayer.red .playerTable span.map_volume.mute{
-  color: #b90000;
+  color: rgba(255, 255, 255, 0.50);
 }
 .mbMiniPlayer.red .map_download:hover{
   color: #990000 !important;
@@ -497,7 +497,7 @@ a.audio{
 }
 
 .mbMiniPlayer.green .playerTable span.map_volume.mute{
-  color: #2aba5a;
+  color: rgba(255, 255, 255, 0.50);
 }
 
 .mbMiniPlayer.green .map_download:hover{

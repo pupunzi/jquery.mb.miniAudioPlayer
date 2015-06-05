@@ -495,6 +495,12 @@
 
 						$muteBox.on(jQuery.mbMiniPlayer.eventEnd,
 								function () {
+
+									if (jQuery.isMobile){
+										$playBox.trigger(jQuery.mbMiniPlayer.eventEnd);
+										return;
+									}
+
 									if (jQuery(this).hasClass("mute")) {
 										jQuery(this).removeClass("mute");
 										jQuery(this).html(jQuery.mbMiniPlayer.icon.volume);

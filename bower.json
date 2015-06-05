@@ -6,7 +6,7 @@
     "pupunzi"
   ],
   "description": "This plugin let you add a minimal full featured player that takes advantage of the new HTML5 AUDIO tag with a flash fallback for browsers that don't support it. It is built on the jPlayer library",
-  "main": "inc/jquery.mb.miniPlayer.js",
+  "main": "src/jquery.mb.miniPlayer.src.js",
   "keywords": [
     "jquery-plugin",
     "audio",
@@ -21,5 +21,5 @@
     "test",
     "tests"
   ],
-  "buildnum": "49856"
+  "buildnum": "49861"
 }

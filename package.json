@@ -34,7 +34,7 @@
   "dependencies": {
     "jquery": ">=1.8"
   },
-  "main": "inc/jquery.mb.miniPlayer.js",
+  "main": "src/jquery.mb.miniPlayer.src.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -54,5 +54,5 @@
     "grunt-contrib-watch": "^0.6.1",
     "grunt-include-replace": "^3.0.0"
   },
-  "buildnum": "49856"
+  "buildnum": "49861"
 }
