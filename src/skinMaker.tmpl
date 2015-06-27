@@ -977,6 +977,7 @@ $(function() {
                 }
 
                 var paramsString = "{" + m[1] + "}";
+                paramsString = paramsString.replace(/'/g, "\"");
                 var params = JSON.parse( paramsString );
 
                 //{"skinName": "mySkin", "borderRadius": 10, "main": "#ed1717", "secondary": "#240404", "playerPadding": 10}

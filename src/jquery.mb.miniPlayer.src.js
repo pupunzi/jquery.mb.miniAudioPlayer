@@ -53,6 +53,7 @@
 			loop                : false,
 			inLine              : false,
 			volumeLevels        : 12,
+			allowMute            : true,
 			showControls        : true,
 			showVolumeLevel     : true,
 			showTime            : true,
@@ -305,6 +306,13 @@
 				$parts.eq(4).addClass("rewBox").append($rewBox).hide();
 				$parts.eq(5).append($playBox);
 
+/*
+				if(!master.player.opt.allowMute){
+					$parts.eq(0).hide();
+					$controlsBox.find(".playerTable span").css({border:"none"});
+				}
+*/
+
 				master.player.opt.media = {};
 				master.player.opt.supplied = [];
 
@@ -496,7 +504,7 @@
 						$muteBox.on(jQuery.mbMiniPlayer.eventEnd,
 								function () {
 
-									if (jQuery.isMobile){
+									if (jQuery.isMobile || !master.player.opt.allowMute){
 										$playBox.trigger(jQuery.mbMiniPlayer.eventEnd);
 										return;
 									}
