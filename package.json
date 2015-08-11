@@ -1,6 +1,6 @@
 {
   "name": "jquery.mb.miniaudioplayer",
-  "title": "jQuery.mb.miniAudioPlayer",
+  "title": "jquery.mb.miniAudioPlayer",
   "description": "This plugin let you add a minimal full featured player that takes advantage of the new HTML5 AUDIO tag with a flash fallback for browsers that don't support it. It is built on the jPlayer library",
   "keywords": [
     "jquery-plugin",
@@ -54,5 +54,5 @@
     "grunt-contrib-watch": "^0.6.1",
     "grunt-include-replace": "^3.0.0"
   },
-  "buildnum": "49870"
+  "buildnum": "49871"
 }
