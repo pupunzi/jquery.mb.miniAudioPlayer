@@ -519,6 +519,7 @@ $.file = {
             fileContent = elToSave.attr("src");
             fileExtension = getFileExtension(fileContent);
         }else if(elToSave.is("textarea")) {
+
             fileContent = elToSave.val();
             fileExtension = defaultExtension || "txt";
 
