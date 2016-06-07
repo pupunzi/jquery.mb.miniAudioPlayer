@@ -29,6 +29,7 @@ module.exports = function(grunt) {
 				files: [
 					{flatten: true, expand: true, cwd: '../jquery.mb.browser/inc/', src: ['jquery.mb.browser.min.js'], dest: 'src/dep/'},
 					{flatten: true, expand: true, cwd: '../jquery.mb.CSSAnimate/inc/', src: ['jquery.mb.CSSAnimate.min.js'], dest: 'src/dep/'},
+					{flatten: false, expand: true, cwd: 'src/css/', src: ['*.css'],  dest: 'dist/css/'},
 					{flatten: false, expand: true, cwd: 'src/css/font/', src: ['**'],  dest: 'dist/css/font/'},
 					{flatten: false, expand: true, cwd: 'resources/', src: ['*.swf'],  dest: 'dist/swf/'},
 					{flatten: false, expand: true, cwd: 'resources/', src: ['*.php'],  dest: 'dist/php/'},
