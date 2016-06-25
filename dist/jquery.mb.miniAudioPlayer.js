@@ -168,7 +168,7 @@
 				if (master.player.opt.addGradientOverlay)
 					$controlsBox.addClass("gradientOverlay");
 
-				var $layout = jQuery("<div class='playerTable'> <div></div><div></div><div></div><div></div><div></div><div></div></div>");
+				var $layout = jQuery("<div class='playerTable'><div></div><div></div><div></div><div></div><div></div><div></div></div>");
 
 				if (!jQuery("#JPLContainer").length) {
 					var JPLContainer = jQuery("<div/>").attr({id: "JPLContainer"});
