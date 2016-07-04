@@ -169,7 +169,7 @@
 				if (master.player.opt.addGradientOverlay)
 					$controlsBox.addClass("gradientOverlay");
 
-				var $layout = jQuery("<div class='playerTable'> <div></div><div></div><div></div><div></div><div></div><div></div> </div>");
+				var $layout = jQuery("<div class='playerTable'><div></div><div></div><div></div><div></div><div></div><div></div></div>");
 
 				if (!jQuery("#JPLContainer").length) {
 					var JPLContainer = jQuery("<div/>").attr({id: "JPLContainer"});
@@ -180,7 +180,7 @@
 				$master.after($controlsBox);
 				$controlsBox.html($layout);
 
-				master.player.fileUrl = encodeURI(master.player.opt.mp3 || master.player.opt.m4a);
+				master.player.fileUrl = encodeURI(master.player.opt.mp3 || master.player.opt.m4a || master.player.opt.ogg);
 				var fileExtension = master.player.fileUrl.substr((Math.max(0, master.player.fileUrl.lastIndexOf(".")) || Infinity) + 1);
 
 				//if there's a querystring remove it
