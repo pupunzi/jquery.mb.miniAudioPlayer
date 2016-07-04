@@ -118,12 +118,13 @@
 
 				// There are serious problems with the player events and Android default browser.
 				// the default HTML5 player is used on that case.
+/*
 				if (jQuery.isAndroidDefault) {
 					var androidPlayer = jQuery("<audio/>").attr({src: url, controls: "controls"}).css({display: "block"});
 					$master.after(androidPlayer);
 					return;
 				}
-
+*/
 				var $player = jQuery("<div/>").attr({id: "JPL_" + playerID});
 				master.player = $player.get(0);
 				master.player.opt = {};
@@ -306,13 +307,6 @@
 				$parts.eq(4).addClass("rewBox").append($rewBox).hide();
 				$parts.eq(5).append($playBox);
 
-/*
-				if(!master.player.opt.allowMute){
-					$parts.eq(0).hide();
-					$controlsBox.find(".playerTable span").css({border:"none"});
-				}
-*/
-
 				master.player.opt.media = {};
 				master.player.opt.supplied = [];
 
@@ -331,296 +325,318 @@
 
 				master.player.opt.supplied = master.player.opt.supplied.toString();
 
-
 				//init jPlayer component (Happyworm Ltd - http://www.jplayer.org)
-				$player.jPlayer({
 
-					ready              : function () {
-						var el = jQuery(this);
-
-						el.jPlayer("setMedia", master.player.opt.media);
-
-						if (master.player.opt.mp3)
-							jQuery.mbMiniPlayer.getID3(master.player);
-
-						if (typeof master.player.opt.onReady == "function") {
-							master.player.opt.onReady(master.player, $controlsBox);
+				if(jQuery.browser.android){
+					var opt = {
+						supplied           : master.player.opt.supplied,
+						wmode              : "transparent",
+						smoothPlayBar      : true,
+						volume             : master.player.opt.volume,
+						swfPath            : master.player.opt.swfPath,
+						solution           : 'html, flash',
+						preload            : 'none',
+						cssSelectorAncestor: "#" + playerID, // Remove the ancestor css selector clause
+						cssSelector        : {
+							playBar: "#playBar_" + playerID,
+							seekBar: "#loadBar_" + playerID
 						}
-
-						function animatePlayer(anim) {
-
-							master.player.width = master.player.opt.width;
-							if (master.player.opt.width.toString().indexOf("%") >= 0) {
-								/*
-								 var m = $playBox.outerWidth() < 40 ? 40 : $playBox.outerWidth();
-								 var margin = player.opt.downloadable ? (m) * 2 : 40;
-								 */
-								var margin = master.player.opt.downloadable ? 60 : 0;
-								var pW = $master.parent().outerWidth() - margin;
-								master.player.width = (pW * (parseFloat(master.player.opt.width))) / 100;
-
-							} else if (master.player.opt.width == 0) {
-								master.player.opt.showControls = false;
-							}
-
-							if (anim == undefined)
-								anim = true;
-
-							var speed = anim ? 500 : 0;
-
-							var isIE = jQuery.browser.msie && jQuery.browser.version < 9;
-
-							if (!master.player.isOpen) { // Open the player
-
-								var widthToRemove = 0;
-
-								if (master.player.opt.showRew) {
-									$rewBox.parent("div").show();
-									if (isIE)
-										$rewBox.show().css({width: 20, display: "block"});
-									else
-										$rewBox.show().animate({width: 20}, speed / 2);
-
-									widthToRemove +=30;
-								}
-
-								if (master.player.opt.showTime) {
-									$timeBox.parent("div").show();
-									if (isIE)
-										$timeBox.show().css({width: 34, display: "block"});
-									else
-										$timeBox.animate({width: 34}, speed / 2).show();
-
-									widthToRemove +=45;
-
-								}
-
-								if (master.player.opt.showVolumeLevel) {
-									$volumeLevel.parent("div").show();
-									jQuery("a",$volumeLevel).show();
-
-									if (isIE)
-										$volumeLevel.show().css({width: 40, display: "block"});
-									else
-										$volumeLevel.show().animate({width: 40}, speed / 2);
-
-									widthToRemove +=50;
-
-								}
-
-								if (master.player.opt.showControls) {
-									$controls.parent("div").show();
-
-									var w =  master.player.width - ($muteBox.outerWidth() + $playBox.outerWidth()+ widthToRemove);
-
-									w = w<60 ? 60 : w;
-									$controls.css({display: "block", height: 20}).animate({width:w}, speed);
-								}
-
-
-							} else { // Close the player
-
-								$controls.animate({width: 1}, speed, function () {
-									jQuery(this).parent("div").css({display: "none"})
-								});
-								if (master.player.opt.showRew) {
-									$rewBox.animate({width: 1}, speed / 2, function () {
-										jQuery(this).parent("div").css({display: "none"})
-									});
-								}
-								if (master.player.opt.showTime) {
-									$timeBox.animate({width: 1}, speed / 2, function () {
-										jQuery(this).parent("div").css({display: "none"})
-									});
-								}
-								if (master.player.opt.showVolumeLevel) {
-									jQuery("a",$volumeLevel).hide();
-
-									$volumeLevel.animate({width: 1}, speed / 2, function () {
-										jQuery(this).parent("div").css({display: "none"})
-									});
-								}
-							}
-						}
-
-						if (!master.player.opt.animate)
-							animatePlayer(false);
-
-						$playBox.on(jQuery.mbMiniPlayer.eventEnd, function (e) {
-
-							if (!master.player.isOpen) {
-
-								if (master.player.opt.animate)
-									animatePlayer();
-
-								master.player.isOpen = true;
-
-								jQuery.mbMiniPlayer.actualPlayer = $master;
-
-								if (master.player.opt.playAlone) {
-									jQuery("[isPlaying='true']").find(".map_play").trigger(jQuery.mbMiniPlayer.eventEnd);
-								}
-
-								jQuery(this).html(jQuery.mbMiniPlayer.icon.pause);
-
-								el.jPlayer("play");
-								$controlsBox.attr("isPlaying", "true");
-
-								//add track for Google Analytics
-								if (typeof _gaq != "undefined" && master.player.opt.gaTrack)
-									_gaq.push(['_trackEvent', 'Audio', 'Play', master.player.title + " - " + self.location.href]);
-
-								if (typeof ga != "undefined" && eval(master.player.opt.gaTrack))
-									ga('send', 'event', 'Audio', 'Play', master.player.title + " - " + self.location.href);
-
-								if (typeof master.player.opt.onPlay == "function")
-									master.player.opt.onPlay(master.player);
-
-							} else {
-
-								if (master.player.opt.animate)
-									animatePlayer();
-
-								master.player.isOpen = false;
-
-								jQuery(this).html(jQuery.mbMiniPlayer.icon.play);
-
-								$controlsBox.attr("isPlaying", "false");
-								el.jPlayer("pause");
-							}
-
-							e.stopPropagation();
-							return false;
-
-						}).hover(
-								function () {
-									jQuery(this).css({opacity: .8})
-								},
-								function () {
-									jQuery(this).css({opacity: 1})
-								}
-						);
-
-						$muteBox.on(jQuery.mbMiniPlayer.eventEnd,
-								function () {
-
-									if (jQuery.isMobile || !master.player.opt.allowMute){
-										$playBox.trigger(jQuery.mbMiniPlayer.eventEnd);
-										return;
-									}
-
-									if (jQuery(this).hasClass("mute")) {
-										jQuery(this).removeClass("mute");
-										jQuery(this).html(jQuery.mbMiniPlayer.icon.volume);
-										el.jPlayer("volume", master.player.opt.vol);
-									} else {
-										jQuery(this).addClass("mute");
-										jQuery(this).html(jQuery.mbMiniPlayer.icon.volumeMute);
-										master.player.opt.vol = master.player.opt.volume;
-										el.jPlayer("volume", 0);
-
-										if(master.player.opt.onMute == "function")
-											master.player.opt.onMute(master.player);
-
-									}
-								}).hover(
-								function () {
-									jQuery(this).css({opacity: .8})
-								},
-								function () {
-									jQuery(this).css({opacity: 1})
-								}
-						);
-
-						$rewBox.on(jQuery.mbMiniPlayer.eventEnd, function () {
-							el.jPlayer("playHead", 0);
-						}).hover(
-								function () {
-									jQuery(this).css({opacity: .8})
-								},
-								function () {
-									jQuery(this).css({opacity: 1})
-								}
-						);
-
-						var bars = master.player.opt.volumeLevels;
-						var barVol = 1 / bars;
-						$volumeLevel.find("a").each(function (i) {
-							jQuery(this).css({opacity: .3, height: "80%", width: Math.floor(35 / bars)});
-							var IDX = Math.floor(master.player.opt.volume / barVol) - 1;
-							if (master.player.opt.volume < .1 && master.player.opt.volume > 0)
-								IDX = 0;
-
-							$volumeLevel.find("a").css({opacity: .1}).removeClass("sel");
-							for (var x = 0; x <= IDX; x++) {
-								$volumeLevel.find("a").eq(x).css({opacity: .4}).addClass("sel");
-							}
-
-							jQuery(this).on(jQuery.mbMiniPlayer.eventEnd, function () {
-								var vol = (i + 1) * barVol;
-								el.jPlayer("volume", vol);
-								if (i == 0) el.jPlayer("volume", .1);
-								$muteBox.removeClass("mute");
-							});
-						});
-
-						// autoplay can't work on devices
-						if (!jQuery.isMobile && master.player.opt.autoplay && ((master.player.opt.playAlone && jQuery("[isPlaying=true]").length == 0) || !master.player.opt.playAlone))
-							$playBox.trigger(jQuery.mbMiniPlayer.eventEnd);
-					},
-					supplied           : master.player.opt.supplied,
-					wmode              : "transparent",
-					smoothPlayBar      : true,
-					volume             : master.player.opt.volume,
-					swfPath            : master.player.opt.swfPath,
-					solution           : 'html, flash',
-//					solution           : player.opt.isIE && $.browser.version<11 ? 'flash' : 'html, flash',
-//					preload            : jQuery.isMobile ? 'none' : 'metadata',
-					preload            : 'none',
-					cssSelectorAncestor: "#" + playerID, // Remove the ancestor css selector clause
-					cssSelector        : {
-						playBar: "#playBar_" + playerID,
-						seekBar: "#loadBar_" + playerID
-						// The other defaults remain unchanged
 					}
-				})
-						.on(jQuery.jPlayer.event.play, function (e) {})
-						.on(jQuery.jPlayer.event.loadedmetadata, function(){})
-						.on(jQuery.jPlayer.event.ended, function () {
 
-							if (jQuery.isAndroidDefault)
-								return;
+					var androidPlayer = new jPlayerAndroidFix($player.attr("id"),master.player.opt.media,opt );
+				}
 
-							if (master.player.opt.onEnd == "function")
-								master.player.opt.onEnd(master.player);
+					$player.jPlayer({
 
-							if (master.player.opt.loop)
-								$player.jPlayer("play");
-							else
-								$playBox.trigger(jQuery.mbMiniPlayer.eventEnd);
-							if (typeof master.player.opt.onPause == "function"){
-								master.player.opt.onPause(player);
+						ready : function () {
+							var el = jQuery(this);
+
+							el.jPlayer("setMedia", master.player.opt.media);
+
+							if (master.player.opt.mp3)
+								jQuery.mbMiniPlayer.getID3(master.player);
+
+							if (typeof master.player.opt.onReady == "function") {
+								master.player.opt.onReady(master.player, $controlsBox);
 							}
 
-						})
-						.on(jQuery.jPlayer.event.timeupdate, function (e) {
-							master.player.duration = e.jPlayer.status.duration;
-							master.player.currentTime = e.jPlayer.status.currentTime;
-							master.player.seekPercent = e.jPlayer.status.seekPercent;
-							$timeBox.html(jQuery.jPlayer.convertTime(e.jPlayer.status.currentTime)).attr("title", jQuery.jPlayer.convertTime(e.jPlayer.status.duration));
-						})
-						.on(jQuery.jPlayer.event.volumechange, function (event) {
+							function animatePlayer(anim) {
+
+								master.player.width = master.player.opt.width;
+								if (master.player.opt.width.toString().indexOf("%") >= 0) {
+									/*
+									 var m = $playBox.outerWidth() < 40 ? 40 : $playBox.outerWidth();
+									 var margin = player.opt.downloadable ? (m) * 2 : 40;
+									 */
+									var margin = master.player.opt.downloadable ? 60 : 0;
+									var pW = $master.parent().outerWidth() - margin;
+									master.player.width = (pW * (parseFloat(master.player.opt.width))) / 100;
+
+								} else if (master.player.opt.width == 0) {
+									master.player.opt.showControls = false;
+								}
+
+								if (anim == undefined)
+									anim = true;
+
+								var speed = anim ? 500 : 0;
+
+								var isIE = jQuery.browser.msie && jQuery.browser.version < 9;
+
+								if (!master.player.isOpen) { // Open the player
+
+									var widthToRemove = 0;
+
+									if (master.player.opt.showRew) {
+										$rewBox.parent("div").show();
+										if (isIE)
+											$rewBox.show().css({width: 20, display: "block"});
+										else
+											$rewBox.show().animate({width: 20}, speed / 2);
+
+										widthToRemove +=30;
+									}
+
+									if (master.player.opt.showTime) {
+										$timeBox.parent("div").show();
+										if (isIE)
+											$timeBox.show().css({width: 34, display: "block"});
+										else
+											$timeBox.animate({width: 34}, speed / 2).show();
+
+										widthToRemove +=45;
+
+									}
+
+									if (master.player.opt.showVolumeLevel) {
+										$volumeLevel.parent("div").show();
+										jQuery("a",$volumeLevel).show();
+
+										if (isIE)
+											$volumeLevel.show().css({width: 40, display: "block"});
+										else
+											$volumeLevel.show().animate({width: 40}, speed / 2);
+
+										widthToRemove +=50;
+
+									}
+
+									if (master.player.opt.showControls) {
+										$controls.parent("div").show();
+
+										var w =  master.player.width - ($muteBox.outerWidth() + $playBox.outerWidth()+ widthToRemove);
+
+										w = w<60 ? 60 : w;
+										$controls.css({display: "block", height: 20}).animate({width:w}, speed);
+									}
+
+
+								} else { // Close the player
+
+									$controls.animate({width: 1}, speed, function () {
+										jQuery(this).parent("div").css({display: "none"})
+									});
+									if (master.player.opt.showRew) {
+										$rewBox.animate({width: 1}, speed / 2, function () {
+											jQuery(this).parent("div").css({display: "none"})
+										});
+									}
+									if (master.player.opt.showTime) {
+										$timeBox.animate({width: 1}, speed / 2, function () {
+											jQuery(this).parent("div").css({display: "none"})
+										});
+									}
+									if (master.player.opt.showVolumeLevel) {
+										jQuery("a",$volumeLevel).hide();
+
+										$volumeLevel.animate({width: 1}, speed / 2, function () {
+											jQuery(this).parent("div").css({display: "none"})
+										});
+									}
+								}
+							}
+
+							if (!master.player.opt.animate)
+								animatePlayer(false);
+
+							$playBox.on(jQuery.mbMiniPlayer.eventEnd, function (e) {
+
+								if (!master.player.isOpen) {
+
+									if (master.player.opt.animate)
+										animatePlayer();
+
+									master.player.isOpen = true;
+
+									jQuery.mbMiniPlayer.actualPlayer = $master;
+
+									if (master.player.opt.playAlone) {
+										jQuery("[isPlaying='true']").find(".map_play").trigger(jQuery.mbMiniPlayer.eventEnd);
+									}
+
+									jQuery(this).html(jQuery.mbMiniPlayer.icon.pause);
+
+									el.jPlayer("play");
+									$controlsBox.attr("isPlaying", "true");
+
+									//add track for Google Analytics
+									if (typeof _gaq != "undefined" && master.player.opt.gaTrack)
+										_gaq.push(['_trackEvent', 'Audio', 'Play', master.player.title + " - " + self.location.href]);
+
+									if (typeof ga != "undefined" && eval(master.player.opt.gaTrack))
+										ga('send', 'event', 'Audio', 'Play', master.player.title + " - " + self.location.href);
+
+									if (typeof master.player.opt.onPlay == "function")
+										master.player.opt.onPlay(master.player);
+
+								} else {
+
+									if (master.player.opt.animate)
+										animatePlayer();
+
+									master.player.isOpen = false;
+
+									jQuery(this).html(jQuery.mbMiniPlayer.icon.play);
+
+									$controlsBox.attr("isPlaying", "false");
+									el.jPlayer("pause");
+								}
+
+								e.stopPropagation();
+								return false;
+
+							}).hover(
+									function () {
+										jQuery(this).css({opacity: .8})
+									},
+									function () {
+										jQuery(this).css({opacity: 1})
+									}
+							);
+
+							$muteBox.on(jQuery.mbMiniPlayer.eventEnd,
+									function () {
+
+										if (jQuery.isMobile || !master.player.opt.allowMute){
+											$playBox.trigger(jQuery.mbMiniPlayer.eventEnd);
+											return;
+										}
+
+										if (jQuery(this).hasClass("mute")) {
+											jQuery(this).removeClass("mute");
+											jQuery(this).html(jQuery.mbMiniPlayer.icon.volume);
+											el.jPlayer("volume", master.player.opt.vol);
+										} else {
+											jQuery(this).addClass("mute");
+											jQuery(this).html(jQuery.mbMiniPlayer.icon.volumeMute);
+											master.player.opt.vol = master.player.opt.volume;
+											el.jPlayer("volume", 0);
+
+											if(master.player.opt.onMute == "function")
+												master.player.opt.onMute(master.player);
+
+										}
+									}).hover(
+									function () {
+										jQuery(this).css({opacity: .8})
+									},
+									function () {
+										jQuery(this).css({opacity: 1})
+									}
+							);
+
+							$rewBox.on(jQuery.mbMiniPlayer.eventEnd, function () {
+								el.jPlayer("playHead", 0);
+							}).hover(
+									function () {
+										jQuery(this).css({opacity: .8})
+									},
+									function () {
+										jQuery(this).css({opacity: 1})
+									}
+							);
+
 							var bars = master.player.opt.volumeLevels;
 							var barVol = 1 / bars;
-							master.player.opt.volume = event.jPlayer.options.volume;
-							var IDX = Math.floor(master.player.opt.volume / barVol) - 1;
-							if (master.player.opt.volume < .1 && master.player.opt.volume > 0)
-								IDX = 0;
-							$volumeLevel.find("a").css({opacity: .1}).removeClass("sel");
-							for (var x = 0; x <= IDX; x++) {
-								$volumeLevel.find("a").eq(x).css({opacity: .4}).addClass("sel");
-							}
-						});
+							$volumeLevel.find("a").each(function (i) {
+								jQuery(this).css({opacity: .3, height: "80%", width: Math.floor(35 / bars)});
+								var IDX = Math.floor(master.player.opt.volume / barVol) - 1;
+								if (master.player.opt.volume < .1 && master.player.opt.volume > 0)
+									IDX = 0;
+
+								$volumeLevel.find("a").css({opacity: .1}).removeClass("sel");
+								for (var x = 0; x <= IDX; x++) {
+									$volumeLevel.find("a").eq(x).css({opacity: .4}).addClass("sel");
+								}
+
+								jQuery(this).on(jQuery.mbMiniPlayer.eventEnd, function () {
+									var vol = (i + 1) * barVol;
+									el.jPlayer("volume", vol);
+									if (i == 0) el.jPlayer("volume", .1);
+									$muteBox.removeClass("mute");
+								});
+							});
+
+							// autoplay can't work on devices
+							if (!jQuery.isMobile && master.player.opt.autoplay && ((master.player.opt.playAlone && jQuery("[isPlaying=true]").length == 0) || !master.player.opt.playAlone))
+								$playBox.trigger(jQuery.mbMiniPlayer.eventEnd);
+						},
+						supplied           : master.player.opt.supplied,
+						wmode              : "transparent",
+						smoothPlayBar      : true,
+						volume             : master.player.opt.volume,
+						swfPath            : master.player.opt.swfPath,
+						solution           : 'html, flash',
+//					solution           : player.opt.isIE && $.browser.version<11 ? 'flash' : 'html, flash',
+//					preload            : jQuery.isMobile ? 'none' : 'metadata',
+						preload            : 'none',
+						cssSelectorAncestor: "#" + playerID, // Remove the ancestor css selector clause
+						cssSelector        : {
+							playBar: "#playBar_" + playerID,
+							seekBar: "#loadBar_" + playerID
+							// The other defaults remain unchanged
+						}
+					})
+							.on(jQuery.jPlayer.event.play, function (e) {})
+							.on(jQuery.jPlayer.event.loadedmetadata, function(){})
+							.on(jQuery.jPlayer.event.ended, function () {
+
+/*
+								if (jQuery.isAndroidDefault)
+									return;
+*/
+
+								if (master.player.opt.onEnd == "function")
+									master.player.opt.onEnd(master.player);
+
+								if (master.player.opt.loop)
+									$player.jPlayer("play");
+
+								else
+									$playBox.trigger(jQuery.mbMiniPlayer.eventEnd);
+								if (typeof master.player.opt.onPause == "function"){
+									master.player.opt.onPause(player);
+								}
+
+							})
+							.on(jQuery.jPlayer.event.timeupdate, function (e) {
+								master.player.duration = e.jPlayer.status.duration;
+								master.player.currentTime = e.jPlayer.status.currentTime;
+								master.player.seekPercent = e.jPlayer.status.seekPercent;
+								$timeBox.html(jQuery.jPlayer.convertTime(e.jPlayer.status.currentTime)).attr("title", jQuery.jPlayer.convertTime(e.jPlayer.status.duration));
+							})
+							.on(jQuery.jPlayer.event.volumechange, function (event) {
+								var bars = master.player.opt.volumeLevels;
+								var barVol = 1 / bars;
+								master.player.opt.volume = event.jPlayer.options.volume;
+								var IDX = Math.floor(master.player.opt.volume / barVol) - 1;
+								if (master.player.opt.volume < .1 && master.player.opt.volume > 0)
+									IDX = 0;
+								$volumeLevel.find("a").css({opacity: .1}).removeClass("sel");
+								for (var x = 0; x <= IDX; x++) {
+									$volumeLevel.find("a").eq(x).css({opacity: .4}).addClass("sel");
+								}
+							});
 
 				$controlsBox.on("keypress", function (e) {
 
@@ -796,3 +812,119 @@
 	jQuery.fn.mb_miniPlayer_getPlayer = jQuery.mbMiniPlayer.getPlayer;
 
 })(jQuery);
+
+// TMP For testing on standard browsers.
+// $.jPlayer.platform.android = true;
+
+var jPlayerAndroidFix = (function($) {
+	var fix = function(id, media, options) {
+		this.playFix = false;
+		this.init(id, media, options);
+	};
+	fix.prototype = {
+		init: function(id, media, options) {
+			var self = this;
+
+			// Store the params
+			this.id = id;
+			this.media = media;
+			this.options = options;
+
+			// Make a jQuery selector of the id, for use by the jPlayer instance.
+			this.player = $(this.id);
+
+			// Make the ready event to set the media to initiate.
+			this.player.bind($.jPlayer.event.ready, function(event) {
+				// Use this fix's setMedia() method.
+				self.setMedia(self.media);
+			});
+
+			// Apply Android fixes
+			if($.jPlayer.platform.android) {
+
+				// Fix playing new media immediately after setMedia.
+				this.player.bind($.jPlayer.event.progress, function(event) {
+					if(self.playFixRequired) {
+						self.playFixRequired = false;
+
+						// Enable the contols again
+						// self.player.jPlayer('option', 'cssSelectorAncestor', self.cssSelectorAncestor);
+
+						// Play if required, otherwise it will wait for the normal GUI input.
+						if(self.playFix) {
+							self.playFix = false;
+							$(this).jPlayer("play");
+						}
+					}
+				});
+				// Fix missing ended events.
+				this.player.bind($.jPlayer.event.ended, function(event) {
+					if(self.endedFix) {
+						self.endedFix = false;
+						setTimeout(function() {
+							self.setMedia(self.media);
+						},0);
+						// what if it was looping?
+					}
+				});
+				this.player.bind($.jPlayer.event.pause, function(event) {
+					if(self.endedFix) {
+						var remaining = event.jPlayer.status.duration - event.jPlayer.status.currentTime;
+						if(event.jPlayer.status.currentTime === 0 || remaining < 1) {
+							// Trigger the ended event from inside jplayer instance.
+							setTimeout(function() {
+								self.jPlayer._trigger($.jPlayer.event.ended);
+							},0);
+						}
+					}
+				});
+			}
+
+			// Instance jPlayer
+			this.player.jPlayer(this.options);
+
+			// Store a local copy of the jPlayer instance's object
+			this.jPlayer = this.player.data('jPlayer');
+
+			// Store the real cssSelectorAncestor being used.
+			this.cssSelectorAncestor = this.player.jPlayer('option', 'cssSelectorAncestor');
+
+			// Apply Android fixes
+			this.resetAndroid();
+
+			return this;
+		},
+		setMedia: function(media) {
+			this.media = media;
+
+			// Apply Android fixes
+			this.resetAndroid();
+
+			// Set the media
+			this.player.jPlayer("setMedia", this.media);
+			return this;
+		},
+		play: function() {
+			// Apply Android fixes
+			if($.jPlayer.platform.android && this.playFixRequired) {
+				// Apply Android play fix, if it is required.
+				this.playFix = true;
+			} else {
+				// Other browsers play it, as does Android if the fix is no longer required.
+				this.player.jPlayer("play");
+			}
+		},
+		resetAndroid: function() {
+			// Apply Android fixes
+			if($.jPlayer.platform.android) {
+				this.playFix = false;
+				this.playFixRequired = true;
+				this.endedFix = true;
+				// Disable the controls
+				// this.player.jPlayer('option', 'cssSelectorAncestor', '#NeverFoundDisabled');
+			}
+		}
+	};
+	return fix;
+})(jQuery);
+
