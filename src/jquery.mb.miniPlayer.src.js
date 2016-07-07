@@ -493,7 +493,10 @@
 								e.stopPropagation();
 								return false;
 
-							}).hover(
+							});
+
+							if(!jQuery.browser.mobile)
+								$playBox.hover(
 									function () {
 										jQuery(this).css({opacity: .8})
 									},
@@ -524,7 +527,10 @@
 												master.player.opt.onMute(master.player);
 
 										}
-									}).hover(
+									});
+
+							if(!jQuery.browser.mobile)
+								$muteBox.hover(
 									function () {
 										jQuery(this).css({opacity: .8})
 									},
@@ -535,7 +541,10 @@
 
 							$rewBox.on(jQuery.mbMiniPlayer.eventEnd, function () {
 								el.jPlayer("playHead", 0);
-							}).hover(
+							});
+
+							if(!jQuery.browser.mobile)
+								$rewBox.hover(
 									function () {
 										jQuery(this).css({opacity: .8})
 									},
