@@ -116,15 +116,6 @@
 				var playerID = "mp_" + ($master.attr("id") ? $master.attr("id") : new Date().getTime());
 				var title = $master.html();
 
-				// There are serious problems with the player events and Android default browser.
-				// the default HTML5 player is used on that case.
-/*
-				if (jQuery.isAndroidDefault) {
-					var androidPlayer = jQuery("<audio/>").attr({src: url, controls: "controls"}).css({display: "block"});
-					$master.after(androidPlayer);
-					return;
-				}
-*/
 				var $player = jQuery("<div/>").attr({id: "JPL_" + playerID});
 				master.player = $player.get(0);
 				master.player.opt = {};
@@ -134,7 +125,7 @@
 				master.player.idx = idx + 1;
 				master.player.title = title;
 
-				master.player.opt.isIE = jQuery.browser.msie;//&& jQuery.browser.version === 9;
+				master.player.opt.isIE = jQuery.browser.msie; //&& jQuery.browser.version === 9;
 
 				if (jQuery.metadata) {
 					jQuery.metadata.setType("class");
@@ -241,10 +232,7 @@
 									e.preventDefault();
 									e.stopPropagation();
 
-
 									var cleanFileUrl = fileUrl.split("?")[0];
-
-									console.debug(cleanFileUrl);
 
 									expires = "";
 									document.cookie = "mapdownload=true" + expires + "; path=/";
@@ -505,7 +493,10 @@
 								e.stopPropagation();
 								return false;
 
-							}).hover(
+							});
+
+							if(!jQuery.browser.mobile)
+								$playBox.hover(
 									function () {
 										jQuery(this).css({opacity: .8})
 									},
@@ -536,7 +527,10 @@
 												master.player.opt.onMute(master.player);
 
 										}
-									}).hover(
+									});
+
+							if(!jQuery.browser.mobile)
+								$muteBox.hover(
 									function () {
 										jQuery(this).css({opacity: .8})
 									},
@@ -547,7 +541,10 @@
 
 							$rewBox.on(jQuery.mbMiniPlayer.eventEnd, function () {
 								el.jPlayer("playHead", 0);
-							}).hover(
+							});
+
+							if(!jQuery.browser.mobile)
+								$rewBox.hover(
 									function () {
 										jQuery(this).css({opacity: .8})
 									},
