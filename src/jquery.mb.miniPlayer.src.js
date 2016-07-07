@@ -813,8 +813,6 @@
 
 })(jQuery);
 
-// TMP For testing on standard browsers.
-// $.jPlayer.platform.android = true;
 
 var jPlayerAndroidFix = (function($) {
 	var fix = function(id, media, options) {
