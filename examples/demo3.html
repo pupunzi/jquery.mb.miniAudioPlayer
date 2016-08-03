@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<!--
+  ~ /*******************************************************************************
+  ~  jquery.mb.components
+  ~  file: demo1.html
+  ~
+  ~  Copyright (c) 2001-2014. Matteo Bicocchi (Pupunzi);
+  ~  Open lab srl, Firenze - Italy
+  ~  email: matteo@open-lab.com
+  ~  site: 	http://pupunzi.com
+  ~  blog:	http://pupunzi.open-lab.com
+  ~ 	http://open-lab.com
+  ~
+  ~  Licences: MIT, GPL
+  ~  http://www.opensource.org/licenses/mit-license.php
+  ~  http://www.gnu.org/licenses/gpl.html
+  ~
+  ~  last modified: 03/05/14 19.20
+  ~  ******************************************************************************/
+  -->
+
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <title>jquery.mb.miniAudioPlayer</title>
+
+  <link rel="stylesheet" type="text/css" href="../dist/css/jquery.mb.miniAudioPlayer.min.css" title="style" media="screen"/>
+  <link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
+
+  <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.js"></script>-->
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script type="text/javascript" src="../dist/jquery.mb.miniAudioPlayer.min.js"></script>
+  <style type="text/css">
+
+    /*Generic page style*/
+
+    body{
+      margin:0;
+      background: #ffc000;
+      font:normal 16px/20px Lekton, sans-serif;
+    }
+
+    #wrapper{
+      position:absolute;
+      padding:100px 50px;
+      width:80%;
+      min-height: 100%;
+      margin-left: 10% ;
+      top:0;
+      background: #e8e8e8;
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      box-shadow: 0 0 10px rgba(0,0,0,0.4);
+    }
+
+    .wrapper h1 {
+      font-size: 26px;
+    }
+
+    button {
+      padding: 3px;
+      display: inline-block;
+      cursor: pointer;
+      color: #fff;
+      background-color: #ccc;
+      border-radius: 5px;
+      box-shadow: #999 1px 1px 3px;
+      border: 1px solid white;
+      text-shadow: 1px -1px 2px #aaa9a9 !important;
+    }
+
+    button:hover {
+      color: #666;
+    }
+
+    hr {
+      border: none;
+      background-color: #ccc;
+      height: 1px;
+    }
+
+  </style>
+
+  <script>
+
+    $(function () {
+
+      var isIframe=function(){var a=!1;try{self.location.href!=top.location.href&&(a=!0)}catch(b){a=!0}return a};
+
+      console.debug(isIframe())
+
+      if(!isIframe()){var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");$("#wrapper").prepend(logo),$("#logo").fadeIn()}
+
+
+      $(".audio").mb_miniPlayer({
+        width: 240,
+        inLine: false,
+        onEnd: playNext
+      });
+
+      function playNext(player) {
+        var players = $(".audio");
+        document.playerIDX = (player.idx <= players.length - 1 ? player.idx : 0);
+        players.eq(document.playerIDX).mb_miniPlayer_play();
+      }
+
+    });
+  </script>
+</head>
+
+<body>
+<br>
+
+<div id="wrapper">
+  <h1>mb.miniAudioPlayer.demo - auto start next player</h1>
+  <br>
+  This is a GUI implementation of <a href="http://www.jplayer.org/" target="_blank"><strong>Happyworm jPlayer
+  plugin</strong></a>, an HTML5 audio engine, developed on jQuery framework, that let you listen mp3 and ogg file over
+  the html5 audio tag where supported or using an invisible flash player where not supported.
+  For more informations about html5 browsers' support go to <a href="http://www.jplayer.org/latest/developer-guide/"
+                                                               target="_blank">jPlayer documentation site</a>.
+  <br>
+  <p><a href="../dist/skinMaker.html"> Customize the player skin</a></p>
+  <br>
+
+  <button onclick="jQuery.mbMiniPlayer.actualPlayer.mb_miniPlayer_stop()">stop actual player</button>
+  <br>
+  <br>
+  <br>
+  <a  class="audio {autoplay:true, inLine:true}"
+      href="http://www.pacdv.com/sounds/ambience_sounds/airport-gate-1.mp3">Airport Gate (Boarding)</a>
+  <hr>
+  <a  class="audio {ogg:'http://www.miaowmusic.com/ogg/Miaow-02-Hidden.ogg'}"
+      href="http://www.pacdv.com/sounds/ambience_sounds/g-t-1.mp3">Group Talking</a>
+  <hr>
+  <a  class="audio {ogg:'http://www.miaowmusic.com/ogg/Miaow-02-Hidden.ogg'}"
+      href="http://www.pacdv.com/sounds/ambience_sounds/water-stream-1.mp3" style="display:none">Water Stream
+    (Small)</a>
+  <hr>
+  <a  class="audio {ogg:'http://www.miaowmusic.com/ogg/Miaow-02-Hidden.ogg'}"
+      href="http://www.pacdv.com/sounds/domestic_sound_effects/doorbell-1.mp3">Doorbell</a>
+  <hr>
+  <a  class="audio {ogg:'http://www.miaowmusic.com/ogg/Miaow-02-Hidden.ogg'}"
+      href="http://www.pacdv.com/sounds/transportation_sounds/antique-car-honk-1.mp3" style="display: none">Antique Car
+    & Honk</a>
+  <hr>
+  <br>
+  All the music are provided by <a href="http://www.pacdv.com" target="_blank">© pacdv.com</a>.
+  <br>
+
+  <p>
+    Here is a demo of a custom behaviour applied as callback for the "end" event of each player:
+    <br>
+    The first player has the "autoPlay" parameter set as true and therefor it'll start playing on page load; once
+    one of the audio played ends the next player will start playing.
+    <br>
+    If is the last player playing it starts over from the first.
+    <br>
+    This behaviour can't works on iOs devices due to their security restrictions.
+  </p>
+	<pre style="margin-left: 0px;overflow:auto; background: #dcdcdc; padding: 10px "><code>
+    // this is the initializer function
+
+    $(".audio").mb_miniPlayer({
+    width:240,
+    inLine:false,
+    onEnd:playNext
+    });
+
+    // and this is function invoked as 'onEnd' callback
+    // Both the onPlay and onEnd callback functions receive the index of the player as parameter.
+
+    function playNext(idx){
+    var players=$(".audio");
+    document.playerIDX = idx+1 <= players.length-1 ? idx+1 : 0;
+    players.eq(document.playerIDX).mb_miniPlayer_play();
+    }
+  </code></pre>
+
+  <br>
+  <b>jquery.mb.miniPlayer</b> is a GUI implementation of the <a href="http://www.jplayer.org" target="_blank">jquery.jPlayer</a>
+  plug-in realized by © Happyworm LTD. (many thanks to <a href="http://happyworm.com/blog/" target="_blank">Mark
+  Boas</a>)
+</div>
+</body>
+</html>

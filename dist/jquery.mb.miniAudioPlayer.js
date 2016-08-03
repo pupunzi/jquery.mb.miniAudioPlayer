@@ -113,11 +113,16 @@
 				var $master = jQuery(master);
 				$master.hide();
 				var url = $master.attr("href");
-				var playerID = "mp_" + ($master.attr("id") ? $master.attr("id") : new Date().getTime());
+
+				$master.attr("id", ($master.attr("id") ? $master.attr("id") : new Date().getTime()));
+
+				var playerID = "mp_" + $master.attr("id");
 				var title = $master.html();
 
 				var $player = jQuery("<div/>").attr({id: "JPL_" + playerID});
-				master.player = $player.get(0);
+				var player = $player.get(0);
+				master.player = player;
+
 				master.player.opt = {};
 				jQuery.extend(master.player.opt, jQuery.mbMiniPlayer.defaults, options);
 				jQuery.mbMiniPlayer.eventEnd = jQuery.isMobile ? "touchend" : "mouseup";
@@ -744,6 +749,13 @@
 		getPlayer: function () {
 			var id = this.attr("id");
 			return jQuery("#mp_" + id);
+		},
+
+		getMaster: function () {
+			var id = this.attr("id").replace("mp_","");
+			console.debug(id);
+
+			return jQuery("#" + id);
 		}
 	};
 
@@ -807,6 +819,7 @@
 	jQuery.fn.mb_miniPlayer_toggle = jQuery.mbMiniPlayer.toggle;
 	jQuery.fn.mb_miniPlayer_destroy = jQuery.mbMiniPlayer.destroy;
 	jQuery.fn.mb_miniPlayer_getPlayer = jQuery.mbMiniPlayer.getPlayer;
+	jQuery.fn.mb_miniPlayer_getMaster = jQuery.mbMiniPlayer.getMaster;
 
 })(jQuery);
 
