@@ -9,7 +9,7 @@
     "player",
     "jPlayer"
   ],
-  "version": "1.8.5",
+  "version": "1.8.6",
   "author": "Pupunzi <matteo@open-lab.com> (Matteo Bicocchi)",
   "maintainers": [
     "Pupunzi <matteo@open-lab.com> (Matteo Bicocchi)"
@@ -54,5 +54,5 @@
     "grunt-contrib-watch": "^0.6.1",
     "grunt-include-replace": "^3.0.0"
   },
-  "buildnum": "49898"
+  "buildnum": "49906"
 }

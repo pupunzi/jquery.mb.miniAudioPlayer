@@ -26,12 +26,12 @@
 	var map = map || {};
 
 	jQuery.mbMiniPlayer = {
-		author  : "Matteo Bicocchi",
-		"version" : "1.8.5",
-		name    : "mb.miniPlayer",
-		isMobile: false,
+		author   : "Matteo Bicocchi",
+		"version": "1.8.6",
+		name     : "mb.miniPlayer",
+		isMobile : false,
 
-		icon    : {
+		icon: {
 			play      : "P",
 			pause     : "p",
 			stop      : "S",
@@ -53,7 +53,7 @@
 			loop                : false,
 			inLine              : false,
 			volumeLevels        : 12,
-			allowMute            : true,
+			allowMute           : true,
 			showControls        : true,
 			showVolumeLevel     : true,
 			showTime            : true,
@@ -105,7 +105,7 @@
 
 				var master = this;
 
-				if (master.isInit)
+				if (master.isInit || jQuery(master).is(".map_download"))
 					return;
 
 				master.isInit = true;
@@ -155,7 +155,7 @@
 
 				var skin = master.player.opt.skin;
 
-				var $controlsBox = jQuery("<div/>").attr({id: playerID, isPlaying: false, tabIndex: master.player.idx }).addClass("mbMiniPlayer").addClass(skin);
+				var $controlsBox = jQuery("<div/>").attr({id: playerID, isPlaying: false, tabIndex: master.player.idx}).addClass("mbMiniPlayer").addClass(skin);
 				master.player.controlBox = $controlsBox;
 
 				if (master.player.opt.inLine)
@@ -187,7 +187,7 @@
 
 				master.player.fileName = encodeURI(master.player.fileUrl.replace("." + fileExtension, "").split("/").pop());
 
-				master.player.createDownload = function(fileUrl, fileName){
+				master.player.createDownload = function (fileUrl, fileName) {
 
 					fileUrl = fileUrl || master.player.fileUrl;
 					fileName = fileName || master.player.fileName;
@@ -199,9 +199,8 @@
 
 					if (!master.player.opt.downloadPage) {
 						//if not use downloadPage, download html5Way
-
 						//if can download HTML5 way
-						if(isSameDomain && typeof a.download != "undefined"){
+						if (typeof a.download != "undefined") { //isSameDomain &&
 
 							master.player.download = jQuery("<a/>")
 									.addClass("map_download")
@@ -209,7 +208,7 @@
 									.css({display: "inline-block", cursor: "pointer"})
 									.html("d")
 									.attr("title", "download: " + fileName)
-									.on("mouseover", function(){
+									.on("mouseover", function () {
 										jQuery(this).attr("title", "download: " + fileName);
 									});
 						}
@@ -226,7 +225,7 @@
 									})
 									.attr("title", "open: " + fileName);
 
-					}else{
+					} else {
 
 						// use the PHP page
 						master.player.download = jQuery("<span/>")
@@ -243,9 +242,9 @@
 									expires = "";
 									document.cookie = "mapdownload=true" + expires + "; path=/";
 									location.href = master.player.opt.downloadPage + "?filename=" + fileName + "." + fileExtension + "&fileurl=" + cleanFileUrl;
-								}).on("mouseover", function(){
+								}).on("mouseover", function () {
 									jQuery(this).attr("title", "download: " + fileName);
-								}).on("click", function(e){
+								}).on("click", function (e) {
 									e.preventDefault();
 									e.stopPropagation();
 								})
@@ -321,7 +320,7 @@
 
 				//init jPlayer component (Happyworm Ltd - http://www.jplayer.org)
 
-				if(jQuery.browser.android){
+				if (jQuery.browser.android) {
 					var opt = {
 						supplied           : master.player.opt.supplied,
 						wmode              : "transparent",
@@ -337,172 +336,172 @@
 						}
 					}
 
-					var androidPlayer = new jPlayerAndroidFix($player.attr("id"),master.player.opt.media,opt );
+					var androidPlayer = new jPlayerAndroidFix($player.attr("id"), master.player.opt.media, opt);
 				}
 
-					$player.jPlayer({
+				$player.jPlayer({
 
-						ready : function () {
-							var el = jQuery(this);
+					ready              : function () {
+						var el = jQuery(this);
 
-							el.jPlayer("setMedia", master.player.opt.media);
+						el.jPlayer("setMedia", master.player.opt.media);
 
-							if (master.player.opt.mp3)
-								jQuery.mbMiniPlayer.getID3(master.player);
+						if (master.player.opt.mp3)
+							jQuery.mbMiniPlayer.getID3(master.player);
 
-							if (typeof master.player.opt.onReady == "function") {
-								master.player.opt.onReady(master.player, $controlsBox);
+						if (typeof master.player.opt.onReady == "function") {
+							master.player.opt.onReady(master.player, $controlsBox);
+						}
+
+						function animatePlayer(anim) {
+
+							master.player.width = master.player.opt.width;
+							if (master.player.opt.width.toString().indexOf("%") >= 0) {
+								/*
+								 var m = $playBox.outerWidth() < 40 ? 40 : $playBox.outerWidth();
+								 var margin = player.opt.downloadable ? (m) * 2 : 40;
+								 */
+								var margin = master.player.opt.downloadable ? 60 : 0;
+								var pW = $master.parent().outerWidth() - margin;
+								master.player.width = (pW * (parseFloat(master.player.opt.width))) / 100;
+
+							} else if (master.player.opt.width == 0) {
+								master.player.opt.showControls = false;
 							}
 
-							function animatePlayer(anim) {
+							if (anim == undefined)
+								anim = true;
 
-								master.player.width = master.player.opt.width;
-								if (master.player.opt.width.toString().indexOf("%") >= 0) {
-									/*
-									 var m = $playBox.outerWidth() < 40 ? 40 : $playBox.outerWidth();
-									 var margin = player.opt.downloadable ? (m) * 2 : 40;
-									 */
-									var margin = master.player.opt.downloadable ? 60 : 0;
-									var pW = $master.parent().outerWidth() - margin;
-									master.player.width = (pW * (parseFloat(master.player.opt.width))) / 100;
+							var speed = anim ? 500 : 0;
 
-								} else if (master.player.opt.width == 0) {
-									master.player.opt.showControls = false;
+							var isIE = jQuery.browser.msie && jQuery.browser.version < 9;
+
+							if (!master.player.isOpen) { // Open the player
+
+								var widthToRemove = 0;
+
+								if (master.player.opt.showRew) {
+									$rewBox.parent("div").show();
+									if (isIE)
+										$rewBox.show().css({width: 20, display: "block"});
+									else
+										$rewBox.show().animate({width: 20}, speed / 2);
+
+									widthToRemove += 30;
 								}
 
-								if (anim == undefined)
-									anim = true;
+								if (master.player.opt.showTime) {
+									$timeBox.parent("div").show();
+									if (isIE)
+										$timeBox.show().css({width: 34, display: "block"});
+									else
+										$timeBox.animate({width: 34}, speed / 2).show();
 
-								var speed = anim ? 500 : 0;
+									widthToRemove += 45;
 
-								var isIE = jQuery.browser.msie && jQuery.browser.version < 9;
+								}
 
-								if (!master.player.isOpen) { // Open the player
+								if (master.player.opt.showVolumeLevel) {
+									$volumeLevel.parent("div").show();
+									jQuery("a", $volumeLevel).show();
 
-									var widthToRemove = 0;
+									if (isIE)
+										$volumeLevel.show().css({width: 40, display: "block"});
+									else
+										$volumeLevel.show().animate({width: 40}, speed / 2);
 
-									if (master.player.opt.showRew) {
-										$rewBox.parent("div").show();
-										if (isIE)
-											$rewBox.show().css({width: 20, display: "block"});
-										else
-											$rewBox.show().animate({width: 20}, speed / 2);
+									widthToRemove += 50;
 
-										widthToRemove +=30;
-									}
+								}
 
-									if (master.player.opt.showTime) {
-										$timeBox.parent("div").show();
-										if (isIE)
-											$timeBox.show().css({width: 34, display: "block"});
-										else
-											$timeBox.animate({width: 34}, speed / 2).show();
+								if (master.player.opt.showControls) {
+									$controls.parent("div").show();
 
-										widthToRemove +=45;
+									var w = master.player.width - ($muteBox.outerWidth() + $playBox.outerWidth() + widthToRemove);
 
-									}
-
-									if (master.player.opt.showVolumeLevel) {
-										$volumeLevel.parent("div").show();
-										jQuery("a",$volumeLevel).show();
-
-										if (isIE)
-											$volumeLevel.show().css({width: 40, display: "block"});
-										else
-											$volumeLevel.show().animate({width: 40}, speed / 2);
-
-										widthToRemove +=50;
-
-									}
-
-									if (master.player.opt.showControls) {
-										$controls.parent("div").show();
-
-										var w =  master.player.width - ($muteBox.outerWidth() + $playBox.outerWidth()+ widthToRemove);
-
-										w = w<60 ? 60 : w;
-										$controls.css({display: "block", height: 20}).animate({width:w}, speed);
-									}
+									w = w < 60 ? 60 : w;
+									$controls.css({display: "block", height: 20}).animate({width: w}, speed);
+								}
 
 
-								} else { // Close the player
+							} else { // Close the player
 
-									$controls.animate({width: 1}, speed, function () {
+								$controls.animate({width: 1}, speed, function () {
+									jQuery(this).parent("div").css({display: "none"})
+								});
+								if (master.player.opt.showRew) {
+									$rewBox.animate({width: 1}, speed / 2, function () {
 										jQuery(this).parent("div").css({display: "none"})
 									});
-									if (master.player.opt.showRew) {
-										$rewBox.animate({width: 1}, speed / 2, function () {
-											jQuery(this).parent("div").css({display: "none"})
-										});
-									}
-									if (master.player.opt.showTime) {
-										$timeBox.animate({width: 1}, speed / 2, function () {
-											jQuery(this).parent("div").css({display: "none"})
-										});
-									}
-									if (master.player.opt.showVolumeLevel) {
-										jQuery("a",$volumeLevel).hide();
+								}
+								if (master.player.opt.showTime) {
+									$timeBox.animate({width: 1}, speed / 2, function () {
+										jQuery(this).parent("div").css({display: "none"})
+									});
+								}
+								if (master.player.opt.showVolumeLevel) {
+									jQuery("a", $volumeLevel).hide();
 
-										$volumeLevel.animate({width: 1}, speed / 2, function () {
-											jQuery(this).parent("div").css({display: "none"})
-										});
-									}
+									$volumeLevel.animate({width: 1}, speed / 2, function () {
+										jQuery(this).parent("div").css({display: "none"})
+									});
 								}
 							}
+						}
 
-							if (!master.player.opt.animate)
-								animatePlayer(false);
+						if (!master.player.opt.animate)
+							animatePlayer(false);
 
-							$playBox.on(jQuery.mbMiniPlayer.eventEnd, function (e) {
+						$playBox.on(jQuery.mbMiniPlayer.eventEnd, function (e) {
 
-								if (!master.player.isOpen) {
+							if (!master.player.isOpen) {
 
-									if (master.player.opt.animate)
-										animatePlayer();
+								if (master.player.opt.animate)
+									animatePlayer();
 
-									master.player.isOpen = true;
+								master.player.isOpen = true;
 
-									jQuery.mbMiniPlayer.actualPlayer = $master;
+								jQuery.mbMiniPlayer.actualPlayer = $master;
 
-									if (master.player.opt.playAlone) {
-										jQuery("[isPlaying='true']").find(".map_play").trigger(jQuery.mbMiniPlayer.eventEnd);
-									}
-
-									jQuery(this).html(jQuery.mbMiniPlayer.icon.pause);
-
-									el.jPlayer("play");
-									$controlsBox.attr("isPlaying", "true");
-
-									//add track for Google Analytics
-									if (typeof _gaq != "undefined" && master.player.opt.gaTrack)
-										_gaq.push(['_trackEvent', 'Audio', 'Play', master.player.title + " - " + self.location.href]);
-
-									if (typeof ga != "undefined" && eval(master.player.opt.gaTrack))
-										ga('send', 'event', 'Audio', 'Play', master.player.title + " - " + self.location.href);
-
-									if (typeof master.player.opt.onPlay == "function")
-										master.player.opt.onPlay(master.player);
-
-								} else {
-
-									if (master.player.opt.animate)
-										animatePlayer();
-
-									master.player.isOpen = false;
-
-									jQuery(this).html(jQuery.mbMiniPlayer.icon.play);
-
-									$controlsBox.attr("isPlaying", "false");
-									el.jPlayer("pause");
+								if (master.player.opt.playAlone) {
+									jQuery("[isPlaying='true']").find(".map_play").trigger(jQuery.mbMiniPlayer.eventEnd);
 								}
 
-								e.stopPropagation();
-								return false;
+								jQuery(this).html(jQuery.mbMiniPlayer.icon.pause);
 
-							});
+								el.jPlayer("play");
+								$controlsBox.attr("isPlaying", "true");
 
-							if(!jQuery.browser.mobile)
-								$playBox.hover(
+								//add track for Google Analytics
+								if (typeof _gaq != "undefined" && master.player.opt.gaTrack)
+									_gaq.push(['_trackEvent', 'Audio', 'Play', master.player.title + " - " + self.location.href]);
+
+								if (typeof ga != "undefined" && eval(master.player.opt.gaTrack))
+									ga('send', 'event', 'Audio', 'Play', master.player.title + " - " + self.location.href);
+
+								if (typeof master.player.opt.onPlay == "function")
+									master.player.opt.onPlay(master.player);
+
+							} else {
+
+								if (master.player.opt.animate)
+									animatePlayer();
+
+								master.player.isOpen = false;
+
+								jQuery(this).html(jQuery.mbMiniPlayer.icon.play);
+
+								$controlsBox.attr("isPlaying", "false");
+								el.jPlayer("pause");
+							}
+
+							e.stopPropagation();
+							return false;
+
+						});
+
+						if (!jQuery.browser.mobile)
+							$playBox.hover(
 									function () {
 										jQuery(this).css({opacity: .8})
 									},
@@ -511,135 +510,135 @@
 									}
 							);
 
-							$muteBox.on(jQuery.mbMiniPlayer.eventEnd,
-									function () {
+						$muteBox.on(jQuery.mbMiniPlayer.eventEnd,
+								function () {
 
-										if (jQuery.isMobile || !master.player.opt.allowMute){
-											$playBox.trigger(jQuery.mbMiniPlayer.eventEnd);
-											return;
-										}
-
-										if (jQuery(this).hasClass("mute")) {
-											jQuery(this).removeClass("mute");
-											jQuery(this).html(jQuery.mbMiniPlayer.icon.volume);
-											el.jPlayer("volume", master.player.opt.vol);
-										} else {
-											jQuery(this).addClass("mute");
-											jQuery(this).html(jQuery.mbMiniPlayer.icon.volumeMute);
-											master.player.opt.vol = master.player.opt.volume;
-											el.jPlayer("volume", 0);
-
-											if(master.player.opt.onMute == "function")
-												master.player.opt.onMute(master.player);
-
-										}
-									});
-
-							if(!jQuery.browser.mobile)
-								$muteBox.hover(
-									function () {
-										jQuery(this).css({opacity: .8})
-									},
-									function () {
-										jQuery(this).css({opacity: 1})
+									if (jQuery.isMobile || !master.player.opt.allowMute) {
+										$playBox.trigger(jQuery.mbMiniPlayer.eventEnd);
+										return;
 									}
-							);
 
-							$rewBox.on(jQuery.mbMiniPlayer.eventEnd, function () {
-								el.jPlayer("playHead", 0);
-							});
+									if (jQuery(this).hasClass("mute")) {
+										jQuery(this).removeClass("mute");
+										jQuery(this).html(jQuery.mbMiniPlayer.icon.volume);
+										el.jPlayer("volume", master.player.opt.vol);
+									} else {
+										jQuery(this).addClass("mute");
+										jQuery(this).html(jQuery.mbMiniPlayer.icon.volumeMute);
+										master.player.opt.vol = master.player.opt.volume;
+										el.jPlayer("volume", 0);
 
-							if(!jQuery.browser.mobile)
-								$rewBox.hover(
-									function () {
-										jQuery(this).css({opacity: .8})
-									},
-									function () {
-										jQuery(this).css({opacity: 1})
+										if (master.player.opt.onMute == "function")
+											master.player.opt.onMute(master.player);
+
 									}
-							);
-
-							var bars = master.player.opt.volumeLevels;
-							var barVol = 1 / bars;
-							$volumeLevel.find("a").each(function (i) {
-								jQuery(this).css({opacity: .3, height: "80%", width: Math.floor(35 / bars)});
-								var IDX = Math.floor(master.player.opt.volume / barVol) - 1;
-								if (master.player.opt.volume < .1 && master.player.opt.volume > 0)
-									IDX = 0;
-
-								$volumeLevel.find("a").css({opacity: .1}).removeClass("sel");
-								for (var x = 0; x <= IDX; x++) {
-									$volumeLevel.find("a").eq(x).css({opacity: .4}).addClass("sel");
-								}
-
-								jQuery(this).on(jQuery.mbMiniPlayer.eventEnd, function () {
-									var vol = (i + 1) * barVol;
-									el.jPlayer("volume", vol);
-									if (i == 0) el.jPlayer("volume", .1);
-									$muteBox.removeClass("mute");
 								});
-							});
 
-							// autoplay can't work on devices
-							if (!jQuery.isMobile && master.player.opt.autoplay && ((master.player.opt.playAlone && jQuery("[isPlaying=true]").length == 0) || !master.player.opt.playAlone))
-								$playBox.trigger(jQuery.mbMiniPlayer.eventEnd);
-						},
-						supplied           : master.player.opt.supplied,
-						wmode              : "transparent",
-						smoothPlayBar      : true,
-						volume             : master.player.opt.volume,
-						swfPath            : master.player.opt.swfPath,
-						solution           : 'html, flash',
+						if (!jQuery.browser.mobile)
+							$muteBox.hover(
+									function () {
+										jQuery(this).css({opacity: .8})
+									},
+									function () {
+										jQuery(this).css({opacity: 1})
+									}
+							);
+
+						$rewBox.on(jQuery.mbMiniPlayer.eventEnd, function () {
+							el.jPlayer("playHead", 0);
+						});
+
+						if (!jQuery.browser.mobile)
+							$rewBox.hover(
+									function () {
+										jQuery(this).css({opacity: .8})
+									},
+									function () {
+										jQuery(this).css({opacity: 1})
+									}
+							);
+
+						var bars = master.player.opt.volumeLevels;
+						var barVol = 1 / bars;
+						$volumeLevel.find("a").each(function (i) {
+							jQuery(this).css({opacity: .3, height: "80%", width: Math.floor(35 / bars)});
+							var IDX = Math.floor(master.player.opt.volume / barVol) - 1;
+							if (master.player.opt.volume < .1 && master.player.opt.volume > 0)
+								IDX = 0;
+
+							$volumeLevel.find("a").css({opacity: .1}).removeClass("sel");
+							for (var x = 0; x <= IDX; x++) {
+								$volumeLevel.find("a").eq(x).css({opacity: .4}).addClass("sel");
+							}
+
+							jQuery(this).on(jQuery.mbMiniPlayer.eventEnd, function () {
+								var vol = (i + 1) * barVol;
+								el.jPlayer("volume", vol);
+								if (i == 0) el.jPlayer("volume", .1);
+								$muteBox.removeClass("mute");
+							});
+						});
+
+						// autoplay can't work on devices
+						if (!jQuery.isMobile && master.player.opt.autoplay && ((master.player.opt.playAlone && jQuery("[isPlaying=true]").length == 0) || !master.player.opt.playAlone))
+							$playBox.trigger(jQuery.mbMiniPlayer.eventEnd);
+					},
+					supplied           : master.player.opt.supplied,
+					wmode              : "transparent",
+					smoothPlayBar      : true,
+					volume             : master.player.opt.volume,
+					swfPath            : master.player.opt.swfPath,
+					solution           : 'html, flash',
 //					solution           : player.opt.isIE && $.browser.version<11 ? 'flash' : 'html, flash',
 //					preload            : jQuery.isMobile ? 'none' : 'metadata',
-						preload            : 'none',
-						cssSelectorAncestor: "#" + playerID, // Remove the ancestor css selector clause
-						cssSelector        : {
-							playBar: "#playBar_" + playerID,
-							seekBar: "#loadBar_" + playerID
-							// The other defaults remain unchanged
-						}
-					})
-							.on(jQuery.jPlayer.event.play, function (e) {})
-							.on(jQuery.jPlayer.event.loadedmetadata, function(){})
-							.on(jQuery.jPlayer.event.ended, function () {
+					preload            : 'none',
+					cssSelectorAncestor: "#" + playerID, // Remove the ancestor css selector clause
+					cssSelector        : {
+						playBar: "#playBar_" + playerID,
+						seekBar: "#loadBar_" + playerID
+						// The other defaults remain unchanged
+					}
+				})
+						.on(jQuery.jPlayer.event.play, function (e) {})
+						.on(jQuery.jPlayer.event.loadedmetadata, function () {})
+						.on(jQuery.jPlayer.event.ended, function () {
 
-/*
-								if (jQuery.isAndroidDefault)
-									return;
-*/
+							/*
+															if (jQuery.isAndroidDefault)
+																return;
+							*/
 
-								if (master.player.opt.onEnd == "function")
-									master.player.opt.onEnd(master.player);
+							if (master.player.opt.onEnd == "function")
+								master.player.opt.onEnd(master.player);
 
-								if (master.player.opt.loop)
-									$player.jPlayer("play");
+							if (master.player.opt.loop)
+								$player.jPlayer("play");
 
-								else
-									$playBox.trigger(jQuery.mbMiniPlayer.eventEnd);
-								if (typeof master.player.opt.onPause == "function"){
-									master.player.opt.onPause(player);
-								}
+							else
+								$playBox.trigger(jQuery.mbMiniPlayer.eventEnd);
+							if (typeof master.player.opt.onPause == "function") {
+								master.player.opt.onPause(player);
+							}
 
-							})
-							.on(jQuery.jPlayer.event.timeupdate, function (e) {
-								master.player.duration = e.jPlayer.status.duration;
-								master.player.currentTime = e.jPlayer.status.currentTime;
-								master.player.seekPercent = e.jPlayer.status.seekPercent;
-								$timeBox.html(jQuery.jPlayer.convertTime(e.jPlayer.status.currentTime)).attr("title", jQuery.jPlayer.convertTime(e.jPlayer.status.duration));
-							})
-							.on(jQuery.jPlayer.event.volumechange, function (event) {
-								var bars = master.player.opt.volumeLevels;
-								var barVol = 1 / bars;
-								master.player.opt.volume = event.jPlayer.options.volume;
-								var IDX = Math.floor(master.player.opt.volume / barVol) - 1;
-								if (master.player.opt.volume < .1 && master.player.opt.volume > 0)
-									IDX = 0;
-								$volumeLevel.find("a").css({opacity: .1}).removeClass("sel");
-								for (var x = 0; x <= IDX; x++) {
-									$volumeLevel.find("a").eq(x).css({opacity: .4}).addClass("sel");
-								}
-							});
+						})
+						.on(jQuery.jPlayer.event.timeupdate, function (e) {
+							master.player.duration = e.jPlayer.status.duration;
+							master.player.currentTime = e.jPlayer.status.currentTime;
+							master.player.seekPercent = e.jPlayer.status.seekPercent;
+							$timeBox.html(jQuery.jPlayer.convertTime(e.jPlayer.status.currentTime)).attr("title", jQuery.jPlayer.convertTime(e.jPlayer.status.duration));
+						})
+						.on(jQuery.jPlayer.event.volumechange, function (event) {
+							var bars = master.player.opt.volumeLevels;
+							var barVol = 1 / bars;
+							master.player.opt.volume = event.jPlayer.options.volume;
+							var IDX = Math.floor(master.player.opt.volume / barVol) - 1;
+							if (master.player.opt.volume < .1 && master.player.opt.volume > 0)
+								IDX = 0;
+							$volumeLevel.find("a").css({opacity: .1}).removeClass("sel");
+							for (var x = 0; x <= IDX; x++) {
+								$volumeLevel.find("a").eq(x).css({opacity: .4}).addClass("sel");
+							}
+						});
 
 				$controlsBox.on("keypress", function (e) {
 
@@ -753,7 +752,7 @@
 		},
 
 		getMaster: function () {
-			var id = this.attr("id").replace("mp_","");
+			var id = this.attr("id").replace("mp_", "");
 			console.debug(id);
 
 			return jQuery("#" + id);
@@ -825,13 +824,13 @@
 })(jQuery);
 
 
-var jPlayerAndroidFix = (function($) {
-	var fix = function(id, media, options) {
+var jPlayerAndroidFix = (function ($) {
+	var fix = function (id, media, options) {
 		this.playFix = false;
 		this.init(id, media, options);
 	};
 	fix.prototype = {
-		init: function(id, media, options) {
+		init        : function (id, media, options) {
 			var self = this;
 
 			// Store the params
@@ -843,47 +842,47 @@ var jPlayerAndroidFix = (function($) {
 			this.player = $(this.id);
 
 			// Make the ready event to set the media to initiate.
-			this.player.bind($.jPlayer.event.ready, function(event) {
+			this.player.bind($.jPlayer.event.ready, function (event) {
 				// Use this fix's setMedia() method.
 				self.setMedia(self.media);
 			});
 
 			// Apply Android fixes
-			if($.jPlayer.platform.android) {
+			if ($.jPlayer.platform.android) {
 
 				// Fix playing new media immediately after setMedia.
-				this.player.bind($.jPlayer.event.progress, function(event) {
-					if(self.playFixRequired) {
+				this.player.bind($.jPlayer.event.progress, function (event) {
+					if (self.playFixRequired) {
 						self.playFixRequired = false;
 
 						// Enable the contols again
 						// self.player.jPlayer('option', 'cssSelectorAncestor', self.cssSelectorAncestor);
 
 						// Play if required, otherwise it will wait for the normal GUI input.
-						if(self.playFix) {
+						if (self.playFix) {
 							self.playFix = false;
 							$(this).jPlayer("play");
 						}
 					}
 				});
 				// Fix missing ended events.
-				this.player.bind($.jPlayer.event.ended, function(event) {
-					if(self.endedFix) {
+				this.player.bind($.jPlayer.event.ended, function (event) {
+					if (self.endedFix) {
 						self.endedFix = false;
-						setTimeout(function() {
+						setTimeout(function () {
 							self.setMedia(self.media);
-						},0);
+						}, 0);
 						// what if it was looping?
 					}
 				});
-				this.player.bind($.jPlayer.event.pause, function(event) {
-					if(self.endedFix) {
+				this.player.bind($.jPlayer.event.pause, function (event) {
+					if (self.endedFix) {
 						var remaining = event.jPlayer.status.duration - event.jPlayer.status.currentTime;
-						if(event.jPlayer.status.currentTime === 0 || remaining < 1) {
+						if (event.jPlayer.status.currentTime === 0 || remaining < 1) {
 							// Trigger the ended event from inside jplayer instance.
-							setTimeout(function() {
+							setTimeout(function () {
 								self.jPlayer._trigger($.jPlayer.event.ended);
-							},0);
+							}, 0);
 						}
 					}
 				});
@@ -903,7 +902,7 @@ var jPlayerAndroidFix = (function($) {
 
 			return this;
 		},
-		setMedia: function(media) {
+		setMedia    : function (media) {
 			this.media = media;
 
 			// Apply Android fixes
@@ -913,9 +912,9 @@ var jPlayerAndroidFix = (function($) {
 			this.player.jPlayer("setMedia", this.media);
 			return this;
 		},
-		play: function() {
+		play        : function () {
 			// Apply Android fixes
-			if($.jPlayer.platform.android && this.playFixRequired) {
+			if ($.jPlayer.platform.android && this.playFixRequired) {
 				// Apply Android play fix, if it is required.
 				this.playFix = true;
 			} else {
@@ -923,9 +922,9 @@ var jPlayerAndroidFix = (function($) {
 				this.player.jPlayer("play");
 			}
 		},
-		resetAndroid: function() {
+		resetAndroid: function () {
 			// Apply Android fixes
-			if($.jPlayer.platform.android) {
+			if ($.jPlayer.platform.android) {
 				this.playFix = false;
 				this.playFixRequired = true;
 				this.endedFix = true;
@@ -998,12 +997,26 @@ function z(g,i,d){var f=g,c=i||0,a=0;this.P=function(){return f};if(typeof g=="s
  *  *****************************************************************************
  */
 
-function uncamel(e){return e.replace(/([A-Z])/g,function(e){return"-"+e.toLowerCase()})}function setUnit(e,t){return"string"!=typeof e||e.match(/^[\-0-9\.]+jQuery/)?""+e+t:e}function setFilter(e,t,r){var i=uncamel(t),n=jQuery.browser.mozilla?"":jQuery.CSS.sfx;e[n+"filter"]=e[n+"filter"]||"",r=setUnit(r>jQuery.CSS.filters[t].max?jQuery.CSS.filters[t].max:r,jQuery.CSS.filters[t].unit),e[n+"filter"]+=i+"("+r+") ",delete e[t]}jQuery.support.CSStransition=function(){var e=document.body||document.documentElement,t=e.style;return void 0!==t.transition||void 0!==t.WebkitTransition||void 0!==t.MozTransition||void 0!==t.MsTransition||void 0!==t.OTransition}(),jQuery.CSS={name:"mb.CSSAnimate",author:"Matteo Bicocchi",version:"2.0.0",transitionEnd:"transitionEnd",sfx:"",filters:{blur:{min:0,max:100,unit:"px"},brightness:{min:0,max:400,unit:"%"},contrast:{min:0,max:400,unit:"%"},grayscale:{min:0,max:100,unit:"%"},hueRotate:{min:0,max:360,unit:"deg"},invert:{min:0,max:100,unit:"%"},saturate:{min:0,max:400,unit:"%"},sepia:{min:0,max:100,unit:"%"}},normalizeCss:function(e){var t=jQuery.extend(!0,{},e);jQuery.browser.webkit||jQuery.browser.opera?jQuery.CSS.sfx="-webkit-":jQuery.browser.mozilla?jQuery.CSS.sfx="-moz-":jQuery.browser.msie&&(jQuery.CSS.sfx="-ms-");for(var r in t){"transform"===r&&(t[jQuery.CSS.sfx+"transform"]=t[r],delete t[r]),"transform-origin"===r&&(t[jQuery.CSS.sfx+"transform-origin"]=e[r],delete t[r]),"filter"!==r||jQuery.browser.mozilla||(t[jQuery.CSS.sfx+"filter"]=e[r],delete t[r]),"blur"===r&&setFilter(t,"blur",e[r]),"brightness"===r&&setFilter(t,"brightness",e[r]),"contrast"===r&&setFilter(t,"contrast",e[r]),"grayscale"===r&&setFilter(t,"grayscale",e[r]),"hueRotate"===r&&setFilter(t,"hueRotate",e[r]),"invert"===r&&setFilter(t,"invert",e[r]),"saturate"===r&&setFilter(t,"saturate",e[r]),"sepia"===r&&setFilter(t,"sepia",e[r]);var i="";"x"===r&&(i=jQuery.CSS.sfx+"transform",t[i]=t[i]||"",t[i]+=" translateX("+setUnit(e[r],"px")+")",delete t[r]),"y"===r&&(i=jQuery.CSS.sfx+"transform",t[i]=t[i]||"",t[i]+=" translateY("+setUnit(e[r],"px")+")",delete t[r]),"z"===r&&(i=jQuery.CSS.sfx+"transform",t[i]=t[i]||"",t[i]+=" translateZ("+setUnit(e[r],"px")+")",delete t[r]),"rotate"===r&&(i=jQuery.CSS.sfx+"transform",t[i]=t[i]||"",t[i]+=" rotate("+setUnit(e[r],"deg")+")",delete t[r]),"rotateX"===r&&(i=jQuery.CSS.sfx+"transform",t[i]=t[i]||"",t[i]+=" rotateX("+setUnit(e[r],"deg")+")",delete t[r]),"rotateY"===r&&(i=jQuery.CSS.sfx+"transform",t[i]=t[i]||"",t[i]+=" rotateY("+setUnit(e[r],"deg")+")",delete t[r]),"rotateZ"===r&&(i=jQuery.CSS.sfx+"transform",t[i]=t[i]||"",t[i]+=" rotateZ("+setUnit(e[r],"deg")+")",delete t[r]),"scale"===r&&(i=jQuery.CSS.sfx+"transform",t[i]=t[i]||"",t[i]+=" scale("+setUnit(e[r],"")+")",delete t[r]),"scaleX"===r&&(i=jQuery.CSS.sfx+"transform",t[i]=t[i]||"",t[i]+=" scaleX("+setUnit(e[r],"")+")",delete t[r]),"scaleY"===r&&(i=jQuery.CSS.sfx+"transform",t[i]=t[i]||"",t[i]+=" scaleY("+setUnit(e[r],"")+")",delete t[r]),"scaleZ"===r&&(i=jQuery.CSS.sfx+"transform",t[i]=t[i]||"",t[i]+=" scaleZ("+setUnit(e[r],"")+")",delete t[r]),"skew"===r&&(i=jQuery.CSS.sfx+"transform",t[i]=t[i]||"",t[i]+=" skew("+setUnit(e[r],"deg")+")",delete t[r]),"skewX"===r&&(i=jQuery.CSS.sfx+"transform",t[i]=t[i]||"",t[i]+=" skewX("+setUnit(e[r],"deg")+")",delete t[r]),"skewY"===r&&(i=jQuery.CSS.sfx+"transform",t[i]=t[i]||"",t[i]+=" skewY("+setUnit(e[r],"deg")+")",delete t[r]),"perspective"===r&&(i=jQuery.CSS.sfx+"transform",t[i]=t[i]||"",t[i]+=" perspective("+setUnit(e[r],"px")+")",delete t[r])}return t},getProp:function(e){var t=[];for(var r in e)t.indexOf(r)<0&&t.push(uncamel(r));return t.join(",")},animate:function(e,t,r,i,n){return this.each(function(){function s(){u.called=!0,u.CSSAIsRunning=!1,a.off(jQuery.CSS.transitionEnd+"."+u.id),clearTimeout(u.timeout),a.css(jQuery.CSS.sfx+"transition",""),"function"==typeof n&&n.apply(u),"function"==typeof u.CSSqueue&&(u.CSSqueue(),u.CSSqueue=null)}var u=this,a=jQuery(this);u.id=u.id||"CSSA_"+(new Date).getTime();var o=o||{type:"noEvent"};if(u.CSSAIsRunning&&u.eventType==o.type&&!jQuery.browser.msie&&jQuery.browser.version<=9)return void(u.CSSqueue=function(){a.CSSAnimate(e,t,r,i,n)});if(u.CSSqueue=null,u.eventType=o.type,0!==a.length&&e){if(e=jQuery.normalizeCss(e),u.CSSAIsRunning=!0,"function"==typeof t&&(n=t,t=jQuery.fx.speeds._default),"function"==typeof r&&(i=r,r=0),"string"==typeof r&&(n=r,r=0),"function"==typeof i&&(n=i,i="cubic-bezier(0.65,0.03,0.36,0.72)"),"string"==typeof t)for(var f in jQuery.fx.speeds){if(t==f){t=jQuery.fx.speeds[f];break}t=jQuery.fx.speeds._default}if(t||(t=jQuery.fx.speeds._default),"string"==typeof n&&(i=n,n=null),!jQuery.support.CSStransition){for(var c in e){if("transform"===c&&delete e[c],"filter"===c&&delete e[c],"transform-origin"===c&&delete e[c],"auto"===e[c]&&delete e[c],"x"===c){var S=e[c],l="left";e[l]=S,delete e[c]}if("y"===c){var S=e[c],l="top";e[l]=S,delete e[c]}("-ms-transform"===c||"-ms-filter"===c)&&delete e[c]}return void a.delay(r).animate(e,t,n)}var y={"default":"ease","in":"ease-in",out:"ease-out","in-out":"ease-in-out",snap:"cubic-bezier(0,1,.5,1)",easeOutCubic:"cubic-bezier(.215,.61,.355,1)",easeInOutCubic:"cubic-bezier(.645,.045,.355,1)",easeInCirc:"cubic-bezier(.6,.04,.98,.335)",easeOutCirc:"cubic-bezier(.075,.82,.165,1)",easeInOutCirc:"cubic-bezier(.785,.135,.15,.86)",easeInExpo:"cubic-bezier(.95,.05,.795,.035)",easeOutExpo:"cubic-bezier(.19,1,.22,1)",easeInOutExpo:"cubic-bezier(1,0,0,1)",easeInQuad:"cubic-bezier(.55,.085,.68,.53)",easeOutQuad:"cubic-bezier(.25,.46,.45,.94)",easeInOutQuad:"cubic-bezier(.455,.03,.515,.955)",easeInQuart:"cubic-bezier(.895,.03,.685,.22)",easeOutQuart:"cubic-bezier(.165,.84,.44,1)",easeInOutQuart:"cubic-bezier(.77,0,.175,1)",easeInQuint:"cubic-bezier(.755,.05,.855,.06)",easeOutQuint:"cubic-bezier(.23,1,.32,1)",easeInOutQuint:"cubic-bezier(.86,0,.07,1)",easeInSine:"cubic-bezier(.47,0,.745,.715)",easeOutSine:"cubic-bezier(.39,.575,.565,1)",easeInOutSine:"cubic-bezier(.445,.05,.55,.95)",easeInBack:"cubic-bezier(.6,-.28,.735,.045)",easeOutBack:"cubic-bezier(.175, .885,.32,1.275)",easeInOutBack:"cubic-bezier(.68,-.55,.265,1.55)"};y[i]&&(i=y[i]),a.off(jQuery.CSS.transitionEnd+"."+u.id);var m=jQuery.CSS.getProp(e),d={};jQuery.extend(d,e),d[jQuery.CSS.sfx+"transition-property"]=m,d[jQuery.CSS.sfx+"transition-duration"]=t+"ms",d[jQuery.CSS.sfx+"transition-delay"]=r+"ms",d[jQuery.CSS.sfx+"transition-timing-function"]=i,setTimeout(function(){a.one(jQuery.CSS.transitionEnd+"."+u.id,s),a.css(d)},1),u.timeout=setTimeout(function(){return u.called||!n?(u.called=!1,void(u.CSSAIsRunning=!1)):(a.css(jQuery.CSS.sfx+"transition",""),n.apply(u),u.CSSAIsRunning=!1,void("function"==typeof u.CSSqueue&&(u.CSSqueue(),u.CSSqueue=null)))},t+r+10)}})}},jQuery.fn.CSSAnimate=jQuery.CSS.animate,jQuery.normalizeCss=jQuery.CSS.normalizeCss,jQuery.fn.css3=function(e){return this.each(function(){var t=jQuery(this),r=jQuery.normalizeCss(e);t.css(r)})};
+jQuery.support.CSStransition=function(){var d=(document.body||document.documentElement).style;return void 0!==d.transition||void 0!==d.WebkitTransition||void 0!==d.MozTransition||void 0!==d.MsTransition||void 0!==d.OTransition}();function uncamel(d){return d.replace(/([A-Z])/g,function(a){return"-"+a.toLowerCase()})}function setUnit(d,a){return"string"!==typeof d||d.match(/^[\-0-9\.]+jQuery/)?""+d+a:d}
+function setFilter(d,a,b){var c=uncamel(a),g=jQuery.browser.mozilla?"":jQuery.CSS.sfx;d[g+"filter"]=d[g+"filter"]||"";b=setUnit(b>jQuery.CSS.filters[a].max?jQuery.CSS.filters[a].max:b,jQuery.CSS.filters[a].unit);d[g+"filter"]+=c+"("+b+") ";delete d[a]}
+jQuery.CSS={name:"mb.CSSAnimate",author:"Matteo Bicocchi",version:"2.0.0",transitionEnd:"transitionEnd",sfx:"",filters:{blur:{min:0,max:100,unit:"px"},brightness:{min:0,max:400,unit:"%"},contrast:{min:0,max:400,unit:"%"},grayscale:{min:0,max:100,unit:"%"},hueRotate:{min:0,max:360,unit:"deg"},invert:{min:0,max:100,unit:"%"},saturate:{min:0,max:400,unit:"%"},sepia:{min:0,max:100,unit:"%"}},normalizeCss:function(d){var a=jQuery.extend(!0,{},d);jQuery.browser.webkit||jQuery.browser.opera?jQuery.CSS.sfx=
+		"-webkit-":jQuery.browser.mozilla?jQuery.CSS.sfx="-moz-":jQuery.browser.msie&&(jQuery.CSS.sfx="-ms-");jQuery.CSS.sfx="";for(var b in a){"transform"===b&&(a[jQuery.CSS.sfx+"transform"]=a[b],delete a[b]);"transform-origin"===b&&(a[jQuery.CSS.sfx+"transform-origin"]=d[b],delete a[b]);"filter"!==b||jQuery.browser.mozilla||(a[jQuery.CSS.sfx+"filter"]=d[b],delete a[b]);"blur"===b&&setFilter(a,"blur",d[b]);"brightness"===b&&setFilter(a,"brightness",d[b]);"contrast"===b&&setFilter(a,"contrast",d[b]);"grayscale"===
+b&&setFilter(a,"grayscale",d[b]);"hueRotate"===b&&setFilter(a,"hueRotate",d[b]);"invert"===b&&setFilter(a,"invert",d[b]);"saturate"===b&&setFilter(a,"saturate",d[b]);"sepia"===b&&setFilter(a,"sepia",d[b]);if("x"===b){var c=jQuery.CSS.sfx+"transform";a[c]=a[c]||"";a[c]+=" translateX("+setUnit(d[b],"px")+")";delete a[b]}"y"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" translateY("+setUnit(d[b],"px")+")",delete a[b]);"z"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" translateZ("+
+		setUnit(d[b],"px")+")",delete a[b]);"rotate"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" rotate("+setUnit(d[b],"deg")+")",delete a[b]);"rotateX"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" rotateX("+setUnit(d[b],"deg")+")",delete a[b]);"rotateY"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" rotateY("+setUnit(d[b],"deg")+")",delete a[b]);"rotateZ"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" rotateZ("+setUnit(d[b],"deg")+")",delete a[b]);"scale"===b&&
+(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" scale("+setUnit(d[b],"")+")",delete a[b]);"scaleX"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" scaleX("+setUnit(d[b],"")+")",delete a[b]);"scaleY"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" scaleY("+setUnit(d[b],"")+")",delete a[b]);"scaleZ"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" scaleZ("+setUnit(d[b],"")+")",delete a[b]);"skew"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" skew("+setUnit(d[b],
+		"deg")+")",delete a[b]);"skewX"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" skewX("+setUnit(d[b],"deg")+")",delete a[b]);"skewY"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" skewY("+setUnit(d[b],"deg")+")",delete a[b]);"perspective"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" perspective("+setUnit(d[b],"px")+")",delete a[b])}return a},getProp:function(d){var a=[],b;for(b in d)0>a.indexOf(b)&&a.push(uncamel(b));return a.join(",")},animate:function(d,a,b,c,g){return this.each(function(){function n(){e.called=
+		!0;e.CSSAIsRunning=!1;h.off(jQuery.CSS.transitionEnd+"."+e.id);clearTimeout(e.timeout);h.css(jQuery.CSS.sfx+"transition","");"function"==typeof g&&g.apply(e);"function"==typeof e.CSSqueue&&(e.CSSqueue(),e.CSSqueue=null)}var e=this,h=jQuery(this);e.id=e.id||"CSSA_"+(new Date).getTime();var k=k||{type:"noEvent"};if(e.CSSAIsRunning&&e.eventType==k.type&&!jQuery.browser.msie&&9>=jQuery.browser.version)e.CSSqueue=function(){h.CSSAnimate(d,a,b,c,g)};else if(e.CSSqueue=null,e.eventType=k.type,0!==h.length&&
+		d){d=jQuery.normalizeCss(d);e.CSSAIsRunning=!0;"function"==typeof a&&(g=a,a=jQuery.fx.speeds._default);"function"==typeof b&&(c=b,b=0);"string"==typeof b&&(g=b,b=0);"function"==typeof c&&(g=c,c="cubic-bezier(0.65,0.03,0.36,0.72)");if("string"==typeof a)for(var l in jQuery.fx.speeds)if(a==l){a=jQuery.fx.speeds[l];break}else a=jQuery.fx.speeds._default;a||(a=jQuery.fx.speeds._default);"string"===typeof g&&(c=g,g=null);if(jQuery.support.CSStransition){var f={"default":"ease","in":"ease-in",out:"ease-out",
+	"in-out":"ease-in-out",snap:"cubic-bezier(0,1,.5,1)",easeOutCubic:"cubic-bezier(.215,.61,.355,1)",easeInOutCubic:"cubic-bezier(.645,.045,.355,1)",easeInCirc:"cubic-bezier(.6,.04,.98,.335)",easeOutCirc:"cubic-bezier(.075,.82,.165,1)",easeInOutCirc:"cubic-bezier(.785,.135,.15,.86)",easeInExpo:"cubic-bezier(.95,.05,.795,.035)",easeOutExpo:"cubic-bezier(.19,1,.22,1)",easeInOutExpo:"cubic-bezier(1,0,0,1)",easeInQuad:"cubic-bezier(.55,.085,.68,.53)",easeOutQuad:"cubic-bezier(.25,.46,.45,.94)",easeInOutQuad:"cubic-bezier(.455,.03,.515,.955)",
+	easeInQuart:"cubic-bezier(.895,.03,.685,.22)",easeOutQuart:"cubic-bezier(.165,.84,.44,1)",easeInOutQuart:"cubic-bezier(.77,0,.175,1)",easeInQuint:"cubic-bezier(.755,.05,.855,.06)",easeOutQuint:"cubic-bezier(.23,1,.32,1)",easeInOutQuint:"cubic-bezier(.86,0,.07,1)",easeInSine:"cubic-bezier(.47,0,.745,.715)",easeOutSine:"cubic-bezier(.39,.575,.565,1)",easeInOutSine:"cubic-bezier(.445,.05,.55,.95)",easeInBack:"cubic-bezier(.6,-.28,.735,.045)",easeOutBack:"cubic-bezier(.175, .885,.32,1.275)",easeInOutBack:"cubic-bezier(.68,-.55,.265,1.55)"};
+	f[c]&&(c=f[c]);h.off(jQuery.CSS.transitionEnd+"."+e.id);f=jQuery.CSS.getProp(d);var m={};jQuery.extend(m,d);m[jQuery.CSS.sfx+"transition-property"]=f;m[jQuery.CSS.sfx+"transition-duration"]=a+"ms";m[jQuery.CSS.sfx+"transition-delay"]=b+"ms";m[jQuery.CSS.sfx+"transition-timing-function"]=c;setTimeout(function(){h.one(jQuery.CSS.transitionEnd+"."+e.id,n);h.css(m)},1);e.timeout=setTimeout(function(){e.called||!g?(e.called=!1,e.CSSAIsRunning=!1):(h.css(jQuery.CSS.sfx+"transition",""),g.apply(e),e.CSSAIsRunning=
+			!1,"function"==typeof e.CSSqueue&&(e.CSSqueue(),e.CSSqueue=null))},a+b+10)}else{for(f in d)"transform"===f&&delete d[f],"filter"===f&&delete d[f],"transform-origin"===f&&delete d[f],"auto"===d[f]&&delete d[f],"x"===f&&(k=d[f],l="left",d[l]=k,delete d[f]),"y"===f&&(k=d[f],l="top",d[l]=k,delete d[f]),"-ms-transform"!==f&&"-ms-filter"!==f||delete d[f];h.delay(b).animate(d,a,g)}}})}};jQuery.fn.CSSAnimate=jQuery.CSS.animate;jQuery.normalizeCss=jQuery.CSS.normalizeCss;
+jQuery.fn.css3=function(d){return this.each(function(){var a=jQuery(this),b=jQuery.normalizeCss(d);a.css(b)})};
 ;/*___________________________________________________________________________________________________________________________________________________
  _ jquery.mb.components                                                                                                                             _
  _                                                                                                                                                  _
- _ file: jquery.mb.browser.js                                                                                                                       _
- _ last modified: 21/06/16 0.59                                                                                                                     _
+ _ file: jquery.mb.browser.min.js                                                                                                                   _
+ _ last modified: 24/05/17 19.56                                                                                                                    _
  _                                                                                                                                                  _
  _ Open Lab s.r.l., Florence - Italy                                                                                                                _
  _                                                                                                                                                  _
@@ -1017,21 +1030,22 @@ function uncamel(e){return e.replace(/([A-Z])/g,function(e){return"-"+e.toLowerC
  _    http://www.opensource.org/licenses/mit-license.php                                                                                            _
  _    http://www.gnu.org/licenses/gpl.html                                                                                                          _
  _                                                                                                                                                  _
- _ Copyright (c) 2001-2016. Matteo Bicocchi (Pupunzi);                                                                                              _
+ _ Copyright (c) 2001-2017. Matteo Bicocchi (Pupunzi);                                                                                              _
  ___________________________________________________________________________________________________________________________________________________*/
 
-var nAgt=navigator.userAgent;
-if(!jQuery.browser){var isTouchSupported=function(){var a=nAgt.msMaxTouchPoints,e="ontouchstart"in document.createElement("div");return a||e?!0:!1};jQuery.browser={};jQuery.browser.mozilla=!1;jQuery.browser.webkit=!1;jQuery.browser.opera=!1;jQuery.browser.safari=!1;jQuery.browser.chrome=!1;jQuery.browser.androidStock=!1;jQuery.browser.msie=!1;jQuery.browser.edge=!1;var getOS=function(){var a={version:"Unknown version",name:"Unknown OS"};-1!=navigator.appVersion.indexOf("Win")&&(a.name="Windows");
-	-1==navigator.appVersion.indexOf("Mac")||navigator.appVersion.indexOf("Mobile")||(a.name="Mac");-1!=navigator.appVersion.indexOf("Linux")&&(a.name="Linux");a.name=a.name.toLowerCase();"mac"==a.name&&(a.version=/Mac OS X (10[\.\_\d]+)/.exec(nAgt)[1],a.version=a.version.replace(/_/g,".").substring(0,5));"windows"==a.name&&(a.version="Unknown.Unknown");/Windows NT 5.1/.test(nAgt)&&(a.version="5.1");/Windows NT 6.0/.test(nAgt)&&(a.version="6.0");/Windows NT 6.1/.test(nAgt)&&(a.version="6.1");/Windows NT 6.2/.test(nAgt)&&
-	(a.version="6.2");/Windows NT 10.0/.test(nAgt)&&(a.version="10.0");/Linux/.test(nAgt)&&/Linux/.test(nAgt)&&(a.version="Unknown.Unknown");a.major_version="Unknown";a.minor_version="Unknown";"Unknown.Unknown"!=a.version&&(a.major_version=parseFloat(a.version.split(".")[0]),a.minor_version=parseFloat(a.version.split(".")[1]));return a};jQuery.browser.ua=nAgt;jQuery.browser.os=getOS();jQuery.browser.hasTouch=isTouchSupported();jQuery.browser.name=navigator.appName;jQuery.browser.fullVersion=""+parseFloat(navigator.appVersion);
-	jQuery.browser.majorVersion=parseInt(navigator.appVersion,10);var nameOffset,verOffset,ix;if(-1!=(verOffset=nAgt.indexOf("Opera")))jQuery.browser.opera=!0,jQuery.browser.name="Opera",jQuery.browser.fullVersion=nAgt.substring(verOffset+6),-1!=(verOffset=nAgt.indexOf("Version"))&&(jQuery.browser.fullVersion=nAgt.substring(verOffset+8));else if(-1!=(verOffset=nAgt.indexOf("OPR")))jQuery.browser.opera=!0,jQuery.browser.name="Opera",jQuery.browser.fullVersion=nAgt.substring(verOffset+4);else if(-1!=(verOffset=
-			nAgt.indexOf("MSIE")))jQuery.browser.msie=!0,jQuery.browser.name="Microsoft Internet Explorer",jQuery.browser.fullVersion=nAgt.substring(verOffset+5);else if(-1!=nAgt.indexOf("Trident")){jQuery.browser.msie=!0;jQuery.browser.name="Microsoft Internet Explorer";var start=nAgt.indexOf("rv:")+3,end=start+4;jQuery.browser.fullVersion=nAgt.substring(start,end)}else-1!=(verOffset=nAgt.indexOf("Edge"))?(jQuery.browser.edge=!0,jQuery.browser.name="Microsoft Edge",jQuery.browser.fullVersion=nAgt.substring(verOffset+
-			5)):-1!=(verOffset=nAgt.indexOf("Chrome"))?(jQuery.browser.webkit=!0,jQuery.browser.chrome=!0,jQuery.browser.name="Chrome",jQuery.browser.fullVersion=nAgt.substring(verOffset+7)):-1<nAgt.indexOf("mozilla/5.0")&&-1<nAgt.indexOf("android ")&&-1<nAgt.indexOf("applewebkit")&&!(-1<nAgt.indexOf("chrome"))?(verOffset=nAgt.indexOf("Chrome"),jQuery.browser.webkit=!0,jQuery.browser.androidStock=!0,jQuery.browser.name="androidStock",jQuery.browser.fullVersion=nAgt.substring(verOffset+7)):-1!=(verOffset=nAgt.indexOf("Safari"))?
-			(jQuery.browser.webkit=!0,jQuery.browser.safari=!0,jQuery.browser.name="Safari",jQuery.browser.fullVersion=nAgt.substring(verOffset+7),-1!=(verOffset=nAgt.indexOf("Version"))&&(jQuery.browser.fullVersion=nAgt.substring(verOffset+8))):-1!=(verOffset=nAgt.indexOf("AppleWebkit"))?(jQuery.browser.webkit=!0,jQuery.browser.safari=!0,jQuery.browser.name="Safari",jQuery.browser.fullVersion=nAgt.substring(verOffset+7),-1!=(verOffset=nAgt.indexOf("Version"))&&(jQuery.browser.fullVersion=nAgt.substring(verOffset+
-			8))):-1!=(verOffset=nAgt.indexOf("Firefox"))?(jQuery.browser.mozilla=!0,jQuery.browser.name="Firefox",jQuery.browser.fullVersion=nAgt.substring(verOffset+8)):(nameOffset=nAgt.lastIndexOf(" ")+1)<(verOffset=nAgt.lastIndexOf("/"))&&(jQuery.browser.name=nAgt.substring(nameOffset,verOffset),jQuery.browser.fullVersion=nAgt.substring(verOffset+1),jQuery.browser.name.toLowerCase()==jQuery.browser.name.toUpperCase()&&(jQuery.browser.name=navigator.appName));-1!=(ix=jQuery.browser.fullVersion.indexOf(";"))&&
-	(jQuery.browser.fullVersion=jQuery.browser.fullVersion.substring(0,ix));-1!=(ix=jQuery.browser.fullVersion.indexOf(" "))&&(jQuery.browser.fullVersion=jQuery.browser.fullVersion.substring(0,ix));jQuery.browser.majorVersion=parseInt(""+jQuery.browser.fullVersion,10);isNaN(jQuery.browser.majorVersion)&&(jQuery.browser.fullVersion=""+parseFloat(navigator.appVersion),jQuery.browser.majorVersion=parseInt(navigator.appVersion,10));jQuery.browser.version=jQuery.browser.majorVersion;jQuery.browser.android=
-			/Android/i.test(nAgt);jQuery.browser.blackberry=/BlackBerry|BB|PlayBook/i.test(nAgt);jQuery.browser.ios=/iPhone|iPad|iPod|webOS/i.test(nAgt);jQuery.browser.operaMobile=/Opera Mini/i.test(nAgt);jQuery.browser.windowsMobile=/IEMobile|Windows Phone/i.test(nAgt);jQuery.browser.kindle=/Kindle|Silk/i.test(nAgt);jQuery.browser.mobile=jQuery.browser.android||jQuery.browser.blackberry||jQuery.browser.ios||jQuery.browser.windowsMobile||jQuery.browser.operaMobile||jQuery.browser.kindle;jQuery.isMobile=jQuery.browser.mobile;
-	jQuery.isTablet=jQuery.browser.mobile&&765<jQuery(window).width();jQuery.isAndroidDefault=jQuery.browser.android&&!/chrome/i.test(nAgt)}jQuery.browser.versionCompare=function(a,e){if("stringstring"!=typeof a+typeof e)return!1;for(var c=a.split("."),d=e.split("."),b=0,f=Math.max(c.length,d.length);b<f;b++){if(c[b]&&!d[b]&&0<parseInt(c[b])||parseInt(c[b])>parseInt(d[b]))return 1;if(d[b]&&!c[b]&&0<parseInt(d[b])||parseInt(c[b])<parseInt(d[b]))return-1}return 0};
+var nAgt=navigator.userAgent;jQuery.browser=jQuery.browser||{};jQuery.browser.mozilla=!1;jQuery.browser.webkit=!1;jQuery.browser.opera=!1;jQuery.browser.safari=!1;jQuery.browser.chrome=!1;jQuery.browser.androidStock=!1;jQuery.browser.msie=!1;jQuery.browser.edge=!1;jQuery.browser.ua=nAgt;function isTouchSupported(){var a=nAgt.msMaxTouchPoints,e="ontouchstart"in document.createElement("div");return a||e?!0:!1}
+var getOS=function(){var a={version:"Unknown version",name:"Unknown OS"};-1!=navigator.appVersion.indexOf("Win")&&(a.name="Windows");-1!=navigator.appVersion.indexOf("Mac")&&0>navigator.appVersion.indexOf("Mobile")&&(a.name="Mac");-1!=navigator.appVersion.indexOf("Linux")&&(a.name="Linux");/Mac OS X/.test(nAgt)&&!/Mobile/.test(nAgt)&&(a.version=/Mac OS X (10[\.\_\d]+)/.exec(nAgt)[1],a.version=a.version.replace(/_/g,".").substring(0,5));/Windows/.test(nAgt)&&(a.version="Unknown.Unknown");/Windows NT 5.1/.test(nAgt)&&
+(a.version="5.1");/Windows NT 6.0/.test(nAgt)&&(a.version="6.0");/Windows NT 6.1/.test(nAgt)&&(a.version="6.1");/Windows NT 6.2/.test(nAgt)&&(a.version="6.2");/Windows NT 10.0/.test(nAgt)&&(a.version="10.0");/Linux/.test(nAgt)&&/Linux/.test(nAgt)&&(a.version="Unknown.Unknown");a.name=a.name.toLowerCase();a.major_version="Unknown";a.minor_version="Unknown";"Unknown.Unknown"!=a.version&&(a.major_version=parseFloat(a.version.split(".")[0]),a.minor_version=parseFloat(a.version.split(".")[1]));return a};
+jQuery.browser.os=getOS();jQuery.browser.hasTouch=isTouchSupported();jQuery.browser.name=navigator.appName;jQuery.browser.fullVersion=""+parseFloat(navigator.appVersion);jQuery.browser.majorVersion=parseInt(navigator.appVersion,10);var nameOffset,verOffset,ix;
+if(-1!=(verOffset=nAgt.indexOf("Opera")))jQuery.browser.opera=!0,jQuery.browser.name="Opera",jQuery.browser.fullVersion=nAgt.substring(verOffset+6),-1!=(verOffset=nAgt.indexOf("Version"))&&(jQuery.browser.fullVersion=nAgt.substring(verOffset+8));else if(-1!=(verOffset=nAgt.indexOf("OPR")))jQuery.browser.opera=!0,jQuery.browser.name="Opera",jQuery.browser.fullVersion=nAgt.substring(verOffset+4);else if(-1!=(verOffset=nAgt.indexOf("MSIE")))jQuery.browser.msie=!0,jQuery.browser.name="Microsoft Internet Explorer",
+		jQuery.browser.fullVersion=nAgt.substring(verOffset+5);else if(-1!=nAgt.indexOf("Trident")){jQuery.browser.msie=!0;jQuery.browser.name="Microsoft Internet Explorer";var start=nAgt.indexOf("rv:")+3,end=start+4;jQuery.browser.fullVersion=nAgt.substring(start,end)}else-1!=(verOffset=nAgt.indexOf("Edge"))?(jQuery.browser.edge=!0,jQuery.browser.name="Microsoft Edge",jQuery.browser.fullVersion=nAgt.substring(verOffset+5)):-1!=(verOffset=nAgt.indexOf("Chrome"))?(jQuery.browser.webkit=!0,jQuery.browser.chrome=
+		!0,jQuery.browser.name="Chrome",jQuery.browser.fullVersion=nAgt.substring(verOffset+7)):-1<nAgt.indexOf("mozilla/5.0")&&-1<nAgt.indexOf("android ")&&-1<nAgt.indexOf("applewebkit")&&!(-1<nAgt.indexOf("chrome"))?(verOffset=nAgt.indexOf("Chrome"),jQuery.browser.webkit=!0,jQuery.browser.androidStock=!0,jQuery.browser.name="androidStock",jQuery.browser.fullVersion=nAgt.substring(verOffset+7)):-1!=(verOffset=nAgt.indexOf("Safari"))?(jQuery.browser.webkit=!0,jQuery.browser.safari=!0,jQuery.browser.name=
+		"Safari",jQuery.browser.fullVersion=nAgt.substring(verOffset+7),-1!=(verOffset=nAgt.indexOf("Version"))&&(jQuery.browser.fullVersion=nAgt.substring(verOffset+8))):-1!=(verOffset=nAgt.indexOf("AppleWebkit"))?(jQuery.browser.webkit=!0,jQuery.browser.safari=!0,jQuery.browser.name="Safari",jQuery.browser.fullVersion=nAgt.substring(verOffset+7),-1!=(verOffset=nAgt.indexOf("Version"))&&(jQuery.browser.fullVersion=nAgt.substring(verOffset+8))):-1!=(verOffset=nAgt.indexOf("Firefox"))?(jQuery.browser.mozilla=
+		!0,jQuery.browser.name="Firefox",jQuery.browser.fullVersion=nAgt.substring(verOffset+8)):(nameOffset=nAgt.lastIndexOf(" ")+1)<(verOffset=nAgt.lastIndexOf("/"))&&(jQuery.browser.name=nAgt.substring(nameOffset,verOffset),jQuery.browser.fullVersion=nAgt.substring(verOffset+1),jQuery.browser.name.toLowerCase()==jQuery.browser.name.toUpperCase()&&(jQuery.browser.name=navigator.appName));
+-1!=(ix=jQuery.browser.fullVersion.indexOf(";"))&&(jQuery.browser.fullVersion=jQuery.browser.fullVersion.substring(0,ix));-1!=(ix=jQuery.browser.fullVersion.indexOf(" "))&&(jQuery.browser.fullVersion=jQuery.browser.fullVersion.substring(0,ix));jQuery.browser.majorVersion=parseInt(""+jQuery.browser.fullVersion,10);isNaN(jQuery.browser.majorVersion)&&(jQuery.browser.fullVersion=""+parseFloat(navigator.appVersion),jQuery.browser.majorVersion=parseInt(navigator.appVersion,10));
+jQuery.browser.version=jQuery.browser.majorVersion;jQuery.browser.android=/Android/i.test(nAgt);jQuery.browser.blackberry=/BlackBerry|BB|PlayBook/i.test(nAgt);jQuery.browser.ios=/iPhone|iPad|iPod|webOS/i.test(nAgt);jQuery.browser.operaMobile=/Opera Mini/i.test(nAgt);jQuery.browser.windowsMobile=/IEMobile|Windows Phone/i.test(nAgt);jQuery.browser.kindle=/Kindle|Silk/i.test(nAgt);
+jQuery.browser.mobile=jQuery.browser.android||jQuery.browser.blackberry||jQuery.browser.ios||jQuery.browser.windowsMobile||jQuery.browser.operaMobile||jQuery.browser.kindle;jQuery.isMobile=jQuery.browser.mobile;jQuery.isTablet=jQuery.browser.mobile&&765<jQuery(window).width();jQuery.isAndroidDefault=jQuery.browser.android&&!/chrome/i.test(nAgt);jQuery.mbBrowser=jQuery.browser;
+jQuery.browser.versionCompare=function(a,e){if("stringstring"!=typeof a+typeof e)return!1;for(var c=a.split("."),d=e.split("."),b=0,f=Math.max(c.length,d.length);b<f;b++){if(c[b]&&!d[b]&&0<parseInt(c[b])||parseInt(c[b])>parseInt(d[b]))return 1;if(d[b]&&!c[b]&&0<parseInt(d[b])||parseInt(c[b])<parseInt(d[b]))return-1}return 0};
 ;/*
  * Metadata - jQuery plugin for parsing metadata from elements
  * Copyright (c) 2006 John Resig, Yehuda Katz, Jörn Zaefferer, Paul McLanahan
