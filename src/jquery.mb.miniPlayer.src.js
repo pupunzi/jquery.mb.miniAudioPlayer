@@ -195,6 +195,7 @@
 					var host = location.hostname.split(".");
 					host = host.length == 3 ? host[1] : host[0];
 					var isSameDomain = (fileUrl.indexOf(host) >= 0) || fileUrl.indexOf("http") < 0;
+
 					var a = document.createElement('a');
 
 					if (!master.player.opt.downloadPage) {
