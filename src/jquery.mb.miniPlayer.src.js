@@ -27,7 +27,7 @@
 
 	jQuery.mbMiniPlayer = {
 		author   : "Matteo Bicocchi",
-		"version": "{{ version }}",
+		version: "{{ version }}",
 		name     : "mb.miniPlayer",
 		isMobile : false,
 
@@ -41,37 +41,38 @@
 		},
 
 		defaults: {
-			ogg                 : null,
-			m4a                 : null,
-			width               : 150,
-			skin                : "black", // available: black, blue, orange, red, gray or use the skinMaker tool to create your.
-			volume              : .5,
-			autoplay            : false,
-			animate             : true,
-			id3                 : false,
-			playAlone           : true,
-			loop                : false,
-			inLine              : false,
-			volumeLevels        : 12,
-			allowMute           : true,
-			showControls        : true,
-			showVolumeLevel     : true,
-			showTime            : true,
-			showRew             : true,
-			addShadow           : false,
-			addGradientOverlay  : false,
-			gaTrack             : true,
-			downloadable        : false,
-			downloadablesecurity: false,
-			downloadPage        : null,
-			swfPath             : "swf/",
-			pauseOnWindowBlur   : false,
-			onReady             : function (player, $controlsBox) {},
-			onPlay              : function (player) {},
-			onEnd               : function (player) {},
-			onPause             : function (player) {},
-			onMute              : function (player) {},
-			onDownload          : function (player) {}
+      ogg                  : null,
+      m4a                  : null,
+      width                : 150,
+      skin                 : "black", // available: black, blue, orange, red, gray or use the skinMaker tool to create your.
+      volume               : .5,
+      autoplay             : false,
+      animate              : true,
+      id3                  : false,
+      playAlone            : true,
+      loop                 : false,
+      inLine               : false,
+      volumeLevels         : 12,
+      allowMute            : true,
+      showControls         : true,
+      showVolumeLevel      : true,
+      showTime             : true,
+      showRew              : true,
+      addShadow            : false,
+      addGradientOverlay   : false,
+      gaTrack              : true,
+      downloadable         : false,
+      allowDownloadOnMobile: false,
+      downloadablesecurity : false,
+      downloadPage         : null,
+      swfPath              : "swf/",
+      pauseOnWindowBlur    : false,
+      onReady              : function (player, $controlsBox) {},
+      onPlay               : function (player) {},
+      onEnd                : function (player) {},
+      onPause              : function (player) {},
+      onMute               : function (player) {},
+      onDownload           : function (player) {}
 		},
 
 		getID3: function (player) {
@@ -141,7 +142,8 @@
 				if (jQuery.isMobile) { //'ontouchstart' in window
 					master.player.opt.showVolumeLevel = false;
 					master.player.opt.autoplay = false;
-					master.player.opt.downloadable = false;
+					if(!master.player.opt.allowDownloadOnMobile)
+					  master.player.opt.downloadable = false;
 				}
 
 				if (!master.player.opt.mp3 && url.indexOf("mp3") > 0)
