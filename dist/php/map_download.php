@@ -1,4 +1,25 @@
 <?php
+////////////////////////////////////////////////////////////////////////////////
+// jquery.mb.components
+//
+// file: map_download.php
+// last modified: 12/29/17 7:06 PM
+// Version:  {{ version }}
+// Build:  {{ buildnum }}
+//
+// Open Lab s.r.l., Florence - Italy
+// email:  matteo@open-lab.com
+// blog: 	http://pupunzi.open-lab.com
+// site: 	http://pupunzi.com
+// 	http://open-lab.com
+//
+// Licences: MIT, GPL
+// http://www.opensource.org/licenses/mit-license.php
+// http://www.gnu.org/licenses/gpl.html
+//
+// Copyright (c) 2001-2018. Matteo Bicocchi (Pupunzi)
+////////////////////////////////////////////////////////////////////////////////
+
 /**
  * Download file.
  */
