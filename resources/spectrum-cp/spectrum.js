@@ -121,7 +121,7 @@
                         "<div class='sp-alpha'><div class='sp-alpha-inner'><div class='sp-alpha-handle'></div></div></div>",
                     "</div>",
                     "<div class='sp-input-container sp-cf'>",
-                        "<input class='sp-input' type='text' spellcheck='false'  />",
+                        "<input class='sp-input' type='text' spellCheck='false'  />",
                     "</div>",
                     "<div class='sp-initial sp-thumb sp-cf'></div>",
                     "<div class='sp-button-container sp-cf'>",
