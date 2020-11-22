@@ -606,12 +606,7 @@
 						.on(jQuery.jPlayer.event.loadedmetadata, function () {})
 						.on(jQuery.jPlayer.event.ended, function () {
 
-							/*
-															if (jQuery.isAndroidDefault)
-																return;
-							*/
-
-							if (master.player.opt.onEnd == "function")
+							if (typeof master.player.opt.onEnd === "function")
 								master.player.opt.onEnd(master.player);
 
 							if (master.player.opt.loop)
