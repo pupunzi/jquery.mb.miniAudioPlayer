@@ -27,7 +27,7 @@ module.exports = function(grunt) {
 		copy: {
 			dist: {
 				files: [
-					{flatten: true, expand: true, cwd: '../jquery.mb.browser/inc/', src: ['jquery.mb.browser.min.js'], dest: 'src/dep/'},
+					{flatten: true, expand: true, cwd: '../jquery.mb.browser/inc/', src: ['jquery.mbBrowser.min.js'], dest: 'src/dep/'},
 					{flatten: true, expand: true, cwd: '../jquery.mb.CSSAnimate/inc/', src: ['jquery.mb.CSSAnimate.min.js'], dest: 'src/dep/'},
 					{flatten: false, expand: true, cwd: 'src/css/', src: ['*.css'],  dest: 'dist/css/'},
 					{flatten: false, expand: true, cwd: 'src/css/font/', src: ['**'],  dest: 'dist/css/font/'},

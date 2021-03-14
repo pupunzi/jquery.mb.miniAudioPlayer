@@ -132,7 +132,7 @@
 				master.player.idx = idx + 1;
 				master.player.title = title;
 
-				master.player.opt.isIE = jQuery.browser.msie; //&& jQuery.browser.version === 9;
+				master.player.opt.isIE = jQuery.mbBrowser.msie; //&& jQuery.mbBrowser.version === 9;
 
 				if (jQuery.metadata) {
 					jQuery.metadata.setType("class");
@@ -323,7 +323,7 @@
 
 				//init jPlayer component (Happyworm Ltd - http://www.jplayer.org)
 
-				if (jQuery.browser.android) {
+				if (jQuery.mbBrowser.android) {
 					var opt = {
 						supplied           : master.player.opt.supplied,
 						wmode              : "transparent",
@@ -377,7 +377,7 @@
 
 							var speed = anim ? 500 : 0;
 
-							var isIE = jQuery.browser.msie && jQuery.browser.version < 9;
+							var isIE = jQuery.mbBrowser.msie && jQuery.mbBrowser.version < 9;
 
 							if (!master.player.isOpen) { // Open the player
 
@@ -503,7 +503,7 @@
 
 						});
 
-						if (!jQuery.browser.mobile)
+						if (!jQuery.mbBrowser.mobile)
 							$playBox.hover(
 									function () {
 										jQuery(this).css({opacity: .8})
@@ -537,7 +537,7 @@
 									}
 								});
 
-						if (!jQuery.browser.mobile)
+						if (!jQuery.mbBrowser.mobile)
 							$muteBox.hover(
 									function () {
 										jQuery(this).css({opacity: .8})
@@ -551,7 +551,7 @@
 							el.jPlayer("playHead", 0);
 						});
 
-						if (!jQuery.browser.mobile)
+						if (!jQuery.mbBrowser.mobile)
 							$rewBox.hover(
 									function () {
 										jQuery(this).css({opacity: .8})
